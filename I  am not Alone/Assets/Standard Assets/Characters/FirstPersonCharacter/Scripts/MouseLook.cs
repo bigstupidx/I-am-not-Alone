@@ -43,13 +43,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 character.localRotation = Quaternion.Slerp (character.localRotation, m_CharacterTargetRot,
                     smoothTime * Time.deltaTime);
-                camera.localRotation = Quaternion.Slerp (camera.localRotation, m_CameraTargetRot,
-                    smoothTime * Time.deltaTime);
+                //camera.localRotation = Quaternion.Slerp (camera.localRotation, m_CameraTargetRot,
+                //    smoothTime * Time.deltaTime);
             }
             else
             {
                 character.localRotation = m_CharacterTargetRot;
-                camera.localRotation = m_CameraTargetRot;
+              //  camera.localRotation = m_CameraTargetRot;
             }
 
             UpdateCursorLock();
