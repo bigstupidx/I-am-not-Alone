@@ -16,32 +16,58 @@ public class BulletSystem : MonoBehaviour
 
     public bool checkWeapons = false;
 
+    public float intervalWeaponAmmunition = 0.5f;
+
     public ParticleSystem bullet;
     // последсвите от попадания
     public GameObject smoke;
     private ParticleCollisionEvent[] collisionEvents = new ParticleCollisionEvent[16];
     public Material[] BulletPowerMaterial;
+
+
     private float reloadTimer;
-    public float interval;
+    public float WeaponAmmunition = 1;
+    bool l;
+    WeaponController _weaponController;
+    Transform AdvancedPoolingSystem;
     void Start ()
     {
+        AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
 
-        bullet = GetComponent<ParticleSystem>();
-
+        _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         bullet.Stop();
 
         //  BulletVisualMaterial(bulletDamage);
     }
-
+    private void OnEnable ()
+    {
+        AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
+        _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
+        _weaponController.Ammunition(WeaponAmmunition);
+    }
     private void Update ()
     {
         if (reloadTimer > 0)
         {
 
-          //  bullet.Stop();
+            //  bullet.Stop();
             reloadTimer -= Time.deltaTime;
         }
+
         BulettAttack();
+        if (l)
+        {
+            WeaponAmmunition -= Time.deltaTime * intervalWeaponAmmunition;
+            _weaponController.Ammunition(WeaponAmmunition);
+            if (WeaponAmmunition <= 0)
+            {
+
+                //    Destroy(transform.parent.gameObject);
+
+                gameObject.DestroyAPS();
+                transform.SetParent(AdvancedPoolingSystem);
+            }
+        }
     }
 
     void BulletVisualMaterial (int dmg)
@@ -74,25 +100,29 @@ public class BulletSystem : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             bullet.Stop();
-
+            l = false;
         }
         if (Input.GetMouseButtonDown(0))
-
         {
+            // Debug.Log(WeaponAmmunition);
 
-            reloadTimer = interval;
+            l = true;
             bullet.Play();
-
-          //  Debug.Log("play");
-
-
 
         }
 
 
 
+        //  Debug.Log("play");
 
     }
+
+
+
+
+
+
+
 
 
 
@@ -181,7 +211,9 @@ public class BulletSystem : MonoBehaviour
             i++;
 
         }
+
     }
 }
+
 
 
