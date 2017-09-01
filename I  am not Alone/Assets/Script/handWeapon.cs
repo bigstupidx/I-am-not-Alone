@@ -1,13 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[System.Serializable]
+public class UpdateHandWeapon
+{
+    public float intervalWeaponAmmunition;
 
+    public int damage;
+
+    public UpdateHandWeapon (float intervalAmuni, int _damage)
+    {
+
+        this.intervalWeaponAmmunition = intervalAmuni;
+        this.damage = _damage;
+
+    }
+}
 public class handWeapon : MonoBehaviour
 {
 
     private Animator anim;
     public float intervalWeaponAmmunition = 0.5f;
     public float WeaponAmmunition = 1;
+    public int level;
+    public List<UpdateWeapon> updateWeapon = new List<UpdateWeapon>();
     WeaponController _weaponController;
     Transform AdvancedPoolingSystem;
     // Use this for initialization
@@ -17,10 +33,12 @@ public class handWeapon : MonoBehaviour
         anim = GetComponent<Animator>();
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
-
+        UpdateWeapon();
     }
     private void OnEnable ()
     {
+        UpdateWeapon();
+
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         _weaponController.Ammunition(WeaponAmmunition);
@@ -60,5 +78,11 @@ public class handWeapon : MonoBehaviour
 
 
         }
+    }
+
+    public void UpdateWeapon ()
+    {
+        intervalWeaponAmmunition = updateWeapon[level].intervalWeaponAmmunition;
+
     }
 }

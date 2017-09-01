@@ -9,6 +9,7 @@ public class BoxWeapon : MonoBehaviour
     WeaponController _weaponController;
     public string nameWeapon;
     public int categoryWeapon;
+    public int level;
     // Use this for initialization
     void Start ()
     {
@@ -29,7 +30,7 @@ public class BoxWeapon : MonoBehaviour
         {
          
 
-            _weaponController.PlayerWeapon(nameWeapon, categoryWeapon);
+            _weaponController.PlayerWeapon(nameWeapon, categoryWeapon, level);
             transform.parent.gameObject.DestroyAPS();
 
 

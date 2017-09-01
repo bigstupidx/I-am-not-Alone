@@ -57,20 +57,20 @@ public class WeaponController : MonoBehaviour
 
     }
 
-    public void PlayerWeapon (string nameWeapon,int category)
+    public void PlayerWeapon (string nameWeapon,int category, int level)
     {
         if (category ==0)
         {
             if (Hand.transform.GetChild(0).childCount == 0)
             {
-                AddWeapon(nameWeapon, Hand.transform.GetChild(0));
+                AddWeapon(nameWeapon, Hand.transform.GetChild(0),level);
 
              
             }
             else
             {
                 RemoveWeapon(Hand.transform.GetChild(0).GetChild(0));
-                AddWeapon(nameWeapon, Hand.transform.GetChild(0));
+                AddWeapon(nameWeapon, Hand.transform.GetChild(0),level);
               
             }
 
@@ -80,7 +80,7 @@ public class WeaponController : MonoBehaviour
 
             if(WeaponOne.transform.childCount == 0)
             {
-                AddWeapon(nameWeapon, WeaponOne.transform);
+                AddWeapon(nameWeapon, WeaponOne.transform,level);
                 return;
             }
             else
@@ -95,7 +95,7 @@ public class WeaponController : MonoBehaviour
             }
             if (WeaponTwo.transform.childCount == 0)
             {
-                AddWeapon(nameWeapon, WeaponTwo.transform);
+                AddWeapon(nameWeapon, WeaponTwo.transform,level);
                 return;
             }
             else
@@ -110,26 +110,26 @@ public class WeaponController : MonoBehaviour
             if(WeaponTwo.transform.childCount != 0)
             {
                 RemoveWeapon(WeaponTwo.transform.GetChild(0));
-                AddWeapon(nameWeapon, WeaponTwo.transform);
+                AddWeapon(nameWeapon, WeaponTwo.transform,level);
             }
 
         }
 
     }
 
-    public void AddWeapon (string name,Transform pos)
+    public void AddWeapon (string name,Transform pos,int level)
     {
 
         GameObject weapon = pool.InstantiateAPS(name, pos.position, pos.rotation);
         weapon.transform.SetParent(pos);
         if (weapon.GetComponent<BulletSystem>() != null)
         {
-            weapon.GetComponent<BulletSystem>().WeaponAmmunition = 1;
-
+            weapon.GetComponent<BulletSystem>().level = level;
+            
         }
         else
         {
-            weapon.transform.parent.parent.GetComponent<handWeapon>().WeaponAmmunition = 1;
+            weapon.transform.parent.parent.GetComponent<handWeapon>().level = level;
         }
         Ammunition(1);
 

@@ -37,6 +37,7 @@ public class CheckInWeapon : MonoBehaviour
             Debug.Log(WeaponBought[i].nameWeapon + " " + WeaponBought[i].category);
             box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought[i].category;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought[i].nameWeapon;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought[i].levelWeapon;
         }
     }
     public void CheckIn ()

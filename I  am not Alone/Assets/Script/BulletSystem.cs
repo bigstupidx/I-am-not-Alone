@@ -2,8 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public class UpdateWeapon
+{
+    public float intervalWeaponAmmunition;
+
+    public int damage;
+
+    public UpdateWeapon (float intervalAmuni, int _damage)
+    {
+
+        this.intervalWeaponAmmunition = intervalAmuni;
+        this.damage = _damage;
+
+    }
+}
+
+
+
 public class BulletSystem : MonoBehaviour
 {
+
 
 
     // сколько  урона будет наносить
@@ -21,19 +41,22 @@ public class BulletSystem : MonoBehaviour
     public ParticleSystem bullet;
     // последсвите от попадания
     public GameObject smoke;
-    private ParticleCollisionEvent[] collisionEvents = new ParticleCollisionEvent[16];
+
+    [HideInInspector]
     public Material[] BulletPowerMaterial;
-
-
-    private float reloadTimer;
     public float WeaponAmmunition = 1;
+    public int level;
+    private float reloadTimer;
+
+    public List<UpdateWeapon> updateWeapon = new List<UpdateWeapon>();
     bool l;
+    private ParticleCollisionEvent[] collisionEvents = new ParticleCollisionEvent[16];
     WeaponController _weaponController;
     Transform AdvancedPoolingSystem;
     void Start ()
     {
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
-
+        UpdateWeapon();
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         bullet.Stop();
 
@@ -43,6 +66,7 @@ public class BulletSystem : MonoBehaviour
     {
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
+        UpdateWeapon();
         _weaponController.Ammunition(WeaponAmmunition);
     }
     private void Update ()
@@ -57,7 +81,7 @@ public class BulletSystem : MonoBehaviour
         BulettAttack();
         if (l)
         {
-            WeaponAmmunition -= Time.deltaTime * intervalWeaponAmmunition;
+            WeaponAmmunition -= Time.deltaTime *intervalWeaponAmmunition;
             _weaponController.Ammunition(WeaponAmmunition);
             if (WeaponAmmunition <= 0)
             {
@@ -118,7 +142,10 @@ public class BulletSystem : MonoBehaviour
     }
 
 
-
+    void UpdateWeapon ()
+    {
+        intervalWeaponAmmunition = updateWeapon[level].intervalWeaponAmmunition;
+    }
 
 
 
