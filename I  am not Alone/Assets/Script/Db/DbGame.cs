@@ -13,12 +13,14 @@ public class DbGame : MonoBehaviour
 {
 
     [Space(15)]
+
     private string connection;
     private IDbConnection dbcon;
     private IDbCommand dbcmd;
     private IDataReader reader;
     CheckInScene checkIn;
     CheckInWeapon checkInWeapon;
+    MainMenu mainmenu;
     string filepath;
 
 
@@ -97,7 +99,12 @@ public class DbGame : MonoBehaviour
     }
     public void GetWeaponBought ()
     {
-        checkInWeapon = GetComponent<CheckInWeapon>();
+      
+
+            checkInWeapon = GetComponent<CheckInWeapon>();
+
+      
+
         using (IDbConnection dbconnection = new SqliteConnection(connection))
         {
             dbconnection.Open();
@@ -112,9 +119,11 @@ public class DbGame : MonoBehaviour
                 {
                     while (reader.Read())
                     {
-             
-                        checkInWeapon.WeaponBought.Add(new WeaponParams(reader.GetString(0), reader.GetInt32(1), reader.GetInt32(2)));
-                    
+                       
+
+                            checkInWeapon.WeaponBought.Add(new WeaponParams(reader.GetString(0), reader.GetInt32(1), reader.GetInt32(2)));
+                           
+                      
                     }
                     dbconnection.Close();
                     reader.Close();
@@ -155,6 +164,43 @@ public class DbGame : MonoBehaviour
         }
 
     }
+
+    public void GetMoney ()
+    {
+        mainmenu = GetComponent<MainMenu>();
+        using (IDbConnection dbconnection = new SqliteConnection(connection))
+        {
+            dbconnection.Open();
+            using (IDbCommand dcm = dbconnection.CreateCommand())
+            {
+
+
+                string sqlQuery = String.Format("SELECT  Money  FROM PlayerParams");
+
+                dcm.CommandText = sqlQuery;
+                using (IDataReader reader = dcm.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+                        mainmenu.myMoney.text = reader.GetString(0);
+
+                     
+                      
+                    }
+                    dbconnection.Close();
+                    reader.Close();
+                }
+
+
+            }
+          
+        }
+
+
+
+    }
+
     public void UpdateMoney (string money)
     {
         using (IDbConnection dbconnetcion = new SqliteConnection(connection))
@@ -180,7 +226,7 @@ public class DbGame : MonoBehaviour
 
 
     }
-    public void InsertDBWeapon (string WeaponName, int level)
+    public void InsertDBWeapon (string WeaponName, int level, int category)
     {
 
 
@@ -192,7 +238,7 @@ public class DbGame : MonoBehaviour
             dbConnection.Open();
             using (IDbCommand dbCmd = dbConnection.CreateCommand())
             {
-                string sqlQuery = String.Format("INSERT INTO PlayerItemParams VALUES(\"{0}\",\"{1}\")", WeaponName, level);
+                string sqlQuery = String.Format("INSERT INTO PlayerItemParams VALUES(\"{0}\",\"{1}\",\"{2}\")", WeaponName, level,category);
 
                 dbCmd.CommandText = sqlQuery;
                 dbCmd.ExecuteScalar();

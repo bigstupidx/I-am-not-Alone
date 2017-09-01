@@ -13,7 +13,7 @@ public class ItemParams : MonoBehaviour
     public float maxLevelUpgrade = 10;
     public Text MyMoney;
     public Image upgradeImage;
-
+    public int category;
     public List<string> coast = new List<string>();
     DbGame db;
     // Use this for initialization
@@ -59,15 +59,17 @@ public class ItemParams : MonoBehaviour
             {
                 if (levelItem == 0)
                 {
-                    db.InsertDBWeapon(weaponName.text, 1);
+                    db.InsertDBWeapon(weaponName.text, 1,category);
                     levelItem += 1;
                     MyMoney.text = (int.Parse(MyMoney.text) - int.Parse(coast.text)).ToString();
+                    db.UpdateMoney(MyMoney.text);
                 }
                 else
                 {
                     levelItem += 1;
                     MyMoney.text = (int.Parse(MyMoney.text) - int.Parse(coast.text)).ToString();
                     db.UpdateDBWeapon(weaponName.text, levelItem);
+                    db.UpdateMoney(MyMoney.text);
                 }
 
 

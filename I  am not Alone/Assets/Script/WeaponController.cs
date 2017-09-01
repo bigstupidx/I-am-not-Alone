@@ -61,7 +61,7 @@ public class WeaponController : MonoBehaviour
     {
         if (category ==0)
         {
-            if (Hand.transform.GetChild(0).GetChild(0) == null)
+            if (Hand.transform.GetChild(0).childCount == 0)
             {
                 AddWeapon(nameWeapon, Hand.transform.GetChild(0));
 

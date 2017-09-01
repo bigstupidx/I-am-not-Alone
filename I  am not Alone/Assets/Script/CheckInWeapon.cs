@@ -4,21 +4,41 @@ using UnityEngine;
 
 public class CheckInWeapon : MonoBehaviour
 {
-
+    public bool ShopOrNot;
     public Transform grid;
 
     public List<WeaponParams> WeaponBought = new List<WeaponParams>();
+    PoolingSystem pool;
 
-   // public List<int> WeaponLevel = new List<int>();
     DbGame db;
     void Start ()
     {
         db = GetComponent<DbGame>();
         db.OpenDB("DBGame.db");
         db.GetWeaponBought();
-        CheckIn();
+        if (ShopOrNot)
+        {
+            CheckIn(); 
+        }
+        pool = PoolingSystem.Instance;
     }
 
+    private void OnEnable ()
+    {
+        pool = PoolingSystem.Instance;
+    }
+    private void Update ()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+
+            int i = Random.Range(0, WeaponBought.Count);
+            GameObject box = pool.InstantiateAPS("BoxWithWeapon", new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), Quaternion.identity);
+            Debug.Log(WeaponBought[i].nameWeapon + " " + WeaponBought[i].category);
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought[i].category;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought[i].nameWeapon;
+        }
+    }
     public void CheckIn ()
     {
 

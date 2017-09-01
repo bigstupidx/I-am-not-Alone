@@ -11,11 +11,16 @@ public class MainMenu : MonoBehaviour
     public Text myMoney;
 
     [HideInInspector]
-
     bool byeScene;
     DbGame db;
     // Use this for initialization
-
+    private void Start ()
+    {
+        db = GetComponent<DbGame>();
+        db.OpenDB("DBGame.db");
+        db.GetMoney();
+    
+    }
 
 
     public void ButtonPlay ()
@@ -34,6 +39,7 @@ public class MainMenu : MonoBehaviour
         if (int.Parse(myMoney.text) > int.Parse(price.text))
         {
             myMoney.text = (int.Parse(myMoney.text) - int.Parse(price.text)).ToString();
+            db.UpdateMoney(myMoney.text);
             byeScene = true;
         }
         else { byeScene = false; return; }
