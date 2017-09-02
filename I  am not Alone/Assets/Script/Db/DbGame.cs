@@ -38,7 +38,7 @@ public class DbGame : MonoBehaviour
         filepath = Application.dataPath + "/" + p;
 
 
-        //   filepath = Application.persistentDataPath + "/" + p;
+       // filepath = Application.persistentDataPath + "/" + p;
 
 
         //  }
@@ -99,11 +99,11 @@ public class DbGame : MonoBehaviour
     }
     public void GetWeaponBought ()
     {
-      
 
-            checkInWeapon = GetComponent<CheckInWeapon>();
 
-      
+        checkInWeapon = GetComponent<CheckInWeapon>();
+
+
 
         using (IDbConnection dbconnection = new SqliteConnection(connection))
         {
@@ -119,11 +119,11 @@ public class DbGame : MonoBehaviour
                 {
                     while (reader.Read())
                     {
-                       
 
-                            checkInWeapon.WeaponBought.Add(new WeaponParams(reader.GetString(0), reader.GetInt32(1), reader.GetInt32(2)));
-                           
-                      
+
+                        checkInWeapon.WeaponBought.Add(new WeaponParams(reader.GetString(0), reader.GetInt32(1), reader.GetInt32(2)));
+
+
                     }
                     dbconnection.Close();
                     reader.Close();
@@ -185,8 +185,8 @@ public class DbGame : MonoBehaviour
 
                         mainmenu.myMoney.text = reader.GetString(0);
 
-                     
-                      
+
+
                     }
                     dbconnection.Close();
                     reader.Close();
@@ -194,7 +194,7 @@ public class DbGame : MonoBehaviour
 
 
             }
-          
+
         }
 
 
@@ -238,7 +238,7 @@ public class DbGame : MonoBehaviour
             dbConnection.Open();
             using (IDbCommand dbCmd = dbConnection.CreateCommand())
             {
-                string sqlQuery = String.Format("INSERT INTO PlayerItemParams VALUES(\"{0}\",\"{1}\",\"{2}\")", WeaponName, level,category);
+                string sqlQuery = String.Format("INSERT INTO PlayerItemParams VALUES(\"{0}\",\"{1}\",\"{2}\")", WeaponName, level, category);
 
                 dbCmd.CommandText = sqlQuery;
                 dbCmd.ExecuteScalar();

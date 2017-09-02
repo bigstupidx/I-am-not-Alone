@@ -28,17 +28,11 @@ public class handWeapon : MonoBehaviour
     Transform AdvancedPoolingSystem;
     // Use this for initialization
     bool l;
-    void Start ()
-    {
-        anim = GetComponent<Animator>();
-        _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
-        AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
-        UpdateWeapon();
-    }
+
     private void OnEnable ()
     {
         UpdateWeapon();
-
+        anim = GetComponent<Animator>();
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         _weaponController.Ammunition(WeaponAmmunition);

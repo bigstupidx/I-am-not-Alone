@@ -57,81 +57,98 @@ public class WeaponController : MonoBehaviour
 
     }
 
-    public void PlayerWeapon (string nameWeapon,int category, int level)
+    public void PlayerWeapon (string nameWeapon, int category, int level)
     {
-        if (category ==0)
+        if (category == 0)
         {
             if (Hand.transform.GetChild(0).childCount == 0)
             {
-                AddWeapon(nameWeapon, Hand.transform.GetChild(0),level);
-
+                AddWeapon(nameWeapon, Hand.transform.GetChild(0), level);
              
+
             }
             else
             {
                 RemoveWeapon(Hand.transform.GetChild(0).GetChild(0));
-                AddWeapon(nameWeapon, Hand.transform.GetChild(0),level);
-              
+                AddWeapon(nameWeapon, Hand.transform.GetChild(0), level);
+           
             }
 
         }
         else
         {
-
-            if(WeaponOne.transform.childCount == 0)
+            if (WeaponOne.transform.childCount == 0)
             {
-                AddWeapon(nameWeapon, WeaponOne.transform,level);
+                AddWeapon(nameWeapon, WeaponOne.transform, level);
+            
+               
                 return;
             }
             else
             {
                 if (WeaponOne.transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
                 {
-                    Ammunition(1);
+
                     WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
+                 
                     return;
                 }
-             
             }
             if (WeaponTwo.transform.childCount == 0)
             {
-                AddWeapon(nameWeapon, WeaponTwo.transform,level);
+                AddWeapon(nameWeapon, WeaponTwo.transform, level);
+
                 return;
             }
             else
             {
                 if (WeaponTwo.transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
                 {
-                    Ammunition(1);
+
+               
                     WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
                     return;
                 }
+                else
+                {
+                    RemoveWeapon(WeaponTwo.transform.GetChild(0));
+
+                    AddWeapon(nameWeapon, WeaponTwo.transform, level);
+                    return;
+
+                }
+
+
+
+
             }
-            if(WeaponTwo.transform.childCount != 0)
-            {
-                RemoveWeapon(WeaponTwo.transform.GetChild(0));
-                AddWeapon(nameWeapon, WeaponTwo.transform,level);
-            }
+
+
+
+
+
+
 
         }
 
     }
 
-    public void AddWeapon (string name,Transform pos,int level)
+    public void AddWeapon (string name, Transform pos, int level)
     {
 
-        GameObject weapon = pool.InstantiateAPS(name, pos.position, pos.rotation);
-        weapon.transform.SetParent(pos);
+        GameObject weapon = pool.InstantiateAPS(name, pos.position, pos.rotation, pos.gameObject);
+
         if (weapon.GetComponent<BulletSystem>() != null)
         {
             weapon.GetComponent<BulletSystem>().level = level;
-            
+            weapon.GetComponent<BulletSystem>().WeaponAmmunition = 1;
         }
         else
         {
             weapon.transform.parent.parent.GetComponent<handWeapon>().level = level;
+            weapon.transform.parent.parent.GetComponent<handWeapon>().WeaponAmmunition = 1;
         }
-        Ammunition(1);
+
 
     }
     public void RemoveWeapon (Transform Weapon)
@@ -144,6 +161,7 @@ public class WeaponController : MonoBehaviour
 
     public void Ammunition (float value)
     {
+        Debug.Log(value);
         image.fillAmount = value;
 
 

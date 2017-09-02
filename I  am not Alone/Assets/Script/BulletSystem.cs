@@ -6,7 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class UpdateWeapon
 {
-    public float intervalWeaponAmmunition;
+    public float intervalWeaponAmmunition =1 ;
 
     public int damage;
 
@@ -46,47 +46,39 @@ public class BulletSystem : MonoBehaviour
     public Material[] BulletPowerMaterial;
     public float WeaponAmmunition = 1;
     public int level;
-    private float reloadTimer;
+   
 
     public List<UpdateWeapon> updateWeapon = new List<UpdateWeapon>();
     bool l;
     private ParticleCollisionEvent[] collisionEvents = new ParticleCollisionEvent[16];
     WeaponController _weaponController;
     Transform AdvancedPoolingSystem;
-    void Start ()
-    {
-        AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
-        UpdateWeapon();
-        _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
-        bullet.Stop();
+    float timer;
 
-        //  BulletVisualMaterial(bulletDamage);
-    }
     private void OnEnable ()
     {
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         UpdateWeapon();
+        timer = 0;
         _weaponController.Ammunition(WeaponAmmunition);
+        l = false;
     }
     private void Update ()
     {
-        if (reloadTimer > 0)
-        {
-
-            //  bullet.Stop();
-            reloadTimer -= Time.deltaTime;
-        }
+  
 
         BulettAttack();
         if (l)
         {
-            WeaponAmmunition -= Time.deltaTime *intervalWeaponAmmunition;
+            timer = Time.deltaTime;
+            WeaponAmmunition -= timer * intervalWeaponAmmunition;
+
             _weaponController.Ammunition(WeaponAmmunition);
             if (WeaponAmmunition <= 0)
             {
 
-                //    Destroy(transform.parent.gameObject);
+           
 
                 gameObject.DestroyAPS();
                 transform.SetParent(AdvancedPoolingSystem);
@@ -144,7 +136,7 @@ public class BulletSystem : MonoBehaviour
 
     void UpdateWeapon ()
     {
-        intervalWeaponAmmunition = updateWeapon[level].intervalWeaponAmmunition;
+       intervalWeaponAmmunition = updateWeapon[level].intervalWeaponAmmunition;
     }
 
 
