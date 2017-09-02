@@ -6,7 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class UpdateWeapon
 {
-    public float intervalWeaponAmmunition =1 ;
+    public float intervalWeaponAmmunition = 1;
 
     public int damage;
 
@@ -26,31 +26,24 @@ public class BulletSystem : MonoBehaviour
 
 
 
-    // сколько  урона будет наносить
-    public int bulletDamage;
-
-
-
-
-
-
     public bool checkWeapons = false;
 
     public float intervalWeaponAmmunition = 0.5f;
 
     public ParticleSystem bullet;
+    public MyParticleCollision particleCol;
     // последсвите от попадания
-    public GameObject smoke;
+
 
     [HideInInspector]
     public Material[] BulletPowerMaterial;
     public float WeaponAmmunition = 1;
     public int level;
-   
+
 
     public List<UpdateWeapon> updateWeapon = new List<UpdateWeapon>();
     bool l;
-    private ParticleCollisionEvent[] collisionEvents = new ParticleCollisionEvent[16];
+
     WeaponController _weaponController;
     Transform AdvancedPoolingSystem;
     float timer;
@@ -66,7 +59,7 @@ public class BulletSystem : MonoBehaviour
     }
     private void Update ()
     {
-  
+
 
         BulettAttack();
         if (l)
@@ -78,7 +71,7 @@ public class BulletSystem : MonoBehaviour
             if (WeaponAmmunition <= 0)
             {
 
-           
+
 
                 gameObject.DestroyAPS();
                 transform.SetParent(AdvancedPoolingSystem);
@@ -120,8 +113,7 @@ public class BulletSystem : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
-            // Debug.Log(WeaponAmmunition);
-
+          
             l = true;
             bullet.Play();
 
@@ -136,7 +128,8 @@ public class BulletSystem : MonoBehaviour
 
     void UpdateWeapon ()
     {
-       intervalWeaponAmmunition = updateWeapon[level].intervalWeaponAmmunition;
+        intervalWeaponAmmunition = updateWeapon[level].intervalWeaponAmmunition;
+        particleCol.bulletDamage = updateWeapon[level].damage;
     }
 
 
@@ -144,95 +137,69 @@ public class BulletSystem : MonoBehaviour
 
 
 
+    //void OnParticleCollision (GameObject other)
+    //{
 
-
-    void OnParticleCollision (GameObject other)
-    {
-
-        //if (other.tag == "AIZombie")
-        //{
-        //    if (other.GetComponent<TheallXp>().CurArmor > 0)
-        //    {
-
-
-        //        if (other.transform.root.name != transform.root.name)
-        //        {
-        //            other.GetComponent<TheallXp>().Armor(bulletDamage);
-        //            other.GetComponent<TheallXp>().resetArmorTimer = 5;
-        //            other.GetComponent<TheallXp>().EnemyShip(transform.root);
-        //        }
-
-        //    }
-        //    if (other.GetComponent<TheallXp>().CurArmor <= 0)
-        //    {
-
-
-        //        if (other.transform.root.name != transform.root.name)
-        //        {
-        //            other.GetComponent<TheallXp>().Helth(bulletDamage);
-        //            other.GetComponent<TheallXp>().resetArmorTimer = 5;
-        //            other.GetComponent<TheallXp>().EnemyShip(transform.root);
-        //        }
-
-        //    }
+    //    Debug.Log(other.name);
+    //    if (other.tag == "CraftMode")
+    //    {
 
 
 
 
-        //}
+    //        if (other.transform.root.name != transform.name)
+    //        {
+    //            other.GetComponent<Health>().Helth(bulletDamage);
 
-
-        //if (other.tag == "furniture")
-        //{
-
-        //    if (other.GetComponent<TheallXp>().CurArmor > 0)
-        //    {
-
-
-
-        //        if (other.transform.root.name != transform.root.name)
-        //        {
-        //            other.GetComponent<TheallXp>().Armor(bulletDamage);
-
-
-        //        }
-
-        //    }
-        //    if (other.GetComponent<TheallXp>().CurArmor <= 0)
-        //    {
-
-
-        //        if (other.transform.root.name != transform.root.name)
-        //        {
-        //            other.GetComponent<TheallXp>().Helth(bulletDamage);
-
-
-        //        }
-
-        //    }
+    //        }
 
 
 
 
 
-        //}
 
-        int safeLength = GetComponent<ParticleSystem>().GetSafeCollisionEventSize();
-        if (collisionEvents.Length < safeLength)
-            collisionEvents = new ParticleCollisionEvent[safeLength];
-        int numCollisionEvents = GetComponent<ParticleSystem>().GetCollisionEvents(other, collisionEvents);
-        int i = 0;
-        while (i < numCollisionEvents)
-        {
-            Vector3 collisionHitLoc = collisionEvents[i].intersection;
+    //    }
 
-            Instantiate(smoke, collisionHitLoc, Quaternion.identity);
-            i++;
 
-        }
+    //    if (other.tag == "Things")
+    //    {
 
-    }
+
+
+    //        if (other.transform.root.name != transform.name)
+    //        {
+    //            other.GetComponent<Health>().Helth(bulletDamage);
+
+
+    //        }
+
+
+
+
+
+
+
+    //    }
+
+    //    int safeLength = GetComponent<ParticleSystem>().GetSafeCollisionEventSize();
+    //    if (collisionEvents.Length < safeLength)
+    //        collisionEvents = new ParticleCollisionEvent[safeLength];
+    //    int numCollisionEvents = GetComponent<ParticleSystem>().GetCollisionEvents(other, collisionEvents);
+    //    int i = 0;
+    //    while (i < numCollisionEvents)
+    //    {
+    //        Vector3 collisionHitLoc = collisionEvents[i].intersection;
+
+    //        //  Instantiate(smoke, collisionHitLoc, Quaternion.identity);
+    //        i++;
+
+    //    }
+
+    //}
 }
+
+  
+
 
 
 

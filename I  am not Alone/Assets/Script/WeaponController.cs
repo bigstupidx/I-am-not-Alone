@@ -161,7 +161,7 @@ public class WeaponController : MonoBehaviour
 
     public void Ammunition (float value)
     {
-        Debug.Log(value);
+       
         image.fillAmount = value;
 
 
