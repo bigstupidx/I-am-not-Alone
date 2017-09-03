@@ -1,36 +1,47 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class CountForCreare
+[System.Serializable]
+public class ItemForbuild
 {
-    public string nameMaterial;
-    public int Count;
+    public string NameMaterial;
+    public int CountMaterial;
 
-    public CountForCreare (string name, int _count)
+    public ItemForbuild (string name, int count)
     {
-        nameMaterial = name;
-        Count = _count;
+        NameMaterial = name;
+        CountMaterial = count;
     }
-
-
 }
+
+
+
+
 
 
 public class CraftItem : MonoBehaviour
 {
-    public string whatMaterial;
-    public List<CountForCreare> CountWoodForCreate;
+    public bool BuildStatic = true;
+    public List<ItemForbuild> CountWoodForCreate = new List<ItemForbuild>();
     public bool Built;
     public Material[] materials;
+    [HideInInspector]
+    public Transform pointForMenu;
+    private SwitchMode buildMode;
+    private Renderer rend;
+    private GameObject MainCanvas;
+    Indicator indicator;
 
 
-    SwitchMode buildMode;
-    Renderer rend;
     // Use this for initialization
     void Start ()
     {
+        indicator = GetComponent<Indicator>();
+        MainCanvas = GameObject.Find("MainCanvas");
+        pointForMenu = transform.Find("PointForMenu").transform;
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
+
+
         DefaultOptions();
     }
 
@@ -44,33 +55,66 @@ public class CraftItem : MonoBehaviour
 
             rend.sharedMaterial = materials[0];
             transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
-            buildMode.craft.Add(this.gameObject);
-       
+
+
         }
-        gameObject.SetActive(false);
+        buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject));
+        indicator.IndicatorOffscreen();
+        if (BuildStatic)
+        {
+            gameObject.SetActive(false); 
+        }
         Built = false;
     }
     private void OnTriggerEnter (Collider other)
     {
-        if (other.transform.tag == "Player")
+        if (other.CompareTag("Player"))
         {
 
             if (!Built)
             {
-                for (int i = 0; i < transform.GetChild(0).childCount; i++)
-                {
-                    rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
-
-
-                    rend.sharedMaterial = materials[1];
-                    transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
-                    Built = true;
-                    buildMode.craft.Remove(buildMode.craft.Find(obj => obj.name == gameObject.name));
-
-
-                } 
+                buildMode.CraftItemBuildNowStatic = this.gameObject.GetComponent<CraftItem>();
+                buildMode.ButtonCraft.SetActive(true);
             }
+        }
+    }
+    public void BuildContruction (bool b)
+    {
+        if (b)
+        {
+            for (int i = 0; i < transform.GetChild(0).childCount; i++)
+            {
+                rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
 
+
+                rend.sharedMaterial = materials[1];
+                transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+                Built = false;
+                buildMode.craft.Remove(buildMode.craft.Find(obj => obj.ItemCraft.name == gameObject.name));
+                indicator._targetSpriteOfPool.gameObject.SetActive(false);
+
+            } 
+        }
+    }
+
+    private void OnTriggerStay (Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+
+
+          
+                BuildContruction(Built);
+            
+
+        }
+    }
+    private void OnTriggerExit (Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+
+            buildMode.ButtonCraft.SetActive(false);
         }
     }
 }
