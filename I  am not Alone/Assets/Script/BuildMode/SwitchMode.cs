@@ -46,7 +46,10 @@ public class SwitchMode : MonoBehaviour
     public List<CraftParams> craft = new List<CraftParams>();
 
     public CraftItem CraftItemBuildNowStatic;
+
+
     public CraftItem CraftItemBuildNowDinamic;
+ 
     private void Start ()
     {
 
@@ -71,7 +74,7 @@ public class SwitchMode : MonoBehaviour
             }
             else
             {
-          
+
                 BuildMode.SetActive(false);
                 PlayerMode.SetActive(true);
                 Hand.SetActive(true);
@@ -82,6 +85,28 @@ public class SwitchMode : MonoBehaviour
 
     }
 
+    public void BuildMOdeMenu (Toggle rog)
+    {
+        if (rog.isOn)
+        {
+
+            BuildMode.SetActive(true);
+            PlayerMode.SetActive(false);
+            Hand.SetActive(false);
+            HandWeapon.SetActive(false);
+        }
+        else
+        {
+
+            BuildMode.SetActive(false);
+            PlayerMode.SetActive(true);
+            Hand.SetActive(true);
+            HandWeapon.SetActive(true);
+        }
+        CheckInBuiltWalls(rog.isOn);
+    }
+
+   
     void CheckInBuiltWalls (bool visible)
     {
 
@@ -89,6 +114,12 @@ public class SwitchMode : MonoBehaviour
         {
             craft[i].ItemCraft.SetActive(visible);
           craft[i].PanelUIForCraft.SetActive(visible);
+            if(CraftItemBuildNowDinamic != null & !visible)
+            {
+                CraftItemBuildNowDinamic.gameObject.DestroyAPS();
+                CraftItemBuildNowDinamic.GetComponent<Indicator>()._targetSpriteOfPool.gameObject.SetActive(false);
+                CraftItemBuildNowDinamic.GetComponent<Indicator>()._blowUpYes.gameObject.SetActive(false);
+            }
         }
 
 
@@ -111,19 +142,20 @@ public class SwitchMode : MonoBehaviour
      
       
     }
-    public void ButtonNo ()
-    {
 
+    /// <summary>
+    /// Добавить что бы отнимала 
 
-
-    }
-    void  CheckInpurChasingPower (List<ItemForbuild> _itemForbuild, CraftItem c)
+    /// </summary>
+    /// <param name="_itemForbuild"></param>
+    /// <param name="c"></param>
+    void CheckInpurChasingPower (List<ItemForbuild> _itemForbuild, CraftItem c)
     {
         int wood = 0;
         int metal = 0;
         int glass = 0;
         int electric = 0;
-
+        int interactive = 0;
 
 
 
@@ -180,6 +212,18 @@ public class SwitchMode : MonoBehaviour
                 else
                 {
                     return ;
+                }
+
+            }
+            if (_itemForbuild[i].NameMaterial.Equals("Interactive"))
+            {
+                if (_itemForbuild[i].CountMaterial <= int.Parse(c.Item.counterText.GetChild(i).GetComponent<Text>().text))
+                {
+                    c.Item.counterText.GetChild(i).GetComponent<Text>().text = (int.Parse(c.Item.counterText.GetChild(i).GetComponent<Text>().text) - _itemForbuild[i].CountMaterial).ToString();
+                }
+                else
+                {
+                    return;
                 }
 
             }

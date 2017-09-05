@@ -24,7 +24,7 @@ public class MyParticleCollision : MonoBehaviour
 
             if (other.transform.root.name != transform.name)
             {
-                other.GetComponent<Health>().Helth(bulletDamage);
+                other.GetComponent<Health>().HelthDamage(bulletDamage);
 
             }
 
@@ -43,7 +43,7 @@ public class MyParticleCollision : MonoBehaviour
             
             if (other.transform.root.name != transform.name)
             {
-                other.GetComponent<Health>().Helth(bulletDamage);
+                other.GetComponent<Health>().HelthDamage(bulletDamage);
 
 
             }
