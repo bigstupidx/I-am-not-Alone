@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ItemParams : MonoBehaviour
 {
-
+    public bool ItemCraft;
     public int levelItem;
     public Text UnlockOrUpgrade;
     public Text textCoast;
@@ -15,11 +15,15 @@ public class ItemParams : MonoBehaviour
     public Image upgradeImage;
     public int category;
     public List<string> coast = new List<string>();
+ 
+    
     DbGame db;
     // Use this for initialization
     void Start ()
     {
         db = GameObject.Find("MenuController").GetComponent<DbGame>();
+     
+      
         db.OpenDB("DBGame.db");
         IntializedParams();
 
@@ -59,7 +63,14 @@ public class ItemParams : MonoBehaviour
             {
                 if (levelItem == 0)
                 {
-                    db.InsertDBWeapon(weaponName.text, 1,category);
+                    if (ItemCraft)
+                    {
+                        db.InsertDBWeapon(weaponName.text, 1, category);
+                    }
+                    else
+                    {
+                        db.InsertDBCraft(weaponName.text, 1);
+                    }
                     levelItem += 1;
                     MyMoney.text = (int.Parse(MyMoney.text) - int.Parse(coast.text)).ToString();
                     db.UpdateMoney(MyMoney.text);
@@ -68,7 +79,14 @@ public class ItemParams : MonoBehaviour
                 {
                     levelItem += 1;
                     MyMoney.text = (int.Parse(MyMoney.text) - int.Parse(coast.text)).ToString();
-                    db.UpdateDBWeapon(weaponName.text, levelItem);
+                    if (ItemCraft)
+                    {
+                        db.UpdateDBWeapon(weaponName.text, levelItem);
+                    }
+                    else
+                    {
+                        db.UpdateDBCraft(weaponName.text, levelItem);
+                    }
                     db.UpdateMoney(MyMoney.text);
                 }
 

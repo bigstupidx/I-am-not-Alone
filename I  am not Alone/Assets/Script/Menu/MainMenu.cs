@@ -27,7 +27,7 @@ public class MainMenu : MonoBehaviour
     {
 
 
-        SceneManager.LoadSceneAsync(sceneName);
+        SceneManager.LoadScene(sceneName);
 
 
     }

@@ -9,15 +9,18 @@ public class Health : MonoBehaviour
     public float MaxHealth = 100.0f;
     public float CurHelth = 100.0f;
 
+    [Header("Woods,Metals,Glasses,Electrics,Interactive")]
+    public int MakeMaterial;
     public GameObject[] explosion;
 
     PoolingSystem poolsistem;
     SwitchMode buildMode;
     CraftItem _craftItem;
-
+    CheckInWeaponAndCraft checkWeaponAndCraft;
     private void Start ()
     {
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
+        checkWeaponAndCraft = GameObject.Find("WeaponController").GetComponent<CheckInWeaponAndCraft>();
         if (transform.parent != null)
         {
             _craftItem = transform.parent.GetComponent<CraftItem>();
@@ -31,7 +34,8 @@ public class Health : MonoBehaviour
     {
         poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
         this.gameObject.DestroyAPS();
-
+        _craftItem = GetComponent<CraftItem>();
+        _craftItem.DefaultOptions();
         CurHelth = 100;
     }
 
@@ -61,7 +65,15 @@ public class Health : MonoBehaviour
                 //     shipguiController.Healthometer.fillAmount = CurHelth / MaxHealth;
 
             }
+            if (transform.CompareTag("Things"))
+            {
+               
+                poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
 
+                //   checkWeaponAndCraft.CreateBoxItem(transform.position,MakeMaterial);
+                checkWeaponAndCraft.CreateBoxInterActive(transform.position);
+
+            }
             if (transform.CompareTag("CraftMode"))
             {
 
@@ -83,7 +95,18 @@ public class Health : MonoBehaviour
 
             }
 
+            if (transform.CompareTag("CraftFromMenu"))
+            {
 
+                _craftItem = GetComponent<CraftItem>();
+                _craftItem.DefaultOptions();
+                poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
+                this.gameObject.DestroyAPS();
+                _craftItem._StartHisEffect = false;
+                CurHelth = 100;
+
+
+            }
             else
             {
 

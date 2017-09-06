@@ -16,15 +16,20 @@ public class ItemForbuild
     public string NameMaterial;
     public int CountMaterial;
 
-    public ItemForbuild (bool w, bool m, bool g, bool e, bool i, string name, int count)
+    public void Start()
     {
-        wood = w; if (w) name = "Woods";
-        metal = m; if (w) name = "Metals";
-        glass = g; if (w) name = "Glasses";
-        electric = e; if (w) name = "Electrics";
-        interactive = i; if (w) name = "Interactive";
-        NameMaterial = name;
-        CountMaterial = count;
+   
+        if (wood)  NameMaterial = "Woods"; 
+    
+        if (metal)  NameMaterial = "Metals"; 
+    
+        if (glass)  NameMaterial = "Glasses"; 
+     
+        if (electric)  NameMaterial = "Electrics"; 
+     
+        if (interactive)  NameMaterial = "Interactive"; 
+
+     
     }
 
 
@@ -73,8 +78,11 @@ public class CraftItem : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-   
-        pool = PoolingSystem.Instance;
+        for (int i = 0; i < CountWoodForCreate.Count; i++)
+        {
+            CountWoodForCreate[i].Start();
+        }
+          pool = PoolingSystem.Instance;
         rigid = GetComponent<Rigidbody>();
         health = GetComponent<Health>();
         indicator = GetComponent<Indicator>();
@@ -136,6 +144,7 @@ public class CraftItem : MonoBehaviour
                     buildMode.CraftItemBuildNowDinamic = null;
                     Item.itemCreate = null;
                     rigid.isKinematic = true;
+                    Item.CheckOFToggle();
                 }
                 else
                 {

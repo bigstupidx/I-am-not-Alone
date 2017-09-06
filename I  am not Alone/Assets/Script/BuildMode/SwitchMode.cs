@@ -33,15 +33,16 @@ public class SwitchMode : MonoBehaviour
 
     [Space(15)]
     [Header("panelGoods")]
-    public Text CountWoods;
-    public Text CountMetals;
-    public Text CountGlasses;
-    public Text CountElectrics;
+    public List<Text> panelGoods = new List<Text>();
+
         
 
 
 
     bool l;
+    [Space(15)]
+    public List<GameObject> interActivePrefab = new List<GameObject>();
+    [Space(5)]
     // Use this for initialization
     public List<CraftParams> craft = new List<CraftParams>();
 
@@ -116,9 +117,13 @@ public class SwitchMode : MonoBehaviour
           craft[i].PanelUIForCraft.SetActive(visible);
             if(CraftItemBuildNowDinamic != null & !visible)
             {
+                CraftItemBuildNowDinamic.Item.CheckOFToggle();
                 CraftItemBuildNowDinamic.gameObject.DestroyAPS();
                 CraftItemBuildNowDinamic.GetComponent<Indicator>()._targetSpriteOfPool.gameObject.SetActive(false);
-                CraftItemBuildNowDinamic.GetComponent<Indicator>()._blowUpYes.gameObject.SetActive(false);
+                if (CraftItemBuildNowDinamic.GetComponent<Indicator>()._blowUpYes.gameObject!=null)
+                {
+                    CraftItemBuildNowDinamic.GetComponent<Indicator>()._blowUpYes.gameObject.SetActive(false); 
+                }
             }
         }
 
@@ -143,19 +148,14 @@ public class SwitchMode : MonoBehaviour
       
     }
 
-    /// <summary>
-    /// Добавить что бы отнимала 
 
-    /// </summary>
-    /// <param name="_itemForbuild"></param>
-    /// <param name="c"></param>
     void CheckInpurChasingPower (List<ItemForbuild> _itemForbuild, CraftItem c)
     {
         int wood = 0;
         int metal = 0;
         int glass = 0;
         int electric = 0;
-        int interactive = 0;
+        
 
 
 
@@ -166,9 +166,10 @@ public class SwitchMode : MonoBehaviour
 
             if (_itemForbuild[i].NameMaterial.Equals("Woods"))
             {
-                if (_itemForbuild[i].CountMaterial <= int.Parse(CountWoods.text))
+                if (_itemForbuild[i].CountMaterial <= int.Parse(panelGoods[0].text))
                 {
                     wood = _itemForbuild[i].CountMaterial;
+                    continue;
                 }
                 else
                 {
@@ -181,9 +182,10 @@ public class SwitchMode : MonoBehaviour
             }
             if (_itemForbuild[i].NameMaterial.Equals("Metals"))
             {
-                if (_itemForbuild[i].CountMaterial <= int.Parse(CountMetals.text))
+                if (_itemForbuild[i].CountMaterial <= int.Parse(panelGoods[1].text))
                 {
                     metal = _itemForbuild[i].CountMaterial;
+                    continue;
                 }
                 else
                 {
@@ -193,9 +195,10 @@ public class SwitchMode : MonoBehaviour
             }
             if (_itemForbuild[i].NameMaterial.Equals("Glasses"))
             {
-                if (_itemForbuild[i].CountMaterial <= int.Parse(CountGlasses.text))
+                if (_itemForbuild[i].CountMaterial <= int.Parse(panelGoods[2].text))
                 {
                     glass = _itemForbuild[i].CountMaterial;
+                    continue;
                 }
                 else
                 {
@@ -205,9 +208,10 @@ public class SwitchMode : MonoBehaviour
             }
             if (_itemForbuild[i].NameMaterial.Equals("Electrics"))
             {
-                if (_itemForbuild[i].CountMaterial <= int.Parse(CountElectrics.text))
+                if (_itemForbuild[i].CountMaterial <= int.Parse(panelGoods[3].text))
                 {
                     electric = _itemForbuild[i].CountMaterial;
+                      continue;
                 }
                 else
                 {
@@ -230,10 +234,10 @@ public class SwitchMode : MonoBehaviour
 
 
         }
-        CountWoods.text = (int.Parse(CountWoods.text) - wood).ToString();
-        CountMetals.text = (int.Parse(CountMetals.text) - metal).ToString();
-        CountGlasses.text = (int.Parse(CountGlasses.text) - glass).ToString();
-        CountElectrics.text = (int.Parse(CountElectrics.text) - electric).ToString();
+        panelGoods[0].text = (int.Parse(panelGoods[0].text) - wood).ToString();
+        panelGoods[1].text = (int.Parse(panelGoods[1].text) - metal).ToString();
+        panelGoods[2].text = (int.Parse(panelGoods[2].text) - glass).ToString();
+        panelGoods[3].text = (int.Parse(panelGoods[3].text) - electric).ToString();
         c.BuildContruction(true);
         wood = 0;
         metal = 0;

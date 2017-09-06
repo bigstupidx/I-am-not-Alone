@@ -19,7 +19,7 @@ public class DbGame : MonoBehaviour
     private IDbCommand dbcmd;
     private IDataReader reader;
     CheckInScene checkIn;
-    CheckInWeapon checkInWeapon;
+    CheckInWeaponAndCraft checkInWeaponAndCraft;
     MainMenu mainmenu;
     string filepath;
 
@@ -101,7 +101,7 @@ public class DbGame : MonoBehaviour
     {
 
 
-        checkInWeapon = GetComponent<CheckInWeapon>();
+        checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>();
 
 
 
@@ -121,7 +121,47 @@ public class DbGame : MonoBehaviour
                     {
 
 
-                        checkInWeapon.WeaponBought.Add(new WeaponParams(reader.GetString(0), reader.GetInt32(1), reader.GetInt32(2)));
+                        checkInWeaponAndCraft.WeaponBought.Add(new ParamsDbBoughtWeaponAndCraftItem(reader.GetString(0), reader.GetInt32(1), reader.GetInt32(2)));
+
+
+                    }
+                    dbconnection.Close();
+                    reader.Close();
+                }
+
+
+            }
+
+        }
+
+
+
+    }
+    public void GetCraftItemBought ()
+    {
+
+
+        checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>();
+
+
+
+        using (IDbConnection dbconnection = new SqliteConnection(connection))
+        {
+            dbconnection.Open();
+            using (IDbCommand dcm = dbconnection.CreateCommand())
+            {
+
+
+                string sqlQuery = String.Format("SELECT NameCraft , LevelItem  FROM PlayerCraftItem");
+
+                dcm.CommandText = sqlQuery;
+                using (IDataReader reader = dcm.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+
+                        checkInWeaponAndCraft.CraftItemBought.Add(new ParamsDbBoughtWeaponAndCraftItem(reader.GetString(0), reader.GetInt32(1),0));
 
 
                     }
@@ -278,6 +318,57 @@ public class DbGame : MonoBehaviour
         }
 
     }
+    public void InsertDBCraft (string NameCraft, int level)
+    {
 
+
+
+
+        using (IDbConnection dbConnection = new SqliteConnection(connection))
+        {
+
+            dbConnection.Open();
+            using (IDbCommand dbCmd = dbConnection.CreateCommand())
+            {
+                string sqlQuery = String.Format("INSERT INTO PlayerCraftItem VALUES(\"{0}\",\"{1}\")", NameCraft, level);
+
+                dbCmd.CommandText = sqlQuery;
+                dbCmd.ExecuteScalar();
+                dbConnection.Close();
+
+
+
+            }
+
+
+        }
+
+    }
+    public void UpdateDBCraft (string NameCraft, int level)
+    {
+
+
+
+
+        using (IDbConnection dbConnection = new SqliteConnection(connection))
+        {
+
+            dbConnection.Open();
+            using (IDbCommand dbCmd = dbConnection.CreateCommand())
+            {
+                string sqlQuery = String.Format("UPDATE PlayerCraftItem SET   LevelItem =\"{1}\"  WHERE NameCraft =\"{0}\"", NameCraft, level);
+
+                dbCmd.CommandText = sqlQuery;
+                dbCmd.ExecuteScalar();
+                dbConnection.Close();
+
+
+
+            }
+
+
+        }
+
+    }
 }
 
