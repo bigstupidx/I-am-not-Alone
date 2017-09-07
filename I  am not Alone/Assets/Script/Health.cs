@@ -72,6 +72,7 @@ public class Health : MonoBehaviour
 
                 //   checkWeaponAndCraft.CreateBoxItem(transform.position,MakeMaterial);
                 checkWeaponAndCraft.CreateBoxInterActive(transform.position);
+                Destroy(gameObject);
 
             }
             if (transform.CompareTag("CraftMode"))
@@ -108,13 +109,13 @@ public class Health : MonoBehaviour
 
 
             }
-            else
-            {
+            //else
+            //{
 
-                poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
+            //    poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
 
-                Destroy(gameObject);
-            }
+            //    Destroy(gameObject);
+            //}
 
 
 

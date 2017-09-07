@@ -15,10 +15,10 @@ public class Indicator : MonoBehaviour
 
 
     Vector3 screenCenter = new Vector3(Screen.width, Screen.height, 0) * 0.5f;
-    [HideInInspector]
+   
     public Image _targetSpriteOfPool;
     public Image BlowUpYes;
-    [HideInInspector]
+ 
     public Image _blowUpYes;
     private Vector3 offScreen = new Vector3(-2000, -2000, -1200);
     GameObject player;

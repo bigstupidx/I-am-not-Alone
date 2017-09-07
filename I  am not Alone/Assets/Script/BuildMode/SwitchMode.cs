@@ -50,7 +50,9 @@ public class SwitchMode : MonoBehaviour
 
 
     public CraftItem CraftItemBuildNowDinamic;
- 
+    public Button buttonAction;
+    public bool openOrClosedDoor = false;
+    public Animator Door;
     private void Start ()
     {
 
@@ -107,6 +109,7 @@ public class SwitchMode : MonoBehaviour
         CheckInBuiltWalls(rog.isOn);
     }
 
+
    
     void CheckInBuiltWalls (bool visible)
     {
@@ -127,6 +130,18 @@ public class SwitchMode : MonoBehaviour
 
     }
 
+
+    public void DoorAnimator()
+    {
+        openOrClosedDoor =! openOrClosedDoor;
+        if (Door != null)
+        {
+            Door.SetBool("openOrClosed", openOrClosedDoor);
+
+        }
+
+
+    }
 
     public void ButtonCraftItemNow ()
     {

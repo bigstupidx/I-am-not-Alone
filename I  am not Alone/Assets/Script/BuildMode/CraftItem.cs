@@ -116,16 +116,19 @@ public class CraftItem : MonoBehaviour
             rend.enabled = true;
             rend.sharedMaterial = materials[0];
         }
-        indicator.IndicatorOffscreen(true, 0);
+       
         if (BuildStatic)
         {
+            indicator.IndicatorOffscreen(false, 0);
             buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject));
 
             gameObject.SetActive(false);
             transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
+         
         }
         else
         {
+            indicator.IndicatorOffscreen(true, 0);
             rigid.isKinematic = false;
         }
         Built = false;
@@ -146,9 +149,9 @@ public class CraftItem : MonoBehaviour
 
 
             }
-            Built = false;
+            Built = true;
             buildMode.craft.Remove(buildMode.craft.Find(obj => obj.ItemCraft.name == gameObject.name));
-            indicator.IndicatorOffscreen(false, 1);
+      
 
             if (!BuildStatic)
             {
@@ -159,9 +162,13 @@ public class CraftItem : MonoBehaviour
                 buildMode.CraftItemBuildNowDinamic = null;
                 rigid.isKinematic = true;
                 Item.CheckOFToggle();
+                indicator.IndicatorOffscreen(false, 1);
+                indicator.IndicatorOffscreen(true, 2);
             }
             else
             {
+                indicator.IndicatorOffscreen(false, 0);
+              
                 transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
             }
         }
@@ -190,6 +197,10 @@ public class CraftItem : MonoBehaviour
             {
 
                 BuildContruction(Built);
+                if (Built)
+                {
+                    buildMode.ButtonCraft.SetActive(false);
+                }
 
             }
             if (other.CompareTag("AI"))
