@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class CheckInWeaponAndCraft : MonoBehaviour
 {
     public bool ShopOrNot;
@@ -87,7 +87,8 @@ public class CheckInWeaponAndCraft : MonoBehaviour
             {
 
                 GameObject l = Instantiate(CraftGuiPrefab.Find((obj => obj.name.Equals(CraftItemBought[i].nameWeapon))), gridBuildMenu.position, gridBuildMenu.rotation, gridBuildMenu);
-
+                l.GetComponent<SelectContructionForCreate>().level.text = (CraftItemBought[i].levelWeapon).ToString();
+                l.GetComponent<Toggle>().group = gridBuildMenu.GetComponent<ToggleGroup>();
             }
         }
     }

@@ -16,20 +16,20 @@ public class ItemForbuild
     public string NameMaterial;
     public int CountMaterial;
 
-    public void Start()
+    public void Start ()
     {
-   
-        if (wood)  NameMaterial = "Woods"; 
-    
-        if (metal)  NameMaterial = "Metals"; 
-    
-        if (glass)  NameMaterial = "Glasses"; 
-     
-        if (electric)  NameMaterial = "Electrics"; 
-     
-        if (interactive)  NameMaterial = "Interactive"; 
 
-     
+        if (wood) NameMaterial = "Woods";
+
+        if (metal) NameMaterial = "Metals";
+
+        if (glass) NameMaterial = "Glasses";
+
+        if (electric) NameMaterial = "Electrics";
+
+        if (interactive) NameMaterial = "Interactive";
+
+
     }
 
 
@@ -48,6 +48,7 @@ public class CraftItem : MonoBehaviour
     public bool DamageObject;
     public bool hisEffect;
     public GameObject hisEffectPrefab;
+    public GameObject hisEffectPrefabPoolForDestroy;
     public bool mySelf;
     public bool BlowUpEffect;
     [Space(2)]
@@ -57,7 +58,8 @@ public class CraftItem : MonoBehaviour
     public LayerMask effectLayer;
     [Space(15)]
     public List<ItemForbuild> CountWoodForCreate = new List<ItemForbuild>();
-    public List<int> Level = new List<int>();
+    public List<int> LevelHealth = new List<int>();
+    public int level;
     public bool Built;
 
     public Material[] materials;
@@ -82,9 +84,13 @@ public class CraftItem : MonoBehaviour
         {
             CountWoodForCreate[i].Start();
         }
-          pool = PoolingSystem.Instance;
+        pool = PoolingSystem.Instance;
         rigid = GetComponent<Rigidbody>();
         health = GetComponent<Health>();
+        if (health == null)
+        {
+            health = transform.GetChild(0).GetComponent<Health>();
+        }
         indicator = GetComponent<Indicator>();
         MainCanvas = GameObject.Find("MainCanvas");
         pointForMenu = transform.Find("PointForMenu").transform;
@@ -93,17 +99,24 @@ public class CraftItem : MonoBehaviour
 
         DefaultOptions();
     }
-  
 
+    public void  DefaultForParticle ()
+    {
+        indicator.IndicatorOffscreen(false, 0);
+    }
     public void DefaultOptions ()
     {
+        if (!Interactive)
+        {
+            health.MaxHealth = health.CurHelth = LevelHealth[level];
+        }
         for (int i = 0; i < transform.GetChild(0).childCount; i++)
         {
             rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
             rend.enabled = true;
-
+            rend.sharedMaterial = materials[0];
         }
-        indicator.IndicatorOffscreen();
+        indicator.IndicatorOffscreen(true, 0);
         if (BuildStatic)
         {
             buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject));
@@ -131,25 +144,25 @@ public class CraftItem : MonoBehaviour
 
                 rend.sharedMaterial = materials[1];
 
-                Built = false;
-                buildMode.craft.Remove(buildMode.craft.Find(obj => obj.ItemCraft.name == gameObject.name));
-                indicator._targetSpriteOfPool.gameObject.SetActive(false);
 
-                if (!BuildStatic)
+            }
+            Built = false;
+            buildMode.craft.Remove(buildMode.craft.Find(obj => obj.ItemCraft.name == gameObject.name));
+            indicator.IndicatorOffscreen(false, 1);
+
+            if (!BuildStatic)
+            {
+                if (Interactive)
                 {
-                    if (Interactive)
-                    {
-                        Item.InterectiveChangeParamsOrDestroy();
-                    }
-                    buildMode.CraftItemBuildNowDinamic = null;
-                    Item.itemCreate = null;
-                    rigid.isKinematic = true;
-                    Item.CheckOFToggle();
+                    Item.InterectiveChangeParamsOrDestroy();
                 }
-                else
-                {
-                    transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
-                }
+                buildMode.CraftItemBuildNowDinamic = null;
+                rigid.isKinematic = true;
+                Item.CheckOFToggle();
+            }
+            else
+            {
+                transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
             }
         }
     }
@@ -233,17 +246,17 @@ public class CraftItem : MonoBehaviour
 
     public void His ()
     {
-        pool.InstantiateAPS(hisEffectPrefab.name, transform.position, transform.rotation);
+        hisEffectPrefabPoolForDestroy= pool.InstantiateAPS(hisEffectPrefab.name, transform.position, transform.rotation);
         _StartHisEffect = true;
-        indicator._blowUpYes.gameObject.SetActive(false);
+        indicator.IndicatorOffscreen(false, 0);
     }
 
     public void BlowUp ()
     {
         health.MySelfDestroyer();
-        //  other.GetComponent<Health>().HelthDamage(damage);
+
         AddExposionForce(transform.position);
-        indicator._blowUpYes.gameObject.SetActive(false);
+        indicator.IndicatorOffscreen(false, 0);
     }
 
     void AddExposionForce (Vector3 centre)
@@ -254,7 +267,7 @@ public class CraftItem : MonoBehaviour
             if (hit.GetComponent<Rigidbody>() != null)
             {
                 hit.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, centre, ExplosionRadios, 1, ForceMode.Impulse);
-                hit.GetComponent<Health>().HelthDamage(damage);
+
             }
         }
     }

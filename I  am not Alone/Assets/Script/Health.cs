@@ -36,7 +36,7 @@ public class Health : MonoBehaviour
         this.gameObject.DestroyAPS();
         _craftItem = GetComponent<CraftItem>();
         _craftItem.DefaultOptions();
-        CurHelth = 100;
+
     }
 
     public void HelthDamage (int damage)
@@ -79,7 +79,7 @@ public class Health : MonoBehaviour
 
                 _craftItem.DefaultOptions();
 
-                CurHelth = 100;
+     
                 poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
             }
             if (transform.CompareTag("AI"))
@@ -90,7 +90,7 @@ public class Health : MonoBehaviour
                 poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
                 this.gameObject.DestroyAPS();
                 _craftItem._StartHisEffect = false;
-                CurHelth = 100;
+          
 
 
             }
@@ -100,10 +100,11 @@ public class Health : MonoBehaviour
 
                 _craftItem = GetComponent<CraftItem>();
                 _craftItem.DefaultOptions();
+           
                 poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
                 this.gameObject.DestroyAPS();
                 _craftItem._StartHisEffect = false;
-                CurHelth = 100;
+              
 
 
             }

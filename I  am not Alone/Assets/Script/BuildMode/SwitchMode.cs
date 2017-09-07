@@ -119,11 +119,8 @@ public class SwitchMode : MonoBehaviour
             {
                 CraftItemBuildNowDinamic.Item.CheckOFToggle();
                 CraftItemBuildNowDinamic.gameObject.DestroyAPS();
-                CraftItemBuildNowDinamic.GetComponent<Indicator>()._targetSpriteOfPool.gameObject.SetActive(false);
-                if (CraftItemBuildNowDinamic.GetComponent<Indicator>()._blowUpYes.gameObject!=null)
-                {
-                    CraftItemBuildNowDinamic.GetComponent<Indicator>()._blowUpYes.gameObject.SetActive(false); 
-                }
+                CraftItemBuildNowDinamic.GetComponent<Indicator>().IndicatorOffscreen(false, 0);
+           
             }
         }
 

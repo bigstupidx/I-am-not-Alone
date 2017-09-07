@@ -20,8 +20,9 @@ public class SelectContructionForCreate : MonoBehaviour
     public Text NameDinamicCraftItem;
     Transform player;
     [HideInInspector]
-     public Transform counterText;
+    public Transform counterText;
     private Toggle toggle;
+    public Text level;
     // Use this for initialization
     void Start ()
     {
@@ -36,15 +37,16 @@ public class SelectContructionForCreate : MonoBehaviour
 
     public void InterectiveChangeParamsOrDestroy ()
     {
-        if (int.Parse(counterText.GetChild(0).GetComponent<Text>().text) == 0)
+        if (int.Parse(counterText.GetChild(0).GetComponent<Text>().text) <= 0)
         {
-       
+
             Destroy(this.gameObject);
         }
-    
+
     }
     public void CheckOFToggle ()
     {
+        itemCreate = null;
         toggle.isOn = false;
     }
 
@@ -54,10 +56,14 @@ public class SelectContructionForCreate : MonoBehaviour
         {
             if (itemCreate == null)
             {
-                itemCreate = pool.InstantiateAPS(NameDinamicCraftItem.text, new Vector3(player.position.x, player.position.y, player.position.z), player.rotation);
+                itemCreate = pool.InstantiateAPS(NameDinamicCraftItem.text, new Vector3(player.position.x + 0.6f, player.position.y, player.position.z), player.rotation);
                 switchMode.CraftItemBuildNowDinamic = itemCreate.GetComponent<CraftItem>();
+                if (!itemCreate.GetComponent<CraftItem>().Interactive)
+                {
+                    itemCreate.GetComponent<CraftItem>().level = int.Parse(level.text); 
+                }
                 itemCreate.GetComponent<CraftItem>().Item = gameObject.GetComponent<SelectContructionForCreate>();
-                itemCreate.GetComponent<Indicator>()._targetSpriteOfPool.gameObject.SetActive(true);
+                itemCreate.GetComponent<Indicator>().IndicatorOffscreen(true, 0);
             }
 
         }
@@ -66,11 +72,7 @@ public class SelectContructionForCreate : MonoBehaviour
             if (itemCreate != null)
             {
                 itemCreate.DestroyAPS();
-                itemCreate.GetComponent<Indicator>()._targetSpriteOfPool.gameObject.SetActive(false);
-                if (itemCreate.GetComponent<Indicator>()._blowUpYes!= null)
-                {
-                    itemCreate.GetComponent<Indicator>()._blowUpYes.gameObject.SetActive(false); 
-                }
+                itemCreate.GetComponent<Indicator>().IndicatorOffscreen(false, 0);
                 switchMode.craft.Remove(switchMode.craft.Find(obj => obj.ItemCraft.name == itemCreate.name));
                 itemCreate = null;
             }

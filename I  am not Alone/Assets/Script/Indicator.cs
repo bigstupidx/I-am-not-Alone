@@ -20,7 +20,7 @@ public class Indicator : MonoBehaviour
     public Image BlowUpYes;
     [HideInInspector]
     public Image _blowUpYes;
-    private Vector3 offScreen = new Vector3(-100, -100, 0);
+    private Vector3 offScreen = new Vector3(-2000, -2000, -1200);
     GameObject player;
     private Rect centerRect;
     private Canvas canvas;
@@ -37,16 +37,16 @@ public class Indicator : MonoBehaviour
         if (item.BlowUpEffect || item.hisEffect)
         {
             _blowUpYes = Instantiate(BlowUpYes, offScreen, Quaternion.Euler(new Vector3(0, 0, 0))) as Image;
-            _blowUpYes.rectTransform.parent = canvas.transform;
-            _blowUpYes.name = _blowUpYes + transform.name;
-            _blowUpYes.enabled = true;
+            _blowUpYes.rectTransform.parent = canvas.transform.GetChild(0);
+
+
         }
-        _targetSpriteOfPool.rectTransform.parent = canvas.transform;
-        _targetSpriteOfPool.name = _targetSpriteOfPool + transform.name;
+        _targetSpriteOfPool.rectTransform.parent = canvas.transform.GetChild(0);
+
 
         centerRect.width = 1280;
         centerRect.height = 800;
-        _targetSpriteOfPool.enabled = false;
+
 
         centerRect.position = new Vector2((screenCenter.x - centerRect.width / 2), screenCenter.y - centerRect.height / 2);
 
@@ -149,9 +149,36 @@ public class Indicator : MonoBehaviour
 
     }
 
-    public void IndicatorOffscreen ()
+    public void IndicatorOffscreen (bool visible, int i)
     {
-        _targetSpriteOfPool.rectTransform.position = offScreen;
+
+
+        if (i == 0)
+        {
+            //      _targetSpriteOfPool.rectTransform.position = offScreen;
+            _targetSpriteOfPool.gameObject.SetActive(visible);
+            if (BlowUpYes != null)
+            {
+                //   _blowUpYes.rectTransform.position = offScreen;
+                _blowUpYes.gameObject.SetActive(visible);
+            }
+        }
+        else if (i == 1)
+        {
+            _targetSpriteOfPool.gameObject.SetActive(visible);
+        }
+        else if (i == 2)
+        {
+            if (BlowUpYes != null)
+            {
+                //   _blowUpYes.rectTransform.position = offScreen;
+                _blowUpYes.gameObject.SetActive(visible);
+            }
+        }
     }
+
+
+
 }
+
 
