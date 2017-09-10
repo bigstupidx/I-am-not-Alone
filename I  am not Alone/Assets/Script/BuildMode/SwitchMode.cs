@@ -122,7 +122,7 @@ public class SwitchMode : MonoBehaviour
             {
                 CraftItemBuildNowDinamic.Item.CheckOFToggle();
                 CraftItemBuildNowDinamic.gameObject.DestroyAPS();
-                CraftItemBuildNowDinamic.GetComponent<Indicator>().IndicatorOffscreen(false, 0);
+                CraftItemBuildNowDinamic.GetComponent<Indicator>().IndicatorSetActive(false, 0);
            
             }
         }

@@ -100,9 +100,10 @@ public class CraftItem : MonoBehaviour
         DefaultOptions();
     }
 
+
     public void  DefaultForParticle ()
     {
-        indicator.IndicatorOffscreen(false, 0);
+        indicator.IndicatorSetActive(false, 0);
     }
     public void DefaultOptions ()
     {
@@ -116,10 +117,11 @@ public class CraftItem : MonoBehaviour
             rend.enabled = true;
             rend.sharedMaterial = materials[0];
         }
-       
+        indicator.IndicatorOffScreen();
+        indicator.IndicatorSetActive(true, 0);
         if (BuildStatic)
         {
-            indicator.IndicatorOffscreen(false, 0);
+           // indicator.IndicatorSetActive(true, 0);
             buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject));
 
             gameObject.SetActive(false);
@@ -128,7 +130,7 @@ public class CraftItem : MonoBehaviour
         }
         else
         {
-            indicator.IndicatorOffscreen(true, 0);
+           
             rigid.isKinematic = false;
         }
         Built = false;
@@ -162,12 +164,12 @@ public class CraftItem : MonoBehaviour
                 buildMode.CraftItemBuildNowDinamic = null;
                 rigid.isKinematic = true;
                 Item.CheckOFToggle();
-                indicator.IndicatorOffscreen(false, 1);
-                indicator.IndicatorOffscreen(true, 2);
+                indicator.IndicatorSetActive(false, 1);
+                indicator.IndicatorSetActive(true, 2);
             }
             else
             {
-                indicator.IndicatorOffscreen(false, 0);
+                indicator.IndicatorSetActive(false, 0);
               
                 transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
             }
@@ -259,7 +261,7 @@ public class CraftItem : MonoBehaviour
     {
         hisEffectPrefabPoolForDestroy= pool.InstantiateAPS(hisEffectPrefab.name, transform.position, transform.rotation);
         _StartHisEffect = true;
-        indicator.IndicatorOffscreen(false, 0);
+        indicator.IndicatorSetActive(false, 0);
     }
 
     public void BlowUp ()
@@ -267,7 +269,7 @@ public class CraftItem : MonoBehaviour
         health.MySelfDestroyer();
 
         AddExposionForce(transform.position);
-        indicator.IndicatorOffscreen(false, 0);
+        indicator.IndicatorSetActive(false, 0);
     }
 
     void AddExposionForce (Vector3 centre)

@@ -27,7 +27,7 @@ public class handWeapon : MonoBehaviour
     WeaponController _weaponController;
     Transform AdvancedPoolingSystem;
     // Use this for initialization
-    bool l;
+    public bool l;
 
     private void OnEnable ()
     {

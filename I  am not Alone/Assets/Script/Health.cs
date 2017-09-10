@@ -39,7 +39,7 @@ public class Health : MonoBehaviour
 
     }
 
-    public void HelthDamage (int damage)
+    public void HelthDamage (float damage)
     {
 
 

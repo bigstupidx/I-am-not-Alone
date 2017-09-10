@@ -148,8 +148,17 @@ public class Indicator : MonoBehaviour
 
 
     }
-
-    public void IndicatorOffscreen (bool visible, int i)
+    public void IndicatorOffScreen ()
+    {
+            _targetSpriteOfPool.rectTransform.position = offScreen;
+       // _targetSpriteOfPool.gameObject.SetActive(visible);
+        if (BlowUpYes != null)
+        {
+             _blowUpYes.rectTransform.position = offScreen;
+          //  _blowUpYes.gameObject.SetActive(visible);
+        }
+    }
+    public void IndicatorSetActive (bool visible, int i)
     {
 
 

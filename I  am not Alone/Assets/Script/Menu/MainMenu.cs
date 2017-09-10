@@ -9,10 +9,12 @@ public class MainMenu : MonoBehaviour
 
     public string sceneName;
     public Text myMoney;
-
+    public GameObject loadPanel;
     [HideInInspector]
     bool byeScene;
     DbGame db;
+    AsyncOperation async;
+    public Slider progressSlider;
     // Use this for initialization
     private void Start ()
     {
@@ -27,8 +29,8 @@ public class MainMenu : MonoBehaviour
     {
 
 
-        SceneManager.LoadScene(sceneName);
-
+        loadPanel.SetActive(true);
+        StartCoroutine(Load(sceneName));
 
     }
 
@@ -80,15 +82,43 @@ public class MainMenu : MonoBehaviour
 
     public void ButtonBackToMainMenu ()
     {
-        SceneManager.LoadSceneAsync(0);
 
+        loadPanel.SetActive(true);
+        StartCoroutine(Load("Menu"));
 
     }
     public void ButtonShop ()
     {
-        SceneManager.LoadSceneAsync(1);
+        loadPanel.SetActive(true);
+        StartCoroutine(Load("Shop"));
 
 
+    }
+    IEnumerator Load (string i)
+    {
+
+        async = SceneManager.LoadSceneAsync(i);
+        //async.allowSceneActivation = false;
+        while (!async.isDone)
+        {
+
+
+            //progressSlider.value = async.progress;
+
+
+            while (!async.isDone)
+            {
+                float progress = Mathf.Clamp01(async.progress / .9f);
+                progressSlider.value = progress;
+                //  if(progressSlider.value == 0.9f){
+                // progressSlider.value = 1.0f;
+                //  async.allowSceneActivation = true;
+                //}
+                yield return null;
+            }
+            //  
+
+        }
     }
 }
 
