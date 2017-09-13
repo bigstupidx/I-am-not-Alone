@@ -35,7 +35,7 @@ public class MyParticleCollision : MonoBehaviour
 
         }
 
-        if (other.tag == "CraftFromMenu")
+        if (other.tag == "WallCrash")
         {
 
 
@@ -47,11 +47,18 @@ public class MyParticleCollision : MonoBehaviour
 
             }
 
+        }
+        if (other.tag == "CraftFromMenu")
+        {
 
 
 
+            if (other.transform.root.name != transform.name)
+            {
+                other.GetComponent<Health>().HelthDamage(bulletDamage);
 
 
+            }
 
         }
         if (other.tag == "Things")

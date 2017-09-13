@@ -22,7 +22,7 @@ public class AutoLookonEnemy : MonoBehaviour
 
         if (enemy.Count == 0)
         {
-            weapon.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+       
             return;
         }
         if (enemy.Count == 1)
@@ -76,7 +76,7 @@ public class AutoLookonEnemy : MonoBehaviour
 
             c = 0;
 
-
+            weapon.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
 
         }
     }

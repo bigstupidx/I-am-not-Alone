@@ -11,6 +11,7 @@ public class Health : MonoBehaviour
 
     [Header("Woods,Metals,Glasses,Electrics,Interactive")]
     public int MakeMaterial;
+    public GameObject CraftItemStaticForWallCrash;
     public GameObject[] explosion;
 
     PoolingSystem poolsistem;
@@ -67,7 +68,7 @@ public class Health : MonoBehaviour
             }
             if (transform.CompareTag("Things"))
             {
-               
+
                 poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
 
                 //   checkWeaponAndCraft.CreateBoxItem(transform.position,MakeMaterial);
@@ -80,7 +81,7 @@ public class Health : MonoBehaviour
 
                 _craftItem.DefaultOptions();
 
-     
+
                 poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
             }
             if (transform.CompareTag("AI"))
@@ -91,21 +92,28 @@ public class Health : MonoBehaviour
                 poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
                 this.gameObject.DestroyAPS();
                 _craftItem._StartHisEffect = false;
-          
+
 
 
             }
+            if (transform.CompareTag("WallCrash"))
+            {
+                CraftItemStaticForWallCrash.SetActive(true);
+                Destroy(gameObject);
+         
 
+
+            }
             if (transform.CompareTag("CraftFromMenu"))
             {
 
                 _craftItem = GetComponent<CraftItem>();
                 _craftItem.DefaultOptions();
-           
+
                 poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
                 this.gameObject.DestroyAPS();
                 _craftItem._StartHisEffect = false;
-              
+
 
 
             }
