@@ -28,16 +28,21 @@ namespace UnityStandardAssets.Utility
 
             // We need to actually hit an object
             RaycastHit hit = new RaycastHit();
+           
             if (
                 !Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition).origin,
                                  mainCamera.ScreenPointToRay(Input.mousePosition).direction, out hit, 100,
                                  Physics.DefaultRaycastLayers))
             {
+                Debug.Log("!Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition).origin,mainCamera.ScreenPointToRay(Input.mousePosition).direction, out hit, 100,Physics.DefaultRaycastLayers");
                 return;
             }
             // We need to hit a rigidbody that is not kinematic
+            Debug.Log(hit.collider.name);
             if (!hit.rigidbody || hit.rigidbody.isKinematic)
             {
+                Debug.Log("!hit.rigidbody || hit.rigidbody.isKinematic");
+
                 return;
             }
            
@@ -50,6 +55,7 @@ namespace UnityStandardAssets.Utility
             }
 
             m_SpringJoint.transform.position = hit.point;
+        
             m_SpringJoint.anchor = Vector3.zero;
 
             m_SpringJoint.spring = k_Spring;
@@ -72,6 +78,7 @@ namespace UnityStandardAssets.Utility
             {
                 var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
                 m_SpringJoint.transform.position = ray.GetPoint(distance);
+                
                 yield return null;
             }
             if (m_SpringJoint.connectedBody)

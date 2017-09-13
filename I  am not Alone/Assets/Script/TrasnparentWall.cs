@@ -44,8 +44,11 @@ public class TrasnparentWall : MonoBehaviour
                 //Add to list and disable renderer
                 walls.Add(currentHit);
 
-                currentHit.GetComponent<Renderer>().material.SetFloat("_BodyAlpha", 0.1f);
-
+                // currentHit.GetComponent<Renderer>().material.SetFloat("_BodyAlpha", 0.1f);
+                if (currentHit.GetComponent<Renderer>())
+                {
+                    currentHit.GetComponent<Renderer>().enabled = false; 
+                }
 
             }
         }
@@ -70,8 +73,11 @@ public class TrasnparentWall : MonoBehaviour
                 //Enable renderer, remove from list, and decrement the counter because the list is one smaller now
                 Transform wasHidden = walls[i];
 
-                wasHidden.GetComponent<Renderer>().material.SetFloat("_BodyAlpha", 1f);
-
+                //  wasHidden.GetComponent<Renderer>().material.SetFloat("_BodyAlpha", 1f);
+                if (wasHidden.GetComponent<Renderer>())
+                {
+                    wasHidden.GetComponent<Renderer>().enabled = true; 
+                }
                 walls.RemoveAt(i);
                 i--;
             }
