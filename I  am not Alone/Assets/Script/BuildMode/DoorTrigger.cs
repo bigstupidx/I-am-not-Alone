@@ -1,19 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class DoorTrigger : MonoBehaviour
 {
     private SwitchMode buildMode;
     Animator animator;
-    public bool cantOpen = true;
+    public NavMeshObstacle obstacle;
     public CraftItem craftItem;
     // Use this for initialization
     void Start ()
     {
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
-        animator = GetComponent<Animator>();
-      
+        animator = transform.parent.GetComponent<Animator>();
+        obstacle =transform.parent.GetComponent<NavMeshObstacle>();
+
     }
 
     private void OnTriggerStay (Collider other)

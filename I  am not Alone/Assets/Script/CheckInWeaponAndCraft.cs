@@ -42,7 +42,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
 
             int i = Random.Range(0, WeaponBought.Count);
             GameObject box = pool.InstantiateAPS("BoxWithWeapon", new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), Quaternion.identity);
-            Debug.Log(WeaponBought[i].nameWeapon + " " + WeaponBought[i].category);
+      
             box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought[i].category;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought[i].nameWeapon;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought[i].levelWeapon;

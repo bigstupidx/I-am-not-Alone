@@ -27,4 +27,17 @@ public class SelectionWeaponForPC : MonoBehaviour {
 
         }
     }
+
+   public void Weapon1 ()
+    {
+        weaponController.SelectionWeapon(0);
+    }
+    public void Weapon2 ()
+    {
+        weaponController.SelectionWeapon(1);
+    }
+    public void Weapon3 ()
+    {
+        weaponController.SelectionWeapon(2);
+    }
 }

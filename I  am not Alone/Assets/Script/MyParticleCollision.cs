@@ -16,7 +16,7 @@ public class MyParticleCollision : MonoBehaviour
     {
 
 
-        if (other.tag == "CraftMode")
+        if (other.CompareTag("CraftMode"))
         {
 
 
@@ -35,7 +35,7 @@ public class MyParticleCollision : MonoBehaviour
 
         }
 
-        if (other.tag == "WallCrash")
+        if (other.CompareTag("WallCrash"))
         {
 
 
@@ -48,7 +48,7 @@ public class MyParticleCollision : MonoBehaviour
             }
 
         }
-        if (other.tag == "CraftFromMenu")
+        if (other.CompareTag("AI"))
         {
 
 
@@ -61,7 +61,20 @@ public class MyParticleCollision : MonoBehaviour
             }
 
         }
-        if (other.tag == "Things")
+        if (other.CompareTag("CraftFromMenu"))
+        {
+
+
+
+            if (other.transform.root.name != transform.name)
+            {
+                other.GetComponent<Health>().HelthDamage(bulletDamage);
+
+
+            }
+
+        }
+        if (other.CompareTag("Things"))
         {
 
 

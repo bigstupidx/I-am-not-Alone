@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class BetweenFloor : MonoBehaviour {
     public GameObject Floor;
+
+    public bool FloorCraft;
+    public SwitchMode switchMode;
     // Use this for initialization
     private void OnTriggerEnter (Collider other)
     {
         if (other.CompareTag("Player"))
         {
-
+            FloorCraft = true;
+            switchMode.CheckInBuiltWalls(true);
             Floor.SetActive(true);
+         
+         
 
         }
     }
@@ -18,7 +24,8 @@ public class BetweenFloor : MonoBehaviour {
     {
         if (other.CompareTag("Player"))
         {
-
+            FloorCraft = false;
+            switchMode.CheckInBuiltWalls(true);
             Floor.SetActive(false);
 
         }

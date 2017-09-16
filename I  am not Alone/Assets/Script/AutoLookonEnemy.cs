@@ -22,28 +22,43 @@ public class AutoLookonEnemy : MonoBehaviour
 
         if (enemy.Count == 0)
         {
-       
+            enemy.Clear();
             return;
         }
         if (enemy.Count == 1)
         {
-            weapon.transform.LookAt(enemy[c].transform.position);
+            if ((enemy[c].gameObject))
+            {
+                weapon.transform.LookAt(enemy[c].transform.position);
+            }
+            else { enemy.Clear(); }
         }
         else
         {
-            MinDistance = Vector2.Distance(transform.root.position, enemy[c].transform.position);
+            if ((enemy[c].gameObject))
+            {
+                MinDistance = Vector2.Distance(transform.root.position, enemy[c].transform.position);
+            }
+            else { enemy.Clear(); }
             for (int i = 0; i < enemy.Count; i++)
             {
-                float newDistance = Vector2.Distance(transform.root.position, enemy[i].transform.position);
-                if (newDistance <= MinDistance)
+                if (enemy[i].gameObject)
                 {
-                    MinDistance = newDistance;
-                    c = i;
-                    weapon.transform.LookAt(enemy[i].transform.position);
+                    float newDistance = Vector2.Distance(transform.root.position, enemy[i].transform.position);
+                    if (newDistance <= MinDistance)
+                    {
+                        MinDistance = newDistance;
+                        c = i;
+                        weapon.transform.LookAt(enemy[i].transform.position);
 
 
 
 
+                    }
+                }
+                else
+                {
+                    enemy.Clear();
                 }
             }
         }
@@ -61,6 +76,7 @@ public class AutoLookonEnemy : MonoBehaviour
             }
             else
             {
+                enemy.Clear();
                 enemy.Add(other.gameObject);
             }
 

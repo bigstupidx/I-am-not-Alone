@@ -87,13 +87,14 @@ public class Health : MonoBehaviour
             if (transform.CompareTag("AI"))
             {
 
-                _craftItem = GetComponent<CraftItem>();
-                _craftItem.DefaultOptions();
-                poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
-                this.gameObject.DestroyAPS();
-                _craftItem._StartHisEffect = false;
-
-
+                //_craftItem = GetComponent<CraftItem>();
+                //_craftItem.DefaultOptions();
+               poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
+                //this.gameObject.DestroyAPS();
+                //_craftItem._StartHisEffect = false;
+                checkWeaponAndCraft.CreateBoxItem(transform.position, MakeMaterial);
+               // checkWeaponAndCraft.CreateBoxInterActive(transform.position);
+                Destroy(gameObject);
 
             }
             if (transform.CompareTag("WallCrash"))

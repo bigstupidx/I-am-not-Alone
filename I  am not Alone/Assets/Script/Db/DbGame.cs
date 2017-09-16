@@ -35,10 +35,10 @@ public class DbGame : MonoBehaviour
 
 
 
-       filepath = Application.dataPath + "/" + p;
+      filepath = Application.dataPath + "/" + p;
 
 
-     // filepath = Application.persistentDataPath + "/" + p;
+   //  filepath = Application.persistentDataPath + "/" + p;
 
 
         //  }

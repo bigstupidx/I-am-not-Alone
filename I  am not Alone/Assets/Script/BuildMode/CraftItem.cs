@@ -61,7 +61,7 @@ public class CraftItem : MonoBehaviour
     public List<int> LevelHealth = new List<int>();
     public int level;
     public bool Built;
-
+    public int Floor;
     public Material[] materials;
     [HideInInspector]
     public Transform pointForMenu;
@@ -122,7 +122,7 @@ public class CraftItem : MonoBehaviour
         if (BuildStatic)
         {
            // indicator.IndicatorSetActive(true, 0);
-            buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject));
+            buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject,Floor));
 
             gameObject.SetActive(false);
             transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
@@ -277,6 +277,11 @@ public class CraftItem : MonoBehaviour
         Collider[] thingsHit = UnityEngine.Physics.OverlapSphere(transform.position, ExplosionRadios, effectLayer);
         foreach (Collider hit in thingsHit)
         {
+            if(hit.GetComponent<Health>() != null)
+            {
+                hit.GetComponent<Health>().HelthDamage(damage);
+
+            }
             if (hit.GetComponent<Rigidbody>() != null)
             {
                 hit.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, centre, ExplosionRadios, 1, ForceMode.Impulse);

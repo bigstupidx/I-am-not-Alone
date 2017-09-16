@@ -34,14 +34,13 @@ namespace UnityStandardAssets.Utility
                                  mainCamera.ScreenPointToRay(Input.mousePosition).direction, out hit, 100,
                                  Physics.DefaultRaycastLayers))
             {
-                Debug.Log("!Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition).origin,mainCamera.ScreenPointToRay(Input.mousePosition).direction, out hit, 100,Physics.DefaultRaycastLayers");
-                return;
+               return;
             }
             // We need to hit a rigidbody that is not kinematic
-            Debug.Log(hit.collider.name);
+      
             if (!hit.rigidbody || hit.rigidbody.isKinematic)
             {
-                Debug.Log("!hit.rigidbody || hit.rigidbody.isKinematic");
+              
 
                 return;
             }

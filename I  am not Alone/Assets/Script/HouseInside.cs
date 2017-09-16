@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HouseInside : MonoBehaviour {
+public class HouseInside : MonoBehaviour
+{
 
     public GameObject TwoFloour;
     public GameObject Roof;
-	// Use this for initialization
-	void Start () {
-		
-	}
+    // Use this for initialization
+    void Start ()
+    {
+
+    }
     private void OnTriggerEnter (Collider other)
     {
         if (other.CompareTag("Player"))
@@ -24,7 +26,11 @@ public class HouseInside : MonoBehaviour {
         if (other.CompareTag("Player"))
         {
             Roof.SetActive(true);
+
             TwoFloour.SetActive(true);
+
+
+
 
         }
     }

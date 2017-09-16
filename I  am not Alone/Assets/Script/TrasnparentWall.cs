@@ -42,12 +42,17 @@ public class TrasnparentWall : MonoBehaviour
             if (!walls.Contains(currentHit))
             {
                 //Add to list and disable renderer
-                walls.Add(currentHit);
+
 
                 // currentHit.GetComponent<Renderer>().material.SetFloat("_BodyAlpha", 0.1f);
-                if (currentHit.GetComponent<Renderer>())
+
+                if (!currentHit.CompareTag("Floor"))
                 {
-                    currentHit.GetComponent<Renderer>().enabled = false; 
+                    if (currentHit.GetComponent<Renderer>())
+                    {
+                        walls.Add(currentHit);
+                        currentHit.GetComponent<Renderer>().enabled = false;
+                    } 
                 }
 
             }
@@ -76,9 +81,10 @@ public class TrasnparentWall : MonoBehaviour
                 //  wasHidden.GetComponent<Renderer>().material.SetFloat("_BodyAlpha", 1f);
                 if (wasHidden.GetComponent<Renderer>())
                 {
-                    wasHidden.GetComponent<Renderer>().enabled = true; 
+                    wasHidden.GetComponent<Renderer>().enabled = true;
+                    walls.RemoveAt(i);
                 }
-                walls.RemoveAt(i);
+        
                 i--;
             }
         }

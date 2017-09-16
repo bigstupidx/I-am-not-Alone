@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 [System.Serializable]
-public class CraftParams {
+public class CraftParams
+{
 
     public GameObject ItemCraft;
     public GameObject PanelUIForCraft;
-
-    public CraftParams(GameObject item, GameObject panel)
+    public int Floor;
+    public CraftParams (GameObject item, GameObject panel, int floor)
     {
         this.ItemCraft = item;
         this.PanelUIForCraft = panel;
-
+        Floor = floor;
     }
 
 
@@ -35,7 +36,7 @@ public class SwitchMode : MonoBehaviour
     [Header("panelGoods")]
     public List<Text> panelGoods = new List<Text>();
 
-        
+
 
 
 
@@ -53,12 +54,13 @@ public class SwitchMode : MonoBehaviour
     public Button buttonAction;
     public bool openOrClosedDoor = false;
     public Animator Door;
+    public BetweenFloor betweenFloor;
     private void Start ()
     {
 
         ButtonCraft.SetActive(false);
         l = false;
-       
+
     }
     // Update is called once per frame
     void Update ()
@@ -110,30 +112,96 @@ public class SwitchMode : MonoBehaviour
     }
 
 
-   
-    void CheckInBuiltWalls (bool visible)
+
+    public void CheckInBuiltWalls (bool visible)
     {
 
-        for (int i = 0; i < craft.Count; i++)
+        if (l)
         {
-            craft[i].ItemCraft.SetActive(visible);
-          craft[i].PanelUIForCraft.SetActive(visible);
-            if(CraftItemBuildNowDinamic != null & !visible)
+            for (int i = 0; i < craft.Count; i++)
+            {
+                if (craft[i].Floor == 2 & betweenFloor.FloorCraft)
+                {
+                    craft[i].ItemCraft.SetActive(visible);
+                    craft[i].PanelUIForCraft.SetActive(visible);
+                }
+                else
+                {
+                    if (craft[i].Floor == 1 & betweenFloor.FloorCraft)
+                    {
+                        craft[i].ItemCraft.SetActive(false);
+                        craft[i].PanelUIForCraft.SetActive(false);
+                    }
+
+                }
+
+                if (craft[i].Floor == 1 & !betweenFloor.FloorCraft)
+                {
+                    craft[i].ItemCraft.SetActive(visible);
+                    craft[i].PanelUIForCraft.SetActive(visible);
+                }
+                else
+                {
+                    if (craft[i].Floor == 2 & !betweenFloor.FloorCraft)
+                    {
+                        craft[i].ItemCraft.SetActive(false);
+                        craft[i].PanelUIForCraft.SetActive(false);
+                    }
+                }
+
+
+
+
+
+
+
+
+                if (CraftItemBuildNowDinamic != null & !visible)
+                {
+                    CraftItemBuildNowDinamic.Item.CheckOFToggle();
+                    CraftItemBuildNowDinamic.gameObject.DestroyAPS();
+                    CraftItemBuildNowDinamic.GetComponent<Indicator>().IndicatorSetActive(false, 0);
+
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < craft.Count; i++)
+            {
+
+                craft[i].ItemCraft.SetActive(false);
+                craft[i].PanelUIForCraft.SetActive(false);
+
+
+            }
+
+
+
+
+
+
+
+
+
+            if (CraftItemBuildNowDinamic != null & !visible)
             {
                 CraftItemBuildNowDinamic.Item.CheckOFToggle();
                 CraftItemBuildNowDinamic.gameObject.DestroyAPS();
                 CraftItemBuildNowDinamic.GetComponent<Indicator>().IndicatorSetActive(false, 0);
-           
+
             }
         }
+
 
 
     }
 
 
-    public void DoorAnimator()
+    public void DoorAnimator ()
     {
-        openOrClosedDoor =! openOrClosedDoor;
+        openOrClosedDoor = !openOrClosedDoor;
+        Door.transform.GetChild(0).GetComponent<DoorTrigger>().obstacle.enabled = openOrClosedDoor;
         if (Door != null)
         {
             Door.SetBool("openOrClosed", openOrClosedDoor);
@@ -145,19 +213,19 @@ public class SwitchMode : MonoBehaviour
 
     public void ButtonCraftItemNow ()
     {
-   
+
         CheckInpurChasingPower(CraftItemBuildNowStatic.CountWoodForCreate, CraftItemBuildNowStatic);
-      
-    
+
+
     }
 
 
     public void ButtonYes ()
     {
-    
+
         CheckInpurChasingPower(CraftItemBuildNowDinamic.CountWoodForCreate, CraftItemBuildNowDinamic);
-     
-      
+
+
     }
 
 
@@ -167,7 +235,7 @@ public class SwitchMode : MonoBehaviour
         int metal = 0;
         int glass = 0;
         int electric = 0;
-        
+
 
 
 
@@ -185,8 +253,8 @@ public class SwitchMode : MonoBehaviour
                 }
                 else
                 {
-                
-                    return ;
+
+                    return;
                 }
 
 
@@ -201,7 +269,7 @@ public class SwitchMode : MonoBehaviour
                 }
                 else
                 {
-                    return ;
+                    return;
                 }
 
             }
@@ -214,7 +282,7 @@ public class SwitchMode : MonoBehaviour
                 }
                 else
                 {
-                    return ;
+                    return;
                 }
 
             }
@@ -223,11 +291,11 @@ public class SwitchMode : MonoBehaviour
                 if (_itemForbuild[i].CountMaterial <= int.Parse(panelGoods[3].text))
                 {
                     electric = _itemForbuild[i].CountMaterial;
-                      continue;
+                    continue;
                 }
                 else
                 {
-                    return ;
+                    return;
                 }
 
             }
