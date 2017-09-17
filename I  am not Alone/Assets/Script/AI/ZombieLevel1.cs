@@ -39,7 +39,14 @@ public class ZombieLevel1 : MonoBehaviour
                     hit.transform.GetComponent<Health>().HelthDamage(damage);
 
 
-                } 
+                }
+                if (hit.transform.CompareTag("Player"))
+
+                {
+                    hit.transform.GetComponent<Health>().HelthDamage(damage);
+
+
+                }
             }
 
         }

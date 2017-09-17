@@ -77,6 +77,7 @@ public class CraftItem : MonoBehaviour
     PoolingSystem pool;
     [HideInInspector]
     public bool _StartHisEffect = false;
+    public bool ground;
     // Use this for initialization
     void Start ()
     {
@@ -123,7 +124,7 @@ public class CraftItem : MonoBehaviour
         {
            // indicator.IndicatorSetActive(true, 0);
             buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject,Floor));
-
+            ground = false;
             gameObject.SetActive(false);
             transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
          
@@ -142,36 +143,39 @@ public class CraftItem : MonoBehaviour
     {
         if (b)
         {
-            for (int i = 0; i < transform.GetChild(0).childCount; i++)
+            if (ground)
             {
-                rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
-
-
-                rend.sharedMaterial = materials[1];
-
-
-            }
-            Built = true;
-            buildMode.craft.Remove(buildMode.craft.Find(obj => obj.ItemCraft.name == gameObject.name));
-      
-
-            if (!BuildStatic)
-            {
-                if (Interactive)
+                for (int i = 0; i < transform.GetChild(0).childCount; i++)
                 {
-                    Item.InterectiveChangeParamsOrDestroy();
+                    rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
+
+
+                    rend.sharedMaterial = materials[1];
+
+
                 }
-                buildMode.CraftItemBuildNowDinamic = null;
-                rigid.isKinematic = true;
-                Item.CheckOFToggle();
-                indicator.IndicatorSetActive(false, 1);
-                indicator.IndicatorSetActive(true, 2);
-            }
-            else
-            {
-                indicator.IndicatorSetActive(false, 0);
-              
-                transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+                Built = true;
+                buildMode.craft.Remove(buildMode.craft.Find(obj => obj.ItemCraft.name == gameObject.name));
+
+
+                if (!BuildStatic)
+                {
+                    if (Interactive)
+                    {
+                        Item.InterectiveChangeParamsOrDestroy();
+                    }
+                    buildMode.CraftItemBuildNowDinamic = null;
+                    rigid.isKinematic = true;
+                    Item.CheckOFToggle();
+                    indicator.IndicatorSetActive(false, 1);
+                    indicator.IndicatorSetActive(true, 2);
+                }
+                else
+                {
+                    indicator.IndicatorSetActive(false, 0);
+
+                    transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+                } 
             }
         }
     }
@@ -288,5 +292,14 @@ public class CraftItem : MonoBehaviour
 
             }
         }
+    }
+
+    private void OnCollisionEnter (Collision collision)
+    {
+        ground = true;
+    }
+    private void OnCollisionExit (Collision collision)
+    {
+        ground = false;
     }
 }

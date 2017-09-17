@@ -45,12 +45,7 @@ public class Health : MonoBehaviour
 
 
         CurHelth -= damage;
-        if (transform.CompareTag("Player"))
-        {
-
-            //     shipguiController.Healthometer.fillAmount = CurHelth / MaxHealth;
-
-        }
+    
         if (CurHelth > MaxHealth)
         {
             CurHelth = MaxHealth;
@@ -62,7 +57,7 @@ public class Health : MonoBehaviour
 
             if (transform.CompareTag("Player"))
             {
-
+                Debug.Log("умер");
                 //     shipguiController.Healthometer.fillAmount = CurHelth / MaxHealth;
 
             }
