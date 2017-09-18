@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 public class ZombieLevel1 : MonoBehaviour
 {
-    NavMeshAgent agent;
+    public NavMeshAgent agent;
     NavMeshObstacle obstacle;
     Transform player;
     public bool ThingsDamage;
@@ -50,7 +50,7 @@ public class ZombieLevel1 : MonoBehaviour
             }
 
         }
-    
+
 
         if ((player.transform.position - transform.position).sqrMagnitude < Mathf.Pow(agent.stoppingDistance, 2))
         {
