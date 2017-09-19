@@ -77,7 +77,8 @@ public class CraftItem : MonoBehaviour
     PoolingSystem pool;
     [HideInInspector]
     public bool _StartHisEffect = false;
-    public bool ground;
+    bool ground;
+    public GameObject[] NavmeshLinkWindow;
     // Use this for initialization
     void Start ()
     {
@@ -102,7 +103,7 @@ public class CraftItem : MonoBehaviour
     }
 
 
-    public void  DefaultForParticle ()
+    public void DefaultForParticle ()
     {
         indicator.IndicatorSetActive(false, 0);
     }
@@ -122,16 +123,22 @@ public class CraftItem : MonoBehaviour
         indicator.IndicatorSetActive(true, 0);
         if (BuildStatic)
         {
-           // indicator.IndicatorSetActive(true, 0);
-            buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject,Floor));
-            ground = false;
+            // indicator.IndicatorSetActive(true, 0);
+            buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject, Floor));
+            ground = true;
             gameObject.SetActive(false);
             transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
-         
+            if (NavmeshLinkWindow.Length != 0)
+            {
+                for (int i = 0; i < NavmeshLinkWindow.Length; i++)
+                {
+                    NavmeshLinkWindow[i].SetActive(true);
+                } 
+            }
         }
         else
         {
-           
+
             rigid.isKinematic = false;
         }
         Built = false;
@@ -173,9 +180,15 @@ public class CraftItem : MonoBehaviour
                 else
                 {
                     indicator.IndicatorSetActive(false, 0);
-
+                    if (NavmeshLinkWindow.Length != 0)
+                    {
+                        for (int i = 0; i < NavmeshLinkWindow.Length; i++)
+                        {
+                            NavmeshLinkWindow[i].SetActive(false);
+                        } 
+                    }
                     transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
-                } 
+                }
             }
         }
     }
@@ -263,7 +276,7 @@ public class CraftItem : MonoBehaviour
 
     public void His ()
     {
-        hisEffectPrefabPoolForDestroy= pool.InstantiateAPS(hisEffectPrefab.name, transform.position, transform.rotation);
+        hisEffectPrefabPoolForDestroy = pool.InstantiateAPS(hisEffectPrefab.name, transform.position, transform.rotation);
         _StartHisEffect = true;
         indicator.IndicatorSetActive(false, 0);
     }
@@ -281,7 +294,7 @@ public class CraftItem : MonoBehaviour
         Collider[] thingsHit = UnityEngine.Physics.OverlapSphere(transform.position, ExplosionRadios, effectLayer);
         foreach (Collider hit in thingsHit)
         {
-            if(hit.GetComponent<Health>() != null)
+            if (hit.GetComponent<Health>() != null)
             {
                 hit.GetComponent<Health>().HelthDamage(damage);
 

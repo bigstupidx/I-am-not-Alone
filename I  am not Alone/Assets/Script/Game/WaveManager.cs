@@ -13,7 +13,7 @@ public class Wave
     public GameObject[] ZombiePref;
 
 }
-
+[System.Serializable]
 public class WaveParams
 {
 
@@ -41,8 +41,11 @@ public class WaveManager : MonoBehaviour
 
     [Space(5)]
     public List<Wave> wave = new List<Wave>();
+    [Space(5)]
+
     private List<SpawnerZombie> spawerZombie = new List<SpawnerZombie>();
     private List<WaveParams> waveParams = new List<WaveParams>();
+    private List<WaveParams> waveParamsHard = new List<WaveParams>();
     [Space(5)]
     float NightTime;
     public LSkyTOD _lskyTod;
@@ -53,10 +56,14 @@ public class WaveManager : MonoBehaviour
     bool day;
     bool night;
     bool startWave;
+    public bool harfMode = false;
+    SwitchMode switchMode;
+     GameObject[] lightAllScene;
     // Use this for initialization
     void Start ()
     {
-
+        lightAllScene = GameObject.FindGameObjectsWithTag("LightInscene");
+        switchMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
         for (int i = 0; i < transform.childCount; i++)
         {
 
@@ -69,7 +76,9 @@ public class WaveManager : MonoBehaviour
         day = true;
         startWave = true;
         SkyParamsWave();
-        GenerateParamsWave(levelWave);
+
+        switchMode.BuildMOdeMenu(true);
+        GenerateParamsWaveForHardMode(wave.Count - 1);
     }
 
     public void SkyParamsWave ()
@@ -86,8 +95,13 @@ public class WaveManager : MonoBehaviour
                 _lskyTod.dayInSeconds = wave[levelWave].Night * 2;
                 night = false;
                 startWave = true;
+                switchMode.BuildMOdeMenu(false);
+                for (int i = 0; i < lightAllScene.Length; i++)
+                {
+                    lightAllScene[i].GetComponent<Light>().enabled = true; 
+                }
             }
-          
+
         }
 
 
@@ -95,9 +109,25 @@ public class WaveManager : MonoBehaviour
         {
             if (day)
             {
+                for (int i = 0; i < lightAllScene.Length; i++)
+                {
+                    lightAllScene[i].GetComponent<Light>().enabled = false;
+                }
                 if (waveLevelUp)
                 {
-                    levelWave++;
+
+                    if (!harfMode)
+                    {
+                        levelWave++;
+                    }
+
+                    if (levelWave > wave.Count - 1)
+                    {
+
+                        harfMode = true;
+                        levelWave = Random.Range(0, wave.Count - 1);
+                    }
+                    switchMode.BuildMOdeMenu(true);
                     waveLevelUp = false;
                 }
                 night = true;
@@ -108,14 +138,14 @@ public class WaveManager : MonoBehaviour
             {
                 if (startWave)
                 {
-                    Debug.Log(_lskyTod.CurrentHour);
+
                     waveParams.Clear();
                     GenerateParamsWave(levelWave);
                     startWave = false;
                 }
             }
         }
-     
+
 
 
     }
@@ -127,6 +157,7 @@ public class WaveManager : MonoBehaviour
         SkyParamsWave();
 
         CreatePrefab(levelWave);
+        HardModeCreatePreafab(wave.Count - 1);
     }
 
     void GenerateParamsWave (int w)
@@ -138,13 +169,35 @@ public class WaveManager : MonoBehaviour
             {
 
 
-                waveParams.Add(new WaveParams((wave[w].Night - 20) / wave[w].countZombie[i]));
+                waveParams.Add(new WaveParams((wave[w].Night) / wave[w].countZombie[i]));
 
 
             }
-            Debug.Log(w);
 
-            NightTime = wave[w].Night - 20f;
+
+
+
+
+
+
+        }
+    }
+    void GenerateParamsWaveForHardMode (int w)
+    {
+
+        {
+
+            for (int i = 0; i < wave[w].ZombiePref.Length; i++)
+            {
+
+
+                waveParamsHard.Add(new WaveParams((wave[w].Night) / wave[w].countZombie[i]));
+
+
+            }
+
+
+
 
 
 
@@ -155,23 +208,52 @@ public class WaveManager : MonoBehaviour
     {
         if (_lsky.IsNight)
         {
-            Debug.Log(w);
-            NightTime -= Time.deltaTime;
-            //  if (timersecond <= NightTime)
-            if (NightTime > 0)
+
+            for (int i = 0; i < waveParams.Count; i++)
             {
-                for (int i = 0; i < waveParams.Count; i++)
+
+                waveParams[i].TimerCreate -= Time.deltaTime;
+
+                if (waveParams[i].TimerCreate <= 0)
+                {
+                    int li = Random.Range(0, spawerZombie.Count);
+
+                    spawerZombie[li].CreateZombie(wave[w].ZombiePref[i].gameObject);
+
+                    waveParams[i].TimerCreate = waveParams[i].InstantiationTimer;
+
+                }
+                else
+                {
+                    continue;
+                }
+
+
+
+            }
+        }
+
+    }
+    void HardModeCreatePreafab (int w)
+    {
+        if (harfMode)
+        {
+            if (_lsky.IsNight)
+            {
+
+
+                for (int i = 0; i < waveParamsHard.Count; i++)
                 {
 
-                    waveParams[i].TimerCreate -= Time.deltaTime;
+                    waveParamsHard[i].TimerCreate -= Time.deltaTime;
 
-                    if (waveParams[i].TimerCreate <= 0)
+                    if (waveParamsHard[i].TimerCreate <= 0)
                     {
                         int li = Random.Range(0, spawerZombie.Count);
 
                         spawerZombie[li].CreateZombie(wave[w].ZombiePref[i].gameObject);
 
-                        waveParams[i].TimerCreate = waveParams[i].InstantiationTimer;
+                        waveParamsHard[i].TimerCreate = waveParamsHard[i].InstantiationTimer;
 
                     }
                     else
@@ -180,10 +262,11 @@ public class WaveManager : MonoBehaviour
                     }
 
 
+
                 }
             }
         }
-        
+
     }
 }
 

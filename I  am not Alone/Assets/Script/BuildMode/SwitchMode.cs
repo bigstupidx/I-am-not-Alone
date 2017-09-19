@@ -66,33 +66,13 @@ public class SwitchMode : MonoBehaviour
     void Update ()
     {
 
-        if (Input.GetButtonDown("Build"))
-        {
-            l = !l;
-            if (l)
-            {
 
-                BuildMode.SetActive(true);
-                PlayerMode.SetActive(false);
-                Hand.SetActive(false);
-                HandWeapon.SetActive(false);
-            }
-            else
-            {
-
-                BuildMode.SetActive(false);
-                PlayerMode.SetActive(true);
-                Hand.SetActive(true);
-                HandWeapon.SetActive(true);
-            }
-            CheckInBuiltWalls(l);
-        }
 
     }
 
-    public void BuildMOdeMenu (Toggle rog)
+    public void BuildMOdeMenu (bool rog)
     {
-        if (rog.isOn)
+        if (rog)
         {
 
             BuildMode.SetActive(true);
@@ -108,7 +88,8 @@ public class SwitchMode : MonoBehaviour
             Hand.SetActive(true);
             HandWeapon.SetActive(true);
         }
-        CheckInBuiltWalls(rog.isOn);
+        l = rog;
+        CheckInBuiltWalls(rog);
     }
 
 
