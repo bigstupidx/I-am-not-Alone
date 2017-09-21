@@ -8,9 +8,9 @@ public class UpdateWeapon
 {
     public float intervalWeaponAmmunition = 1;
 
-    public int damage;
+    public float damage;
 
-    public UpdateWeapon (float intervalAmuni, int _damage)
+    public UpdateWeapon (float intervalAmuni, float _damage)
     {
 
         this.intervalWeaponAmmunition = intervalAmuni;

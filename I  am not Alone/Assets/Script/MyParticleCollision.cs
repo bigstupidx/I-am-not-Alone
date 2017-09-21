@@ -5,7 +5,7 @@ using UnityEngine;
 public class MyParticleCollision : MonoBehaviour
 {
     private ParticleCollisionEvent[] collisionEvents = new ParticleCollisionEvent[16];
-    public int bulletDamage;
+    public float bulletDamage;
     PoolingSystem pool;
     // Use this for initialization
     void Start ()
@@ -52,7 +52,7 @@ public class MyParticleCollision : MonoBehaviour
         if (other.CompareTag("AI"))
         {
 
-
+            Debug.Log(true);
             pool.InstantiateAPS("BloodSprayEffect", other.transform.position, Quaternion.identity);
             if (other.transform.root.name != transform.name)
             {

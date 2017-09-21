@@ -112,6 +112,7 @@ public class CraftItem : MonoBehaviour
     {
         if (!Interactive)
         {
+            ground = true;
             health.MaxHealth = health.CurHelth = LevelHealth[level];
         }
         for (int i = 0; i < transform.GetChild(0).childCount; i++)
