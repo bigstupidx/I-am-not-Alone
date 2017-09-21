@@ -18,6 +18,13 @@ public class Health : MonoBehaviour
     SwitchMode buildMode;
     CraftItem _craftItem;
     CheckInWeaponAndCraft checkWeaponAndCraft;
+
+    [Space(15)]
+    [Header("For Ai")]
+    public bool WeaponBox;
+    public bool MaterialBox;
+    public bool InterectiveBox;
+    public bool OrRandom;
     public int  MoneyAi;
     private void Start ()
     {
@@ -89,8 +96,41 @@ public class Health : MonoBehaviour
                 //this.gameObject.DestroyAPS();
                 //_craftItem._StartHisEffect = false;
                 checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + MoneyAi).ToString();
-                checkWeaponAndCraft.CreateBoxItem(transform.position, MakeMaterial);
-               // checkWeaponAndCraft.CreateBoxInterActive(transform.position);
+                int r = Random.Range(0, 2);
+                if (r==1)
+                {
+                    if (OrRandom)
+                    {
+                        int i = Random.Range(0, 2);
+                        int l = Random.Range(0, 5);
+                        Debug.Log(l);
+                        MakeMaterial = l;
+                        if (i == 0)
+                        {
+                            checkWeaponAndCraft.CreateBoxItem(transform.position, MakeMaterial);
+                        }
+                        else
+                        {
+                            checkWeaponAndCraft.CreateBoxWeapon(transform.position);
+                        }
+                    }
+                    else
+                    {
+                        if (MaterialBox)
+                        {
+                            checkWeaponAndCraft.CreateBoxItem(transform.position, MakeMaterial);
+                        }
+                        if (WeaponBox)
+                        {
+                            checkWeaponAndCraft.CreateBoxWeapon(transform.position);
+                        }
+                    }
+                    if (InterectiveBox)
+                    {
+                        checkWeaponAndCraft.CreateBoxInterActive(transform.position);
+                    } 
+                }
+                // checkWeaponAndCraft.CreateBoxInterActive(transform.position);
                 Destroy(gameObject);
 
             }

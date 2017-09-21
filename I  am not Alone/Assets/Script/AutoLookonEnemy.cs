@@ -70,7 +70,10 @@ public class AutoLookonEnemy : MonoBehaviour
     }
     private void OnTriggerStay (Collider other)
     {
-        weapon = transform.GetChild(0);
+        if (transform.childCount !=0)
+        {
+            weapon = transform.GetChild(0); 
+        }
 
         if (other.CompareTag("AI"))
         {

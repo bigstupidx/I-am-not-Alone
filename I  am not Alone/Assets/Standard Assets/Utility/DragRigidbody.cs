@@ -12,11 +12,11 @@ namespace UnityStandardAssets.Utility
         const float k_AngularDrag = 5.0f;
         const float k_Distance = 0.2f;
         const bool k_AttachToCenterOfMass = false;
-
+        bool doorClose;
         private SpringJoint m_SpringJoint;
 
 
-        private void Update()
+        private void Update ()
         {
             // Make sure the user pressed the mouse down
             if (!Input.GetMouseButtonDown(0))
@@ -28,23 +28,34 @@ namespace UnityStandardAssets.Utility
 
             // We need to actually hit an object
             RaycastHit hit = new RaycastHit();
-           
+
             if (
                 !Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition).origin,
                                  mainCamera.ScreenPointToRay(Input.mousePosition).direction, out hit, 100,
                                  Physics.DefaultRaycastLayers))
             {
-               return;
+                return;
+            }
+            if (hit.transform.CompareTag("Things"))
+            {
+                if (hit.transform.name.Equals("Door"))
+                {
+
+                    doorClose = !doorClose;
+
+                    hit.rigidbody.isKinematic = doorClose;
+                    return;
+                }
             }
             // We need to hit a rigidbody that is not kinematic
-      
+
             if (!hit.rigidbody || hit.rigidbody.isKinematic)
             {
-              
+
 
                 return;
             }
-           
+
             if (!m_SpringJoint)
             {
                 var go = new GameObject("Rigidbody dragger");
@@ -54,7 +65,7 @@ namespace UnityStandardAssets.Utility
             }
 
             m_SpringJoint.transform.position = hit.point;
-        
+
             m_SpringJoint.anchor = Vector3.zero;
 
             m_SpringJoint.spring = k_Spring;
@@ -66,7 +77,7 @@ namespace UnityStandardAssets.Utility
         }
 
 
-        private IEnumerator DragObject(float distance)
+        private IEnumerator DragObject (float distance)
         {
             var oldDrag = m_SpringJoint.connectedBody.drag;
             var oldAngularDrag = m_SpringJoint.connectedBody.angularDrag;
@@ -77,7 +88,7 @@ namespace UnityStandardAssets.Utility
             {
                 var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
                 m_SpringJoint.transform.position = ray.GetPoint(distance);
-                
+
                 yield return null;
             }
             if (m_SpringJoint.connectedBody)
@@ -89,7 +100,7 @@ namespace UnityStandardAssets.Utility
         }
 
 
-        private Camera FindCamera()
+        private Camera FindCamera ()
         {
             if (GetComponent<Camera>())
             {

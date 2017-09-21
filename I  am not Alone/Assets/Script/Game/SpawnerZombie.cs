@@ -6,9 +6,7 @@ using UnityEngine.AI;
 public class SpawnerZombie : MonoBehaviour
 {
     public int spawnerRadius;
-    public bool Zombielevel1;
-    public bool ZombieDog;
-    public bool ZombieMutant;
+
     void OnDrawGizmosSelected ()
     {
         Gizmos.color = Color.green;
@@ -29,18 +27,9 @@ public class SpawnerZombie : MonoBehaviour
         }
         // Instantiate and make the enemy a child of this object
         GameObject o = (GameObject)Instantiate(prefZombie, randomLoc3d, transform.rotation);
-        if (Zombielevel1)
-        {
-            o.GetComponent<ZombieLevel1>().agent.speed = Random.Range(3.0f, 4.5f);
-        }
-        else if (ZombieDog)
-        {
-            o.GetComponent<ZombieLevel1>().agent.speed = Random.Range(5.0f, 8f);
-        }
-        else if (ZombieMutant)
-        {
-            o.GetComponent<ZombieLevel1>().agent.speed = Random.Range(2, 4f);
-        }
+    
+            o.GetComponent<ZombieLevel1>().agent.speed += Random.Range(-2,+2);
+        
     }
 
 }

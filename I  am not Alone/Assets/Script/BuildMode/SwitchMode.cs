@@ -40,7 +40,7 @@ public class SwitchMode : MonoBehaviour
 
 
 
-    bool l;
+    public bool l;
     [Space(15)]
     public List<GameObject> interActivePrefab = new List<GameObject>();
     [Space(5)]
@@ -59,7 +59,7 @@ public class SwitchMode : MonoBehaviour
     {
 
         ButtonCraft.SetActive(false);
-        l = false;
+        l = true;
 
     }
     // Update is called once per frame

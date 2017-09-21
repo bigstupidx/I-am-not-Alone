@@ -79,6 +79,7 @@ public class CraftItem : MonoBehaviour
     public bool _StartHisEffect = false;
     bool ground;
     public GameObject[] NavmeshLinkWindow;
+    public GameObject[] NavmeshLinkWindowOffToIntoTrigger;
     // Use this for initialization
     void Start ()
     {
@@ -133,7 +134,11 @@ public class CraftItem : MonoBehaviour
                 for (int i = 0; i < NavmeshLinkWindow.Length; i++)
                 {
                     NavmeshLinkWindow[i].SetActive(true);
-                } 
+                }
+                for (int i = 0; i < NavmeshLinkWindowOffToIntoTrigger.Length; i++)
+                {
+                    NavmeshLinkWindowOffToIntoTrigger[i].SetActive(true);
+                }
             }
         }
         else
@@ -226,8 +231,17 @@ public class CraftItem : MonoBehaviour
             {
 
 
+                if (NavmeshLinkWindowOffToIntoTrigger.Length !=0)
+                {
+                    for (int i = 0; i < NavmeshLinkWindowOffToIntoTrigger.Length; i++)
+                    {
+                        other.GetComponent<ZombieLevel1>().timerStop = 1.0f;
+                        other.GetComponent<ZombieLevel1>().TransformRotation(transform.parent);
+                        health.HelthDamage(0.05f);
+                          NavmeshLinkWindowOffToIntoTrigger[i].SetActive(false);
+                    }
 
-
+                }
 
 
 
@@ -237,6 +251,9 @@ public class CraftItem : MonoBehaviour
         {
             if (other.CompareTag("AI"))
             {
+
+
+
                 if (_StartHisEffect)
                 {
 
@@ -267,6 +284,18 @@ public class CraftItem : MonoBehaviour
     }
     private void OnTriggerExit (Collider other)
     {
+        if (other.CompareTag("AI"))
+        {
+
+
+
+            other.GetComponent<ZombieLevel1>().WinDowAttack = false;
+
+
+
+
+
+        }
         if (other.CompareTag("Player"))
         {
 
@@ -313,6 +342,7 @@ public class CraftItem : MonoBehaviour
     }
     private void OnCollisionExit (Collision collision)
     {
+     
         ground = false;
     }
 }

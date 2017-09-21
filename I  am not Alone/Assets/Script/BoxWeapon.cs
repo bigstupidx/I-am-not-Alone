@@ -37,7 +37,7 @@ public class BoxWeapon : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            Physics.IgnoreCollision(other.transform.GetComponent<Collider>(), GetComponent<Collider>());
+
             if (Materials)
             {
                 Materials = false;

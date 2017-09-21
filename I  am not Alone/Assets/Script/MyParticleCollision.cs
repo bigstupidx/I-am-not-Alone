@@ -6,10 +6,11 @@ public class MyParticleCollision : MonoBehaviour
 {
     private ParticleCollisionEvent[] collisionEvents = new ParticleCollisionEvent[16];
     public int bulletDamage;
+    PoolingSystem pool;
     // Use this for initialization
     void Start ()
     {
-
+        pool = PoolingSystem.Instance;
     }
 
     void OnParticleCollision (GameObject other)
@@ -52,12 +53,16 @@ public class MyParticleCollision : MonoBehaviour
         {
 
 
-
+            pool.InstantiateAPS("BloodSprayEffect", other.transform.position, Quaternion.identity);
             if (other.transform.root.name != transform.name)
             {
                 other.GetComponent<Health>().HelthDamage(bulletDamage);
-
-
+                int l = Random.Range(0, 30);
+                if (l ==7)
+                {
+                    other.GetComponent<ZombieLevel1>().timerStop = 1;
+                }
+               
             }
 
         }

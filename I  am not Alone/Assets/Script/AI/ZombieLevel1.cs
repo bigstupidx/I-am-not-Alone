@@ -11,7 +11,8 @@ public class ZombieLevel1 : MonoBehaviour
     public float damage;
     RaycastHit hit;
     Ray ray;
-
+    public float timerStop;
+    public bool WinDowAttack;
     // Use this for initialization
     void Start ()
     {
@@ -21,60 +22,84 @@ public class ZombieLevel1 : MonoBehaviour
 
     }
 
+
     // Update is called once per frame
     void Update ()
     {
-
-        Vector3 fwd = transform.TransformDirection(Vector3.forward);
-        Debug.DrawRay(transform.position, fwd * 3f, Color.yellow);
-
-        if (Physics.Raycast(transform.position, fwd, out hit, 3))
+   
+        timerStop -= Time.deltaTime;
+        if (timerStop <= 0)
         {
+            
+            agent.isStopped = false;
+             Vector3 fwd = transform.TransformDirection(Vector3.forward);
+            Debug.DrawRay(transform.position, fwd * 3f, Color.yellow);
 
-            if (ThingsDamage)
+            if (Physics.Raycast(transform.position, fwd, out hit, 3))
             {
-                if (hit.transform.CompareTag("Things"))
 
+                if (ThingsDamage)
                 {
-                    hit.transform.GetComponent<Health>().HelthDamage(damage);
+                    if (hit.transform.CompareTag("Things"))
+
+                    {
+                        hit.transform.GetComponent<Health>().HelthDamage(damage);
 
 
+                    }
+                    if (hit.transform.CompareTag("CraftMode"))
+
+                    {
+                        hit.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage);
+
+
+                    }
+                    if (hit.transform.CompareTag("Player"))
+
+                    {
+                        hit.transform.GetComponent<Health>().HelthDamage(damage);
+
+
+                    }
                 }
-                if (hit.transform.CompareTag("Player"))
 
-                {
-                    hit.transform.GetComponent<Health>().HelthDamage(damage);
-
-
-                }
             }
 
-        }
+
+            if ((player.transform.position - transform.position).sqrMagnitude < Mathf.Pow(agent.stoppingDistance, 2))
+            {
+                // If the agent is in attack range, become an obstacle and
+                // disable the NavMeshAgent component
+                obstacle.enabled = true;
+                agent.enabled = false;
+                Vector3 relativePos = player.transform.position - transform.position;
+                Quaternion rotation = Quaternion.LookRotation(relativePos);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 7f);
+            }
+            else
+            {
+
+                // If we are not in range, become an agent again
+                obstacle.enabled = false;
+                agent.enabled = true;
+                agent.SetDestination(player.position);
+            }
 
 
-        if ((player.transform.position - transform.position).sqrMagnitude < Mathf.Pow(agent.stoppingDistance, 2))
-        {
-            // If the agent is in attack range, become an obstacle and
-            // disable the NavMeshAgent component
-            obstacle.enabled = true;
-            agent.enabled = false;
-            Vector3 relativePos = player.transform.position - transform.position;
-            Quaternion rotation = Quaternion.LookRotation(relativePos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 7f);
+
+
         }
         else
         {
-
-            // If we are not in range, become an agent again
-            obstacle.enabled = false;
-            agent.enabled = true;
-            agent.SetDestination(player.position);
+            agent.isStopped = true;
         }
-
-
-
-
     }
 
 
+    public void TransformRotation(Transform r)
+    {
+        Vector3 relativePos = r.transform.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(relativePos);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 7f);
+    }
 }

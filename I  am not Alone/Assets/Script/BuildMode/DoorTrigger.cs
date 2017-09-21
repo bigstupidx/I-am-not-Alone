@@ -9,10 +9,11 @@ public class DoorTrigger : MonoBehaviour
     public NavMeshObstacle obstacle;
     public CraftItem craftItem;
     Rigidbody rigid;
-    Material material;
+    public Material[] materials;
     HingeJoint hinge;
     bool PlayerHere;
     bool close = false;
+    Renderer rend;
     // Use this for initialization
     void Start ()
     {
@@ -20,7 +21,7 @@ public class DoorTrigger : MonoBehaviour
 
         obstacle = transform.parent.GetComponent<NavMeshObstacle>();
         rigid = transform.parent.GetComponent<Rigidbody>();
-        material = transform.parent.GetComponent<Material>();
+
         hinge = transform.parent.GetComponent<HingeJoint>();
 
 
@@ -28,34 +29,31 @@ public class DoorTrigger : MonoBehaviour
         // This could be used to fire off a catapult.
 
 
+        rend = transform.parent.GetComponent<Renderer>();
+        rend.enabled = true;
+        rend.sharedMaterial = materials[0];
+
 
     }
 
 
-    private void Update ()
-    {
 
-        if (hinge.angle <= 0.0f)
-        {
-            if (PlayerHere)
-            {
-                rigid.isKinematic = false;
-            }
-            else
-            {
-                rigid.isKinematic = true;
-            }
-            obstacle.enabled = true;
-        }
-
-    }
 
 
     private void OnTriggerStay (Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            PlayerHere = true;
+            if (rigid.isKinematic)
+            {
+                obstacle.enabled = true;
+                rend.sharedMaterial = materials[1];
+            }
+            else
+            {
+                obstacle.enabled = false;
+                rend.sharedMaterial = materials[0];
+            }
             if (craftItem.Built)
             {
                 rigid.isKinematic = true;
@@ -69,7 +67,22 @@ public class DoorTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerHere = false;
+            if (rigid.isKinematic)
+            {
+                obstacle.enabled = true;
+                rend.sharedMaterial = materials[1];
+            }
+            else
+            {
+                obstacle.enabled = false;
+                rend.sharedMaterial = materials[0];
+            }
+            if (craftItem.Built)
+            {
+                rigid.isKinematic = true;
+                obstacle.enabled = true;
+            }
+
 
         }
     }
