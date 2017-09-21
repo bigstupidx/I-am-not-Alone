@@ -51,9 +51,9 @@ public class SwitchMode : MonoBehaviour
 
 
     public CraftItem CraftItemBuildNowDinamic;
-    public Button buttonAction;
-    public bool openOrClosedDoor = false;
-    public Animator Door;
+    public Toggle toggleDoor;
+
+
     public BetweenFloor betweenFloor;
     private void Start ()
     {
@@ -179,18 +179,7 @@ public class SwitchMode : MonoBehaviour
     }
 
 
-    public void DoorAnimator ()
-    {
-        openOrClosedDoor = !openOrClosedDoor;
-        Door.transform.GetChild(0).GetComponent<DoorTrigger>().obstacle.enabled = openOrClosedDoor;
-        if (Door != null)
-        {
-            Door.SetBool("openOrClosed", openOrClosedDoor);
 
-        }
-
-
-    }
 
     public void ButtonCraftItemNow ()
     {

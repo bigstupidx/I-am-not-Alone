@@ -5,31 +5,61 @@ using UnityEngine.AI;
 public class DoorTrigger : MonoBehaviour
 {
     private SwitchMode buildMode;
-    Animator animator;
+
     public NavMeshObstacle obstacle;
     public CraftItem craftItem;
+    Rigidbody rigid;
+    Material material;
+    HingeJoint hinge;
+    bool PlayerHere;
+    bool close = false;
     // Use this for initialization
     void Start ()
     {
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
-        animator = transform.parent.GetComponent<Animator>();
-        obstacle =transform.parent.GetComponent<NavMeshObstacle>();
+
+        obstacle = transform.parent.GetComponent<NavMeshObstacle>();
+        rigid = transform.parent.GetComponent<Rigidbody>();
+        material = transform.parent.GetComponent<Material>();
+        hinge = transform.parent.GetComponent<HingeJoint>();
+
+
+        // Make the spring reach shoot for a 70 degree angle.
+        // This could be used to fire off a catapult.
+
+
 
     }
+
+
+    private void Update ()
+    {
+
+        if (hinge.angle <= 0.0f)
+        {
+            if (PlayerHere)
+            {
+                rigid.isKinematic = false;
+            }
+            else
+            {
+                rigid.isKinematic = true;
+            }
+            obstacle.enabled = true;
+        }
+
+    }
+
 
     private void OnTriggerStay (Collider other)
     {
         if (other.CompareTag("Player"))
         {
-
-            if (!craftItem.Built)
+            PlayerHere = true;
+            if (craftItem.Built)
             {
-                buildMode.buttonAction.gameObject.SetActive(true);
-                buildMode.Door = animator;
-            }
-            else
-            {
-                buildMode.buttonAction.gameObject.SetActive(false);
+                rigid.isKinematic = true;
+                obstacle.enabled = true;
             }
 
 
@@ -39,12 +69,7 @@ public class DoorTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-
-
-            buildMode.buttonAction.gameObject.SetActive(false);
-            buildMode.Door = null;
-
-
+            PlayerHere = false;
 
         }
     }

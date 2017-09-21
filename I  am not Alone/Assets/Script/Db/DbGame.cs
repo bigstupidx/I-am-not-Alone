@@ -35,10 +35,10 @@ public class DbGame : MonoBehaviour
 
 
 
-      filepath = Application.dataPath + "/" + p;
+        filepath = Application.dataPath + "/" + p;
 
 
-   //  filepath = Application.persistentDataPath + "/" + p;
+        //  filepath = Application.persistentDataPath + "/" + p;
 
 
         //  }
@@ -161,7 +161,7 @@ public class DbGame : MonoBehaviour
                     {
 
 
-                        checkInWeaponAndCraft.CraftItemBought.Add(new ParamsDbBoughtWeaponAndCraftItem(reader.GetString(0), reader.GetInt32(1),0));
+                        checkInWeaponAndCraft.CraftItemBought.Add(new ParamsDbBoughtWeaponAndCraftItem(reader.GetString(0), reader.GetInt32(1), 0));
 
 
                     }
@@ -207,7 +207,7 @@ public class DbGame : MonoBehaviour
 
     public void GetMoney ()
     {
-        mainmenu = GetComponent<MainMenu>();
+    
         using (IDbConnection dbconnection = new SqliteConnection(connection))
         {
             dbconnection.Open();
@@ -222,8 +222,18 @@ public class DbGame : MonoBehaviour
                 {
                     while (reader.Read())
                     {
+                        if (mainmenu = GetComponent<MainMenu>())
+                        {
+                            mainmenu = GetComponent<MainMenu>();
+                            mainmenu.myMoney.text = reader.GetString(0);
 
-                        mainmenu.myMoney.text = reader.GetString(0);
+                        }
+                        else if (checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>())
+                        {
+                            checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>();
+                            checkInWeaponAndCraft.MyMoney.text = reader.GetString(0);
+                        }
+            
 
 
 

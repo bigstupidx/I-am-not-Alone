@@ -18,6 +18,7 @@ public class Health : MonoBehaviour
     SwitchMode buildMode;
     CraftItem _craftItem;
     CheckInWeaponAndCraft checkWeaponAndCraft;
+    public int  MoneyAi;
     private void Start ()
     {
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
@@ -87,6 +88,7 @@ public class Health : MonoBehaviour
                poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
                 //this.gameObject.DestroyAPS();
                 //_craftItem._StartHisEffect = false;
+                checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + MoneyAi).ToString();
                 checkWeaponAndCraft.CreateBoxItem(transform.position, MakeMaterial);
                // checkWeaponAndCraft.CreateBoxInterActive(transform.position);
                 Destroy(gameObject);

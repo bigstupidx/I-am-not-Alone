@@ -16,12 +16,15 @@ public class BoxWeapon : MonoBehaviour
     public Transform textGuiPanelGoods;
     SwitchMode buildMode;
     public Transform gridBuild;
+    GameObject player;
     // Use this for initialization
     void Start ()
     {
-        buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
+        player = GameObject.FindGameObjectWithTag("Player");
+           buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         pool = PoolingSystem.Instance;
+  
     }
 
     private void OnEnable ()
@@ -34,7 +37,7 @@ public class BoxWeapon : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-
+            Physics.IgnoreCollision(other.transform.GetComponent<Collider>(), GetComponent<Collider>());
             if (Materials)
             {
                 Materials = false;
@@ -64,6 +67,12 @@ public class BoxWeapon : MonoBehaviour
             transform.parent.gameObject.DestroyAPS();
 
 
+        }
+
+        if (other.CompareTag("AI"))
+        {
+            Physics.IgnoreCollision(transform.parent.GetComponent<Collider>(),other.GetComponent<Collider>());
+        
         }
     }
 

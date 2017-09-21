@@ -58,7 +58,9 @@ public class WaveManager : MonoBehaviour
     bool startWave;
     public bool harfMode = false;
     SwitchMode switchMode;
-     GameObject[] lightAllScene;
+    GameObject[] lightAllScene;
+    public CheckInWeaponAndCraft _weaponcraft;
+
     // Use this for initialization
     void Start ()
     {
@@ -98,7 +100,7 @@ public class WaveManager : MonoBehaviour
                 switchMode.BuildMOdeMenu(false);
                 for (int i = 0; i < lightAllScene.Length; i++)
                 {
-                    lightAllScene[i].GetComponent<Light>().enabled = true; 
+                    lightAllScene[i].GetComponent<Light>().enabled = true;
                 }
             }
 
@@ -129,6 +131,7 @@ public class WaveManager : MonoBehaviour
                     }
                     switchMode.BuildMOdeMenu(true);
                     waveLevelUp = false;
+                    _weaponcraft.PlusAndUpdateMoneyPlayer();
                 }
                 night = true;
                 _lskyTod.dayInSeconds = wave[levelWave].Day * 2;
@@ -169,7 +172,7 @@ public class WaveManager : MonoBehaviour
             {
 
 
-                waveParams.Add(new WaveParams((wave[w].Night) / wave[w].countZombie[i]));
+                waveParams.Add(new WaveParams((wave[w].Night - 20) / wave[w].countZombie[i]));
 
 
             }
@@ -177,7 +180,7 @@ public class WaveManager : MonoBehaviour
 
 
 
-
+            NightTime = wave[w].Night - 20.0f;
 
 
         }
@@ -191,7 +194,7 @@ public class WaveManager : MonoBehaviour
             {
 
 
-                waveParamsHard.Add(new WaveParams((wave[w].Night) / wave[w].countZombie[i]));
+                waveParamsHard.Add(new WaveParams((wave[w].Night - 20) / wave[w].countZombie[i]));
 
 
             }
@@ -208,28 +211,31 @@ public class WaveManager : MonoBehaviour
     {
         if (_lsky.IsNight)
         {
-
-            for (int i = 0; i < waveParams.Count; i++)
+            NightTime -= Time.deltaTime;
+            if (NightTime >= 0)
             {
-
-                waveParams[i].TimerCreate -= Time.deltaTime;
-
-                if (waveParams[i].TimerCreate <= 0)
+                for (int i = 0; i < waveParams.Count; i++)
                 {
-                    int li = Random.Range(0, spawerZombie.Count);
 
-                    spawerZombie[li].CreateZombie(wave[w].ZombiePref[i].gameObject);
+                    waveParams[i].TimerCreate -= Time.deltaTime;
 
-                    waveParams[i].TimerCreate = waveParams[i].InstantiationTimer;
+                    if (waveParams[i].TimerCreate <= 0)
+                    {
+                        int li = Random.Range(0, spawerZombie.Count);
+
+                        spawerZombie[li].CreateZombie(wave[w].ZombiePref[i].gameObject);
+
+                        waveParams[i].TimerCreate = waveParams[i].InstantiationTimer;
+
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+
 
                 }
-                else
-                {
-                    continue;
-                }
-
-
-
             }
         }
 

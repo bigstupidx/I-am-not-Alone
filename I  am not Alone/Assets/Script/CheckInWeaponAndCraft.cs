@@ -10,6 +10,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     public List<ParamsDbBoughtWeaponAndCraftItem> WeaponBought = new List<ParamsDbBoughtWeaponAndCraftItem>();
     public List<ParamsDbBoughtWeaponAndCraftItem> CraftItemBought = new List<ParamsDbBoughtWeaponAndCraftItem>();
     public List<GameObject> CraftGuiPrefab = new List<GameObject>();
+    public Text MyMoney;
     PoolingSystem pool;
     SwitchMode buildMode;
     DbGame db;
@@ -19,6 +20,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         db.OpenDB("DBGame.db");
         db.GetWeaponBought();
         db.GetCraftItemBought();
+        db.GetMoney();
         if (ShopOrNot)
         {
             CheckInBoughtItem();
@@ -42,7 +44,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
 
             int i = Random.Range(0, WeaponBought.Count);
             GameObject box = pool.InstantiateAPS("BoxWithWeapon", new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), Quaternion.identity);
-      
+
             box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought[i].category;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought[i].nameWeapon;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought[i].levelWeapon;
@@ -50,7 +52,11 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     }
 
 
+    public void PlusAndUpdateMoneyPlayer ()
+    {
 
+        db.UpdateMoney(MyMoney.text);
+    }
 
     public void CreateBoxItem (Vector3 pos, int _makeMaterial)
     {
