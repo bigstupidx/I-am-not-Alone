@@ -39,16 +39,16 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     }
     private void Update ()
     {
-        if (Input.GetButtonDown("Jump"))
-        {
+        //if (Input.GetButtonDown("Jump"))
+        //{
 
-            int i = Random.Range(0, WeaponBought.Count);
-            GameObject box = pool.InstantiateAPS("BoxWithWeapon", new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), Quaternion.identity);
+        //    int i = Random.Range(0, WeaponBought.Count);
+        //    GameObject box = pool.InstantiateAPS("BoxWithWeapon", new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), Quaternion.identity);
 
-            box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought[i].category;
-            box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought[i].nameWeapon;
-            box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought[i].levelWeapon;
-        }
+        //    box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought[i].category;
+        //    box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought[i].nameWeapon;
+        //    box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought[i].levelWeapon;
+        //}
     }
 
 
@@ -79,11 +79,28 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     {
         int i = Random.Range(0, WeaponBought.Count);
         GameObject box = pool.InstantiateAPS("BoxWithWeapon", pos, Quaternion.identity);
-        Debug.Log(WeaponBought[i].nameWeapon + " " + WeaponBought[i].category);
+
         box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought[i].category;
         box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought[i].nameWeapon;
         box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought[i].levelWeapon;
+        box.transform.GetChild(0).GetComponent<BoxWeapon>().WeaponAmunition = 1;
+    }
 
+    public void OldWeapon (string nameWeapon, BulletSystem bul,handWeapon hand, Vector3 pos)
+    {
+        GameObject box = pool.InstantiateAPS("BoxWithMyWeapon", pos, Quaternion.identity);
+
+        box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).category;
+        box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).nameWeapon;
+        box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).levelWeapon;
+        if (hand == null)
+        {
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().WeaponAmunition = bul.WeaponAmmunition;
+        }
+        else
+        {
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().WeaponAmunition = hand.WeaponAmmunition;
+        }
     }
     void AddItemStart ()
     {

@@ -79,13 +79,17 @@ public class TrasnparentWall : MonoBehaviour
                 Transform wasHidden = walls[i];
 
                 //  wasHidden.GetComponent<Renderer>().material.SetFloat("_BodyAlpha", 1f);
-                if (wasHidden.GetComponent<Renderer>())
+                if (wasHidden)
                 {
-                    wasHidden.GetComponent<Renderer>().enabled = true;
-                    walls.RemoveAt(i);
+                    if (wasHidden.GetComponent<Renderer>())
+                    {
+                        wasHidden.GetComponent<Renderer>().enabled = true;
+                        walls.RemoveAt(i);
+                    }
+
+                    i--;
                 }
-        
-                i--;
+              
             }
         }
     }

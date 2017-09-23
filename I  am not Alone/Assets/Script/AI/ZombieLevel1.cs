@@ -13,6 +13,7 @@ public class ZombieLevel1 : MonoBehaviour
     Ray ray;
     public float timerStop;
     public bool WinDowAttack;
+    bool stoping;
     // Use this for initialization
     void Start ()
     {
@@ -26,13 +27,17 @@ public class ZombieLevel1 : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-   
+
         timerStop -= Time.deltaTime;
         if (timerStop <= 0)
         {
-            
-            agent.isStopped = false;
-             Vector3 fwd = transform.TransformDirection(Vector3.forward);
+
+            if (stoping)
+            {
+                agent.isStopped = false;
+                stoping = false;
+            }
+            Vector3 fwd = transform.TransformDirection(Vector3.forward);
             Debug.DrawRay(transform.position, fwd * 3f, Color.yellow);
 
             if (Physics.Raycast(transform.position, fwd, out hit, 3))
@@ -91,12 +96,13 @@ public class ZombieLevel1 : MonoBehaviour
         }
         else
         {
+            stoping = true;
             agent.isStopped = true;
         }
     }
 
 
-    public void TransformRotation(Transform r)
+    public void TransformRotation (Transform r)
     {
         Vector3 relativePos = r.transform.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(relativePos);

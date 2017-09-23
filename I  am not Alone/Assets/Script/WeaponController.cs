@@ -15,6 +15,8 @@ public class WeaponController : MonoBehaviour
     public GameObject WeaponTwo;
     PoolingSystem pool;
     Transform AdvancedPoolingSystem;
+    CheckInWeaponAndCraft _checkInWeaponCraft;
+    GameObject player;
     private void OnEnable ()
     {
         pool = PoolingSystem.Instance;
@@ -23,6 +25,8 @@ public class WeaponController : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        _checkInWeaponCraft = GetComponent<CheckInWeaponAndCraft>();
         pool = PoolingSystem.Instance;
         SelectionWeapon(0);
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
@@ -57,21 +61,43 @@ public class WeaponController : MonoBehaviour
 
     }
 
-    public void PlayerWeapon (string nameWeapon, int category, int level)
+    public void PlayerWeapon (string nameWeapon, int category, int level , float amunition)
     {
         if (category == 0)
         {
             if (Hand.transform.GetChild(0).childCount == 0)
             {
-                AddWeapon(nameWeapon, Hand.transform.GetChild(0), level);
-             
+                AddWeapon(nameWeapon, Hand.transform.GetChild(0), level, category, amunition);
 
+                return;
             }
             else
             {
-                RemoveWeapon(Hand.transform.GetChild(0).GetChild(0));
-                AddWeapon(nameWeapon, Hand.transform.GetChild(0), level);
-           
+                if (Hand.transform.GetChild(0).GetChild(0).name.Equals(nameWeapon + "(Clone)"))
+                {
+
+                    if (Hand.GetComponent<handWeapon>().WeaponAmmunition == 1)
+                    {
+                         RemoveWeapon(Hand.transform.GetChild(0).GetChild(0), nameWeapon, category);
+                        AddWeapon(nameWeapon, Hand.transform.GetChild(0), level, category, amunition);
+                   
+                    }
+                    else
+                    {
+                        Hand.GetComponent<handWeapon>().WeaponAmmunition = 1;
+                    
+                    }
+
+                    return;
+                }
+                else
+                {
+                    RemoveWeapon(Hand.transform.GetChild(0).GetChild(0), nameWeapon, category);
+                    AddWeapon(nameWeapon, Hand.transform.GetChild(0), level, category, amunition);
+                    return;
+                }
+
+
             }
 
         }
@@ -79,9 +105,9 @@ public class WeaponController : MonoBehaviour
         {
             if (WeaponOne.transform.childCount == 0)
             {
-                AddWeapon(nameWeapon, WeaponOne.transform, level);
-            
-               
+                AddWeapon(nameWeapon, WeaponOne.transform, level, category,amunition);
+
+
                 return;
             }
             else
@@ -89,14 +115,22 @@ public class WeaponController : MonoBehaviour
                 if (WeaponOne.transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
                 {
 
-                    WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
-                 
+                  
+                    if (WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition == 1)
+                    {
+                        RemoveWeapon(WeaponOne.transform.GetChild(0), nameWeapon, category);
+                        AddWeapon(nameWeapon, WeaponOne.transform, level, category, amunition);
+                    }
+                    else
+                    {
+                        WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
+                    }
                     return;
                 }
             }
             if (WeaponTwo.transform.childCount == 0)
             {
-                AddWeapon(nameWeapon, WeaponTwo.transform, level);
+                AddWeapon(nameWeapon, WeaponTwo.transform, level, category,amunition);
 
                 return;
             }
@@ -105,15 +139,23 @@ public class WeaponController : MonoBehaviour
                 if (WeaponTwo.transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
                 {
 
-               
-                    WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
+
+                    if (WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition == 1)
+                    {
+                        RemoveWeapon(WeaponTwo.transform.GetChild(0), nameWeapon, category);
+                        AddWeapon(nameWeapon, WeaponTwo.transform, level, category, amunition);
+                    }
+                    else
+                    {
+                        WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
+                    }
                     return;
                 }
                 else
                 {
-                    RemoveWeapon(WeaponTwo.transform.GetChild(0));
+                    RemoveWeapon(WeaponTwo.transform.GetChild(0), nameWeapon,category);
 
-                    AddWeapon(nameWeapon, WeaponTwo.transform, level);
+                    AddWeapon(nameWeapon, WeaponTwo.transform, level, category,amunition);
                     return;
 
                 }
@@ -133,26 +175,36 @@ public class WeaponController : MonoBehaviour
 
     }
 
-    public void AddWeapon (string name, Transform pos, int level)
+    public void AddWeapon (string name, Transform pos, int level, int category,float amuni)
     {
 
         GameObject weapon = pool.InstantiateAPS(name, pos.position, pos.rotation, pos.gameObject);
 
-        if (weapon.GetComponent<BulletSystem>() != null)
+        if (category == 1)
         {
             weapon.GetComponent<BulletSystem>().level = level;
-            weapon.GetComponent<BulletSystem>().WeaponAmmunition = 1;
+            weapon.GetComponent<BulletSystem>().WeaponAmmunition = amuni;
         }
         else
         {
-            weapon.transform.parent.parent.GetComponent<handWeapon>().level = level;
-            weapon.transform.parent.parent.GetComponent<handWeapon>().WeaponAmmunition = 1;
+            Hand.GetComponent<handWeapon>().level = level;
+            Hand.GetComponent<handWeapon>().WeaponAmmunition = amuni;
         }
 
 
     }
-    public void RemoveWeapon (Transform Weapon)
+    public void RemoveWeapon (Transform Weapon, string nameWe,int category)
     {
+        if(category == 0)
+        {
+            _checkInWeaponCraft.OldWeapon(nameWe,null , Hand.GetComponent<handWeapon>(), player.transform.position + new Vector3(4,0,4));
+        }
+        else
+        {
+            _checkInWeaponCraft.OldWeapon(nameWe, Weapon.GetComponent<BulletSystem>(),null, player.transform.position);
+        }
+
+    
         Weapon.gameObject.DestroyAPS();
         Weapon.transform.SetParent(AdvancedPoolingSystem);
 
@@ -161,7 +213,7 @@ public class WeaponController : MonoBehaviour
 
     public void Ammunition (float value)
     {
-       
+
         image.fillAmount = value;
 
 

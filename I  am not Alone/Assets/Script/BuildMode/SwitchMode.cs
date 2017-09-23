@@ -77,16 +77,16 @@ public class SwitchMode : MonoBehaviour
 
             BuildMode.SetActive(true);
             PlayerMode.SetActive(false);
-            Hand.SetActive(false);
-            HandWeapon.SetActive(false);
+            //Hand.SetActive(false);
+            //HandWeapon.SetActive(false);
         }
         else
         {
 
             BuildMode.SetActive(false);
             PlayerMode.SetActive(true);
-            Hand.SetActive(true);
-            HandWeapon.SetActive(true);
+            //Hand.SetActive(true);
+            //HandWeapon.SetActive(true);
         }
         l = rog;
         CheckInBuiltWalls(rog);

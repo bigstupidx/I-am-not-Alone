@@ -15,8 +15,10 @@ public class AutoLookonEnemy : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-
-        weapon = transform.GetChild(0);
+        if (transform.childCount != 0)
+        {
+            weapon = transform.GetChild(0);
+        }
     }
     private void Update ()
     {

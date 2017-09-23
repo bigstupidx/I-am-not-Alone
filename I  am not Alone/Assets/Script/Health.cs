@@ -103,7 +103,7 @@ public class Health : MonoBehaviour
                     {
                         int i = Random.Range(0, 2);
                         int l = Random.Range(0, 5);
-                        Debug.Log(l);
+                 
                         MakeMaterial = l;
                         if (i == 0)
                         {

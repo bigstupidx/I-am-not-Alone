@@ -7,6 +7,7 @@ public class HouseInside : MonoBehaviour
 
     public GameObject TwoFloour;
     public GameObject Roof;
+    public BetweenFloor betweenFloor;
     // Use this for initialization
     void Start ()
     {
@@ -18,7 +19,7 @@ public class HouseInside : MonoBehaviour
         {
             Roof.SetActive(false);
             TwoFloour.SetActive(false);
-
+            betweenFloor.RenderObjectToFloor(false);
         }
     }
     private void OnTriggerExit (Collider other)

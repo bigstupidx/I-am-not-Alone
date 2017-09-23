@@ -52,8 +52,8 @@ public class MyParticleCollision : MonoBehaviour
         if (other.CompareTag("AI"))
         {
 
-            Debug.Log(true);
-            pool.InstantiateAPS("BloodSprayEffect", other.transform.position, Quaternion.identity);
+           
+           // pool.InstantiateAPS("BloodSprayEffect", other.transform.position, Quaternion.identity);
             if (other.transform.root.name != transform.name)
             {
                 other.GetComponent<Health>().HelthDamage(bulletDamage);

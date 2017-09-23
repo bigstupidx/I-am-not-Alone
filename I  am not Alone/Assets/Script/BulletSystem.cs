@@ -26,7 +26,7 @@ public class BulletSystem : MonoBehaviour
 
 
 
-    public bool checkWeapons = false;
+
 
     public float intervalWeaponAmmunition = 0.5f;
 
@@ -35,8 +35,7 @@ public class BulletSystem : MonoBehaviour
     // последсвите от попадания
 
 
-    [HideInInspector]
-    public Material[] BulletPowerMaterial;
+
     public float WeaponAmmunition = 1;
     public int level;
 
@@ -79,30 +78,7 @@ public class BulletSystem : MonoBehaviour
         }
     }
 
-    void BulletVisualMaterial (int dmg)
-    {
-        if (dmg == 10)
-        {
-            bullet.GetComponent<ParticleSystemRenderer>().material = BulletPowerMaterial[0];
-        }
-        else if (dmg == 20)
-        {
-            bullet.GetComponent<ParticleSystemRenderer>().material = BulletPowerMaterial[1];
-        }
-        else if (dmg == 30)
-        {
-            bullet.GetComponent<ParticleSystemRenderer>().material = BulletPowerMaterial[1];
-        }
-        else if (dmg == 5)
-        {
-            bullet.GetComponent<ParticleSystemRenderer>().material = BulletPowerMaterial[1];
-        }
-        else
-        {
-            bullet.GetComponent<ParticleSystemRenderer>().material = BulletPowerMaterial[1];
-        }
 
-    }
     public void BulettAttack ()
     {
         //  BulletVisualMaterial(bulletDamage);
@@ -113,7 +89,7 @@ public class BulletSystem : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
-          
+
             l = true;
             bullet.Play();
 
@@ -198,7 +174,7 @@ public class BulletSystem : MonoBehaviour
     //}
 }
 
-  
+
 
 
 
