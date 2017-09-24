@@ -56,7 +56,7 @@ public class SelectContructionForCreate : MonoBehaviour
         {
             if (itemCreate == null)
             {
-                itemCreate = pool.InstantiateAPS(NameDinamicCraftItem.text, new Vector3(player.position.x + 0.6f, player.position.y, player.position.z), player.rotation);
+                itemCreate = pool.InstantiateAPS(NameDinamicCraftItem.text, new Vector3(player.position.x + 0.6f, player.position.y, player.position.z + 0.6f), player.rotation);
                 switchMode.CraftItemBuildNowDinamic = itemCreate.GetComponent<CraftItem>();
                 if (!itemCreate.GetComponent<CraftItem>().Interactive)
                 {

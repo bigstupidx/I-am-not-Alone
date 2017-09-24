@@ -223,7 +223,7 @@ public class WaveManager : MonoBehaviour
                     {
                         int li = Random.Range(0, spawerZombie.Count);
 
-                        spawerZombie[li].CreateZombie(wave[w].ZombiePref[i].gameObject);
+                        spawerZombie[li].CreateZombie(wave[w].ZombiePref[i].gameObject, _lsky);
 
                         waveParams[i].TimerCreate = waveParams[i].InstantiationTimer;
 
@@ -257,7 +257,7 @@ public class WaveManager : MonoBehaviour
                     {
                         int li = Random.Range(0, spawerZombie.Count);
 
-                        spawerZombie[li].CreateZombie(wave[w].ZombiePref[i].gameObject);
+                        spawerZombie[li].CreateZombie(wave[w].ZombiePref[i].gameObject,_lsky);
 
                         waveParamsHard[i].TimerCreate = waveParamsHard[i].InstantiationTimer;
 

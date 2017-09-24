@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using AC.LSky;
 public class SpawnerZombie : MonoBehaviour
 {
     public int spawnerRadius;
@@ -13,7 +13,7 @@ public class SpawnerZombie : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, spawnerRadius);
     }
 
-    public void CreateZombie (GameObject prefZombie)
+    public void CreateZombie (GameObject prefZombie, LSky sky)
     {
 
         // Choose a random location within the spawnRadius
@@ -27,9 +27,9 @@ public class SpawnerZombie : MonoBehaviour
         }
         // Instantiate and make the enemy a child of this object
         GameObject o = (GameObject)Instantiate(prefZombie, randomLoc3d, transform.rotation);
-    
-            o.GetComponent<ZombieLevel1>().agent.speed += Random.Range(-2,+2);
-        
+        o.GetComponent<ZombieLevel1>()._sky = sky;
+        o.GetComponent<ZombieLevel1>().agent.speed += Random.Range(-2, +2);
+        o.GetComponent<ZombieLevel1>().standartSpeed = o.GetComponent<ZombieLevel1>().agent.speed;
     }
 
 }

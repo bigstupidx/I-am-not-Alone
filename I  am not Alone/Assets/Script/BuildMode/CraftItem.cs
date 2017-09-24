@@ -52,13 +52,13 @@ public class CraftItem : MonoBehaviour
     public bool mySelf;
     public bool BlowUpEffect;
     [Space(2)]
-    public int damage;
+    public float damage;
     public float ExplosionRadios;
     public float ExplosionForce;
     public LayerMask effectLayer;
     [Space(15)]
     public List<ItemForbuild> CountWoodForCreate = new List<ItemForbuild>();
-    public List<int> LevelHealth = new List<int>();
+    public List<float> LevelUpdate = new List<float>();
     public int level;
     public bool Built;
     public int Floor;
@@ -80,6 +80,10 @@ public class CraftItem : MonoBehaviour
     bool ground;
     public GameObject[] NavmeshLinkWindow;
     public GameObject[] NavmeshLinkWindowOffToIntoTrigger;
+    public bool ColliderTrue;
+
+    float timer;
+    BoxCollider thisCollider;
     // Use this for initialization
     void Start ()
     {
@@ -88,7 +92,7 @@ public class CraftItem : MonoBehaviour
             CountWoodForCreate[i].Start();
         }
         pool = PoolingSystem.Instance;
-        rigid = GetComponent<Rigidbody>();
+
         health = GetComponent<Health>();
         if (health == null)
         {
@@ -102,8 +106,39 @@ public class CraftItem : MonoBehaviour
 
         DefaultOptions();
     }
+    private void Update ()
+    {
+        if (ColliderTrue)
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                rigid.useGravity = true;
+                ColliderTrue = false;
+                thisCollider.enabled = true;
+            }
+        }
+    }
 
+    private void OnEnable ()
+    {
 
+        if (!BuildStatic)
+        {
+            rigid = GetComponent<Rigidbody>();
+            thisCollider = GetComponent<BoxCollider>();
+            timer = 0.2f;
+            ColliderTrue = true;
+            rigid.useGravity = false;
+            thisCollider.enabled = false;
+        }
+        else
+        {
+            ColliderTrue = false;
+
+        }
+
+    }
     public void DefaultForParticle ()
     {
         indicator.IndicatorSetActive(false, 0);
@@ -113,7 +148,11 @@ public class CraftItem : MonoBehaviour
         if (!Interactive)
         {
             ground = true;
-            health.MaxHealth = health.CurHelth = LevelHealth[level];
+            health.MaxHealth = health.CurHelth = LevelUpdate[level];
+        }
+        if (DamageObject)
+        {
+            damage = LevelUpdate[level];
         }
         for (int i = 0; i < transform.GetChild(0).childCount; i++)
         {
@@ -173,8 +212,15 @@ public class CraftItem : MonoBehaviour
 
                     rend.sharedMaterial = materials[1];
 
-
+                    if (transform.GetChild(0).GetChild(i).childCount != 0)
+                    {
+                        for (int l = 0; l < transform.GetChild(0).GetChild(i).childCount; l++)
+                        {
+                            transform.GetChild(0).GetChild(i).GetChild(l).gameObject.SetActive(true);
+                        }
+                    }
                 }
+               
                 Built = true;
                 buildMode.craft.Remove(buildMode.craft.Find(obj => obj.ItemCraft.name == gameObject.name));
 
@@ -199,7 +245,7 @@ public class CraftItem : MonoBehaviour
                         for (int i = 0; i < NavmeshLinkWindow.Length; i++)
                         {
                             NavmeshLinkWindow[i].SetActive(false);
-                        } 
+                        }
                     }
                     transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
                 }
@@ -220,6 +266,16 @@ public class CraftItem : MonoBehaviour
                 }
             }
         }
+        if (other.CompareTag("AI"))
+        {
+
+
+            if (Interactive)
+            {
+                other.GetComponent<ZombieLevel1>().agent.speed -= 3;
+
+            }
+        }
     }
     private void OnTriggerStay (Collider other)
     {
@@ -229,7 +285,10 @@ public class CraftItem : MonoBehaviour
             if (other.CompareTag("Player"))
             {
 
-                BuildContruction(Built);
+                if (!Built)
+                {
+                    BuildContruction(Built); 
+                }
                 if (Built)
                 {
                     buildMode.ButtonCraft.SetActive(false);
@@ -240,16 +299,21 @@ public class CraftItem : MonoBehaviour
             {
 
 
-                if (NavmeshLinkWindowOffToIntoTrigger.Length !=0)
-                {
-                    for (int i = 0; i < NavmeshLinkWindowOffToIntoTrigger.Length; i++)
-                    {
-                        other.GetComponent<ZombieLevel1>().timerStop = 1.0f;
-                        other.GetComponent<ZombieLevel1>().TransformRotation(transform.parent);
-                        health.HelthDamage(0.05f);
-                          NavmeshLinkWindowOffToIntoTrigger[i].SetActive(false);
-                    }
 
+
+                if (other.GetComponent<ZombieLevel1>().JointWindow)
+                {
+                    if (NavmeshLinkWindowOffToIntoTrigger.Length != 0)
+                    {
+                        for (int i = 0; i < NavmeshLinkWindowOffToIntoTrigger.Length; i++)
+                        {
+                            other.GetComponent<ZombieLevel1>().timerStop = 1.0f;
+                            other.GetComponent<ZombieLevel1>().TransformRotation(transform.parent);
+                            health.HelthDamage(0.05f);
+                            NavmeshLinkWindowOffToIntoTrigger[i].SetActive(false);
+                        }
+
+                    }
                 }
 
 
@@ -261,26 +325,39 @@ public class CraftItem : MonoBehaviour
             if (other.CompareTag("AI"))
             {
 
-
-
-                if (_StartHisEffect)
+                if (hisEffect)
                 {
 
-                    other.GetComponent<Health>().HelthDamage(damage);
-                }
-                else if (!BlowUpEffect)
-                {
-
-                    if (mySelf)
+                    if (_StartHisEffect)
                     {
-                        health.MySelfDestroyer();
+
+                        other.GetComponent<Health>().HelthDamage(damage);
+                    }
+                }
+                else
+                {
+                    if (!BlowUpEffect)
+                    {
+
+                        if (mySelf)
+                        {
+                            health.MySelfDestroyer();
+                            AddExposionForce(transform.position);
+
+                        }
+                        else
+                        {
+                            other.GetComponent<Health>().HelthDamage(damage);
+                        }
+
+
+
 
                     }
-
-
-                    AddExposionForce(transform.position);
-
                 }
+
+
+
 
 
 
@@ -298,9 +375,9 @@ public class CraftItem : MonoBehaviour
 
 
 
-            other.GetComponent<ZombieLevel1>().WinDowAttack = false;
+            //    other.GetComponent<ZombieLevel1>().WinDowAttack = false;
 
-
+            other.GetComponent<ZombieLevel1>().agent.speed = other.GetComponent<ZombieLevel1>().standartSpeed;
 
 
 
@@ -351,7 +428,7 @@ public class CraftItem : MonoBehaviour
     }
     private void OnCollisionExit (Collision collision)
     {
-     
+
         ground = false;
     }
 }

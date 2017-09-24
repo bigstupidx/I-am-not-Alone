@@ -1,23 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
     [Header("настроки здоровья")]
 
     public float MaxHealth = 100.0f;
     public float CurHelth = 100.0f;
-
+    [Space(15)]
+    [Header("For Craft")]
     [Header("Woods,Metals,Glasses,Electrics,Interactive")]
     public int MakeMaterial;
     public GameObject CraftItemStaticForWallCrash;
-    public GameObject[] explosion;
 
-    PoolingSystem poolsistem;
-    SwitchMode buildMode;
-    CraftItem _craftItem;
-    CheckInWeaponAndCraft checkWeaponAndCraft;
+
+    [Space(15)]
+    [Header("For Player")]
+    public Image HealthPlayer;
 
     [Space(15)]
     [Header("For Ai")]
@@ -26,6 +26,12 @@ public class Health : MonoBehaviour
     public bool InterectiveBox;
     public bool OrRandom;
     public int  MoneyAi;
+
+
+    PoolingSystem poolsistem;
+    SwitchMode buildMode;
+    CraftItem _craftItem;
+    CheckInWeaponAndCraft checkWeaponAndCraft;
     private void Start ()
     {
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
@@ -36,6 +42,11 @@ public class Health : MonoBehaviour
         }
 
         poolsistem = PoolingSystem.Instance;
+        if (transform.CompareTag("Player"))
+        {
+            HealthPlayer.fillAmount = CurHelth/MaxHealth;
+
+        }
     }
     // Use this for initialization
 
@@ -53,7 +64,12 @@ public class Health : MonoBehaviour
 
 
         CurHelth -= damage;
-    
+  
+        if (transform.CompareTag("Player"))
+        {
+            HealthPlayer.fillAmount = CurHelth / MaxHealth;
+
+        }
         if (CurHelth > MaxHealth)
         {
             CurHelth = MaxHealth;
@@ -101,15 +117,15 @@ public class Health : MonoBehaviour
                 {
                     if (OrRandom)
                     {
-                        int i = Random.Range(0, 2);
+                        int i = Random.Range(0, 5);
                         int l = Random.Range(0, 5);
                  
                         MakeMaterial = l;
-                        if (i == 0)
+                        if (i == 0  || i==1)
                         {
                             checkWeaponAndCraft.CreateBoxItem(transform.position, MakeMaterial);
                         }
-                        else
+                        else if(i == 2)
                         {
                             checkWeaponAndCraft.CreateBoxWeapon(transform.position);
                         }

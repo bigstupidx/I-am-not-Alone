@@ -10,20 +10,25 @@ public class ParticleDestroyAndDestroyParenObject : MonoBehaviour {
 	void Start () {
         system = GetComponent<ParticleSystem>();
         craft = ParentObject.GetComponent<CraftItem>();
-        InvokeRepeating("DestroyPart", 0.0f, 5.0f);
+      
+            InvokeRepeating("DestroyPart", 0.0f, 5.0f); 
+        
 	}
 	
     void DestroyPart () {
-        if (!system.IsAlive())
+        if (craft.Built)
         {
-            if (craft.hisEffect)
+            if (!system.IsAlive())
             {
-                craft.hisEffectPrefabPoolForDestroy.DestroyAPS();
+                if (craft.hisEffect)
+                {
+                    craft.hisEffectPrefabPoolForDestroy.DestroyAPS();
+                }
+                craft.DefaultOptions();
+                craft.DefaultForParticle();
+                ParentObject.DestroyAPS();
+
             }
-            craft.DefaultOptions();
-            craft.DefaultForParticle();
-            ParentObject.DestroyAPS();
-    
-        }
-}
+        } 
+    }
 }

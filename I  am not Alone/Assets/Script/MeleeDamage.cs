@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeDamage : MonoBehaviour {
+public class MeleeDamage : MonoBehaviour
+{
     public float Damage;
     handWeapon handWeapon;
     private void Start ()
@@ -18,7 +19,7 @@ public class MeleeDamage : MonoBehaviour {
         catch (System.Exception)
         {
 
-            
+
         }
     }
     // Use this for initialization
@@ -40,7 +41,7 @@ public class MeleeDamage : MonoBehaviour {
                 catch (System.Exception)
                 {
 
-                    
+
                 }
 
             }
@@ -56,16 +57,20 @@ public class MeleeDamage : MonoBehaviour {
         {
 
 
-
-            try
+            if (handWeapon.l)
             {
-                other.transform.GetComponent<Health>().HelthDamage(Damage);
-            }
-            catch (System.Exception)
-            {
+                try
+                {
+                    other.transform.GetComponent<Health>().HelthDamage(Damage);
+                }
+                catch (System.Exception)
+                {
 
 
+                }
+
             }
+
 
 
 
@@ -78,18 +83,48 @@ public class MeleeDamage : MonoBehaviour {
         {
 
 
-
-            try
+            if (handWeapon.l)
             {
-                other.transform.GetComponent<Health>().HelthDamage(Damage);
+                try
+                {
+                    other.transform.GetComponent<Health>().HelthDamage(Damage);
+                }
+                catch (System.Exception)
+                {
+
+
+                }
+
             }
-            catch (System.Exception)
+
+
+
+
+        }
+    
+      if (other.transform.tag == "AI")
+        {
+
+
+            if (handWeapon.l)
             {
+                try
+                {
+                    other.transform.GetComponent<Health>().HelthDamage (Damage);
+}
+                catch (System.Exception)
+                {
 
+
+                }
 
             }
+
+
+
 
         }
     }
-
 }
+
+

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using AC.LSky;
 public class ZombieLevel1 : MonoBehaviour
 {
     public NavMeshAgent agent;
@@ -12,18 +13,34 @@ public class ZombieLevel1 : MonoBehaviour
     RaycastHit hit;
     Ray ray;
     public float timerStop;
-    public bool WinDowAttack;
+
+    public bool JointWindow;
+    public float standartSpeed;
+    //   public bool WinDowAttack;
     bool stoping;
+    public LSky _sky;
+    Health health;
     // Use this for initialization
     void Start ()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
+        InvokeRepeating("DayDestroyObject", 0.0f, 0.5f);
+        health = GetComponent<Health>();
+
+
 
     }
 
+    void DayDestroyObject ()
+    {
+        if (_sky.IsDay)
+        {
+            health.HelthDamage(0.3f);
+        }
 
+    }
     // Update is called once per frame
     void Update ()
     {
