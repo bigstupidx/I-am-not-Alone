@@ -55,6 +55,10 @@ public class SwitchMode : MonoBehaviour
 
 
     public BetweenFloor betweenFloor;
+    int wood = 0;
+    int metal = 0;
+    int glass = 0;
+    int electric = 0;
     private void Start ()
     {
 
@@ -63,12 +67,6 @@ public class SwitchMode : MonoBehaviour
 
     }
     // Update is called once per frame
-    void Update ()
-    {
-
-
-
-    }
 
     public void BuildMOdeMenu (bool rog)
     {
@@ -148,6 +146,11 @@ public class SwitchMode : MonoBehaviour
         }
         else
         {
+            for (var i = craft.Count - 1; i > -1; i--)
+            {
+                if (craft[i].ItemCraft == null)
+                    craft.RemoveAt(i);
+            }
             for (int i = 0; i < craft.Count; i++)
             {
 
@@ -201,10 +204,10 @@ public class SwitchMode : MonoBehaviour
 
     void CheckInpurChasingPower (List<ItemForbuild> _itemForbuild, CraftItem c)
     {
-        int wood = 0;
-        int metal = 0;
-        int glass = 0;
-        int electric = 0;
+        wood = 0;
+        metal = 0;
+        glass = 0;
+        electric = 0;
 
 
 
@@ -284,16 +287,22 @@ public class SwitchMode : MonoBehaviour
 
 
         }
+
+        c.BuildContruction(true);
+
+
+    }
+    public void ChangeMaterial ()
+    {
         panelGoods[0].text = (int.Parse(panelGoods[0].text) - wood).ToString();
         panelGoods[1].text = (int.Parse(panelGoods[1].text) - metal).ToString();
         panelGoods[2].text = (int.Parse(panelGoods[2].text) - glass).ToString();
         panelGoods[3].text = (int.Parse(panelGoods[3].text) - electric).ToString();
-        c.BuildContruction(true);
+
+
         wood = 0;
         metal = 0;
         glass = 0;
         electric = 0;
-
-
     }
 }

@@ -73,7 +73,7 @@ public class SelectContructionForCreate : MonoBehaviour
             {
                 itemCreate.DestroyAPS();
                 itemCreate.GetComponent<Indicator>().IndicatorSetActive(false, 0);
-                switchMode.craft.Remove(switchMode.craft.Find(obj => obj.ItemCraft.name == itemCreate.name));
+             //   switchMode.craft.Remove(switchMode.craft.Find(obj => obj.ItemCraft.name == itemCreate.name));
                 itemCreate = null;
             }
         }

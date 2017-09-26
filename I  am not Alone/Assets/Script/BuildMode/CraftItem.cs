@@ -47,6 +47,7 @@ public class CraftItem : MonoBehaviour
     [Space(5)]
     public bool DamageObject;
     public bool hisEffect;
+    public bool CustomScript;
     public GameObject hisEffectPrefab;
     public GameObject hisEffectPrefabPoolForDestroy;
     public bool mySelf;
@@ -65,25 +66,27 @@ public class CraftItem : MonoBehaviour
     public Material[] materials;
     [HideInInspector]
     public Transform pointForMenu;
-    private SwitchMode buildMode;
-    private Renderer rend;
-    private GameObject MainCanvas;
-    Indicator indicator;
+    public TurretsAi turretsAi;
     [HideInInspector]
     public Rigidbody rigid;
     [HideInInspector]
     public SelectContructionForCreate Item;
-    Health health;
-    PoolingSystem pool;
+
     [HideInInspector]
     public bool _StartHisEffect = false;
-    bool ground;
+
     public GameObject[] NavmeshLinkWindow;
     public GameObject[] NavmeshLinkWindowOffToIntoTrigger;
-    public bool ColliderTrue;
-
+    bool ColliderTrue;
+    Health health;
+    PoolingSystem pool;
     float timer;
+    bool ground;
     BoxCollider thisCollider;
+    private SwitchMode buildMode;
+    private Renderer rend;
+    private GameObject MainCanvas;
+    Indicator indicator;
     // Use this for initialization
     void Start ()
     {
@@ -153,6 +156,12 @@ public class CraftItem : MonoBehaviour
         if (DamageObject)
         {
             damage = LevelUpdate[level];
+            health.MaxHealth = health.CurHelth = LevelUpdate[level] * 10;
+        }
+        if (CustomScript)
+        {
+            turretsAi.damagePerShot = LevelUpdate[level];
+            health.MaxHealth = health.CurHelth = LevelUpdate[level] * 10;
         }
         for (int i = 0; i < transform.GetChild(0).childCount; i++)
         {
@@ -165,19 +174,23 @@ public class CraftItem : MonoBehaviour
         if (BuildStatic)
         {
             // indicator.IndicatorSetActive(true, 0);
+
             buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject, Floor));
             ground = true;
             gameObject.SetActive(false);
             transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
             if (NavmeshLinkWindow.Length != 0)
             {
-                for (int i = 0; i < NavmeshLinkWindow.Length; i++)
+                if (NavmeshLinkWindow.Length != 0)
                 {
-                    NavmeshLinkWindow[i].SetActive(true);
-                }
-                for (int i = 0; i < NavmeshLinkWindowOffToIntoTrigger.Length; i++)
-                {
-                    NavmeshLinkWindowOffToIntoTrigger[i].SetActive(true);
+                    for (int i = 0; i < NavmeshLinkWindow.Length; i++)
+                    {
+                        NavmeshLinkWindow[i].SetActive(true);
+                    }
+                    for (int i = 0; i < NavmeshLinkWindowOffToIntoTrigger.Length; i++)
+                    {
+                        NavmeshLinkWindowOffToIntoTrigger[i].SetActive(true);
+                    }
                 }
             }
         }
@@ -220,11 +233,15 @@ public class CraftItem : MonoBehaviour
                         }
                     }
                 }
-               
+                for (var i = buildMode.craft.Count - 1; i > -1; i--)
+                {
+                    if (buildMode.craft[i].ItemCraft == null)
+                        buildMode.craft.RemoveAt(i);
+                }
                 Built = true;
-                buildMode.craft.Remove(buildMode.craft.Find(obj => obj.ItemCraft.name == gameObject.name));
 
 
+                buildMode.ChangeMaterial();
                 if (!BuildStatic)
                 {
                     if (Interactive)
@@ -239,6 +256,7 @@ public class CraftItem : MonoBehaviour
                 }
                 else
                 {
+                    buildMode.craft.Remove(buildMode.craft.Find(obj => obj.ItemCraft.name == gameObject.name));
                     indicator.IndicatorSetActive(false, 0);
                     if (NavmeshLinkWindow.Length != 0)
                     {
@@ -287,7 +305,7 @@ public class CraftItem : MonoBehaviour
 
                 if (!Built)
                 {
-                    BuildContruction(Built); 
+                    BuildContruction(Built);
                 }
                 if (Built)
                 {

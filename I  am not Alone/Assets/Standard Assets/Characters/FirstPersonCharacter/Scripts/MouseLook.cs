@@ -14,7 +14,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float MinimumX = -90F;
         public float MaximumX = 90F;
         public bool smooth;
-       public float smoothTime = 5f;
+        public float smoothTime = 5f;
 
         public bool lockCursor = true;
 
@@ -22,18 +22,25 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private Quaternion m_CharacterTargetRot;
         private Quaternion m_CameraTargetRot;
         private bool m_cursorIsLocked = true;
+        public float SwitchPos;
+
+
 
         public void Init (Transform character, Transform camera)
         {
+
             m_CharacterTargetRot = character.localRotation;
             m_CameraTargetRot = camera.localRotation;
         }
 
-
         public void LookRotation (Transform character, Transform camera)
         {
+            // float   yRot = CrossPlatformInputManager.GetAxis("HorizontalRotate");
+            //float     xRot = CrossPlatformInputManager.GetAxis("VerticalRotate");
             float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
-            float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
+            float xRot = CrossPlatformInputManager.GetAxis("Mouse Y");
+            var angle = Mathf.Atan2(yRot * SwitchPos, xRot * SwitchPos) * Mathf.Rad2Deg;
+            //  m_CharacterTargetRot = Quaternion.Euler(0, angle, 0);
 
             m_CharacterTargetRot *= Quaternion.Euler(0f, yRot, 0f);
             m_CameraTargetRot *= Quaternion.Euler(-xRot, 0f, 0f);

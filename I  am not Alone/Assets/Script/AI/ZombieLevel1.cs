@@ -6,12 +6,11 @@ using AC.LSky;
 public class ZombieLevel1 : MonoBehaviour
 {
     public NavMeshAgent agent;
-    NavMeshObstacle obstacle;
-    Transform player;
+
     public bool ThingsDamage;
+    public float PlayerDamage;
     public float damage;
-    RaycastHit hit;
-    Ray ray;
+    public Transform newTraget;
     public float timerStop;
 
     public bool JointWindow;
@@ -20,6 +19,10 @@ public class ZombieLevel1 : MonoBehaviour
     bool stoping;
     public LSky _sky;
     Health health;
+    RaycastHit hit;
+    Ray ray;
+    NavMeshObstacle obstacle;
+    Transform player;
     // Use this for initialization
     void Start ()
     {
@@ -37,7 +40,7 @@ public class ZombieLevel1 : MonoBehaviour
     {
         if (_sky.IsDay)
         {
-            health.HelthDamage(0.3f);
+            health.HelthDamage(0.9f);
         }
 
     }
@@ -79,7 +82,7 @@ public class ZombieLevel1 : MonoBehaviour
                     if (hit.transform.CompareTag("Player"))
 
                     {
-                        hit.transform.GetComponent<Health>().HelthDamage(damage);
+                        hit.transform.GetComponent<Health>().HelthDamage(PlayerDamage);
 
 
                     }
@@ -104,7 +107,13 @@ public class ZombieLevel1 : MonoBehaviour
                 // If we are not in range, become an agent again
                 obstacle.enabled = false;
                 agent.enabled = true;
-                agent.SetDestination(player.position);
+                if (!newTraget)
+                {
+                    agent.SetDestination(player.position);
+                }                else
+                {
+                    agent.SetDestination(newTraget.position);
+                }
             }
 
 

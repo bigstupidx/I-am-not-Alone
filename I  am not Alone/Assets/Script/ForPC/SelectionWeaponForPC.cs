@@ -7,7 +7,7 @@ public class SelectionWeaponForPC : MonoBehaviour {
     public WeaponController weaponController;
     // Use this for initialization
 
- 
+    public bool Fire1;
 
     // Update is called once per frame
     void Update () {
@@ -39,5 +39,14 @@ public class SelectionWeaponForPC : MonoBehaviour {
     public void Weapon3 ()
     {
         weaponController.SelectionWeapon(2);
+    }
+
+    public void WeaponPlayUp ()
+    {
+        Fire1 = false;
+    }
+    public void WeaponPlayDown ()
+    {
+        Fire1 = true;
     }
 }

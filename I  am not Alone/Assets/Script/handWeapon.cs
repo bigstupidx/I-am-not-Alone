@@ -26,6 +26,7 @@ public class handWeapon : MonoBehaviour
     public List<UpdateWeapon> updateWeapon = new List<UpdateWeapon>();
     WeaponController _weaponController;
     Transform AdvancedPoolingSystem;
+    SelectionWeaponForPC selectionWeaponPlay;
     // Use this for initialization
     public bool l;
 
@@ -35,6 +36,7 @@ public class handWeapon : MonoBehaviour
         anim = GetComponent<Animator>();
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
+        selectionWeaponPlay = GameObject.Find("WeaponController").GetComponent<SelectionWeaponForPC>();
         _weaponController.Ammunition(WeaponAmmunition);
     }
     // Update is called once per frame
@@ -54,13 +56,14 @@ public class handWeapon : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(0))
+        //if (!selectionWeaponPlay.Fire1)
+        if(Input.GetMouseButtonUp(0))
         {
             l = false;
             anim.SetBool("attack", false);
         }
+        //if (selectionWeaponPlay.Fire1)
         if (Input.GetMouseButtonDown(0))
-
         {
             l = true;
             anim.SetBool("attack", true);

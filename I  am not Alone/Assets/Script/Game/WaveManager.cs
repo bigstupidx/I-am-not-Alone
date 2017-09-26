@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using AC.LSky;
 
 [System.Serializable]
@@ -58,13 +57,18 @@ public class WaveManager : MonoBehaviour
     bool startWave;
     public bool harfMode = false;
     SwitchMode switchMode;
-    GameObject[] lightAllScene;
+    public List<GameObject> lightAllScene = new List<GameObject>();
     public CheckInWeaponAndCraft _weaponcraft;
 
     // Use this for initialization
     void Start ()
     {
-        lightAllScene = GameObject.FindGameObjectsWithTag("LightInscene");
+       GameObject[] light =GameObject.FindGameObjectsWithTag("LightInscene");
+        for (int i = 0; i < light.Length; i++)
+        {
+            lightAllScene.Add(light[i]);
+        }
+   
         switchMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -98,7 +102,7 @@ public class WaveManager : MonoBehaviour
                 night = false;
                 startWave = true;
                 switchMode.BuildMOdeMenu(false);
-                for (int i = 0; i < lightAllScene.Length; i++)
+                for (int i = 0; i < lightAllScene.Count; i++)
                 {
                     lightAllScene[i].GetComponent<Light>().enabled = true;
                 }
@@ -111,7 +115,13 @@ public class WaveManager : MonoBehaviour
         {
             if (day)
             {
-                for (int i = 0; i < lightAllScene.Length; i++)
+
+                for (var i = lightAllScene.Count - 1; i > -1; i--)
+                {
+                    if (lightAllScene[i] == null)
+                        lightAllScene.RemoveAt(i);
+                }
+                for (int i = 0; i < lightAllScene.Count; i++)
                 {
                     lightAllScene[i].GetComponent<Light>().enabled = false;
                 }
@@ -257,7 +267,7 @@ public class WaveManager : MonoBehaviour
                     {
                         int li = Random.Range(0, spawerZombie.Count);
 
-                        spawerZombie[li].CreateZombie(wave[w].ZombiePref[i].gameObject,_lsky);
+                        spawerZombie[li].CreateZombie(wave[w].ZombiePref[i].gameObject, _lsky);
 
                         waveParamsHard[i].TimerCreate = waveParamsHard[i].InstantiationTimer;
 

@@ -65,11 +65,12 @@ public class ItemParams : MonoBehaviour
                 {
                     if (ItemCraft)
                     {
-                        db.InsertDBWeapon(weaponName.text, 1, category);
+                    
+                        db.InsertDBCraft(weaponName.text, 1);
                     }
                     else
                     {
-                        db.InsertDBCraft(weaponName.text, 1);
+                        db.InsertDBWeapon(weaponName.text, 1, category);
                     }
                     levelItem += 1;
                     MyMoney.text = (int.Parse(MyMoney.text) - int.Parse(coast.text)).ToString();

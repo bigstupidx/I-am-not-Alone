@@ -37,19 +37,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     {
         pool = PoolingSystem.Instance;
     }
-    private void Update ()
-    {
-        //if (Input.GetButtonDown("Jump"))
-        //{
 
-        //    int i = Random.Range(0, WeaponBought.Count);
-        //    GameObject box = pool.InstantiateAPS("BoxWithWeapon", new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), Quaternion.identity);
-
-        //    box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought[i].category;
-        //    box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought[i].nameWeapon;
-        //    box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought[i].levelWeapon;
-        //}
-    }
 
 
     public void PlusAndUpdateMoneyPlayer ()
@@ -86,7 +74,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         box.transform.GetChild(0).GetComponent<BoxWeapon>().WeaponAmunition = 1;
     }
 
-    public void OldWeapon (string nameWeapon, BulletSystem bul,handWeapon hand, Vector3 pos)
+    public void OldWeapon (string nameWeapon, BulletSystem bul, handWeapon hand, Vector3 pos)
     {
         GameObject box = pool.InstantiateAPS("BoxWithMyWeapon", pos, Quaternion.identity);
 
@@ -104,6 +92,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     }
     void AddItemStart ()
     {
+
         for (int i = 0; i < CraftItemBought.Count; i++)
         {
             if (CraftItemBought[i] != null)

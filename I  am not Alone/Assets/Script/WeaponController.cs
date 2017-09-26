@@ -16,7 +16,11 @@ public class WeaponController : MonoBehaviour
     PoolingSystem pool;
     Transform AdvancedPoolingSystem;
     CheckInWeaponAndCraft _checkInWeaponCraft;
+    SelectionWeaponForPC selectionWeapon;
     GameObject player;
+    public GameObject WeaponImageMelee;
+    public GameObject WeaponImageOne;
+    public GameObject WeaponImageTwo;
     private void OnEnable ()
     {
         pool = PoolingSystem.Instance;
@@ -30,6 +34,7 @@ public class WeaponController : MonoBehaviour
         pool = PoolingSystem.Instance;
         SelectionWeapon(0);
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
+        selectionWeapon = GetComponent<SelectionWeaponForPC>();
     }
 
 
@@ -80,7 +85,7 @@ public class WeaponController : MonoBehaviour
                     {
                          RemoveWeapon(Hand.transform.GetChild(0).GetChild(0), nameWeapon, category);
                         AddWeapon(nameWeapon, Hand.transform.GetChild(0), level, category, amunition);
-                   
+                        SelectionWeapon(0);
                     }
                     else
                     {
@@ -106,12 +111,14 @@ public class WeaponController : MonoBehaviour
             if (WeaponOne.transform.childCount == 0)
             {
                 AddWeapon(nameWeapon, WeaponOne.transform, level, category,amunition);
-
+                WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
+                SelectionWeapon(1);
 
                 return;
             }
             else
             {
+                selectionWeapon.Weapon1();
                 if (WeaponOne.transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
                 {
 
@@ -120,6 +127,7 @@ public class WeaponController : MonoBehaviour
                     {
                         RemoveWeapon(WeaponOne.transform.GetChild(0), nameWeapon, category);
                         AddWeapon(nameWeapon, WeaponOne.transform, level, category, amunition);
+                        WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
                     }
                     else
                     {
@@ -131,11 +139,12 @@ public class WeaponController : MonoBehaviour
             if (WeaponTwo.transform.childCount == 0)
             {
                 AddWeapon(nameWeapon, WeaponTwo.transform, level, category,amunition);
-
+                WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
                 return;
             }
             else
             {
+                
                 if (WeaponTwo.transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
                 {
 
@@ -144,6 +153,7 @@ public class WeaponController : MonoBehaviour
                     {
                         RemoveWeapon(WeaponTwo.transform.GetChild(0), nameWeapon, category);
                         AddWeapon(nameWeapon, WeaponTwo.transform, level, category, amunition);
+                        WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
                     }
                     else
                     {
@@ -153,6 +163,7 @@ public class WeaponController : MonoBehaviour
                 }
                 else
                 {
+                    SelectionWeapon(2);
                     RemoveWeapon(WeaponTwo.transform.GetChild(0), nameWeapon,category);
 
                     AddWeapon(nameWeapon, WeaponTwo.transform, level, category,amunition);

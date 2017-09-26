@@ -44,25 +44,32 @@ public class BulletSystem : MonoBehaviour
     bool l;
 
     WeaponController _weaponController;
+    SelectionWeaponForPC selectionWeaponPlay;
     Transform AdvancedPoolingSystem;
     float timer;
-
+    float timeBetweenBullets = 0.15f;
+    float effectsDisplayTime = 0.2f;
+    Light gunLight;
     private void OnEnable ()
     {
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
+        selectionWeaponPlay = GameObject.Find("WeaponController").GetComponent<SelectionWeaponForPC>();
+        gunLight = GetComponent<Light>();
         UpdateWeapon();
         timer = 0;
         _weaponController.Ammunition(WeaponAmmunition);
         l = false;
     }
+
     private void Update ()
     {
 
-
+        timer += Time.deltaTime;
         BulettAttack();
         if (l)
         {
+
             timer = Time.deltaTime;
             WeaponAmmunition -= timer * intervalWeaponAmmunition;
 
@@ -82,13 +89,20 @@ public class BulletSystem : MonoBehaviour
     public void BulettAttack ()
     {
         //  BulletVisualMaterial(bulletDamage);
+        //if (!selectionWeaponPlay.Fire1)
         if (Input.GetMouseButtonUp(0))
         {
             bullet.Stop();
             l = false;
         }
+        //if (selectionWeaponPlay.Fire1)
         if (Input.GetMouseButtonDown(0))
         {
+            if (timer >= timeBetweenBullets && Time.timeScale != 0)
+            {
+                gunLight.enabled = true;
+                timer = 0f;
+            }
 
             l = true;
             bullet.Play();
@@ -96,12 +110,22 @@ public class BulletSystem : MonoBehaviour
         }
 
 
+        if (timer >= timeBetweenBullets * effectsDisplayTime)
+        {
+            // ... disable the effects.
+            DisableEffects();
+        }
 
         //  Debug.Log("play");
 
     }
 
+    public void DisableEffects ()
+    {
+        // Disable the line renderer and the light.
 
+        gunLight.enabled = false;
+    }
     void UpdateWeapon ()
     {
         intervalWeaponAmmunition = updateWeapon[level].intervalWeaponAmmunition;

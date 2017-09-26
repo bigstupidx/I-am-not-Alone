@@ -18,14 +18,14 @@ public class Health : MonoBehaviour
     [Space(15)]
     [Header("For Player")]
     public Image HealthPlayer;
-
+    public ParticleSystem blood;
     [Space(15)]
     [Header("For Ai")]
     public bool WeaponBox;
     public bool MaterialBox;
     public bool InterectiveBox;
     public bool OrRandom;
-    public int  MoneyAi;
+    public int MoneyAi;
 
 
     PoolingSystem poolsistem;
@@ -44,7 +44,7 @@ public class Health : MonoBehaviour
         poolsistem = PoolingSystem.Instance;
         if (transform.CompareTag("Player"))
         {
-            HealthPlayer.fillAmount = CurHelth/MaxHealth;
+            HealthPlayer.fillAmount = CurHelth / MaxHealth;
 
         }
     }
@@ -64,12 +64,17 @@ public class Health : MonoBehaviour
 
 
         CurHelth -= damage;
-  
+
         if (transform.CompareTag("Player"))
         {
             HealthPlayer.fillAmount = CurHelth / MaxHealth;
-
+            blood.Play();
         }
+        if (transform.CompareTag("AI"))
+        {
+            blood.Play();
+        }
+
         if (CurHelth > MaxHealth)
         {
             CurHelth = MaxHealth;
@@ -108,24 +113,24 @@ public class Health : MonoBehaviour
 
                 //_craftItem = GetComponent<CraftItem>();
                 //_craftItem.DefaultOptions();
-               poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
+                poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
                 //this.gameObject.DestroyAPS();
                 //_craftItem._StartHisEffect = false;
                 checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + MoneyAi).ToString();
                 int r = Random.Range(0, 2);
-                if (r==1)
+                if (r == 1)
                 {
                     if (OrRandom)
                     {
-                        int i = Random.Range(0, 5);
-                        int l = Random.Range(0, 5);
-                 
+                        int i = Random.Range(0, 10);
+                        int l = Random.Range(0, 4);
+
                         MakeMaterial = l;
-                        if (i == 0  || i==1)
+                        if (i == 0 || i == 1)
                         {
                             checkWeaponAndCraft.CreateBoxItem(transform.position, MakeMaterial);
                         }
-                        else if(i == 2)
+                        else if (i >= 2 && i <= 4)
                         {
                             checkWeaponAndCraft.CreateBoxWeapon(transform.position);
                         }
@@ -144,7 +149,7 @@ public class Health : MonoBehaviour
                     if (InterectiveBox)
                     {
                         checkWeaponAndCraft.CreateBoxInterActive(transform.position);
-                    } 
+                    }
                 }
                 // checkWeaponAndCraft.CreateBoxInterActive(transform.position);
                 Destroy(gameObject);
@@ -154,7 +159,7 @@ public class Health : MonoBehaviour
             {
                 CraftItemStaticForWallCrash.SetActive(true);
                 Destroy(gameObject);
-         
+
 
 
             }
