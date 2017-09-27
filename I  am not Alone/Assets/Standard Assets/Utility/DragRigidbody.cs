@@ -1,113 +1,123 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityStandardAssets.Utility
+
+public class DragRigidbody : MonoBehaviour
 {
-    public class DragRigidbody : MonoBehaviour
+    
+    const float k_Spring = 100.0f;
+    const float k_Damper = 20.0f;
+    const float k_Drag = 10.0f;
+    const float k_AngularDrag = 5.0f;
+    const float k_Distance = 0.2f;
+    const bool k_AttachToCenterOfMass = false;
+    bool doorClose;
+    private SpringJoint m_SpringJoint;
+    public Material closeMaterial;
+    public Material openMaterial;
+
+    private void Update ()
     {
-        const float k_Spring = 50.0f;
-        const float k_Damper = 5.0f;
-        const float k_Drag = 10.0f;
-        const float k_AngularDrag = 5.0f;
-        const float k_Distance = 0.2f;
-        const bool k_AttachToCenterOfMass = false;
-        bool doorClose;
-        private SpringJoint m_SpringJoint;
-
-
-        private void Update ()
+        // Make sure the user pressed the mouse down
+        if (!Input.GetMouseButtonDown(0))
         {
-            // Make sure the user pressed the mouse down
-            if (!Input.GetMouseButtonDown(0))
-            {
-                return;
-            }
+            return;
+        }
 
-            var mainCamera = FindCamera();
+        var mainCamera = FindCamera();
 
-            // We need to actually hit an object
-            RaycastHit hit = new RaycastHit();
+        // We need to actually hit an object
+      
+        RaycastHit hit = new RaycastHit();
 
-            if (
-                !Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition).origin,
-                                 mainCamera.ScreenPointToRay(Input.mousePosition).direction, out hit, 100,
-                                 Physics.DefaultRaycastLayers))
+        if (
+            !Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition).origin,
+                             mainCamera.ScreenPointToRay(Input.mousePosition).direction, out hit, 100,
+                             Physics.DefaultRaycastLayers))
+        {
+            return;
+        }
+        
+        if (hit.transform.CompareTag("Things"))
+        {
+            if (hit.transform.name.Equals("Door"))
             {
-                return;
-            }
-            if (hit.transform.CompareTag("Things"))
-            {
-                if (hit.transform.name.Equals("Door"))
+             
+                doorClose = !doorClose;
+                if (doorClose)
                 {
-
-                    doorClose = !doorClose;
-
-                    hit.rigidbody.isKinematic = doorClose;
-                    return;
+                    hit.transform.GetComponent<Renderer>().sharedMaterial = closeMaterial;
                 }
-            }
-            // We need to hit a rigidbody that is not kinematic
-
-            if (!hit.rigidbody || hit.rigidbody.isKinematic)
-            {
-
-
+                else
+                {
+                    hit.transform.GetComponent<Renderer>().sharedMaterial = openMaterial;
+                }
+                hit.rigidbody.isKinematic = doorClose;
                 return;
             }
+        }
+        // We need to hit a rigidbody that is not kinematic
 
-            if (!m_SpringJoint)
-            {
-                var go = new GameObject("Rigidbody dragger");
-                Rigidbody body = go.AddComponent<Rigidbody>();
-                m_SpringJoint = go.AddComponent<SpringJoint>();
-                body.isKinematic = true;
-            }
+        if (!hit.rigidbody || hit.rigidbody.isKinematic)
+        {
 
-            m_SpringJoint.transform.position = hit.point;
 
-            m_SpringJoint.anchor = Vector3.zero;
-
-            m_SpringJoint.spring = k_Spring;
-            m_SpringJoint.damper = k_Damper;
-            m_SpringJoint.maxDistance = k_Distance;
-            m_SpringJoint.connectedBody = hit.rigidbody;
-
-            StartCoroutine("DragObject", hit.distance);
+            return;
         }
 
-
-        private IEnumerator DragObject (float distance)
+        if (!m_SpringJoint)
         {
-            var oldDrag = m_SpringJoint.connectedBody.drag;
-            var oldAngularDrag = m_SpringJoint.connectedBody.angularDrag;
-            m_SpringJoint.connectedBody.drag = k_Drag;
-            m_SpringJoint.connectedBody.angularDrag = k_AngularDrag;
-            var mainCamera = FindCamera();
-            while (Input.GetMouseButton(0))
-            {
-                var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-                m_SpringJoint.transform.position = ray.GetPoint(distance);
-
-                yield return null;
-            }
-            if (m_SpringJoint.connectedBody)
-            {
-                m_SpringJoint.connectedBody.drag = oldDrag;
-                m_SpringJoint.connectedBody.angularDrag = oldAngularDrag;
-                m_SpringJoint.connectedBody = null;
-            }
+            var go = new GameObject("Rigidbody dragger");
+            Rigidbody body = go.AddComponent<Rigidbody>();
+            m_SpringJoint = go.AddComponent<SpringJoint>();
+            body.isKinematic = true;
         }
 
+        m_SpringJoint.transform.position = hit.point;
 
-        private Camera FindCamera ()
+        m_SpringJoint.anchor = Vector3.zero;
+
+        m_SpringJoint.spring = k_Spring;
+        m_SpringJoint.damper = k_Damper;
+        m_SpringJoint.maxDistance = k_Distance;
+        m_SpringJoint.connectedBody = hit.rigidbody;
+
+        StartCoroutine("DragObject", hit.distance);
+    }
+
+
+    private IEnumerator DragObject (float distance)
+    {
+        var oldDrag = m_SpringJoint.connectedBody.drag;
+        var oldAngularDrag = m_SpringJoint.connectedBody.angularDrag;
+        m_SpringJoint.connectedBody.drag = k_Drag;
+        m_SpringJoint.connectedBody.angularDrag = k_AngularDrag;
+        var mainCamera = FindCamera();
+        while (Input.GetMouseButton(0))
         {
-            if (GetComponent<Camera>())
-            {
-                return GetComponent<Camera>();
-            }
+            var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            m_SpringJoint.transform.position = ray.GetPoint(distance);
 
-            return Camera.main;
+            yield return null;
+        }
+        if (m_SpringJoint.connectedBody)
+        {
+            m_SpringJoint.connectedBody.drag = oldDrag;
+            m_SpringJoint.connectedBody.angularDrag = oldAngularDrag;
+            m_SpringJoint.connectedBody = null;
         }
     }
+
+
+    private Camera FindCamera ()
+    {
+        if (GetComponent<Camera>())
+        {
+            return GetComponent<Camera>();
+        }
+
+        return Camera.main;
+    }
 }
+

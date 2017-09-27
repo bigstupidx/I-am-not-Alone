@@ -327,7 +327,7 @@ public class CraftItem : MonoBehaviour
                         {
                             other.GetComponent<ZombieLevel1>().timerStop = 1.0f;
                             other.GetComponent<ZombieLevel1>().TransformRotation(transform.parent);
-                            health.HelthDamage(0.05f);
+                            health.HelthDamage(0.05f,false);
                             NavmeshLinkWindowOffToIntoTrigger[i].SetActive(false);
                         }
 
@@ -349,7 +349,7 @@ public class CraftItem : MonoBehaviour
                     if (_StartHisEffect)
                     {
 
-                        other.GetComponent<Health>().HelthDamage(damage);
+                        other.GetComponent<Health>().HelthDamage(damage, false);
                     }
                 }
                 else
@@ -365,7 +365,7 @@ public class CraftItem : MonoBehaviour
                         }
                         else
                         {
-                            other.GetComponent<Health>().HelthDamage(damage);
+                            other.GetComponent<Health>().HelthDamage(damage, false);
                         }
 
 
@@ -429,7 +429,7 @@ public class CraftItem : MonoBehaviour
         {
             if (hit.GetComponent<Health>() != null)
             {
-                hit.GetComponent<Health>().HelthDamage(damage);
+                hit.GetComponent<Health>().HelthDamage(damage, false);
 
             }
             if (hit.GetComponent<Rigidbody>() != null)

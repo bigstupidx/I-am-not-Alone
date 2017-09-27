@@ -59,7 +59,7 @@ public class Health : MonoBehaviour
 
     }
 
-    public void HelthDamage (float damage)
+    public void HelthDamage (float damage, bool player)
     {
 
 
@@ -116,7 +116,11 @@ public class Health : MonoBehaviour
                 poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
                 //this.gameObject.DestroyAPS();
                 //_craftItem._StartHisEffect = false;
-                checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + MoneyAi).ToString();
+                if (player)
+                {
+                    checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + MoneyAi).ToString();
+                }
+        
                 int r = Random.Range(0, 2);
                 if (r == 1)
                 {
@@ -157,7 +161,10 @@ public class Health : MonoBehaviour
             }
             if (transform.CompareTag("WallCrash"))
             {
-                CraftItemStaticForWallCrash.SetActive(true);
+                if (CraftItemStaticForWallCrash)
+                {
+                    CraftItemStaticForWallCrash.SetActive(true); 
+                }
                 Destroy(gameObject);
 
 

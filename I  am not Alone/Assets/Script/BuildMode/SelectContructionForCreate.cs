@@ -18,11 +18,12 @@ public class SelectContructionForCreate : MonoBehaviour
     public GameObject itemCreate;
     [HideInInspector]
     public Text NameDinamicCraftItem;
-    Transform player;
+    Transform instanceCreatePlayer;
     [HideInInspector]
     public Transform counterText;
     private Toggle toggle;
     public Text level;
+
     // Use this for initialization
     void Start ()
     {
@@ -31,7 +32,8 @@ public class SelectContructionForCreate : MonoBehaviour
         switchMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
         panelChooseConstruction = GameObject.Find("panelChooseConstruction");
         pool = PoolingSystem.Instance;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        instanceCreatePlayer = GameObject.FindGameObjectWithTag("Player").transform.Find("instanceCreate");
+   
         toggle = GetComponent<Toggle>();
     }
 
@@ -56,7 +58,9 @@ public class SelectContructionForCreate : MonoBehaviour
         {
             if (itemCreate == null)
             {
-                itemCreate = pool.InstantiateAPS(NameDinamicCraftItem.text, new Vector3(player.position.x + 0.6f, player.position.y, player.position.z + 0.6f), player.rotation);
+                itemCreate = pool.InstantiateAPS(NameDinamicCraftItem.text,new Vector3( instanceCreatePlayer.transform.position.x, instanceCreatePlayer.transform.position.y + 0.5f, instanceCreatePlayer.transform.position.z), instanceCreatePlayer.rotation);
+               
+
                 switchMode.CraftItemBuildNowDinamic = itemCreate.GetComponent<CraftItem>();
                 if (!itemCreate.GetComponent<CraftItem>().Interactive)
                 {
@@ -73,7 +77,7 @@ public class SelectContructionForCreate : MonoBehaviour
             {
                 itemCreate.DestroyAPS();
                 itemCreate.GetComponent<Indicator>().IndicatorSetActive(false, 0);
-             //   switchMode.craft.Remove(switchMode.craft.Find(obj => obj.ItemCraft.name == itemCreate.name));
+                //   switchMode.craft.Remove(switchMode.craft.Find(obj => obj.ItemCraft.name == itemCreate.name));
                 itemCreate = null;
             }
         }

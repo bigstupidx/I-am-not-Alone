@@ -14,6 +14,7 @@ public class ZombieLevel1 : MonoBehaviour
     public float timerStop;
 
     public bool JointWindow;
+    public bool DestoyAll;
     public float standartSpeed;
     //   public bool WinDowAttack;
     bool stoping;
@@ -23,6 +24,7 @@ public class ZombieLevel1 : MonoBehaviour
     Ray ray;
     NavMeshObstacle obstacle;
     Transform player;
+
     // Use this for initialization
     void Start ()
     {
@@ -40,7 +42,7 @@ public class ZombieLevel1 : MonoBehaviour
     {
         if (_sky.IsDay)
         {
-            health.HelthDamage(0.9f);
+            health.HelthDamage(0.9f,false);
         }
 
     }
@@ -68,26 +70,39 @@ public class ZombieLevel1 : MonoBehaviour
                     if (hit.transform.CompareTag("Things"))
 
                     {
-                        hit.transform.GetComponent<Health>().HelthDamage(damage);
+                        hit.transform.GetComponent<Health>().HelthDamage(damage,false);
 
 
                     }
                     if (hit.transform.CompareTag("CraftMode"))
 
                     {
-                        hit.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage);
+                        hit.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false);
 
 
                     }
-                    if (hit.transform.CompareTag("Player"))
+                   
+                }
+           
+                if (hit.transform.CompareTag("Player"))
 
-                    {
-                        hit.transform.GetComponent<Health>().HelthDamage(PlayerDamage);
+                {
+                    hit.transform.GetComponent<Health>().HelthDamage(PlayerDamage, false);
 
 
-                    }
                 }
 
+                if (DestoyAll)
+                {
+                    if (hit.transform.CompareTag("WallCrash"))
+
+                    {
+                        hit.transform.GetComponent<Health>().HelthDamage(damage, false);
+
+
+                    }
+                    
+                }
             }
 
 

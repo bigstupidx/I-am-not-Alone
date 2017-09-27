@@ -25,7 +25,7 @@ public class MyParticleCollision : MonoBehaviour
 
             if (other.transform.root.name != transform.name)
             {
-                other.GetComponent<Health>().HelthDamage(bulletDamage);
+                other.GetComponent<Health>().HelthDamage(bulletDamage, true);
 
             }
 
@@ -43,7 +43,7 @@ public class MyParticleCollision : MonoBehaviour
 
             if (other.transform.root.name != transform.name)
             {
-                other.GetComponent<Health>().HelthDamage(bulletDamage);
+                other.GetComponent<Health>().HelthDamage(bulletDamage, true);
 
 
             }
@@ -56,7 +56,7 @@ public class MyParticleCollision : MonoBehaviour
            // pool.InstantiateAPS("BloodSprayEffect", other.transform.position, Quaternion.identity);
             if (other.transform.root.name != transform.name)
             {
-                other.GetComponent<Health>().HelthDamage(bulletDamage);
+                other.GetComponent<Health>().HelthDamage(bulletDamage, true);
                 int l = Random.Range(0, 30);
                 if (l ==7)
                 {
@@ -73,7 +73,7 @@ public class MyParticleCollision : MonoBehaviour
 
             if (other.transform.root.name != transform.name)
             {
-                other.GetComponent<Health>().HelthDamage(bulletDamage);
+                other.GetComponent<Health>().HelthDamage(bulletDamage, true);
 
 
             }
@@ -86,7 +86,7 @@ public class MyParticleCollision : MonoBehaviour
             
             if (other.transform.root.name != transform.name)
             {
-                other.GetComponent<Health>().HelthDamage(bulletDamage);
+                other.GetComponent<Health>().HelthDamage(bulletDamage, true);
 
 
             }

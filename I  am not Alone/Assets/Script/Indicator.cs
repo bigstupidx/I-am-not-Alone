@@ -30,7 +30,7 @@ public class Indicator : MonoBehaviour
     // Use this for initialization
     void Awake ()
     {
-        canvas = GameObject.Find("MainCanvas").GetComponent<Canvas>();
+        canvas = GameObject.Find("HUDCanvas").GetComponent<Canvas>();
         item = GetComponent<CraftItem>();
         switchMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
         _targetSpriteOfPool = Instantiate(TargetSprite, offScreen, Quaternion.Euler(new Vector3(0, 0, 0))) as Image;

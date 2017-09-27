@@ -15,8 +15,8 @@ public class TurretsAi : MonoBehaviour
     public AudioSource gunAudio;                           // Reference to the audio source.
     public Light gunLight;                                 // Reference to the light component.
     public Transform Zombie;
-    public GameObject turret;
- 
+
+    public LayerMask layers;
     float effectsDisplayTime = 0.2f;                // The proportion of the timeBetweenBullets that the effects will display for.
     float timer;                                    // A timer to determine when to fire.
     Ray shootRay = new Ray();                       // A ray from the gun end forwards.
@@ -29,7 +29,7 @@ public class TurretsAi : MonoBehaviour
     void Awake ()
     {
         // Create a layer mask for the Shootable layer.
-     
+
 
         // Set up the references.
 
@@ -39,7 +39,10 @@ public class TurretsAi : MonoBehaviour
         //faceLight = GetComponentInChildren<Light> ();
 
     }
+    private void Start ()
+    {
 
+    }
 
     void Update ()
     {
@@ -47,8 +50,7 @@ public class TurretsAi : MonoBehaviour
         timer += Time.deltaTime;
         if (Zombie)
         {
-            Headray.origin = HeadTurrets.transform.position;
-            Headray.direction = HeadTurrets.transform.forward;
+
             if (m_lastPOsition != Zombie.transform.position)
             {
                 m_lastPOsition = Zombie.position;
@@ -61,10 +63,12 @@ public class TurretsAi : MonoBehaviour
                 HeadTurrets.transform.rotation = Quaternion.RotateTowards(HeadTurrets.transform.rotation, m_lookRotation, 100 * Time.deltaTime);
 
             }
-
+            Headray.origin = HeadTurrets.transform.GetChild(1).transform.position;
+            Headray.direction = HeadTurrets.transform.GetChild(1).transform.forward;
+            Debug.DrawRay(Headray.origin, Headray.direction * 500, Color.red);
             if (Physics.Raycast(Headray, out headHit, 500))
             {
-
+              
                 if (headHit.transform.CompareTag("AI"))
                 {
 
@@ -127,11 +131,11 @@ public class TurretsAi : MonoBehaviour
 
         // Enable the line renderer and set it's first position to be the end of the gun.
         gunLine.enabled = true;
-        gunLine.SetPosition(0, HeadTurrets.transform.position);
+        gunLine.SetPosition(0, HeadTurrets.transform.GetChild(1).position);
 
         // Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
-        shootRay.origin = HeadTurrets.transform.position;
-        shootRay.direction = HeadTurrets.transform.forward;
+        shootRay.origin = HeadTurrets.transform.GetChild(1).position;
+        shootRay.direction = HeadTurrets.transform.GetChild(1).forward;
 
 
         // Perform the raycast against gameobjects on the shootable layer and if it hits something...
@@ -140,7 +144,7 @@ public class TurretsAi : MonoBehaviour
 
             if (shootHit.transform.CompareTag("AI"))
             {
-                shootHit.transform.GetComponent<Health>().HelthDamage(damagePerShot);
+                shootHit.transform.GetComponent<Health>().HelthDamage(damagePerShot, true);
 
 
 
@@ -148,7 +152,7 @@ public class TurretsAi : MonoBehaviour
             }
             if (shootHit.transform.CompareTag("Player"))
             {
-                shootHit.transform.GetComponent<Health>().HelthDamage(damagePerShot);
+                shootHit.transform.GetComponent<Health>().HelthDamage(damagePerShot,false);
 
 
 
@@ -170,9 +174,9 @@ public class TurretsAi : MonoBehaviour
         if (other.CompareTag("AI"))
         {
             int l = Random.Range(0, 3);
-            if (l ==0)
+            if (l == 0)
             {
-                Debug.Log(true);
+         
                 other.GetComponent<ZombieLevel1>().newTraget = HeadTurrets.transform.parent.parent;
             }
 
@@ -186,11 +190,8 @@ public class TurretsAi : MonoBehaviour
     {
         if (other.CompareTag("AI"))
         {
-       
-            if (true)
-            {
-                other.GetComponent<ZombieLevel1>(); 
-            }
+
+   
             Zombie = other.transform;
 
 

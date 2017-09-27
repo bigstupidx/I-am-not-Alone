@@ -36,7 +36,7 @@ public class MeleeDamage : MonoBehaviour
             {
                 try
                 {
-                    other.transform.GetComponent<Health>().HelthDamage(Damage);
+                    other.transform.GetComponent<Health>().HelthDamage(Damage,true);
                 }
                 catch (System.Exception)
                 {
@@ -61,7 +61,7 @@ public class MeleeDamage : MonoBehaviour
             {
                 try
                 {
-                    other.transform.GetComponent<Health>().HelthDamage(Damage);
+                    other.transform.GetComponent<Health>().HelthDamage(Damage, true);
                 }
                 catch (System.Exception)
                 {
@@ -87,7 +87,7 @@ public class MeleeDamage : MonoBehaviour
             {
                 try
                 {
-                    other.transform.GetComponent<Health>().HelthDamage(Damage);
+                    other.transform.GetComponent<Health>().HelthDamage(Damage, true);
                 }
                 catch (System.Exception)
                 {
@@ -110,7 +110,7 @@ public class MeleeDamage : MonoBehaviour
             {
                 try
                 {
-                    other.transform.GetComponent<Health>().HelthDamage (Damage);
+                    other.transform.GetComponent<Health>().HelthDamage (Damage, true);
 }
                 catch (System.Exception)
                 {

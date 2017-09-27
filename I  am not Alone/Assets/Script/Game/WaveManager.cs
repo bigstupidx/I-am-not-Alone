@@ -284,5 +284,9 @@ public class WaveManager : MonoBehaviour
         }
 
     }
+    public void StartWave ()
+    {
+        _lskyTod.dayInSeconds = 4;
+    }
 }
 

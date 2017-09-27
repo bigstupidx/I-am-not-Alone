@@ -27,7 +27,7 @@ public class SwitchMode : MonoBehaviour
 {
 
     public GameObject BuildMode;
-    public GameObject PlayerMode;
+
     public GameObject ButtonCraft;
     public GameObject Hand;
     public GameObject HandWeapon;
@@ -74,7 +74,7 @@ public class SwitchMode : MonoBehaviour
         {
 
             BuildMode.SetActive(true);
-            PlayerMode.SetActive(false);
+
             //Hand.SetActive(false);
             //HandWeapon.SetActive(false);
         }
@@ -82,7 +82,7 @@ public class SwitchMode : MonoBehaviour
         {
 
             BuildMode.SetActive(false);
-            PlayerMode.SetActive(true);
+      
             //Hand.SetActive(true);
             //HandWeapon.SetActive(true);
         }
