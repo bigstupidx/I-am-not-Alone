@@ -27,6 +27,7 @@ public class handWeapon : MonoBehaviour
     WeaponController _weaponController;
     Transform AdvancedPoolingSystem;
     SelectionWeaponForPC selectionWeaponPlay;
+    public GameObject buttonWeapon;
     // Use this for initialization
     public bool l;
 
@@ -52,18 +53,25 @@ public class handWeapon : MonoBehaviour
                 if (transform.GetChild(0).childCount == 0) { return; }
                 transform.GetChild(0).GetChild(0).gameObject.DestroyAPS();
                 transform.GetChild(0).GetChild(0).transform.SetParent(AdvancedPoolingSystem);
-
+                Destroy(buttonWeapon);
             }
         }
 
-        //if (!selectionWeaponPlay.Fire1)
-        if(Input.GetMouseButtonUp(0))
+#if UNITY_ANDROID
+        if (!selectionWeaponPlay.Fire1)
+#else
+        if (Input.GetMouseButtonUp(0))
+#endif
         {
             l = false;
             anim.SetBool("attack", false);
         }
-        //if (selectionWeaponPlay.Fire1)
+#if UNITY_ANDROID
+        if (selectionWeaponPlay.Fire1)
+#else
         if (Input.GetMouseButtonDown(0))
+#endif
+
         {
             l = true;
             anim.SetBool("attack", true);

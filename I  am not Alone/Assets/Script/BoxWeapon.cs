@@ -6,6 +6,8 @@ using UnityEngine.Playables;
 public class BoxWeapon : MonoBehaviour
 {
 
+
+    [Space(10)]
     PoolingSystem pool;
     public bool StartGoods;
     public bool Materials;
@@ -24,6 +26,9 @@ public class BoxWeapon : MonoBehaviour
     bool triggerEnable = false;
     float timer;
     SphereCollider thisCollider;
+    AudioSource weaponAudio;
+    AudioSource MaterialsAudio;
+    AudioSource InteractiveAudio;
     // Use this for initialization
     void Start ()
     {
@@ -34,8 +39,9 @@ public class BoxWeapon : MonoBehaviour
         _checkInWeaponAndCraft = _weaponController.GetComponent<CheckInWeaponAndCraft>();
         Physics.IgnoreCollision(transform.parent.GetComponent<Collider>(), player.GetComponent<Collider>());
         thisCollider = GetComponent<SphereCollider>();
-
-
+        weaponAudio = player.transform.Find("AudioBox").GetChild(0).GetComponent<AudioSource>();
+        MaterialsAudio = player.transform.Find("AudioBox").GetChild(1).GetComponent<AudioSource>();
+        InteractiveAudio = player.transform.Find("AudioBox").GetChild(2).GetComponent<AudioSource>();
     }
     private void Update ()
     {
@@ -47,7 +53,7 @@ public class BoxWeapon : MonoBehaviour
                 triggerEnable = true;
                 TriggerTrue = false;
                 thisCollider.enabled = true;
-            } 
+            }
         }
     }
 
@@ -58,7 +64,10 @@ public class BoxWeapon : MonoBehaviour
         TriggerTrue = true;
         triggerEnable = false;
         thisCollider.enabled = false;
-
+        player = GameObject.FindGameObjectWithTag("Player");
+        weaponAudio = player.transform.Find("AudioBox").GetChild(0).GetComponent<AudioSource>();
+        MaterialsAudio = player.transform.Find("AudioBox").GetChild(1).GetComponent<AudioSource>();
+        InteractiveAudio = player.transform.Find("AudioBox").GetChild(2).GetComponent<AudioSource>();
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         pool = PoolingSystem.Instance;
     }
@@ -74,14 +83,17 @@ public class BoxWeapon : MonoBehaviour
                 {
                     Randomarams();
                     TakeGood();
+
                     Destroy(transform.parent.gameObject);
+
+
+
                 }
                 else
                 {
-                    if (!nameWeapon.Equals(""))
-                    {
-                        TakeGood();
-                    }
+
+                    TakeGood();
+
                     transform.parent.gameObject.DestroyAPS();
 
                 }
@@ -89,7 +101,7 @@ public class BoxWeapon : MonoBehaviour
 
 
 
-            } 
+            }
         }
 
         if (other.CompareTag("AI"))
@@ -105,28 +117,36 @@ public class BoxWeapon : MonoBehaviour
             Materials = false;
             textGuiPanelGoods.GetComponent<Text>().text = ((int.Parse(textGuiPanelGoods.GetComponent<Text>().text) + level)).ToString();
             textGuiPanelGoods.GetComponent<PlayableDirector>().Play();
+
+            InteractiveAudio.Play();
         }
         else if (Interactive)
         {
             if (gridBuild.Find(textGuiPanelGoods.name + "(Clone)") == null)
             {
                 textGuiPanelGoods.Find("Params").GetChild(0).GetComponent<Text>().text = level.ToString();
-             
+
                 Instantiate(textGuiPanelGoods, gridBuild.position, gridBuild.rotation, gridBuild);
+
 
             }
             else
             {
-           
+
                 gridBuild.Find(textGuiPanelGoods.name + "(Clone)").Find("Params").GetChild(0).GetComponent<Text>().text = ((int.Parse(textGuiPanelGoods.Find("Params").GetChild(0).GetComponent<Text>().text) + level)).ToString();
             }
+
             Interactive = false;
+            InteractiveAudio.Play();
         }
 
         else
         {
+
+            weaponAudio.Play();
             _weaponController.PlayerWeapon(nameWeapon, categoryWeapon, level, WeaponAmunition);
         }
+
     }
 
     void Randomarams ()
@@ -141,13 +161,14 @@ public class BoxWeapon : MonoBehaviour
             nameWeapon = _checkInWeaponAndCraft.WeaponBought[l].nameWeapon;
 
             level = _checkInWeaponAndCraft.WeaponBought[l].levelWeapon;
+
         }
-        else if (u > 5 && u <=8)
+        else if (u > 5 && u <= 8)
         {
             Materials = true;
             int m = Random.Range(0, 5);
-          
-            if(m==0 && m == 1)
+
+            if (m == 0 && m == 1)
             {
                 m = 0;
             }
@@ -188,4 +209,5 @@ public class BoxWeapon : MonoBehaviour
 
 
     }
+
 }

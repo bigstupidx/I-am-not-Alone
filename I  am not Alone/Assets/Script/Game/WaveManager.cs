@@ -59,7 +59,7 @@ public class WaveManager : MonoBehaviour
     SwitchMode switchMode;
     public List<GameObject> lightAllScene = new List<GameObject>();
     public CheckInWeaponAndCraft _weaponcraft;
-
+    public StartSceneObjectRandom _startObject;
     // Use this for initialization
     void Start ()
     {
@@ -96,6 +96,7 @@ public class WaveManager : MonoBehaviour
 
             if (night)
             {
+                _startObject.StartRandomSituation(levelWave);
                 day = true;
                 waveLevelUp = true;
                 _lskyTod.dayInSeconds = wave[levelWave].Night * 2;

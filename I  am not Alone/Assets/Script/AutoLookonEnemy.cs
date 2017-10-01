@@ -14,11 +14,8 @@ public class AutoLookonEnemy : MonoBehaviour
     public Transform TargetAi;
     public GameObject imageBotton;
     // Use this for initialization
- 
-    private void OnEnable ()
-    {
-        imageBotton.SetActive(false);
-    }
+
+
     private void Update ()
     {
 
@@ -34,12 +31,12 @@ public class AutoLookonEnemy : MonoBehaviour
     {
         if (transform.childCount != 0)
         {
-            imageBotton.SetActive(true);
+
             weapon = transform.GetChild(0);
         }
         else
         {
-            imageBotton.SetActive(false);
+
             return;
         }
 
@@ -55,12 +52,12 @@ public class AutoLookonEnemy : MonoBehaviour
     {
         if (transform.childCount != 0)
         {
-            imageBotton.SetActive(true);
+
             weapon = transform.GetChild(0);
         }
         else
         {
-            imageBotton.SetActive(false);
+
             return;
         }
         if (other.CompareTag("AI"))

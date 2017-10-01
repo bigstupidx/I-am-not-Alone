@@ -85,7 +85,7 @@ public class CraftItem : MonoBehaviour
     BoxCollider thisCollider;
     private SwitchMode buildMode;
     private Renderer rend;
-    private GameObject MainCanvas;
+
     Indicator indicator;
     // Use this for initialization
     void Start ()
@@ -102,7 +102,7 @@ public class CraftItem : MonoBehaviour
             health = transform.GetChild(0).GetComponent<Health>();
         }
         indicator = GetComponent<Indicator>();
-        MainCanvas = GameObject.Find("MainCanvas");
+
         pointForMenu = transform.Find("PointForMenu").transform;
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
 
@@ -146,6 +146,27 @@ public class CraftItem : MonoBehaviour
     {
         indicator.IndicatorSetActive(false, 0);
     }
+
+    public void RenderOff ()
+    {
+        transform.GetComponent<Collider>().enabled = false;
+        if (transform.GetChild(0).GetComponent<Collider>())
+        {
+            transform.GetChild(0).GetComponent<Collider>().enabled = false;
+        }
+
+        for (int i = 0; i < transform.GetChild(0).childCount; i++)
+        {
+            rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
+            rend.enabled = false;
+            for (int l = 0; l < transform.GetChild(0).GetChild(i).childCount; l++)
+            {
+                rend = transform.GetChild(0).GetChild(i).GetChild(l).GetComponent<Renderer>();
+                rend.enabled = false;
+            }
+
+        }
+    }
     public void DefaultOptions ()
     {
         if (!Interactive)
@@ -169,8 +190,9 @@ public class CraftItem : MonoBehaviour
             rend.enabled = true;
             rend.sharedMaterial = materials[0];
         }
-        indicator.IndicatorOffScreen();
+
         indicator.IndicatorSetActive(true, 0);
+        indicator.IndicatorOffScreen();
         if (BuildStatic)
         {
             // indicator.IndicatorSetActive(true, 0);
@@ -327,7 +349,7 @@ public class CraftItem : MonoBehaviour
                         {
                             other.GetComponent<ZombieLevel1>().timerStop = 1.0f;
                             other.GetComponent<ZombieLevel1>().TransformRotation(transform.parent);
-                            health.HelthDamage(0.05f,false);
+                            health.HelthDamage(0.05f, false);
                             NavmeshLinkWindowOffToIntoTrigger[i].SetActive(false);
                         }
 
@@ -419,6 +441,7 @@ public class CraftItem : MonoBehaviour
         health.MySelfDestroyer();
 
         AddExposionForce(transform.position);
+
         indicator.IndicatorSetActive(false, 0);
     }
 
@@ -427,6 +450,7 @@ public class CraftItem : MonoBehaviour
         Collider[] thingsHit = UnityEngine.Physics.OverlapSphere(transform.position, ExplosionRadios, effectLayer);
         foreach (Collider hit in thingsHit)
         {
+
             if (hit.GetComponent<Health>() != null)
             {
                 hit.GetComponent<Health>().HelthDamage(damage, false);
@@ -434,6 +458,19 @@ public class CraftItem : MonoBehaviour
             }
             if (hit.GetComponent<Rigidbody>() != null)
             {
+                if (hit.CompareTag("AI"))
+                {
+                    hit.GetComponent<ZombieLevel1>().agent.enabled = false;
+                    hit.GetComponent<ZombieLevel1>().RigidExplosion = true;
+
+                    hit.GetComponent<Rigidbody>().isKinematic = false;
+                    hit.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, centre, ExplosionRadios, 1, ForceMode.Impulse);
+
+                }
+                else
+                {
+
+                }
                 hit.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, centre, ExplosionRadios, 1, ForceMode.Impulse);
 
             }

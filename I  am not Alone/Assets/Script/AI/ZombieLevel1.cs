@@ -16,15 +16,21 @@ public class ZombieLevel1 : MonoBehaviour
     public bool JointWindow;
     public bool DestoyAll;
     public float standartSpeed;
+    public bool RigidExplosion;
     //   public bool WinDowAttack;
     bool stoping;
+
     public LSky _sky;
     Health health;
     RaycastHit hit;
     Ray ray;
     NavMeshObstacle obstacle;
     Transform player;
-
+    private Rigidbody rigi;
+    public AudioClip zombieAtack;
+    public AudioClip zombieStay;
+    public AudioClip zombieDeth;
+    AudioSource source;
     // Use this for initialization
     void Start ()
     {
@@ -33,8 +39,8 @@ public class ZombieLevel1 : MonoBehaviour
         obstacle = GetComponent<NavMeshObstacle>();
         InvokeRepeating("DayDestroyObject", 0.0f, 0.5f);
         health = GetComponent<Health>();
-
-
+        rigi = GetComponent<Rigidbody>();
+        source = GetComponent<AudioSource>();
 
     }
 
@@ -42,20 +48,31 @@ public class ZombieLevel1 : MonoBehaviour
     {
         if (_sky.IsDay)
         {
-            health.HelthDamage(0.9f,false);
+            health.HelthDamage(0.9f, false);
         }
 
     }
     // Update is called once per frame
     void Update ()
     {
-
+  
         timerStop -= Time.deltaTime;
+        if (RigidExplosion)
+        {
+            if (agent.isOnNavMesh)
+            {
+                rigi.isKinematic = true;
+                RigidExplosion = false;
+                agent.enabled = true;
+            }
+        }
         if (timerStop <= 0)
         {
 
             if (stoping)
             {
+            
+
                 agent.isStopped = false;
                 stoping = false;
             }
@@ -70,26 +87,43 @@ public class ZombieLevel1 : MonoBehaviour
                     if (hit.transform.CompareTag("Things"))
 
                     {
-                        hit.transform.GetComponent<Health>().HelthDamage(damage,false);
-
+                        hit.transform.GetComponent<Health>().HelthDamage(damage, false);
+                        if (!source.isPlaying)
+                        {
+                            source.PlayOneShot(zombieAtack);
+                        }
 
                     }
                     if (hit.transform.CompareTag("CraftMode"))
 
                     {
-                        hit.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false);
+                        if (!source.isPlaying)
+                        {
+                            source.PlayOneShot(zombieAtack);
+                        }
+                        if (hit.transform.GetComponent<Health>())
+                        {
+                            hit.transform.GetComponent<Health>().HelthDamage(damage, false);
+                        }
+                        else
+                        {
+                            hit.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false);
+                        }
 
 
                     }
-                   
+
                 }
-           
+
                 if (hit.transform.CompareTag("Player"))
 
                 {
                     hit.transform.GetComponent<Health>().HelthDamage(PlayerDamage, false);
 
-
+                    if (!source.isPlaying)
+                    {
+                        source.PlayOneShot(zombieAtack);
+                    }
                 }
 
                 if (DestoyAll)
@@ -101,7 +135,10 @@ public class ZombieLevel1 : MonoBehaviour
 
 
                     }
-                    
+                    if (!source.isPlaying)
+                    {
+                        source.PlayOneShot(zombieAtack);
+                    }
                 }
             }
 
@@ -124,8 +161,11 @@ public class ZombieLevel1 : MonoBehaviour
                 agent.enabled = true;
                 if (!newTraget)
                 {
+
                     agent.SetDestination(player.position);
-                }                else
+
+                }
+                else
                 {
                     agent.SetDestination(newTraget.position);
                 }
@@ -137,6 +177,11 @@ public class ZombieLevel1 : MonoBehaviour
         }
         else
         {
+            if (!source.isPlaying)
+            {
+                source.PlayOneShot(zombieStay);
+            }
+
             stoping = true;
             agent.isStopped = true;
         }

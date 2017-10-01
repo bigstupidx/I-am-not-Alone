@@ -29,8 +29,9 @@ public class BulletSystem : MonoBehaviour
 
 
     public float intervalWeaponAmmunition = 0.5f;
-
+    public AudioClip weaponSound;
     public ParticleSystem bullet;
+    public ParticleSystem gunMiscle;
     public MyParticleCollision particleCol;
     // последсвите от попадания
 
@@ -47,25 +48,38 @@ public class BulletSystem : MonoBehaviour
     SelectionWeaponForPC selectionWeaponPlay;
     Transform AdvancedPoolingSystem;
     float timer;
-    float timeBetweenBullets = 0.15f;
-    float effectsDisplayTime = 0.2f;
-    Light gunLight;
+    float timerShoot;
+    public float timeBetweenBullets = 0.05f;
+    public float effectsDisplayTime = 0.2f;
+    public Light gunLight;
+    Light SpotlightFace;
+    AudioSource gunAudio;
+    public bool fireGun;
+    public Transform buttonWeapon;
     private void OnEnable ()
     {
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         selectionWeaponPlay = GameObject.Find("WeaponController").GetComponent<SelectionWeaponForPC>();
+
         gunLight = GetComponent<Light>();
+
+        gunAudio = GetComponent<AudioSource>();
         UpdateWeapon();
         timer = 0;
         _weaponController.Ammunition(WeaponAmmunition);
         l = false;
+        if (transform.root.CompareTag("Player"))
+        {
+            SpotlightFace = transform.root.Find("SpotlightFace").GetComponent<Light>();
+        }
     }
 
     private void Update ()
     {
 
         timer += Time.deltaTime;
+        timerShoot += Time.deltaTime;
         BulettAttack();
         if (l)
         {
@@ -78,6 +92,7 @@ public class BulletSystem : MonoBehaviour
             {
 
 
+                Destroy(buttonWeapon.gameObject);
 
                 gameObject.DestroyAPS();
                 transform.SetParent(AdvancedPoolingSystem);
@@ -88,35 +103,119 @@ public class BulletSystem : MonoBehaviour
 
     public void BulettAttack ()
     {
-        //  BulletVisualMaterial(bulletDamage);
-        //if (!selectionWeaponPlay.Fire1)
+
+#if UNITY_ANDROID
+        if (!selectionWeaponPlay.Fire1)
+#else
         if (Input.GetMouseButtonUp(0))
+#endif
+
+
         {
             bullet.Stop();
             l = false;
         }
-        //if (selectionWeaponPlay.Fire1)
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (timer >= timeBetweenBullets && Time.timeScale != 0)
-            {
-                gunLight.enabled = true;
-                timer = 0f;
-            }
-
-            l = true;
-            bullet.Play();
-
+#if UNITY_ANDROID
+     if (fireGun)
+	{
+		  
+	}else{
+         if (selectionWeaponPlay.Fire1) 
         }
 
 
-        if (timer >= timeBetweenBullets * effectsDisplayTime)
+
+
+                if (fireGun)
+        {
+
+             if (selectionWeaponPlay.Fire1) 
+            {
+                gunLight.enabled = true;
+                SpotlightFace.enabled = true;
+
+
+                gunMiscle.Stop();
+                gunMiscle.Play();
+           
+                l = true;
+                bullet.Play();
+                timerShoot = 0f;
+            }
+        }
+        else
+        {
+        if (selectionWeaponPlay.Fire1)
+	{
+		    if (Input.GetButton("Fire1") & timerShoot >= timeBetweenBullets && Time.timeScale != 0)
+            {
+                gunLight.enabled = true;
+                SpotlightFace.enabled = true;
+
+
+                gunMiscle.Stop();
+                gunMiscle.Play();
+               
+                l = true;
+                bullet.Play();
+                timerShoot = 0f;
+            } 
+	}
+
+        }
+
+#else
+        if (fireGun)
+        {
+
+            if (Input.GetButton("Fire1"))
+            {
+                gunLight.enabled = true;
+                SpotlightFace.enabled = true;
+
+
+                gunMiscle.Stop();
+                gunMiscle.Play();
+
+                l = true;
+                bullet.Play();
+                timerShoot = 0f;
+            }
+        }
+        else
+        {
+            if (Input.GetButton("Fire1") & timerShoot >= timeBetweenBullets && Time.timeScale != 0)
+            {
+                gunLight.enabled = true;
+                SpotlightFace.enabled = true;
+
+                gunAudio.Play();
+                gunMiscle.Stop();
+                gunMiscle.Play();
+
+                l = true;
+                bullet.Play();
+                timerShoot = 0f;
+            }
+
+        }
+#endif
+
+
+
+
+
+
+
+        //   }
+
+
+        if (timerShoot >= timeBetweenBullets * effectsDisplayTime)
         {
             // ... disable the effects.
             DisableEffects();
         }
 
-        //  Debug.Log("play");
 
     }
 
@@ -125,6 +224,7 @@ public class BulletSystem : MonoBehaviour
         // Disable the line renderer and the light.
 
         gunLight.enabled = false;
+        SpotlightFace.enabled = false;
     }
     void UpdateWeapon ()
     {
@@ -133,69 +233,6 @@ public class BulletSystem : MonoBehaviour
     }
 
 
-
-
-
-
-    //void OnParticleCollision (GameObject other)
-    //{
-
-    //    Debug.Log(other.name);
-    //    if (other.tag == "CraftMode")
-    //    {
-
-
-
-
-    //        if (other.transform.root.name != transform.name)
-    //        {
-    //            other.GetComponent<Health>().Helth(bulletDamage);
-
-    //        }
-
-
-
-
-
-
-    //    }
-
-
-    //    if (other.tag == "Things")
-    //    {
-
-
-
-    //        if (other.transform.root.name != transform.name)
-    //        {
-    //            other.GetComponent<Health>().Helth(bulletDamage);
-
-
-    //        }
-
-
-
-
-
-
-
-    //    }
-
-    //    int safeLength = GetComponent<ParticleSystem>().GetSafeCollisionEventSize();
-    //    if (collisionEvents.Length < safeLength)
-    //        collisionEvents = new ParticleCollisionEvent[safeLength];
-    //    int numCollisionEvents = GetComponent<ParticleSystem>().GetCollisionEvents(other, collisionEvents);
-    //    int i = 0;
-    //    while (i < numCollisionEvents)
-    //    {
-    //        Vector3 collisionHitLoc = collisionEvents[i].intersection;
-
-    //        //  Instantiate(smoke, collisionHitLoc, Quaternion.identity);
-    //        i++;
-
-    //    }
-
-    //}
 }
 
 

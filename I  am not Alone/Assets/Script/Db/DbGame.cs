@@ -32,17 +32,19 @@ public class DbGame : MonoBehaviour
         // check if file exists in Application.persistentDataPath
 
 
-
-
+//#if UNITY_ANDROID
+//        filepath = Application.persistentDataPath + "/" + p;
+//#elif UNITY_EDITOR
+//        filepath = Application.dataPath + "/" + p;
+//#endif
 
         filepath = Application.dataPath + "/" + p;
 
 
-        //  filepath = Application.persistentDataPath + "/" + p;
 
 
-        //  }
-        //    filepath = Application.persistentDataPath + "/" + p;
+
+
 
 
         if (!File.Exists(filepath))
@@ -207,7 +209,7 @@ public class DbGame : MonoBehaviour
 
     public void GetMoney ()
     {
-    
+
         using (IDbConnection dbconnection = new SqliteConnection(connection))
         {
             dbconnection.Open();
@@ -233,7 +235,7 @@ public class DbGame : MonoBehaviour
                             checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>();
                             checkInWeaponAndCraft.MyMoney.text = reader.GetString(0);
                         }
-            
+
 
 
 

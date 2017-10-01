@@ -55,13 +55,15 @@ public class SwitchMode : MonoBehaviour
 
 
     public BetweenFloor betweenFloor;
+
+    AudioSource source;
     int wood = 0;
     int metal = 0;
     int glass = 0;
     int electric = 0;
     private void Start ()
     {
-
+        source = GetComponent<AudioSource>();
         ButtonCraft.SetActive(false);
         l = true;
 
@@ -97,6 +99,11 @@ public class SwitchMode : MonoBehaviour
 
         if (l)
         {
+            for (var i = craft.Count - 1; i > -1; i--)
+            {
+                if (craft[i].ItemCraft == null)
+                    craft.RemoveAt(i);
+            }
             for (int i = 0; i < craft.Count; i++)
             {
                 if (craft[i].Floor == 2 & betweenFloor.FloorCraft)
@@ -189,7 +196,7 @@ public class SwitchMode : MonoBehaviour
 
         CheckInpurChasingPower(CraftItemBuildNowStatic.CountWoodForCreate, CraftItemBuildNowStatic);
 
-
+        source.Play();
     }
 
 
@@ -198,7 +205,7 @@ public class SwitchMode : MonoBehaviour
 
         CheckInpurChasingPower(CraftItemBuildNowDinamic.CountWoodForCreate, CraftItemBuildNowDinamic);
 
-
+        source.Play();
     }
 
 

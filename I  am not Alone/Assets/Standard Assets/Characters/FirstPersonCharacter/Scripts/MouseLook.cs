@@ -35,15 +35,21 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public void LookRotation (Transform character, Transform camera)
         {
-            // float   yRot = CrossPlatformInputManager.GetAxis("HorizontalRotate");
-            //float     xRot = CrossPlatformInputManager.GetAxis("VerticalRotate");
+#if UNITY_ANDROID
+            float yRot = CrossPlatformInputManager.GetAxis("HorizontalRotate");
+            float xRot = CrossPlatformInputManager.GetAxis("VerticalRotate");
+            var angle = Mathf.Atan2(yRot * SwitchPos, xRot * SwitchPos) * Mathf.Rad2Deg;
+            m_CharacterTargetRot = Quaternion.Euler(0, angle, 0);
+#else
             float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
             float xRot = CrossPlatformInputManager.GetAxis("Mouse Y");
-            var angle = Mathf.Atan2(yRot * SwitchPos, xRot * SwitchPos) * Mathf.Rad2Deg;
-            //  m_CharacterTargetRot = Quaternion.Euler(0, angle, 0);
-
             m_CharacterTargetRot *= Quaternion.Euler(0f, yRot, 0f);
-            m_CameraTargetRot *= Quaternion.Euler(-xRot, 0f, 0f);
+#endif
+
+
+
+
+
 
             if (clampVerticalRotation)
                 m_CameraTargetRot = ClampRotationAroundXAxis(m_CameraTargetRot);
@@ -53,8 +59,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 character.localRotation = Quaternion.Slerp(character.localRotation, m_CharacterTargetRot,
                     smoothTime * Time.deltaTime);
 
-                //camera.localRotation = Quaternion.Slerp (camera.localRotation, m_CameraTargetRot,
-                //    smoothTime * Time.deltaTime);
+
             }
             else
             {

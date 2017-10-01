@@ -57,11 +57,11 @@ public class Indicator : MonoBehaviour
                 _targetSpriteOfPool.transform.Find("Counter").GetChild(i).GetComponent<Text>().text = item.CountWoodForCreate[i].CountMaterial.ToString();
 
             }
-            for (int i = 0; i < _targetSpriteOfPool.transform.Find("Names").childCount; i++)
-            {
-                _targetSpriteOfPool.transform.Find("Names").GetChild(i).GetComponent<Text>().text = item.CountWoodForCreate[i].NameMaterial.ToString();
+            //for (int i = 0; i < _targetSpriteOfPool.transform.Find("Names").childCount; i++)
+            //{
+            //    _targetSpriteOfPool.transform.Find("Names").GetChild(i).GetComponent<Text>().text = item.CountWoodForCreate[i].NameMaterial.ToString();
 
-            }
+            //}
         }
         else
         {

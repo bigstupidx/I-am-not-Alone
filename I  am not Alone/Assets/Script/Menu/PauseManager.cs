@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Advertisements;
 public class PauseManager : MonoBehaviour
 {
 
@@ -14,6 +15,16 @@ public class PauseManager : MonoBehaviour
     private void Awake ()
     {
         Time.timeScale = 1;
+        if (Advertisement.isSupported)
+        {
+            Advertisement.Initialize("1557198", false);
+
+
+        }
+        else
+        {
+            Debug.Log("platform is not Supported");
+        }
     }
     public void ButtonMenu ()
     {
@@ -49,6 +60,22 @@ public class PauseManager : MonoBehaviour
         loadPanel.enabled = true;
         StartCoroutine(Load("Menu"));
         Time.timeScale = 0;
+        //if (Advertisement.isSupported)
+        //{
+        //    Advertisement.Initialize("1557198", false);
+        //    if (Advertisement.IsReady())
+        //    {
+        //        Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
+            
+        //    }
+
+        //}
+        //else
+        //{
+        //    Debug.Log("platform is not Supported");
+        //}
+
+ 
     }
     IEnumerator Load (string i)
     {
@@ -75,5 +102,29 @@ public class PauseManager : MonoBehaviour
             //  
 
         }
+    }
+    private void HandleadResult (ShowResult result)
+    {
+        switch (result)
+        {
+            case ShowResult.Failed:
+                Debug.Log("player failde  launch");
+                StartCoroutine(Load("Menu"));
+                Time.timeScale = 0;
+                break;
+            case ShowResult.Skipped:
+                Debug.Log("player did not fully watch the ad");
+                StartCoroutine(Load("Menu"));
+                Time.timeScale = 0;
+                break;
+            case ShowResult.Finished:
+                Debug.Log("player Gains +5 gems");
+                StartCoroutine(Load("Menu"));
+                Time.timeScale = 0;
+                break;
+            default:
+                break;
+        }
+
     }
 }
