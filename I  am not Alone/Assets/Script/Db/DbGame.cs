@@ -32,11 +32,11 @@ public class DbGame : MonoBehaviour
         // check if file exists in Application.persistentDataPath
 
 
-//#if UNITY_ANDROID
-//        filepath = Application.persistentDataPath + "/" + p;
-//#elif UNITY_EDITOR
-//        filepath = Application.dataPath + "/" + p;
-//#endif
+        //#if UNITY_ANDROID
+        //        filepath = Application.persistentDataPath + "/" + p;
+        //#elif UNITY_EDITOR
+        //        filepath = Application.dataPath + "/" + p;
+        //#endif
 
         filepath = Application.dataPath + "/" + p;
 
@@ -207,6 +207,64 @@ public class DbGame : MonoBehaviour
 
     }
 
+    public string GetLanguage (string idLanguage)
+    {
+
+        using (IDbConnection dbconnection = new SqliteConnection(connection))
+        {
+            dbconnection.Open();
+            using (IDbCommand dcm = dbconnection.CreateCommand())
+            {
+
+
+                string sqlQuery = String.Format("SELECT  Language  FROM PlayerParams");
+
+                dcm.CommandText = sqlQuery;
+                using (IDataReader reader = dcm.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+                        idLanguage = reader.GetString(0);
+
+                    }
+                    dbconnection.Close();
+                    reader.Close();
+                    return idLanguage;
+                }
+
+
+            }
+
+        }
+
+
+    }
+    public void UpdateLanguage (String idLanguage)
+    {
+
+        using (IDbConnection dbconnetcion = new SqliteConnection(connection))
+        {
+
+            dbconnetcion.Open();
+            using (IDbCommand dcm = dbconnetcion.CreateCommand())
+            {
+
+                string sqlQuery = String.Format("UPDATE  PlayerParams  SET  Language = \"{0}\"", idLanguage);
+
+
+
+                dcm.CommandText = sqlQuery;
+
+                dcm.ExecuteScalar();
+                dbconnetcion.Close();
+
+            }
+
+        }
+
+
+    }
     public void GetMoney ()
     {
 

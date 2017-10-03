@@ -16,7 +16,7 @@ public class SelectContructionForCreate : MonoBehaviour
 
     [HideInInspector]
     public GameObject itemCreate;
-    [HideInInspector]
+ 
     public Text NameDinamicCraftItem;
     Transform instanceCreatePlayer;
     [HideInInspector]

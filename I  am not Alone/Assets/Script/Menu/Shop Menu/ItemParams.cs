@@ -7,7 +7,9 @@ public class ItemParams : MonoBehaviour
 {
     public bool ItemCraft;
     public int levelItem;
-    public Text UnlockOrUpgrade;
+    public Text Upgrade;
+    public Text Unlock;
+    public Text Full;
     public Text textCoast;
     public Text weaponName;
     public float maxLevelUpgrade = 10;
@@ -36,12 +38,15 @@ public class ItemParams : MonoBehaviour
 
             if (levelItem == 0)
             {
-                UnlockOrUpgrade.text = "Unlock";
-
+                Unlock.gameObject.SetActive(true);
+                Upgrade.gameObject.SetActive(false);
+                Full.gameObject.SetActive(false);
             }
             else
             {
-                UnlockOrUpgrade.text = "Upgrade";
+                Unlock.gameObject.SetActive(false);
+                Upgrade.gameObject.SetActive(true);
+                Full.gameObject.SetActive(false);
 
             }
             upgradeImage.fillAmount = levelItem / maxLevelUpgrade;
@@ -50,7 +55,9 @@ public class ItemParams : MonoBehaviour
         else
         {
             textCoast.text = "";
-            UnlockOrUpgrade.text = "Full";
+            Unlock.gameObject.SetActive(false);
+            Upgrade.gameObject.SetActive(false);
+            Full.gameObject.SetActive(true);
         }
     }
 
@@ -80,7 +87,7 @@ public class ItemParams : MonoBehaviour
                 {
                     levelItem += 1;
                     MyMoney.text = (int.Parse(MyMoney.text) - int.Parse(coast.text)).ToString();
-                    if (ItemCraft)
+                    if (!ItemCraft)
                     {
                         db.UpdateDBWeapon(weaponName.text, levelItem);
                     }
