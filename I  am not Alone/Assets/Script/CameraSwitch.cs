@@ -10,36 +10,36 @@ public class CameraSwitch : MonoBehaviour
     public int InversParams;
     FirstPersonController player;
     // Use this for initialization
-    private void Start ()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
+    //private void Start ()
+    //{
+    //    player = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
 
-        player.ForcameraFrorward = Vector3.forward;
-        player.ForcameraRight = Vector3.right;
+    //    player.ForcameraFrorward = Vector3.forward;
+    //    player.ForcameraRight = Vector3.right;
 
 
-    }
-    private void OnTriggerEnter (Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            if (InversParams == 0)
-            {
-                player.ForcameraFrorward = Vector3.forward;
-                player.ForcameraRight = Vector3.right;
-                player.m_MouseLook.SwitchPos = -1;
+    //}
+    //private void OnTriggerEnter (Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        if (InversParams == 0)
+    //        {
+    //            player.ForcameraFrorward = Vector3.forward;
+    //            player.ForcameraRight = Vector3.right;
+    //            player.m_MouseLook.SwitchPos = -1;
   
-            }
-            if (InversParams == 1)
-            {
-                player.ForcameraFrorward = -Vector3.forward;
-                player.ForcameraRight = -Vector3.right;
-                player.m_MouseLook.SwitchPos = 1;
+    //        }
+    //        if (InversParams == 1)
+    //        {
+    //            player.ForcameraFrorward = -Vector3.forward;
+    //            player.ForcameraRight = -Vector3.right;
+    //            player.m_MouseLook.SwitchPos = 1;
        
-            }
-            Camera1.SetActive(true);
-            Camera2.SetActive(false);
-        }
-    }
+    //        }
+    //        Camera1.SetActive(true);
+    //        Camera2.SetActive(false);
+    //    }
+    //}
 
 }

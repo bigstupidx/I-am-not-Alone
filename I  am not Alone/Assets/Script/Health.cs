@@ -9,6 +9,7 @@ public class Health : MonoBehaviour
 
     public float MaxHealth = 100.0f;
     public float CurHelth = 100.0f;
+    public bool CollisionDestroy = false;
     [Space(15)]
     [Header("For Craft")]
     [Header("Woods,Metals,Glasses,Electrics,Interactive")]
@@ -38,15 +39,19 @@ public class Health : MonoBehaviour
     WeaponController weaponsControll;
     private GameObject destroyAi;
     AudioSource sourceDestraction;
+    AudioSource staticAudio;
     Transform player;
     bool SoundTrue;
     float timer;
+    private Rigidbody rigid;
     private void Start ()
     {
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
         checkWeaponAndCraft = GameObject.Find("WeaponController").GetComponent<CheckInWeaponAndCraft>();
         weaponsControll = GameObject.Find("WeaponController").GetComponent<WeaponController>();
+        staticAudio = GameObject.Find("StaticAudio").GetComponent<AudioSource>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        rigid = GetComponent<Rigidbody>();
         sourceDestraction = GetComponent<AudioSource>();
         if (!sourceDestraction)
         {
@@ -143,8 +148,24 @@ public class Health : MonoBehaviour
             if (transform.CompareTag("Things"))
             {
 
-                destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffectForZombie", transform.position, Quaternion.identity);
+                destroyAi = poolsistem.InstantiateAPS("DestroyObject", transform.position, Quaternion.identity);
+              
+                ParticleSystem ps = destroyAi.GetComponent<ParticleSystem>();
+                var sh = ps.shape;
+                sh.shapeType = ParticleSystemShapeType.MeshRenderer;
+              
+                if (transform.childCount != 0)
+                {
+                    if (transform.GetChild(0).GetComponent<MeshRenderer>())
+                    {
+                        sh.meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
 
+                    }
+                }
+                else
+                {
+                    sh.meshRenderer = transform.GetComponent<MeshRenderer>();
+                }
                 //   checkWeaponAndCraft.CreateBoxItem(transform.position,MakeMaterial);
                 sourceDestraction.Play();
 
@@ -280,6 +301,30 @@ public class Health : MonoBehaviour
                     transform.GetChild(i).GetComponent<Renderer>().enabled = false;
                 }
             }
+        }
+    }
+
+
+    //private void OnCollisionEnter (Collision collision)
+    //{
+    //    if (CollisionDestroy)
+    //    {
+    //        poolsistem.InstantiateAPS("SmallExplosionEffectForZombie", transform.position, Quaternion.identity);
+    //        Destroy(gameObject);
+    //    }
+    //}
+
+    private void OnTriggerEnter (Collider other)
+    {
+
+        if (other.CompareTag("Player"))
+        {
+            if (CollisionDestroy)
+            {
+
+                staticAudio.Play();
+                Destroy(gameObject);
+            } 
         }
     }
 }

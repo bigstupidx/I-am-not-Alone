@@ -153,6 +153,7 @@ public class BoxWeapon : MonoBehaviour
     {
         int u = Random.Range(0, 10);
 
+
         if (u >= 0 && u <= 5)
         {
             int l = Random.Range(0, _checkInWeaponAndCraft.WeaponBought.Count);
@@ -161,6 +162,7 @@ public class BoxWeapon : MonoBehaviour
             nameWeapon = _checkInWeaponAndCraft.WeaponBought[l].nameWeapon;
 
             level = _checkInWeaponAndCraft.WeaponBought[l].levelWeapon;
+
 
         }
         else if (u > 5 && u <= 8)

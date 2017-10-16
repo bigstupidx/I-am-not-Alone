@@ -57,7 +57,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     public void CreateBoxInterActive (Vector3 pos)
     {
         int i = Random.Range(0, buildMode.interActivePrefab.Count);
-        GameObject box = pool.InstantiateAPS("BoxWithWeapon", pos, Quaternion.identity);
+        GameObject box = pool.InstantiateAPS("BoxWithWeapon", pos + new Vector3(0,2,0), Quaternion.identity);
         box.transform.GetChild(0).GetComponent<BoxWeapon>().Interactive = true;
         box.transform.GetChild(0).GetComponent<BoxWeapon>().gridBuild = gridBuildMenu;
         box.transform.GetChild(0).GetComponent<BoxWeapon>().textGuiPanelGoods = buildMode.interActivePrefab[i].transform;

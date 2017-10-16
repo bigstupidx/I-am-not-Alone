@@ -85,7 +85,7 @@ public class CraftItem : MonoBehaviour
     BoxCollider thisCollider;
     private SwitchMode buildMode;
     private Renderer rend;
-
+    PoolingSystem poolsistem;
     Indicator indicator;
     // Use this for initialization
     void Start ()
@@ -125,15 +125,27 @@ public class CraftItem : MonoBehaviour
 
     private void OnEnable ()
     {
-
+        poolsistem = PoolingSystem.Instance;
+        
         if (!BuildStatic)
         {
             rigid = GetComponent<Rigidbody>();
             thisCollider = GetComponent<BoxCollider>();
-            timer = 0.2f;
-            ColliderTrue = true;
-            rigid.useGravity = false;
-            thisCollider.enabled = false;
+            if (Interactive)
+            {
+              //  timer = 0.4f;
+             //   ColliderTrue = true;
+                rigid.useGravity = true;
+                thisCollider.enabled = true;
+            }
+            else
+            {
+                ColliderTrue = true;
+                rigid.useGravity = false;
+                thisCollider.enabled = false;
+                timer = 0.2f;
+            }
+    
         }
         else
         {
@@ -157,12 +169,18 @@ public class CraftItem : MonoBehaviour
 
         for (int i = 0; i < transform.GetChild(0).childCount; i++)
         {
-            rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
-            rend.enabled = false;
+            if (transform.GetChild(0).GetChild(i).GetComponent<Renderer>())
+            {
+                rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
+                rend.enabled = false; 
+            }
             for (int l = 0; l < transform.GetChild(0).GetChild(i).childCount; l++)
             {
-                rend = transform.GetChild(0).GetChild(i).GetChild(l).GetComponent<Renderer>();
-                rend.enabled = false;
+                if (transform.GetChild(0).GetChild(i).GetChild(l).GetComponent<Renderer>())
+                {
+                    rend = transform.GetChild(0).GetChild(i).GetChild(l).GetComponent<Renderer>();
+                    rend.enabled = false; 
+                }
             }
 
         }
@@ -186,9 +204,12 @@ public class CraftItem : MonoBehaviour
         }
         for (int i = 0; i < transform.GetChild(0).childCount; i++)
         {
-            rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
-            rend.enabled = true;
-            rend.sharedMaterial = materials[0];
+            if (transform.GetChild(0).GetChild(i).GetComponent<Renderer>())
+            {
+                rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
+                rend.enabled = true;
+                rend.sharedMaterial = materials[0]; 
+            }
         }
 
         indicator.IndicatorSetActive(true, 0);
@@ -242,10 +263,19 @@ public class CraftItem : MonoBehaviour
             {
                 for (int i = 0; i < transform.GetChild(0).childCount; i++)
                 {
-                    rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
+                    if (transform.GetChild(0).GetChild(i).GetComponent<Renderer>())
+                    {
+                        rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
 
 
-                    rend.sharedMaterial = materials[1];
+                        rend.sharedMaterial = materials[1];
+                        GameObject createEffect = poolsistem.InstantiateAPS("CreateEffect", transform.position, Quaternion.identity);
+                        ParticleSystem ps = createEffect.GetComponent<ParticleSystem>();
+                        var sh = ps.shape;
+                        sh.shapeType = ParticleSystemShapeType.MeshRenderer;
+                        sh.meshRenderer = transform.GetChild(0).GetChild(i).GetComponent<MeshRenderer>(); 
+                    }
+
 
                     if (transform.GetChild(0).GetChild(i).childCount != 0)
                     {
@@ -431,7 +461,9 @@ public class CraftItem : MonoBehaviour
 
     public void His ()
     {
-        hisEffectPrefabPoolForDestroy = pool.InstantiateAPS(hisEffectPrefab.name, transform.position, transform.rotation);
+        hisEffectPrefabPoolForDestroy = pool.InstantiateAPS(hisEffectPrefab.name, transform.GetChild(0).GetChild(0).position, Quaternion.identity);
+        hisEffectPrefabPoolForDestroy.GetComponent<GameObjectScaled>().scaleX = transform.GetChild(0).GetChild(0).GetComponent<GameObjectScaled>().scaleX;
+        transform.GetChild(0).GetChild(0).GetComponent<GameObjectScaled>().prefabEffect = hisEffectPrefabPoolForDestroy;
         _StartHisEffect = true;
         indicator.IndicatorSetActive(false, 0);
     }

@@ -10,11 +10,12 @@ public class BetweenFloor : MonoBehaviour
     public SwitchMode switchMode;
     public Transform FurnitureFirst;
     public Transform FurnitureSecond;
+    public GameObject FloorHowTrue;
 
     private void Start ()
     {
-     
-      
+
+
     }
     public void RenderObjectToFloor (bool b)
     {
@@ -39,8 +40,11 @@ public class BetweenFloor : MonoBehaviour
                 }
                 else
                 {
-    
-                    FurnitureSecond.GetChild(i).GetComponent<Renderer>().enabled = b;
+
+                    if (FurnitureSecond.GetChild(i).GetComponent<Renderer>())
+                    {
+                        FurnitureSecond.GetChild(i).GetComponent<Renderer>().enabled = b;
+                    }
                     for (int l = 0; l < FurnitureSecond.GetChild(i).childCount; l++)
                     {
                         if (FurnitureSecond.GetChild(i).GetChild(l).GetComponent<Renderer>())
@@ -57,7 +61,7 @@ public class BetweenFloor : MonoBehaviour
 
         }
     }
- 
+
 
     // Use this for initialization
     private void OnTriggerEnter (Collider other)
@@ -67,8 +71,11 @@ public class BetweenFloor : MonoBehaviour
             FloorCraft = true;
             switchMode.CheckInBuiltWalls(true);
             Floor.SetActive(true);
+            FloorHowTrue.SetActive(true);
             for (int i = 0; i < FurnitureSecond.childCount; i++)
                 RenderObjectToFloor(true);
+
+
 
         }
         if (other.CompareTag("Things"))
@@ -95,6 +102,7 @@ public class BetweenFloor : MonoBehaviour
             switchMode.CheckInBuiltWalls(true);
             Floor.SetActive(false);
             RenderObjectToFloor(false);
+            FloorHowTrue.SetActive(false);
         }
         if (other.CompareTag("Things"))
         {

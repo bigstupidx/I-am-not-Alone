@@ -6,7 +6,7 @@ public class HouseInside : MonoBehaviour
 {
 
     public GameObject TwoFloour;
-    public GameObject Roof;
+    public GameObject[] Roof;
     public BetweenFloor betweenFloor;
     // Use this for initialization
     void Start ()
@@ -17,7 +17,10 @@ public class HouseInside : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Roof.SetActive(false);
+            for (int i = 0; i < Roof.Length; i++)
+            {
+                Roof[i].GetComponent<Renderer>().enabled = false;
+            }
             TwoFloour.SetActive(false);
             betweenFloor.RenderObjectToFloor(false);
         }
@@ -26,7 +29,12 @@ public class HouseInside : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Roof.SetActive(true);
+
+            for (int i = 0; i < Roof.Length; i++)
+            {
+                Roof[i].GetComponent<Renderer>().enabled = true;
+            }
+            
 
             TwoFloour.SetActive(true);
 

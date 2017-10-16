@@ -105,7 +105,14 @@ public class WaveManager : MonoBehaviour
                 switchMode.BuildMOdeMenu(false);
                 for (int i = 0; i < lightAllScene.Count; i++)
                 {
-                    lightAllScene[i].GetComponent<Light>().enabled = true;
+                    if (lightAllScene[i].GetComponent<Light>())
+                    {
+                        lightAllScene[i].GetComponent<Light>().enabled = true;
+                    }
+                    else
+                    {
+                        lightAllScene[i].GetComponent<Renderer>().enabled = true;
+                    }
                 }
             }
 
@@ -124,7 +131,14 @@ public class WaveManager : MonoBehaviour
                 }
                 for (int i = 0; i < lightAllScene.Count; i++)
                 {
-                    lightAllScene[i].GetComponent<Light>().enabled = false;
+                    if (lightAllScene[i].GetComponent<Light>())
+                    {
+                        lightAllScene[i].GetComponent<Light>().enabled = false;
+                    }
+                    else
+                    {
+                        lightAllScene[i].GetComponent<Renderer>().enabled = false;
+                    }
                 }
                 if (waveLevelUp)
                 {

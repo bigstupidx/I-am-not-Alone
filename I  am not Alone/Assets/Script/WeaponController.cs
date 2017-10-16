@@ -19,7 +19,7 @@ public class WeaponController : MonoBehaviour
     PoolingSystem pool;
     Transform AdvancedPoolingSystem;
     CheckInWeaponAndCraft _checkInWeaponCraft;
-    SelectionWeaponForPC selectionWeapon;
+    SelectionWeaponForPC selectionWeaponPC;
     GameObject player;
     GameObject melee;
     GameObject buttonWeaponOne;
@@ -37,7 +37,7 @@ public class WeaponController : MonoBehaviour
         pool = PoolingSystem.Instance;
         SelectionWeapon(0);
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
-        selectionWeapon = GetComponent<SelectionWeaponForPC>();
+        selectionWeaponPC = GetComponent<SelectionWeaponForPC>();
     }
 
 
@@ -79,7 +79,10 @@ public class WeaponController : MonoBehaviour
                 melee = Instantiate(WeaponImagepref, weaponPanel);
                 melee.name = "buttonWeaponTwo" + melee;
                 melee.transform.GetChild(0).GetComponent<Image>().sprite = WeaponImage.Find(x => x.name == nameWeapon);
-                melee.GetComponent<Button>().onClick.AddListener(selectionWeapon.Weapon1);
+                melee.transform.GetChild(0).GetComponent<Toggle>().group = melee.transform.parent.GetComponent<ToggleGroup>();
+                Button btn = melee.GetComponent<Button>();
+                btn.onClick.AddListener(selectionWeaponPC.Weapon1);
+                Hand.GetComponent<handWeapon>().WeaponAmmunition = 1;
                 Hand.GetComponent<handWeapon>().buttonWeapon = melee;
                 return;
             }
@@ -125,7 +128,9 @@ public class WeaponController : MonoBehaviour
                 buttonWeaponOne = Instantiate(WeaponImagepref, weaponPanel);
                 buttonWeaponOne.name = "buttonWeaponTwo" + WeaponOne;
                 buttonWeaponOne.transform.GetChild(0).GetComponent<Image>().sprite = WeaponImage.Find(x => x.name == nameWeapon);
-                buttonWeaponOne.GetComponent<Button>().onClick.AddListener(selectionWeapon.Weapon1);
+                buttonWeaponOne.transform.GetChild(0).GetComponent<Toggle>().group = buttonWeaponOne.transform.parent.GetComponent<ToggleGroup>();
+                Button btn = buttonWeaponOne.GetComponent<Button>();
+                btn.onClick.AddListener(selectionWeaponPC.Weapon2);
                 WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().buttonWeapon = buttonWeaponOne.transform;
                 return;
             }
@@ -160,7 +165,9 @@ public class WeaponController : MonoBehaviour
                 buttonWeaponTwo = Instantiate(WeaponImagepref, weaponPanel);
                 buttonWeaponTwo.name = "buttonWeaponTwo" + WeaponTwo;
                 buttonWeaponTwo.transform.GetChild(0).GetComponent<Image>().sprite = WeaponImage.Find(x => x.name == nameWeapon);
-                buttonWeaponTwo.GetComponent<Button>().onClick.AddListener(selectionWeapon.Weapon2);
+                buttonWeaponTwo.transform.GetChild(0).GetComponent<Toggle>().group = buttonWeaponTwo.transform.parent.GetComponent<ToggleGroup>();
+                Button btn = buttonWeaponTwo.GetComponent<Button>();
+                btn.onClick.AddListener(selectionWeaponPC.Weapon3);
                 WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().buttonWeapon = buttonWeaponTwo.transform;
                 return;
             }

@@ -19,10 +19,10 @@ public class DoorTrigger : MonoBehaviour
     {
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
 
-        obstacle = transform.parent.GetComponent<NavMeshObstacle>();
-        rigid = transform.parent.GetComponent<Rigidbody>();
+        obstacle = transform.GetComponent<NavMeshObstacle>();
+        rigid = transform.GetComponent<Rigidbody>();
 
-        hinge = transform.parent.GetComponent<HingeJoint>();
+        hinge = transform.GetComponent<HingeJoint>();
 
 
         // Make the spring reach shoot for a 70 degree angle.
