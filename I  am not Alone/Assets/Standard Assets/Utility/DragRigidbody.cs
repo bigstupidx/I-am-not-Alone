@@ -6,17 +6,18 @@ namespace UnityStandardAssets.Utility
 {
     public class DragRigidbody : MonoBehaviour
     {
+ 
+        public Material closeMaterial;
+        public Material openMaterial;
+        public LayerMask layerMask;
+        private SpringJoint m_SpringJoint;
+        bool doorClose;
         const float k_Spring = 50.0f;
         const float k_Damper = 5.0f;
         const float k_Drag = 10.0f;
         const float k_AngularDrag = 5.0f;
         const float k_Distance = 0.2f;
         const bool k_AttachToCenterOfMass = false;
-        public Material closeMaterial;
-        public Material openMaterial;
-        private SpringJoint m_SpringJoint;
-        bool doorClose;
-
         private void Update()
         {
             // Make sure the user pressed the mouse down
@@ -32,7 +33,11 @@ namespace UnityStandardAssets.Utility
             if (
                 !Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition).origin,
                                  mainCamera.ScreenPointToRay(Input.mousePosition).direction, out hit, 100,
-                                 Physics.DefaultRaycastLayers))
+                                 layerMask))
+            {
+                return;
+            }
+            if (hit.transform.CompareTag("Player"))
             {
                 return;
             }

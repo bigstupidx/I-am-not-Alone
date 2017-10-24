@@ -8,9 +8,9 @@ public class WeaponController : MonoBehaviour
     public GameObject Hand;
 
     public Image image;
-
-
-
+    public AutoLookonEnemy autolookEnemy;
+    public Transform handPlayer;
+    public Animator m_anim;
     public GameObject WeaponOne;
     public GameObject WeaponTwo;
     public Transform weaponPanel;
@@ -24,6 +24,8 @@ public class WeaponController : MonoBehaviour
     GameObject melee;
     GameObject buttonWeaponOne;
     GameObject buttonWeaponTwo;
+    Transform left;
+    Transform right;
     private void OnEnable ()
     {
         pool = PoolingSystem.Instance;
@@ -47,20 +49,37 @@ public class WeaponController : MonoBehaviour
         switch (IdWeapon)
         {
             case 0:
+                ResetWeapon();
                 Hand.SetActive(true);
+
                 WeaponOne.SetActive(false);
                 WeaponTwo.SetActive(false);
+                m_anim.SetLayerWeight(1, 0);
                 break;
             case 1:
-
+                ResetWeapon();
                 Hand.SetActive(false);
+                if (WeaponOne.transform.childCount != 0)
+                {
+                    AnimationWeapon(WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeightWeapon);
+                  
+
+                }
+
                 WeaponOne.SetActive(true);
                 WeaponTwo.SetActive(false);
                 break;
             case 2:
-
+                ResetWeapon();
                 Hand.SetActive(false);
                 WeaponOne.SetActive(false);
+                if (WeaponTwo.transform.childCount != 0)
+                {
+                 
+
+
+                    AnimationWeapon(WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().WeightWeapon);
+                }
                 WeaponTwo.SetActive(true);
                 break;
             default:
@@ -71,11 +90,13 @@ public class WeaponController : MonoBehaviour
 
     public void PlayerWeapon (string nameWeapon, int category, int level, float amunition)
     {
+
         if (category == 0)
         {
             if (Hand.transform.GetChild(0).childCount == 0)
             {
                 AddWeapon(nameWeapon, Hand.transform.GetChild(0), level, category, amunition);
+
                 melee = Instantiate(WeaponImagepref, weaponPanel);
                 melee.name = "buttonWeaponTwo" + melee;
                 melee.transform.GetChild(0).GetComponent<Image>().sprite = WeaponImage.Find(x => x.name == nameWeapon);
@@ -193,13 +214,13 @@ public class WeaponController : MonoBehaviour
                 }
                 else
                 {
-               
+
                     buttonWeaponTwo.transform.GetChild(0).GetComponent<Image>().sprite = WeaponImage.Find(x => x.name == nameWeapon);
 
- 
 
 
-   
+
+
                     RemoveWeapon(WeaponTwo.transform.GetChild(0), nameWeapon, category);
 
                     AddWeapon(nameWeapon, WeaponTwo.transform, level, category, 1);
@@ -223,20 +244,27 @@ public class WeaponController : MonoBehaviour
 
     }
 
+    private void Update ()
+    {
 
+
+
+    }
 
     public void AddWeapon (string name, Transform pos, int level, int category, float amuni)
     {
 
-        GameObject weapon = pool.InstantiateAPS(name, pos.position, pos.rotation, pos.gameObject);
+
 
         if (category == 1)
         {
+            GameObject weapon = pool.InstantiateAPS(name, pos.position, pos.rotation, pos.gameObject);
             weapon.GetComponent<BulletSystem>().level = level;
             weapon.GetComponent<BulletSystem>().WeaponAmmunition = amuni;
         }
         else
         {
+            GameObject weapon = pool.InstantiateAPS(name, pos.position, handPlayer.transform.rotation, pos.gameObject);
             Hand.GetComponent<handWeapon>().level = level;
             Hand.GetComponent<handWeapon>().WeaponAmmunition = amuni;
         }
@@ -267,6 +295,22 @@ public class WeaponController : MonoBehaviour
         image.fillAmount = value;
 
 
+    }
+
+    public void ResetWeapon ()
+    {
+
+        m_anim.SetBool("handAttack", false);
+        m_anim.SetLayerWeight(1, 0);
+    }
+
+
+    public void AnimationWeapon (int weight)
+    {
+        m_anim.SetFloat("WeightWeapon", weight);
+
+
+        m_anim.SetLayerWeight(1, 1);
     }
 
 }

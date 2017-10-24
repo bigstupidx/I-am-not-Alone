@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
+
 public class Health : MonoBehaviour
 {
     [Header("настроки здоровья")]
@@ -20,16 +21,22 @@ public class Health : MonoBehaviour
 
     [Space(15)]
     [Header("For Player")]
+    public Image damageImage;
+    public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
     public Image HealthPlayer;
     public ParticleSystem blood;
     public GameObject imageGameOver;
+
     [Space(15)]
     [Header("For Ai")]
+    public GameObject[] enablesBoody;
+    public SkinnedMeshRenderer skinnedMesh;
     public bool WeaponBox;
     public bool MaterialBox;
     public bool InterectiveBox;
     public bool OrRandom;
     public int MoneyAi;
+    bool damaged;
 
 
     PoolingSystem poolsistem;
@@ -44,6 +51,8 @@ public class Health : MonoBehaviour
     bool SoundTrue;
     float timer;
     private Rigidbody rigid;
+    Animator m_anim;
+    
     private void Start ()
     {
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
@@ -51,12 +60,18 @@ public class Health : MonoBehaviour
         weaponsControll = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         staticAudio = GameObject.Find("StaticAudio").GetComponent<AudioSource>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
         rigid = GetComponent<Rigidbody>();
-        sourceDestraction = GetComponent<AudioSource>();
-        if (!sourceDestraction)
+        if (!transform.CompareTag("Player"))
         {
-            sourceDestraction = transform.parent.GetComponent<AudioSource>();
+
+            sourceDestraction = GetComponent<AudioSource>();
+            if (!sourceDestraction)
+            {
+                sourceDestraction = transform.parent.GetComponent<AudioSource>();
+            }
         }
+
         if (transform.parent != null)
         {
             _craftItem = transform.parent.GetComponent<CraftItem>();
@@ -74,6 +89,25 @@ public class Health : MonoBehaviour
 
     private void Update ()
     {
+
+
+        if (transform.CompareTag("Player"))
+        {
+            if (damaged)
+            {
+                // ... set the colour of the damageImage to the flash colour.
+                damageImage.color = flashColour;
+            }
+            // Otherwise...
+            else
+            {
+                // ... transition the colour back to clear.
+                damageImage.color = Color.Lerp(damageImage.color, Color.clear, 5.0f * Time.deltaTime);
+            }
+
+            // Reset the damaged flag.
+            damaged = false; 
+        }
         if (SoundTrue)
         {
             timer += Time.deltaTime;
@@ -121,11 +155,13 @@ public class Health : MonoBehaviour
 
         if (transform.CompareTag("Player"))
         {
+            damaged = true;
             HealthPlayer.fillAmount = CurHelth / MaxHealth;
             blood.Play();
         }
         if (transform.CompareTag("AI"))
         {
+
             blood.Play();
         }
 
@@ -149,11 +185,11 @@ public class Health : MonoBehaviour
             {
 
                 destroyAi = poolsistem.InstantiateAPS("DestroyObject", transform.position, Quaternion.identity);
-              
+
                 ParticleSystem ps = destroyAi.GetComponent<ParticleSystem>();
                 var sh = ps.shape;
                 sh.shapeType = ParticleSystemShapeType.MeshRenderer;
-              
+
                 if (transform.childCount != 0)
                 {
                     if (transform.GetChild(0).GetComponent<MeshRenderer>())
@@ -206,7 +242,11 @@ public class Health : MonoBehaviour
             {
 
                 ZombieLevel1 zombie = GetComponent<ZombieLevel1>();
-
+                for (int i = 0; i < enablesBoody.Length; i++)
+                {
+                    Destroy(enablesBoody[i]);
+                }
+                //     m_anim.SetBool("die", true);
                 EnebledPhysics();
                 destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffectForZombie", transform.position, Quaternion.identity);
 
@@ -252,8 +292,8 @@ public class Health : MonoBehaviour
 
                 sourceDestraction.clip = zombie.zombieDeth;
 
-                weaponsControll.WeaponOne.GetComponent<AutoLookonEnemy>().TargetAi = null;
-                weaponsControll.WeaponTwo.GetComponent<AutoLookonEnemy>().TargetAi = null;
+                weaponsControll.autolookEnemy.TargetAi = null;
+
                 sourceDestraction.Play();
                 Destroy(zombie);
                 transform.tag = "CraftMode";
@@ -285,13 +325,21 @@ public class Health : MonoBehaviour
 
 
 
-            destroyAi.PlayEffect(30);
+        //    destroyAi.PlayEffect(30);
         }
     }
     void EnebledPhysics ()
     {
         transform.GetComponent<Collider>().enabled = false;
-        transform.GetComponent<Renderer>().enabled = false;
+        if (transform.GetComponent<Renderer>())
+        {
+            transform.GetComponent<Renderer>().enabled = false;
+        }
+        else
+        {
+
+        }
+
         if (transform.childCount != 0)
         {
             for (int i = 0; i < transform.childCount; i++)
@@ -324,7 +372,7 @@ public class Health : MonoBehaviour
 
                 staticAudio.Play();
                 Destroy(gameObject);
-            } 
+            }
         }
     }
 }

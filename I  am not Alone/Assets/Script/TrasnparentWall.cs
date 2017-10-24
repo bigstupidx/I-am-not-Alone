@@ -59,7 +59,10 @@ public class TrasnparentWall : MonoBehaviour
                         }
                         else
                         {
-                            currentHit.GetComponent<Renderer>().enabled = false;
+                            if (!currentHit.CompareTag("Things"))
+                            {
+                                currentHit.GetComponent<Renderer>().enabled = false; 
+                            }
                         }
                     }
                 }
@@ -100,7 +103,10 @@ public class TrasnparentWall : MonoBehaviour
                         }
                         else
                         {
-                            wasHidden.GetComponent<Renderer>().enabled = true;
+                            if (!wasHidden.CompareTag("Things"))
+                            {
+                                wasHidden.GetComponent<Renderer>().enabled = true; 
+                            }
                         }
                         walls.RemoveAt(i);
                     }

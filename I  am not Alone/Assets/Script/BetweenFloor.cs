@@ -17,10 +17,15 @@ public class BetweenFloor : MonoBehaviour
 
 
     }
-    public void RenderObjectToFloor (bool b)
+    public void RenderObjectToFloor (bool b, string newLayer)
     {
         for (int i = 0; i < FurnitureSecond.childCount; i++)
         {
+
+            if (FurnitureSecond.GetChild(i).CompareTag("CraftFromMenu") || FurnitureSecond.GetChild(i).CompareTag("Things"))
+            {
+                FurnitureSecond.GetChild(i).gameObject.layer = LayerMask.NameToLayer(newLayer);
+            }
             if (FurnitureSecond.GetChild(i).childCount == 0)
             {
                 FurnitureSecond.GetChild(i).GetComponent<Renderer>().enabled = b;
@@ -73,7 +78,7 @@ public class BetweenFloor : MonoBehaviour
             Floor.SetActive(true);
             FloorHowTrue.SetActive(true);
             for (int i = 0; i < FurnitureSecond.childCount; i++)
-                RenderObjectToFloor(true);
+                RenderObjectToFloor(true, "Default");
 
 
 
@@ -101,7 +106,8 @@ public class BetweenFloor : MonoBehaviour
             FloorCraft = false;
             switchMode.CheckInBuiltWalls(true);
             Floor.SetActive(false);
-            RenderObjectToFloor(false);
+
+            RenderObjectToFloor(false, "Ignore Raycast");
             FloorHowTrue.SetActive(false);
         }
         if (other.CompareTag("Things"))

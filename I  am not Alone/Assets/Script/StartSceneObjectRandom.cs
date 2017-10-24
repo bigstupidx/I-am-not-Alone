@@ -35,50 +35,50 @@ public class StartSceneObjectRandom : MonoBehaviour
     }
 
 
-    private void Update ()
-    {
-        if (startSituation)
-        {
-            timerToStart += Time.deltaTime;
+    //private void Update ()
+    //{
+    //    if (startSituation)
+    //    {
+    //        timerToStart += Time.deltaTime;
 
-            if (timerToStart >= timeToHunt)
-            {
-                int l = Random.Range(0, 2);
-                if (l == 0)
-                {
-                    for (int i = 0; i < inWave.childCount; i++)
-                    {
+    //        if (timerToStart >= timeToHunt)
+    //        {
+    //            int l = Random.Range(0, 2);
+    //            if (l == 0)
+    //            {
+    //                for (int i = 0; i < inWave.childCount; i++)
+    //                {
 
-                        inWave.GetChild(i).gameObject.SetActive(true);
+    //                    inWave.GetChild(i).gameObject.SetActive(true);
 
-                        timerToStart = 0;
-                        startSituation = false;
-                        return;
-                    }
-                }
-                else
-                {
-                    timerToStart = 0;
-                    startSituation = false;
-                    return;
-                }
-            }
+    //                    timerToStart = 0;
+    //                    startSituation = false;
+    //                    return;
+    //                }
+    //            }
+    //            else
+    //            {
+    //                timerToStart = 0;
+    //                startSituation = false;
+    //                return;
+    //            }
+    //        }
 
-        }
-    }
-    public void StartRandomSituation (int level)
-    {
-        if (level == LevelwaveStart)
-        {
-            startSituation = true;
-            timeToHunt = _waveManager.wave[level].Night / 2 - Random.Range(0, 15);
-
-
-        }
+    //    }
+    //}
+    //public void StartRandomSituation (int level)
+    //{
+    //    if (level == LevelwaveStart)
+    //    {
+    //        startSituation = true;
+    //        timeToHunt = _waveManager.wave[level].Night / 2 - Random.Range(0, 15);
 
 
+    //    }
 
 
-    }
+
+
+    //}
 
 }

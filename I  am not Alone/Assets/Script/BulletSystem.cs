@@ -26,8 +26,8 @@ public class BulletSystem : MonoBehaviour
 
 
 
-
-
+    [Range(0,3)]
+    public int  WeightWeapon;
     public float intervalWeaponAmmunition = 0.5f;
     public AudioClip weaponSound;
     public ParticleSystem bullet;
@@ -91,7 +91,7 @@ public class BulletSystem : MonoBehaviour
             if (WeaponAmmunition <= 0)
             {
 
-
+                _weaponController.ResetWeapon();
                 Destroy(buttonWeapon.gameObject);
 
                 gameObject.DestroyAPS();
@@ -224,7 +224,7 @@ public class BulletSystem : MonoBehaviour
         // Disable the line renderer and the light.
 
         gunLight.enabled = false;
-        SpotlightFace.enabled = false;
+    //    SpotlightFace.enabled = false;
     }
     void UpdateWeapon ()
     {

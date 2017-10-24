@@ -5,13 +5,13 @@ using UnityEngine;
 public class TurretsAi : MonoBehaviour
 {
     public float damagePerShot = 20;                  // The damage inflicted by each bullet.
-    public float timeBetweenBullets = 0.15f;        // The time between each shot.
+    public float timeBetweenBullets = 0.75f;        // The time between each shot.
     public float range = 100f;                      // The distance the gun can fire.
     public GameObject HeadTurrets;
     public bool Shot;
     // A layer mask so the raycast only hits things on the shootable layer.
 
-    public LineRenderer gunLine;                           // Reference to the line renderer.
+    public ParticleSystem gunLine;                           // Reference to the line renderer.
     public AudioSource gunAudio;                           // Reference to the audio source.
     public Light gunLight;                                 // Reference to the light component.
     public Transform Zombie;
@@ -26,6 +26,7 @@ public class TurretsAi : MonoBehaviour
 
     Vector3 m_lastPOsition = Vector3.zero;
     Quaternion m_lookRotation;
+    MyParticleCollision particleCollision;
     void Awake ()
     {
         // Create a layer mask for the Shootable layer.
@@ -41,7 +42,8 @@ public class TurretsAi : MonoBehaviour
     }
     private void Start ()
     {
-
+        particleCollision = gunLine.GetComponent<MyParticleCollision>();
+        particleCollision.bulletDamage = damagePerShot;
     }
 
     void Update ()
@@ -63,22 +65,24 @@ public class TurretsAi : MonoBehaviour
                 HeadTurrets.transform.rotation = Quaternion.RotateTowards(HeadTurrets.transform.rotation, m_lookRotation, 100 * Time.deltaTime);
 
             }
-            Headray.origin = HeadTurrets.transform.GetChild(1).transform.position;
-            Headray.direction = HeadTurrets.transform.GetChild(1).transform.forward;
+            Headray.origin = HeadTurrets.transform.GetChild(0).GetChild(0).transform.position;
+            Headray.direction = HeadTurrets.transform.GetChild(0).GetChild(0).transform.forward;
             Debug.DrawRay(Headray.origin, Headray.direction * 500, Color.red);
             if (Physics.Raycast(Headray, out headHit, 500))
             {
-              
+
                 if (headHit.transform.CompareTag("AI"))
                 {
 
                     Shot = true;
-
-
+               
+                    //      gunLine.Play();
 
                 }
                 else
                 {
+                   
+                    //  gunLine.Clear();
                     Shot = false;
                 }
 
@@ -109,8 +113,8 @@ public class TurretsAi : MonoBehaviour
     public void DisableEffects ()
     {
         // Disable the line renderer and the light.
-        gunLine.enabled = false;
 
+        gunLine.Stop();
         gunLight.enabled = false;
     }
 
@@ -121,53 +125,15 @@ public class TurretsAi : MonoBehaviour
         timer = 0f;
 
         // Play the gun shot audioclip.
-        gunAudio.Play();
+        gunLine.Play();
 
         // Enable the lights.
         gunLight.enabled = true;
 
 
+        gunAudio.Play();
+   
 
-
-        // Enable the line renderer and set it's first position to be the end of the gun.
-        gunLine.enabled = true;
-        gunLine.SetPosition(0, HeadTurrets.transform.GetChild(1).position);
-
-        // Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
-        shootRay.origin = HeadTurrets.transform.GetChild(1).position;
-        shootRay.direction = HeadTurrets.transform.GetChild(1).forward;
-
-
-        // Perform the raycast against gameobjects on the shootable layer and if it hits something...
-        if (Physics.Raycast(shootRay, out shootHit, 500))
-        {
-
-            if (shootHit.transform.CompareTag("AI"))
-            {
-                shootHit.transform.GetComponent<Health>().HelthDamage(damagePerShot, true);
-
-
-
-
-            }
-            if (shootHit.transform.CompareTag("Player"))
-            {
-                shootHit.transform.GetComponent<Health>().HelthDamage(damagePerShot,false);
-
-
-
-
-            }
-
-
-            gunLine.SetPosition(1, shootHit.point);
-        }
-        // If the raycast didn't hit anything on the shootable layer...
-        else
-        {
-            // ... set the second position of the line renderer to the fullest extent of the gun's range.
-            gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
-        }
     }
     private void OnTriggerEnter (Collider other)
     {
@@ -176,7 +142,7 @@ public class TurretsAi : MonoBehaviour
             int l = Random.Range(0, 3);
             if (l == 0)
             {
-         
+
                 other.GetComponent<ZombieLevel1>().newTraget = HeadTurrets.transform.parent.parent;
             }
 
@@ -191,11 +157,21 @@ public class TurretsAi : MonoBehaviour
         if (other.CompareTag("AI"))
         {
 
-   
-            Zombie = other.transform;
+
+            Zombie = other.transform.GetChild(1);
 
 
 
+
+        }
+        if (other.CompareTag("CraftMode"))
+        {
+
+
+            Zombie = null;
+
+        //    gunLine.gameObject.SetActive(false);
+         //   gunLine.Stop();
 
         }
     }
@@ -206,9 +182,9 @@ public class TurretsAi : MonoBehaviour
 
             Zombie = null;
 
+     //       gunLine.gameObject.SetActive(false);
 
-
-
+          //  gunLine.Stop();
         }
     }
 }

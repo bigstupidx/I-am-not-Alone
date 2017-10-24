@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using UnityEngine.AI;
 
 [System.Serializable]
 public class ItemForbuild
@@ -76,7 +75,8 @@ public class CraftItem : MonoBehaviour
     public bool _StartHisEffect = false;
 
     public GameObject[] NavmeshLinkWindow;
-    public GameObject[] NavmeshLinkWindowOffToIntoTrigger;
+    CheckGround checkGround;
+    //   public GameObject[] NavmeshLinkWindowOffToIntoTrigger;
     bool ColliderTrue;
     Health health;
     PoolingSystem pool;
@@ -87,9 +87,13 @@ public class CraftItem : MonoBehaviour
     private Renderer rend;
     PoolingSystem poolsistem;
     Indicator indicator;
+    Ray ItemRay = new Ray();                       // A ray from the gun end forwards.
+    RaycastHit hit;
+
     // Use this for initialization
     void Start ()
     {
+
         for (int i = 0; i < CountWoodForCreate.Count; i++)
         {
             CountWoodForCreate[i].Start();
@@ -111,6 +115,7 @@ public class CraftItem : MonoBehaviour
     }
     private void Update ()
     {
+
         if (ColliderTrue)
         {
             timer -= Time.deltaTime;
@@ -126,15 +131,16 @@ public class CraftItem : MonoBehaviour
     private void OnEnable ()
     {
         poolsistem = PoolingSystem.Instance;
-        
+
         if (!BuildStatic)
         {
+            checkGround = transform.Find("RayTransform").GetComponent<CheckGround>();
             rigid = GetComponent<Rigidbody>();
             thisCollider = GetComponent<BoxCollider>();
             if (Interactive)
             {
-              //  timer = 0.4f;
-             //   ColliderTrue = true;
+                //  timer = 0.4f;
+                //   ColliderTrue = true;
                 rigid.useGravity = true;
                 thisCollider.enabled = true;
             }
@@ -145,10 +151,11 @@ public class CraftItem : MonoBehaviour
                 thisCollider.enabled = false;
                 timer = 0.2f;
             }
-    
+
         }
         else
         {
+
             ColliderTrue = false;
 
         }
@@ -172,14 +179,14 @@ public class CraftItem : MonoBehaviour
             if (transform.GetChild(0).GetChild(i).GetComponent<Renderer>())
             {
                 rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
-                rend.enabled = false; 
+                rend.enabled = false;
             }
             for (int l = 0; l < transform.GetChild(0).GetChild(i).childCount; l++)
             {
                 if (transform.GetChild(0).GetChild(i).GetChild(l).GetComponent<Renderer>())
                 {
                     rend = transform.GetChild(0).GetChild(i).GetChild(l).GetComponent<Renderer>();
-                    rend.enabled = false; 
+                    rend.enabled = false;
                 }
             }
 
@@ -208,7 +215,7 @@ public class CraftItem : MonoBehaviour
             {
                 rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
                 rend.enabled = true;
-                rend.sharedMaterial = materials[0]; 
+                rend.sharedMaterial = materials[0];
             }
         }
 
@@ -230,10 +237,10 @@ public class CraftItem : MonoBehaviour
                     {
                         NavmeshLinkWindow[i].SetActive(true);
                     }
-                    for (int i = 0; i < NavmeshLinkWindowOffToIntoTrigger.Length; i++)
-                    {
-                        NavmeshLinkWindowOffToIntoTrigger[i].SetActive(true);
-                    }
+                    //for (int i = 0; i < NavmeshLinkWindowOffToIntoTrigger.Length; i++)
+                    //{
+                    //    NavmeshLinkWindowOffToIntoTrigger[i].SetActive(true);
+                    //}
                 }
             }
         }
@@ -251,14 +258,35 @@ public class CraftItem : MonoBehaviour
     {
         if (b)
         {
-            if (Interactive)
-            {
-                ground = true;
-            }
-            if (BuildStatic)
-            {
-                ground = true;
-            }
+            ground = true;
+            //ItemRay.origin = RayTransform.position;
+            //ItemRay.direction = -RayTransform.up;
+
+            //if (BuildStatic)
+            //{
+            //    ground = true;
+            //}
+            //else
+            //{
+
+            //    ground = checkGround.GroundTrigger;
+            //    //if (Physics.Raycast(ItemRay.origin, ItemRay.direction * 0.1f, out hit))
+            //    //{
+            //    //    Debug.DrawRay(ItemRay.origin, ItemRay.direction * 0.1f, Color.red);
+            //    //    Debug.Log(hit.transform.name);
+            //    //    if (hit.transform.transform.CompareTag("Untagged"))
+            //    //    {
+            //    //        ground = true;
+            //    //    }
+            //    //    else
+            //    //    {
+            //    //        ground = false;
+            //    //    }
+            //    //}
+            //}
+
+
+
             if (ground)
             {
                 for (int i = 0; i < transform.GetChild(0).childCount; i++)
@@ -273,7 +301,7 @@ public class CraftItem : MonoBehaviour
                         ParticleSystem ps = createEffect.GetComponent<ParticleSystem>();
                         var sh = ps.shape;
                         sh.shapeType = ParticleSystemShapeType.MeshRenderer;
-                        sh.meshRenderer = transform.GetChild(0).GetChild(i).GetComponent<MeshRenderer>(); 
+                        sh.meshRenderer = transform.GetChild(0).GetChild(i).GetComponent<MeshRenderer>();
                     }
 
 
@@ -371,24 +399,34 @@ public class CraftItem : MonoBehaviour
 
 
 
-                if (other.GetComponent<ZombieLevel1>().JointWindow)
+                if (Built)
                 {
-                    if (NavmeshLinkWindowOffToIntoTrigger.Length != 0)
+                    if (other.GetComponent<ZombieLevel1>().JointWindow)
                     {
-                        for (int i = 0; i < NavmeshLinkWindowOffToIntoTrigger.Length; i++)
+
+                        health.HelthDamage(0.1f, false);
+                        OffMeshLinkData data = other.GetComponent<ZombieLevel1>().agent.currentOffMeshLinkData;
+                        Vector3 startPos = other.GetComponent<ZombieLevel1>().agent.transform.position;
+                        Vector3 endPos = data.endPos + Vector3.up * other.GetComponent<ZombieLevel1>().agent.baseOffset;
+                        float normalizedTime = 0.0f;
+                        while (normalizedTime < 1.0f)
                         {
-                            other.GetComponent<ZombieLevel1>().timerStop = 1.0f;
-                            other.GetComponent<ZombieLevel1>().TransformRotation(transform.parent);
-                            health.HelthDamage(0.05f, false);
-                            NavmeshLinkWindowOffToIntoTrigger[i].SetActive(false);
+                            float yOffset = 2.0f * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
+                            other.GetComponent<ZombieLevel1>().agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
+                            normalizedTime += Time.deltaTime / 0.5f;
+
                         }
+                        other.GetComponent<ZombieLevel1>().timerStop = 1.0f;
+
+
 
                     }
                 }
-
-
-
             }
+
+
+
+
         }
         else
         {
@@ -418,6 +456,7 @@ public class CraftItem : MonoBehaviour
                         else
                         {
                             other.GetComponent<Health>().HelthDamage(damage, false);
+                            health.HelthDamage(0.1f, false);
                         }
 
 
@@ -509,13 +548,13 @@ public class CraftItem : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter (Collision collision)
-    {
-        ground = true;
-    }
-    private void OnCollisionExit (Collision collision)
-    {
+    //private void OnCollisionEnter (Collision collision)
+    //{
+    //    ground = true;
+    //}
+    //private void OnCollisionExit (Collision collision)
+    //{
 
-        ground = false;
-    }
+    //    ground = false;
+    //}
 }

@@ -10,7 +10,7 @@ public class MyParticleCollision : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        pool = PoolingSystem.Instance;
+        //pool = PoolingSystem.Instance;
     }
 
     void OnParticleCollision (GameObject other)

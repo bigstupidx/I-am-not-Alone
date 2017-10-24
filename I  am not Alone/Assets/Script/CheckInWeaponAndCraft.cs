@@ -111,9 +111,13 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         {
             if (WeaponBought[i] != null)
             {
+                Debug.Log(WeaponBought[i].nameWeapon);
 
-                gridShop.Find(WeaponBought[i].nameWeapon).GetComponent<ItemParams>().levelItem = WeaponBought[i].levelWeapon;
-                gridShop.Find(WeaponBought[i].nameWeapon).GetComponent<ItemParams>().IntializedParams();
+                if (gridShop.Find(WeaponBought[i].nameWeapon))
+                {
+                    gridShop.Find(WeaponBought[i].nameWeapon).GetComponent<ItemParams>().levelItem = WeaponBought[i].levelWeapon;
+                    gridShop.Find(WeaponBought[i].nameWeapon).GetComponent<ItemParams>().IntializedParams(); 
+                }
             }
         }
         for (int i = 0; i < CraftItemBought.Count; i++)

@@ -19,10 +19,10 @@ public class HouseInside : MonoBehaviour
         {
             for (int i = 0; i < Roof.Length; i++)
             {
-                Roof[i].GetComponent<Renderer>().enabled = false;
+                Roof[i].SetActive(false);
             }
             TwoFloour.SetActive(false);
-            betweenFloor.RenderObjectToFloor(false);
+            betweenFloor.RenderObjectToFloor(false, "Ignore Raycast");
         }
     }
     private void OnTriggerExit (Collider other)
@@ -32,9 +32,8 @@ public class HouseInside : MonoBehaviour
 
             for (int i = 0; i < Roof.Length; i++)
             {
-                Roof[i].GetComponent<Renderer>().enabled = true;
+                Roof[i].SetActive(true);
             }
-            
 
             TwoFloour.SetActive(true);
 

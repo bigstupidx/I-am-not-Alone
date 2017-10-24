@@ -19,7 +19,7 @@ public class UpdateHandWeapon
 public class handWeapon : MonoBehaviour
 {
 
-    private Animator anim;
+    public Animator anim;
     public float intervalWeaponAmmunition = 0.5f;
     public float WeaponAmmunition = 1;
     public int level;
@@ -34,7 +34,7 @@ public class handWeapon : MonoBehaviour
     private void OnEnable ()
     {
         UpdateWeapon();
-        anim = GetComponent<Animator>();
+    
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         selectionWeaponPlay = GameObject.Find("WeaponController").GetComponent<SelectionWeaponForPC>();
@@ -64,7 +64,7 @@ public class handWeapon : MonoBehaviour
 #endif
         {
             l = false;
-            anim.SetBool("attack", false);
+            anim.SetBool("handAttack", false);
         }
 #if UNITY_ANDROID
         if (selectionWeaponPlay.Fire1)
@@ -73,8 +73,11 @@ public class handWeapon : MonoBehaviour
 #endif
 
         {
-            l = true;
-            anim.SetBool("attack", true);
+            if (transform.GetChild(0).childCount != 0)
+            {
+                l = true;
+                anim.SetBool("handAttack", true); 
+            }
 
 
 

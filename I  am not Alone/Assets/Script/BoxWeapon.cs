@@ -65,6 +65,7 @@ public class BoxWeapon : MonoBehaviour
         triggerEnable = false;
         thisCollider.enabled = false;
         player = GameObject.FindGameObjectWithTag("Player");
+      
         weaponAudio = player.transform.Find("AudioBox").GetChild(0).GetComponent<AudioSource>();
         MaterialsAudio = player.transform.Find("AudioBox").GetChild(1).GetComponent<AudioSource>();
         InteractiveAudio = player.transform.Find("AudioBox").GetChild(2).GetComponent<AudioSource>();

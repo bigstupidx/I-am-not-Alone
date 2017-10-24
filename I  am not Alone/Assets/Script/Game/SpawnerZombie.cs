@@ -28,7 +28,7 @@ public class SpawnerZombie : MonoBehaviour
         // Instantiate and make the enemy a child of this object
         GameObject o = (GameObject)Instantiate(prefZombie, randomLoc3d, transform.rotation);
         o.GetComponent<ZombieLevel1>()._sky = sky;
-        o.GetComponent<ZombieLevel1>().agent.speed += Random.Range(-2, +2);
+        o.GetComponent<ZombieLevel1>().agent.avoidancePriority += Random.Range(-20, +20);
         o.GetComponent<ZombieLevel1>().standartSpeed = o.GetComponent<ZombieLevel1>().agent.speed;
     }
 

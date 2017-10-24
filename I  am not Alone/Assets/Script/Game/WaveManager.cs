@@ -96,7 +96,7 @@ public class WaveManager : MonoBehaviour
 
             if (night)
             {
-                _startObject.StartRandomSituation(levelWave);
+              //  _startObject.StartRandomSituation(levelWave);
                 day = true;
                 waveLevelUp = true;
                 _lskyTod.dayInSeconds = wave[levelWave].Night * 2;
@@ -109,10 +109,10 @@ public class WaveManager : MonoBehaviour
                     {
                         lightAllScene[i].GetComponent<Light>().enabled = true;
                     }
-                    else
-                    {
-                        lightAllScene[i].GetComponent<Renderer>().enabled = true;
-                    }
+                    //else
+                    //{
+                    //    lightAllScene[i].GetComponent<Renderer>().enabled = true;
+                    //}
                 }
             }
 
@@ -135,10 +135,10 @@ public class WaveManager : MonoBehaviour
                     {
                         lightAllScene[i].GetComponent<Light>().enabled = false;
                     }
-                    else
-                    {
-                        lightAllScene[i].GetComponent<Renderer>().enabled = false;
-                    }
+                    //else
+                    //{
+                    //lightAllScene[i].GetComponent<Renderer>().enabled = false;
+                    //}
                 }
                 if (waveLevelUp)
                 {
