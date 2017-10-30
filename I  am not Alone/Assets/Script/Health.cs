@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
-
+using UnityEngine.AI;
 public class Health : MonoBehaviour
 {
     [Header("настроки здоровья")]
@@ -331,6 +331,10 @@ public class Health : MonoBehaviour
     void EnebledPhysics ()
     {
         transform.GetComponent<Collider>().enabled = false;
+        if (transform.GetComponent<NavMeshObstacle>())
+        {
+            transform.GetComponent<NavMeshObstacle>().enabled = false;
+        }
         if (transform.GetComponent<Renderer>())
         {
             transform.GetComponent<Renderer>().enabled = false;

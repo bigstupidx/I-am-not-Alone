@@ -8,6 +8,7 @@ public class DoorTrigger : MonoBehaviour
 
     public NavMeshObstacle obstacle;
     public CraftItem craftItem;
+    public OffMeshLink offmeshLink;
     Rigidbody rigid;
 
     HingeJoint hinge;

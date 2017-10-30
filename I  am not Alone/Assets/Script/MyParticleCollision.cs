@@ -15,7 +15,7 @@ public class MyParticleCollision : MonoBehaviour
 
     void OnParticleCollision (GameObject other)
     {
-
+      
 
         if (other.CompareTag("CraftMode"))
         {

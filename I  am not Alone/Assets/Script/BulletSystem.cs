@@ -26,8 +26,8 @@ public class BulletSystem : MonoBehaviour
 
 
 
-    [Range(0,3)]
-    public int  WeightWeapon;
+    [Range(0, 3)]
+    public int WeightWeapon;
     public float intervalWeaponAmmunition = 0.5f;
     public AudioClip weaponSound;
     public ParticleSystem bullet;
@@ -69,10 +69,9 @@ public class BulletSystem : MonoBehaviour
         timer = 0;
         _weaponController.Ammunition(WeaponAmmunition);
         l = false;
-        if (transform.root.CompareTag("Player"))
-        {
-            SpotlightFace = transform.root.Find("SpotlightFace").GetComponent<Light>();
-        }
+
+        SpotlightFace = GameObject.FindGameObjectWithTag("Player").transform.Find("SpotlightFace").GetComponent<Light>();
+
     }
 
     private void Update ()
@@ -224,7 +223,7 @@ public class BulletSystem : MonoBehaviour
         // Disable the line renderer and the light.
 
         gunLight.enabled = false;
-    //    SpotlightFace.enabled = false;
+        //    SpotlightFace.enabled = false;
     }
     void UpdateWeapon ()
     {

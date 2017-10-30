@@ -14,13 +14,13 @@ using AC.LSky;
 public class ZombieLevel1 : MonoBehaviour
 {
     public NavMeshAgent agent;
-
+    public static float avoidancePredictionTime = 0.5f;
     public bool ThingsDamage;
     public float PlayerDamage;
     public float damage;
     public Transform newTraget;
     public float timerStop;
-
+    public NavMeshPath navMeshPath;
     public bool JointWindow;
     public bool damageWindow;
     public bool DestoyAll;
@@ -41,9 +41,16 @@ public class ZombieLevel1 : MonoBehaviour
     public AudioClip zombieDeth;
     public Animator m_animator;
     AudioSource source;
+    GameObject[] targetsDistance;
+    public List<Transform> PriorityTarget = new List<Transform>();
+    public int currentTarget = 0;
+    public int OldTarget;
+
+
     // Use this for initialization
     void Start ()
     {
+        NavMesh.avoidancePredictionTime = 5;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
@@ -51,10 +58,20 @@ public class ZombieLevel1 : MonoBehaviour
         health = GetComponent<Health>();
         rigi = GetComponent<Rigidbody>();
         source = GetComponent<AudioSource>();
+        navMeshPath = new NavMeshPath();
+        targetsDistance = GameObject.FindGameObjectsWithTag("TargetDistance");
+
+        SetNewPriority();
+
+
+
         if (!m_animator)
         {
-            m_animator = GetComponent<Animator>(); 
+            m_animator = GetComponent<Animator>();
         }
+
+        //  Physics.IgnoreCollision(transform.GetComponent<Collider>(), other.GetComponent<Collider>());
+
 
     }
 
@@ -70,6 +87,99 @@ public class ZombieLevel1 : MonoBehaviour
     void Update ()
     {
 
+
+        Vector3 fwd = transform.TransformDirection(Vector3.forward);
+        Debug.DrawRay(transform.position, fwd * 3f, Color.yellow);
+
+        if (Physics.Raycast(transform.position, fwd, out hit, 3))
+        {
+
+            if (m_animator)
+            {
+                if (ThingsDamage)
+                {
+                    if (hit.transform.CompareTag("Things"))
+
+                    {
+                        m_animator.SetBool("attack", true);
+                        hit.transform.GetComponent<Health>().HelthDamage(damage, false);
+
+                        if (!source.isPlaying)
+                        {
+                            source.PlayOneShot(zombieAtack);
+                        }
+
+                    }
+                    else
+                    {
+                        m_animator.SetBool("attack", false);
+                    }
+                    if (hit.transform.CompareTag("CraftMode"))
+
+                    {
+                        m_animator.SetBool("attack", true);
+                        if (!source.isPlaying)
+                        {
+                            source.PlayOneShot(zombieAtack);
+                        }
+                        if (hit.transform.GetComponent<Health>())
+                        {
+                            hit.transform.GetComponent<Health>().HelthDamage(damage, false);
+                        }
+                        else
+                        {
+                            hit.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false);
+                        }
+
+
+                    }
+                    else
+                    {
+                        m_animator.SetBool("attack", false);
+                    }
+
+
+                }
+
+                if (hit.transform.CompareTag("Player"))
+
+                {
+                    hit.transform.GetComponent<Health>().HelthDamage(PlayerDamage, false);
+
+                    if (!source.isPlaying)
+                    {
+                        source.PlayOneShot(zombieAtack);
+                        m_animator.SetBool("attack", true);
+                    }
+                    else
+                    {
+                        m_animator.SetBool("attack", false);
+                    }
+
+                    if (DestoyAll)
+                    {
+                        if (hit.transform.CompareTag("WallCrash"))
+
+                        {
+                            hit.transform.GetComponent<Health>().HelthDamage(damage, false);
+                            m_animator.SetBool("attack", true);
+
+                        }
+                        else
+                        {
+                            m_animator.SetBool("attack", false);
+                        }
+                        if (!source.isPlaying)
+                        {
+                            source.PlayOneShot(zombieAtack);
+                        }
+                    }
+
+                }
+
+            }
+
+        }
         timerStop -= Time.deltaTime;
         if (RigidExplosion)
         {
@@ -90,102 +200,12 @@ public class ZombieLevel1 : MonoBehaviour
                 agent.isStopped = false;
                 stoping = false;
             }
-            Vector3 fwd = transform.TransformDirection(Vector3.forward);
-            Debug.DrawRay(transform.position, fwd * 3f, Color.yellow);
 
-            if (Physics.Raycast(transform.position, fwd, out hit, 3))
-            {
-
-                if (m_animator)
-                {
-                    if (ThingsDamage)
-                    {
-                        if (hit.transform.CompareTag("Things"))
-
-                        {
-                            m_animator.SetBool("attack", true);
-                            hit.transform.GetComponent<Health>().HelthDamage(damage, false);
-                            if (!source.isPlaying)
-                            {
-                                source.PlayOneShot(zombieAtack);
-                            }
-
-                        }
-                        else
-                        {
-                            m_animator.SetBool("attack", false);
-                        }
-                        if (hit.transform.CompareTag("CraftMode"))
-
-                        {
-                            m_animator.SetBool("attack", true);
-                            if (!source.isPlaying)
-                            {
-                                source.PlayOneShot(zombieAtack);
-                            }
-                            if (hit.transform.GetComponent<Health>())
-                            {
-                                hit.transform.GetComponent<Health>().HelthDamage(damage, false);
-                            }
-                            else
-                            {
-                                hit.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false);
-                            }
-
-
-                        }
-                        else
-                        {
-                            m_animator.SetBool("attack", false);
-                        }
-
-
-                    }
-
-                    if (hit.transform.CompareTag("Player"))
-
-                    {
-                        hit.transform.GetComponent<Health>().HelthDamage(PlayerDamage, false);
-
-                        if (!source.isPlaying)
-                        {
-                            source.PlayOneShot(zombieAtack);
-                            m_animator.SetBool("attack", true);
-                        }
-                        else
-                        {
-                            m_animator.SetBool("attack", false);
-                        }
-
-                        if (DestoyAll)
-                        {
-                            if (hit.transform.CompareTag("WallCrash"))
-
-                            {
-                                hit.transform.GetComponent<Health>().HelthDamage(damage, false);
-                                m_animator.SetBool("attack", true);
-
-                            }
-                            else
-                            {
-                                m_animator.SetBool("attack", false);
-                            }
-                            if (!source.isPlaying)
-                            {
-                                source.PlayOneShot(zombieAtack);
-                            }
-                        }
-
-                    }
-
-                }
-
-            }
             if ((player.transform.position - transform.position).sqrMagnitude < Mathf.Pow(agent.stoppingDistance, 2))
             {
                 // If the agent is in attack range, become an obstacle and
                 // disable the NavMeshAgent component
-             //   obstacle.enabled = true;
+                obstacle.enabled = true;
                 agent.enabled = false;
                 Vector3 relativePos = player.transform.position - transform.position;
                 Quaternion rotation = Quaternion.LookRotation(relativePos);
@@ -196,21 +216,22 @@ public class ZombieLevel1 : MonoBehaviour
 
 
                 // If we are not in range, become an agent again
-         //       obstacle.enabled = false;
+                obstacle.enabled = false;
                 agent.enabled = true;
                 if (m_animator)
                 {
                     if (!newTraget)
                     {
                         m_animator.SetBool("walk", true);
-                        agent.SetDestination(player.position);
+                        CalculateNewPath(player);
 
                     }
                     else
                     {
+                        currentTarget = 0;
                         m_animator.SetBool("walk", true);
                         agent.SetDestination(newTraget.position);
-                    } 
+                    }
                 }
             }
 
@@ -227,19 +248,117 @@ public class ZombieLevel1 : MonoBehaviour
             }
             if (m_animator)
             {
-                m_animator.SetBool("walk", false);
-                m_animator.SetBool("attack", false); 
+                //   m_animator.SetBool("walk", false);
+                m_animator.SetBool("attack", false);
             }
             stoping = true;
             agent.isStopped = true;
         }
+
+
+
+
     }
 
 
-    public void TransformRotation (Transform r)
+
+
+    void CalculateNewPath (Transform targetPosition)
     {
-        Vector3 relativePos = r.transform.position - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(relativePos);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 7f);
+        //if (targetPosition)
+        //{
+            agent.CalculatePath(targetPosition.position, navMeshPath);
+      //  }
+        //else
+        //{
+        //    SetNewPriority();
+        //}
+
+        for (int i = 0; i < navMeshPath.corners.Length - 1; i++)
+        {
+            Debug.DrawLine(navMeshPath.corners[i], navMeshPath.corners[i + 1], Color.red);
+        }
+        agent.SetDestination(targetPosition.position);
+
+        if (navMeshPath.status == NavMeshPathStatus.PathPartial)
+        {
+        //    PathFinding();
+        }
+        //switch (navMeshPath.status)
+        //{
+        //    case NavMeshPathStatus.PathComplete:
+        //        agent.SetDestination(targetPosition.position);
+        //        break;
+        //    case NavMeshPathStatus.PathPartial:
+
+        //        break;
+        //    case NavMeshPathStatus.PathInvalid:
+        //        break;
+        //    default:
+        //        break;
+        //}
+
+
     }
+
+
+    void SetNewPriority ()
+    {
+       
+        PriorityTarget.Clear();
+       // PriorityTarget.Add(player);
+        currentTarget = 0;
+
+        for (int i = 0; i < targetsDistance.Length; i++)
+        {
+            PriorityTarget.Add(targetsDistance[i].transform);
+
+        }
+    }
+
+    void PathFinding ()
+    {
+
+        //if (PriorityTarget.Count == 1)
+        //{
+        //    SetNewPriority();
+
+        //}
+
+        //if (currentTarget != 0)
+        //{
+        //    PriorityTarget.RemoveAt(OldTarget);
+        //}
+        //  var second = PriorityTarget[0].transform;
+        var dist = Vector3.Distance(player.position, PriorityTarget[currentTarget].transform.position);   // Note 1
+        for (var i = 0; i < PriorityTarget.Count; i++)
+        {                   // Note 2
+            var tempDist = Vector3.Distance(player.position, PriorityTarget[i].transform.position);
+            if (tempDist < dist)
+            {
+                //   second = PriorityTarget[i].transform;
+                Debug.Log(currentTarget);
+                currentTarget = i;
+                OldTarget = i;
+            }
+        }
+
+
+
+
+
+
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
