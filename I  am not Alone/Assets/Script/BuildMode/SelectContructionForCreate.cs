@@ -62,12 +62,13 @@ public class SelectContructionForCreate : MonoBehaviour
                
 
                 switchMode.CraftItemBuildNowDinamic = itemCreate.GetComponent<CraftItem>();
+                switchMode.ButtonCraft.SetActive(true);
                 if (!itemCreate.GetComponent<CraftItem>().Interactive)
                 {
                     itemCreate.GetComponent<CraftItem>().level = int.Parse(level.text);
                 }
                 itemCreate.GetComponent<CraftItem>().Item = gameObject.GetComponent<SelectContructionForCreate>();
-                itemCreate.GetComponent<Indicator>().IndicatorSetActive(true, 0);
+           //     itemCreate.GetComponent<Indicator>().IndicatorSetActive(true, 0);
             }
 
         }
@@ -75,8 +76,9 @@ public class SelectContructionForCreate : MonoBehaviour
         {
             if (itemCreate != null)
             {
+                switchMode.ButtonCraft.SetActive(false);
                 itemCreate.DestroyAPS();
-                itemCreate.GetComponent<Indicator>().IndicatorSetActive(false, 0);
+            //    itemCreate.GetComponent<Indicator>().IndicatorSetActive(false, 0);
                 //   switchMode.craft.Remove(switchMode.craft.Find(obj => obj.ItemCraft.name == itemCreate.name));
                 itemCreate = null;
             }

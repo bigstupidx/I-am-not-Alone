@@ -35,19 +35,24 @@ public class DoorTrigger : MonoBehaviour
 
     }
 
+    public void DoorClosed(bool close)
+    {
+        rigid.isKinematic = close;
+        obstacle.enabled = close;
+    }
 
     private void Update ()
     {
-        if (rigid.isKinematic)
-        {
-            obstacle.enabled = true;
-            //    rend.sharedMaterial = materials[1];
-        }
-        else
-        {
-            obstacle.enabled = false;
-            //    rend.sharedMaterial = materials[0];
-        }
+        //if (rigid.isKinematic)
+        //{
+        //    obstacle.enabled = true;
+        //    //    rend.sharedMaterial = materials[1];
+        //}
+        //else
+        //{
+        //    obstacle.enabled = false;
+        //    //    rend.sharedMaterial = materials[0];
+        //}
         if (craftItem.Built)
         {
             rigid.isKinematic = true;

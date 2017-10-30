@@ -6,7 +6,7 @@ public class MyParticleCollision : MonoBehaviour
 {
     private ParticleCollisionEvent[] collisionEvents = new ParticleCollisionEvent[16];
     public float bulletDamage;
-    PoolingSystem pool;
+
     // Use this for initialization
     void Start ()
     {

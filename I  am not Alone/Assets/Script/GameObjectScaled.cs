@@ -20,8 +20,11 @@ public class GameObjectScaled : MonoBehaviour
     private void Start ()
     {
 
-        sh = system.shape;
-        sh.radius = scaleX;
+        if (particleCircle)
+        {
+            sh = system.shape;
+            sh.radius = scaleX; 
+        }
     }
     // Use this for initialization
     private void OnEnable ()

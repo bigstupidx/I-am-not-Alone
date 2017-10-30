@@ -145,7 +145,7 @@ public class BoxWeapon : MonoBehaviour
         {
 
             weaponAudio.Play();
-            _weaponController.PlayerWeapon(nameWeapon, categoryWeapon, level, WeaponAmunition);
+            _weaponController.PlayerWeapon(nameWeapon, level, WeaponAmunition);
         }
 
     }

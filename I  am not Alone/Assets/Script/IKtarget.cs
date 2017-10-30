@@ -19,29 +19,32 @@ public class IKtarget : MonoBehaviour
     {
 
         body = m_anim.GetBoneTransform(HumanBodyBones.Chest);
-    
+
         Hand = m_anim.GetBoneTransform(HumanBodyBones.LeftHand);
     }
 
     // Update is called once per frame
     void Update ()
     {
-       
+
         if (!m_anim.GetBool("handAttack"))
         {
             if (target)
             {
-          
-                body.LookAt(target.position);
+                //Quaternion r = Quaternion.LookRotation(target.position);
+                //body.rotation = Quaternion.Lerp(body.rotation, r, Time.deltaTime);
+               body.LookAt(target.position);
 
-             //   Hand.transform.position = handTarget.position;
+                //   Hand.transform.position = handTarget.position;
             }
             else
             {
-             
+
                 targetBody = transform;
                 targetBody.position = transform.position;
-                body.LookAt(targetBody.position);
+                //Quaternion r = Quaternion.LookRotation(targetBody.position);
+                //body.rotation = Quaternion.Lerp(body.rotation, r, Time.deltaTime/10);
+                 body.LookAt(targetBody.position);
             }
 
             body.rotation = body.rotation * Quaternion.Euler(offset);

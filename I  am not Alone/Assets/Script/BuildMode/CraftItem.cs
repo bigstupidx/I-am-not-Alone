@@ -68,7 +68,7 @@ public class CraftItem : MonoBehaviour
     public TurretsAi turretsAi;
     [HideInInspector]
     public Rigidbody rigid;
-    [HideInInspector]
+
     public SelectContructionForCreate Item;
 
     [HideInInspector]
@@ -89,7 +89,7 @@ public class CraftItem : MonoBehaviour
     Indicator indicator;
     Ray ItemRay = new Ray();                       // A ray from the gun end forwards.
     RaycastHit hit;
-
+    GameObject player;
     // Use this for initialization
     void Start ()
     {
@@ -106,10 +106,10 @@ public class CraftItem : MonoBehaviour
             health = transform.GetChild(0).GetComponent<Health>();
         }
         indicator = GetComponent<Indicator>();
-
+        player = GameObject.FindGameObjectWithTag("Player");
         pointForMenu = transform.Find("PointForMenu").transform;
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
-
+        
 
         DefaultOptions();
     }
@@ -202,12 +202,12 @@ public class CraftItem : MonoBehaviour
         if (DamageObject)
         {
             damage = LevelUpdate[level];
-            health.MaxHealth = health.CurHelth = LevelUpdate[level] * 10;
+            health.MaxHealth = health.CurHelth = LevelUpdate[level] * 1000.0f;
         }
         if (CustomScript)
         {
             turretsAi.damagePerShot = LevelUpdate[level];
-            health.MaxHealth = health.CurHelth = LevelUpdate[level] * 10;
+            health.MaxHealth = health.CurHelth = LevelUpdate[level] * 1000f;
         }
         for (int i = 0; i < transform.GetChild(0).childCount; i++)
         {
@@ -246,7 +246,7 @@ public class CraftItem : MonoBehaviour
         }
         else
         {
-
+            Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>());
             rigid.isKinematic = false;
         }
         Built = false;
@@ -259,8 +259,7 @@ public class CraftItem : MonoBehaviour
         if (b)
         {
             ground = true;
-            //ItemRay.origin = RayTransform.position;
-            //ItemRay.direction = -RayTransform.up;
+
 
             //if (BuildStatic)
             //{
@@ -270,19 +269,7 @@ public class CraftItem : MonoBehaviour
             //{
 
             //    ground = checkGround.GroundTrigger;
-            //    //if (Physics.Raycast(ItemRay.origin, ItemRay.direction * 0.1f, out hit))
-            //    //{
-            //    //    Debug.DrawRay(ItemRay.origin, ItemRay.direction * 0.1f, Color.red);
-            //    //    Debug.Log(hit.transform.name);
-            //    //    if (hit.transform.transform.CompareTag("Untagged"))
-            //    //    {
-            //    //        ground = true;
-            //    //    }
-            //    //    else
-            //    //    {
-            //    //        ground = false;
-            //    //    }
-            //    //}
+
             //}
 
 
@@ -319,7 +306,7 @@ public class CraftItem : MonoBehaviour
                         buildMode.craft.RemoveAt(i);
                 }
                 Built = true;
-
+                buildMode.ButtonCraft.SetActive(false);
 
                 buildMode.ChangeMaterial();
                 if (!BuildStatic)
@@ -358,9 +345,25 @@ public class CraftItem : MonoBehaviour
             if (!Built)
             {
                 buildMode.CraftItemBuildNowStatic = this.gameObject.GetComponent<CraftItem>();
+
+
+                if (buildMode.CraftItemBuildNowDinamic)
+                {
+                    buildMode.CraftItemBuildNowDinamic.Item.itemCreate.DestroyAPS();
+                    buildMode.CraftItemBuildNowDinamic.Item.CheckOFToggle();
+                    buildMode.CraftItemBuildNowDinamic = null;
+                }
+
                 if (BuildStatic)
                 {
                     buildMode.ButtonCraft.SetActive(true);
+                }
+            }
+            else
+            {
+                if (!BuildStatic)
+                {
+                    Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>());
                 }
             }
         }
@@ -386,6 +389,14 @@ public class CraftItem : MonoBehaviour
                 if (!Built)
                 {
                     BuildContruction(Built);
+
+                    if (buildMode.CraftItemBuildNowDinamic)
+                    {
+                        buildMode.CraftItemBuildNowDinamic.Item.itemCreate.DestroyAPS();
+                        buildMode.CraftItemBuildNowDinamic.Item.CheckOFToggle();
+                        buildMode.CraftItemBuildNowDinamic = null;
+                    }
+
                 }
                 if (Built)
                 {
@@ -404,7 +415,7 @@ public class CraftItem : MonoBehaviour
                     if (other.GetComponent<ZombieLevel1>().JointWindow)
                     {
 
-                        health.HelthDamage(0.1f, false);
+                        health.HelthDamage(0.01f, false);
                         OffMeshLinkData data = other.GetComponent<ZombieLevel1>().agent.currentOffMeshLinkData;
                         Vector3 startPos = other.GetComponent<ZombieLevel1>().agent.transform.position;
                         Vector3 endPos = data.endPos + Vector3.up * other.GetComponent<ZombieLevel1>().agent.baseOffset;
@@ -493,8 +504,16 @@ public class CraftItem : MonoBehaviour
         }
         if (other.CompareTag("Player"))
         {
+            if (buildMode.CraftItemBuildNowDinamic)
+            {
+                buildMode.CraftItemBuildNowDinamic.Item.itemCreate.DestroyAPS();
+                buildMode.CraftItemBuildNowDinamic.Item.CheckOFToggle();
+                buildMode.CraftItemBuildNowDinamic = null;
+            }
+            buildMode.CraftItemBuildNowStatic = null;
 
             buildMode.ButtonCraft.SetActive(false);
+
         }
     }
 

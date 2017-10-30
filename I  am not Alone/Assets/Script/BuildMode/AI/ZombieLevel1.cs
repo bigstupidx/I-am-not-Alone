@@ -45,7 +45,7 @@ public class ZombieLevel1 : MonoBehaviour
     public List<Transform> PriorityTarget = new List<Transform>();
     public int currentTarget = 0;
     public int OldTarget;
-
+    LineRenderer lineRender;
 
     // Use this for initialization
     void Start ()
@@ -60,7 +60,7 @@ public class ZombieLevel1 : MonoBehaviour
         source = GetComponent<AudioSource>();
         navMeshPath = new NavMeshPath();
         targetsDistance = GameObject.FindGameObjectsWithTag("TargetDistance");
-
+        lineRender = GetComponent<LineRenderer>();
         SetNewPriority();
 
 
@@ -268,16 +268,20 @@ public class ZombieLevel1 : MonoBehaviour
         //if (targetPosition)
         //{
             agent.CalculatePath(targetPosition.position, navMeshPath);
-      //  }
+        //  }
         //else
         //{
         //    SetNewPriority();
         //}
 
-        for (int i = 0; i < navMeshPath.corners.Length - 1; i++)
-        {
-            Debug.DrawLine(navMeshPath.corners[i], navMeshPath.corners[i + 1], Color.red);
-        }
+        lineRender.positionCount = navMeshPath.corners.Length;
+        lineRender.SetPositions(navMeshPath.corners);
+        
+        //for (int i = 0; i < navMeshPath.corners.Length - 1; i++)
+        //{
+        //    Debug.DrawLine(navMeshPath.corners[i], navMeshPath.corners[i + 1], Color.red);
+
+        //}
         agent.SetDestination(targetPosition.position);
 
         if (navMeshPath.status == NavMeshPathStatus.PathPartial)

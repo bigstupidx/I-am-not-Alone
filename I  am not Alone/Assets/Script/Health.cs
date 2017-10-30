@@ -47,7 +47,7 @@ public class Health : MonoBehaviour
     private GameObject destroyAi;
     AudioSource sourceDestraction;
     AudioSource staticAudio;
-    Transform player;
+    Transform playerG;
     bool SoundTrue;
     float timer;
     private Rigidbody rigid;
@@ -59,7 +59,7 @@ public class Health : MonoBehaviour
         checkWeaponAndCraft = GameObject.Find("WeaponController").GetComponent<CheckInWeaponAndCraft>();
         weaponsControll = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         staticAudio = GameObject.Find("StaticAudio").GetComponent<AudioSource>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerG = GameObject.FindGameObjectWithTag("Player").transform;
 
         rigid = GetComponent<Rigidbody>();
         if (!transform.CompareTag("Player"))
@@ -147,7 +147,7 @@ public class Health : MonoBehaviour
 
     }
 
-    public void HelthDamage (float damage, bool player)
+    public void HelthDamage (float damage, bool playerAttack)
     {
 
 
@@ -250,7 +250,7 @@ public class Health : MonoBehaviour
                 EnebledPhysics();
                 destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffectForZombie", transform.position, Quaternion.identity);
 
-                if (player)
+                if (playerAttack)
                 {
                     checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + MoneyAi).ToString();
                 }
@@ -264,11 +264,11 @@ public class Health : MonoBehaviour
                         int l = Random.Range(0, 4);
 
                         MakeMaterial = l;
-                        if (i == 0 || i == 1)
+                        if (i >= 0 || i <= 5)
                         {
                             checkWeaponAndCraft.CreateBoxItem(transform.position, MakeMaterial);
                         }
-                        else if (i >= 2 && i <= 4)
+                        else if (i >= 1 && i <= 4)
                         {
                             checkWeaponAndCraft.CreateBoxWeapon(transform.position);
                         }

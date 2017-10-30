@@ -76,8 +76,9 @@ public class Indicator : MonoBehaviour
                 Button btn1 = _blowUpYes.GetComponent<Button>();
                 btn1.onClick.AddListener(item.His);
             }
-            Button btn2 = _targetSpriteOfPool.GetComponent<Button>();
-            btn2.onClick.AddListener(switchMode.ButtonYes);
+            Button btnswitchMode = _targetSpriteOfPool.GetComponent<Button>();
+            btnswitchMode.onClick.AddListener(switchMode.ButtonYes);
+        
         }
 
 

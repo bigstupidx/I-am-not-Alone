@@ -29,8 +29,8 @@ public class SwitchMode : MonoBehaviour
     public GameObject BuildMode;
 
     public GameObject ButtonCraft;
-    public GameObject Hand;
-    public GameObject HandWeapon;
+
+
 
     [Space(15)]
     [Header("panelGoods")]
@@ -40,7 +40,7 @@ public class SwitchMode : MonoBehaviour
 
 
 
-    public bool l;
+
     [Space(15)]
     public List<GameObject> interActivePrefab = new List<GameObject>();
     [Space(5)]
@@ -51,7 +51,7 @@ public class SwitchMode : MonoBehaviour
 
 
     public CraftItem CraftItemBuildNowDinamic;
-    public Toggle toggleDoor;
+
 
 
     public BetweenFloor betweenFloor;
@@ -61,6 +61,7 @@ public class SwitchMode : MonoBehaviour
     int metal = 0;
     int glass = 0;
     int electric = 0;
+    bool l;
     private void Start ()
     {
         source = GetComponent<AudioSource>();
@@ -84,7 +85,7 @@ public class SwitchMode : MonoBehaviour
         {
 
             BuildMode.SetActive(false);
-      
+
             //Hand.SetActive(true);
             //HandWeapon.SetActive(true);
         }
@@ -188,13 +189,23 @@ public class SwitchMode : MonoBehaviour
 
     }
 
-
+    
 
 
     public void ButtonCraftItemNow ()
     {
+        if (CraftItemBuildNowStatic)
+        {
 
-        CheckInpurChasingPower(CraftItemBuildNowStatic.CountWoodForCreate, CraftItemBuildNowStatic);
+            CheckInpurChasingPower(CraftItemBuildNowStatic.CountWoodForCreate, CraftItemBuildNowStatic);
+        }
+        else
+        {
+
+            CheckInpurChasingPower(CraftItemBuildNowDinamic.CountWoodForCreate, CraftItemBuildNowDinamic);
+
+        }
+
 
         source.Play();
     }
@@ -202,8 +213,6 @@ public class SwitchMode : MonoBehaviour
 
     public void ButtonYes ()
     {
-
-        CheckInpurChasingPower(CraftItemBuildNowDinamic.CountWoodForCreate, CraftItemBuildNowDinamic);
 
         source.Play();
     }
