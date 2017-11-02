@@ -68,7 +68,7 @@ public class CraftItem : MonoBehaviour
     public TurretsAi turretsAi;
     [HideInInspector]
     public Rigidbody rigid;
-
+    public bool ItemDown;
     public SelectContructionForCreate Item;
 
     [HideInInspector]
@@ -90,6 +90,7 @@ public class CraftItem : MonoBehaviour
     Ray ItemRay = new Ray();                       // A ray from the gun end forwards.
     RaycastHit hit;
     GameObject player;
+    NavMeshObstacle obstacle;
     // Use this for initialization
     void Start ()
     {
@@ -109,7 +110,11 @@ public class CraftItem : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         pointForMenu = transform.Find("PointForMenu").transform;
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
-        
+        if (transform.GetComponent<NavMeshObstacle>())
+        {
+            obstacle = GetComponent<NavMeshObstacle>();
+            obstacle.enabled = false;
+        }
 
         DefaultOptions();
     }
@@ -224,7 +229,10 @@ public class CraftItem : MonoBehaviour
         if (BuildStatic)
         {
             // indicator.IndicatorSetActive(true, 0);
-
+            if (gameObject.layer == 0)
+            {
+                gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+            }
             buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject, Floor));
             ground = true;
             gameObject.SetActive(false);
@@ -246,7 +254,10 @@ public class CraftItem : MonoBehaviour
         }
         else
         {
-            Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>());
+            if (ItemDown)
+            {
+                Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>()); 
+            }
             rigid.isKinematic = false;
         }
         Built = false;
@@ -300,6 +311,11 @@ public class CraftItem : MonoBehaviour
                         }
                     }
                 }
+
+                if (gameObject.layer == 2)
+                {
+                    gameObject.layer = LayerMask.NameToLayer("Default");
+                }
                 for (var i = buildMode.craft.Count - 1; i > -1; i--)
                 {
                     if (buildMode.craft[i].ItemCraft == null)
@@ -320,6 +336,10 @@ public class CraftItem : MonoBehaviour
                     Item.CheckOFToggle();
                     indicator.IndicatorSetActive(false, 1);
                     indicator.IndicatorSetActive(true, 2);
+                    if (obstacle)
+                    {
+                        obstacle.enabled = true;
+                    }
                 }
                 else
                 {

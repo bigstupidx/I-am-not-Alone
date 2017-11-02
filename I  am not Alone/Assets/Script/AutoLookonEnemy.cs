@@ -6,8 +6,9 @@ public class AutoLookonEnemy : MonoBehaviour
 {
 
     public IKtarget iktarget;
-
-
+    public Transform weapon1;
+    public Transform weapon2;
+    public Transform weapon3;
 
 
     public Transform TargetAi;
@@ -21,10 +22,16 @@ public class AutoLookonEnemy : MonoBehaviour
 
         if (TargetAi)
         {
+            WeaponLook(weapon1, TargetAi);
+            WeaponLook(weapon2, TargetAi);
+            WeaponLook(weapon3, TargetAi);
             iktarget.target = TargetAi;
         }
         else
         {
+            WeaponLook(weapon1, iktarget.targetBody);
+            WeaponLook(weapon2, iktarget.targetBody);
+            WeaponLook(weapon3, iktarget.targetBody);
             iktarget.target = null;
         }
 
@@ -38,7 +45,9 @@ public class AutoLookonEnemy : MonoBehaviour
         {
             TargetAi = other.transform.GetChild(0);
 
-
+            WeaponLook(weapon1, TargetAi);
+            WeaponLook(weapon2, TargetAi);
+            WeaponLook(weapon3, TargetAi);
 
         }
     }
@@ -52,8 +61,29 @@ public class AutoLookonEnemy : MonoBehaviour
 
             iktarget.target = TargetAi;
 
-
+            WeaponLook(weapon1, iktarget.targetBody);
+            WeaponLook(weapon2, iktarget.targetBody);
+            WeaponLook(weapon3, iktarget.targetBody);
         }
     }
 
+
+    void WeaponLook (Transform weapon, Transform target)
+    {
+        if (target == null)
+        {
+
+            return;
+        }
+        if (weapon.childCount == 0)
+        {
+           
+            return;
+        }
+        else
+        {
+            weapon.LookAt(target);
+        }
+
+    }
 }

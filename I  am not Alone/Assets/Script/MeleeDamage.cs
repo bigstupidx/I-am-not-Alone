@@ -5,124 +5,55 @@ using UnityEngine;
 public class MeleeDamage : MonoBehaviour
 {
     public float Damage;
-    handWeapon handWeapon;
-    private void Start ()
-    {
-        handWeapon = transform.parent.parent.GetComponent<handWeapon>();
-    }
-    private void OnEnable ()
-    {
-        try
-        {
-            handWeapon = transform.parent.parent.GetComponent<handWeapon>();
-        }
-        catch (System.Exception)
-        {
-
-
-        }
-    }
+    public handWeapon weapon;
     // Use this for initialization
     private void OnTriggerStay (Collider other)
     {
-
-        if (other.transform.tag == "CraftMode")
+        if (weapon.fight)
         {
 
-
-
-
-            if (handWeapon.l)
+            if (other.transform.tag == "CraftMode")
             {
-                try
-                {
-                    other.transform.GetComponent<Health>().HelthDamage(Damage,true);
-                }
-                catch (System.Exception)
-                {
 
 
-                }
+                other.transform.GetComponent<Health>().HelthDamage(Damage, true);
+
 
             }
 
-
-
-
-
-
-        }
-
-        if (other.transform.tag == "CraftFromMenu")
-        {
-
-
-            if (handWeapon.l)
+            if (other.transform.tag == "CraftFromMenu")
             {
-                try
-                {
-                    other.transform.GetComponent<Health>().HelthDamage(Damage, true);
-                }
-                catch (System.Exception)
-                {
 
 
-                }
+                other.transform.GetComponent<Health>().HelthDamage(Damage, true);
+
+
+
+
+
+
+
+            }
+            if (other.transform.tag == "Things")
+            {
+
+
+                other.transform.GetComponent<Health>().HelthDamage(Damage, true);
+
+
 
             }
 
-
-
-
-
-
-
-
-        }
-        if (other.transform.tag == "Things")
-        {
-
-
-            if (handWeapon.l)
+            if (other.transform.tag == "AI")
             {
-                try
-                {
-                    other.transform.GetComponent<Health>().HelthDamage(Damage, true);
-                }
-                catch (System.Exception)
-                {
 
 
-                }
-
-            }
+                other.transform.GetComponent<Health>().HelthDamage(Damage, true);
 
 
 
 
-        }
-    
-      if (other.transform.tag == "AI")
-        {
-
-
-            if (handWeapon.l)
-            {
-                try
-                {
-                    other.transform.GetComponent<Health>().HelthDamage (Damage, true);
-}
-                catch (System.Exception)
-                {
-
-
-                }
-
-            }
-
-
-
-
+            } 
         }
     }
 }

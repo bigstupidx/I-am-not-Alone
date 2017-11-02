@@ -19,15 +19,16 @@ public class ZombieLevel1 : MonoBehaviour
     public float PlayerDamage;
     public float damage;
     public Transform newTraget;
+
     public float timerStop;
-    public NavMeshPath navMeshPath;
+
+    public NavMeshPath navMeshPathPlayer;
     public bool JointWindow;
     public bool damageWindow;
     public bool DestoyAll;
     public float standartSpeed;
     public bool RigidExplosion;
-    //   public bool WinDowAttack;
-    bool stoping;
+
 
     public LSky _sky;
     Health health;
@@ -40,9 +41,10 @@ public class ZombieLevel1 : MonoBehaviour
     public AudioClip zombieStay;
     public AudioClip zombieDeth;
     public Animator m_animator;
-    AudioSource source;
-    GameObject[] targetsDistance;
-    public List<Transform> PriorityTarget = new List<Transform>();
+    [HideInInspector]
+    public AudioSource source;
+
+
     public int currentTarget = 0;
     public int OldTarget;
     LineRenderer lineRender;
@@ -58,10 +60,11 @@ public class ZombieLevel1 : MonoBehaviour
         health = GetComponent<Health>();
         rigi = GetComponent<Rigidbody>();
         source = GetComponent<AudioSource>();
-        navMeshPath = new NavMeshPath();
-        targetsDistance = GameObject.FindGameObjectsWithTag("TargetDistance");
+
+        navMeshPathPlayer = new NavMeshPath();
+
         lineRender = GetComponent<LineRenderer>();
-        SetNewPriority();
+
 
 
 
@@ -88,98 +91,7 @@ public class ZombieLevel1 : MonoBehaviour
     {
 
 
-        Vector3 fwd = transform.TransformDirection(Vector3.forward);
-        Debug.DrawRay(transform.position, fwd * 3f, Color.yellow);
 
-        if (Physics.Raycast(transform.position, fwd, out hit, 3))
-        {
-
-            if (m_animator)
-            {
-                if (ThingsDamage)
-                {
-                    if (hit.transform.CompareTag("Things"))
-
-                    {
-                        m_animator.SetBool("attack", true);
-                        hit.transform.GetComponent<Health>().HelthDamage(damage, false);
-
-                        if (!source.isPlaying)
-                        {
-                            source.PlayOneShot(zombieAtack);
-                        }
-
-                    }
-                    else
-                    {
-                        m_animator.SetBool("attack", false);
-                    }
-                    if (hit.transform.CompareTag("CraftMode"))
-
-                    {
-                        m_animator.SetBool("attack", true);
-                        if (!source.isPlaying)
-                        {
-                            source.PlayOneShot(zombieAtack);
-                        }
-                        if (hit.transform.GetComponent<Health>())
-                        {
-                            hit.transform.GetComponent<Health>().HelthDamage(damage, false);
-                        }
-                        else
-                        {
-                            hit.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false);
-                        }
-
-
-                    }
-                    else
-                    {
-                        m_animator.SetBool("attack", false);
-                    }
-
-
-                }
-
-                if (hit.transform.CompareTag("Player"))
-
-                {
-                    hit.transform.GetComponent<Health>().HelthDamage(PlayerDamage, false);
-
-                    if (!source.isPlaying)
-                    {
-                        source.PlayOneShot(zombieAtack);
-                        m_animator.SetBool("attack", true);
-                    }
-                    else
-                    {
-                        m_animator.SetBool("attack", false);
-                    }
-
-                    if (DestoyAll)
-                    {
-                        if (hit.transform.CompareTag("WallCrash"))
-
-                        {
-                            hit.transform.GetComponent<Health>().HelthDamage(damage, false);
-                            m_animator.SetBool("attack", true);
-
-                        }
-                        else
-                        {
-                            m_animator.SetBool("attack", false);
-                        }
-                        if (!source.isPlaying)
-                        {
-                            source.PlayOneShot(zombieAtack);
-                        }
-                    }
-
-                }
-
-            }
-
-        }
         timerStop -= Time.deltaTime;
         if (RigidExplosion)
         {
@@ -193,19 +105,18 @@ public class ZombieLevel1 : MonoBehaviour
         if (timerStop <= 0)
         {
 
-            if (stoping)
+
+            if (agent.isStopped)
             {
-
-
                 agent.isStopped = false;
-                stoping = false;
             }
+
 
             if ((player.transform.position - transform.position).sqrMagnitude < Mathf.Pow(agent.stoppingDistance, 2))
             {
                 // If the agent is in attack range, become an obstacle and
                 // disable the NavMeshAgent component
-                obstacle.enabled = true;
+                //    obstacle.enabled = true;
                 agent.enabled = false;
                 Vector3 relativePos = player.transform.position - transform.position;
                 Quaternion rotation = Quaternion.LookRotation(relativePos);
@@ -216,21 +127,21 @@ public class ZombieLevel1 : MonoBehaviour
 
 
                 // If we are not in range, become an agent again
-                obstacle.enabled = false;
+                //   obstacle.enabled = false;
                 agent.enabled = true;
                 if (m_animator)
                 {
                     if (!newTraget)
                     {
-                        m_animator.SetBool("walk", true);
+
                         CalculateNewPath(player);
 
                     }
                     else
                     {
-                        currentTarget = 0;
-                        m_animator.SetBool("walk", true);
-                        agent.SetDestination(newTraget.position);
+
+                        CalculateNewPath(newTraget);
+
                     }
                 }
             }
@@ -246,14 +157,119 @@ public class ZombieLevel1 : MonoBehaviour
             {
                 source.PlayOneShot(zombieStay);
             }
+
+            if (!agent.isStopped)
+            {
+                agent.isStopped = true;
+            }
+    
+        }
+
+
+
+
+    }
+
+
+
+
+    void CalculateNewPath (Transform target)
+    {
+
+
+        agent.CalculatePath(target.position, navMeshPathPlayer);
+
+        lineRender.positionCount = navMeshPathPlayer.corners.Length;
+        lineRender.SetPositions(navMeshPathPlayer.corners);
+        Vector3 fwd = transform.TransformDirection(Vector3.forward);
+
+        Debug.DrawRay(transform.position, fwd * 2f, Color.yellow);
+        if (Physics.Raycast(transform.position, fwd, out hit, 2F))
+        {
+
+
+
+
+            if (hit.transform.GetComponent<PriorityObject>())
+            {
+                if (target.CompareTag(Tags.player))
+                {
+                    if (hit.transform.CompareTag(Tags.player))
+                    {
+                        target.GetComponent<Health>().HelthDamage(PlayerDamage, false);
+
+                        if (!source.isPlaying)
+                        {
+                            source.PlayOneShot(zombieAtack);
+
+
+                        }
+                        if (m_animator)
+                        {
+                            if (!agent.isStopped)
+                            {
+
+                                agent.isStopped = true;
+                                m_animator.SetBool("attack", true);
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (target.GetComponent<Health>())
+                    {
+                        target.GetComponent<Health>().HelthDamage(damage, false);
+                    }
+                    else
+                    {
+                        target.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false);
+                    }
+
+                    if (!source.isPlaying)
+                    {
+                        source.PlayOneShot(zombieAtack);
+
+
+                    }
+       
+                    if (m_animator)
+                    {
+                        if (!agent.isStopped)
+                        {
+             
+                            agent.isStopped = true;
+                            m_animator.SetBool("attack", true);
+                        }
+                    }
+                }
+
+
+                GhostAnswer(hit.transform, hit.transform.GetComponent<PriorityObject>());
+
+            }
+        }
+        else
+        {
+            newTraget = null;
+            agent.SetDestination(target.position);
             if (m_animator)
             {
-                //   m_animator.SetBool("walk", false);
-                m_animator.SetBool("attack", false);
+                if (agent.isStopped)
+                {
+    
+                    agent.isStopped = false;
+                    m_animator.SetBool("attack", false);
+                }
             }
-            stoping = true;
-            agent.isStopped = true;
         }
+
+
+
+
+
+
 
 
 
@@ -261,101 +277,177 @@ public class ZombieLevel1 : MonoBehaviour
     }
 
 
-
-
-    void CalculateNewPath (Transform targetPosition)
+    void GhostAnswer (Transform target, PriorityObject Object)
     {
-        //if (targetPosition)
-        //{
-            agent.CalculatePath(targetPosition.position, navMeshPath);
-        //  }
-        //else
-        //{
-        //    SetNewPriority();
-        //}
-
-        lineRender.positionCount = navMeshPath.corners.Length;
-        lineRender.SetPositions(navMeshPath.corners);
-        
-        //for (int i = 0; i < navMeshPath.corners.Length - 1; i++)
-        //{
-        //    Debug.DrawLine(navMeshPath.corners[i], navMeshPath.corners[i + 1], Color.red);
-
-        //}
-        agent.SetDestination(targetPosition.position);
-
-        if (navMeshPath.status == NavMeshPathStatus.PathPartial)
+        if (Object.Priority == 0)
         {
-        //    PathFinding();
+            if (Object.gameObject.GetComponent<DoorTrigger>())
+            {
+                if (Object.gameObject.GetComponent<DoorTrigger>().rigid.isKinematic)
+                {
+
+                    newTraget = target;
+
+                }
+                else
+                {
+
+                    newTraget = null;
+                }
+            }
+            else
+            {
+                newTraget = target;
+            }
+
         }
-        //switch (navMeshPath.status)
-        //{
-        //    case NavMeshPathStatus.PathComplete:
-        //        agent.SetDestination(targetPosition.position);
-        //        break;
-        //    case NavMeshPathStatus.PathPartial:
+        if (Object.Priority == 1)
+        {
+            int r = Random.Range(0, 2);
+            if (r == 1)
+            {
+                newTraget = target;
 
-        //        break;
-        //    case NavMeshPathStatus.PathInvalid:
-        //        break;
-        //    default:
-        //        break;
-        //}
+            }
+            else
+            {
+                newTraget = null;
+            }
+        }
+        if (Object.Priority == 2)
+        {
+            int r = Random.Range(0, 4);
+            if (r == 3)
+            {
+                newTraget = target;
 
+            }
+            else
+            {
+                newTraget = null;
+            }
+        }
+        if (Object.Priority == 3)
+        {
+            int r = Random.Range(0, 8);
+            if (r == 4)
+            {
+                newTraget = target;
+
+            }
+            else
+            {
+                newTraget = null;
+            }
+
+        }
 
     }
 
 
-    void SetNewPriority ()
+    void GhostAttack ()
     {
-       
-        PriorityTarget.Clear();
-       // PriorityTarget.Add(player);
-        currentTarget = 0;
-
-        for (int i = 0; i < targetsDistance.Length; i++)
+        if (hit.transform.tag != "Untagged")
         {
-            PriorityTarget.Add(targetsDistance[i].transform);
 
+
+            if (hit.transform.CompareTag(Tags.player))
+            {
+                hit.transform.GetComponent<Health>().HelthDamage(PlayerDamage, false);
+
+                if (!source.isPlaying)
+                {
+                    source.PlayOneShot(zombieAtack);
+
+
+                }
+                if (m_animator)
+                {
+                    if (!agent.isStopped)
+                    {
+                        Debug.Log(hit.transform.name);
+                        agent.isStopped = true;
+                        m_animator.SetBool("attack", true);
+                    }
+                }
+
+            }
+            else
+            {
+                if (newTraget)
+                {
+                    if (!hit.transform.CompareTag(Tags.AI))
+                    {
+                        if (hit.transform.GetComponent<Health>())
+                        {
+                            hit.transform.GetComponent<Health>().HelthDamage(damage, false);
+                        }
+                        else
+                        {
+                            hit.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false);
+                        }
+
+                        if (!source.isPlaying)
+                        {
+                            source.PlayOneShot(zombieAtack);
+
+
+                        }
+                        if (m_animator)
+                        {
+                            if (!agent.isStopped)
+                            {
+                                Debug.Log(hit.transform.name);
+                                agent.isStopped = true;
+                                m_animator.SetBool("attack", true);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (m_animator)
+                    {
+                        if (agent.isStopped)
+                        {
+                            agent.isStopped = false;
+                            m_animator.SetBool("attack", false);
+                        }
+                    }
+                }
+
+            }
         }
-    }
+        else
+        {
+            if (m_animator)
+            {
+                if (agent.isStopped)
+                {
+                    agent.isStopped = false;
+                    m_animator.SetBool("attack", false);
+                }
+            }
+        }
 
+    }
     void PathFinding ()
     {
 
-        //if (PriorityTarget.Count == 1)
-        //{
-        //    SetNewPriority();
-
-        //}
-
-        //if (currentTarget != 0)
-        //{
-        //    PriorityTarget.RemoveAt(OldTarget);
-        //}
-        //  var second = PriorityTarget[0].transform;
-        var dist = Vector3.Distance(player.position, PriorityTarget[currentTarget].transform.position);   // Note 1
-        for (var i = 0; i < PriorityTarget.Count; i++)
-        {                   // Note 2
-            var tempDist = Vector3.Distance(player.position, PriorityTarget[i].transform.position);
-            if (tempDist < dist)
-            {
-                //   second = PriorityTarget[i].transform;
-                Debug.Log(currentTarget);
-                currentTarget = i;
-                OldTarget = i;
-            }
-        }
-
-
-
 
 
 
     }
 
 
+
+
+
+
 }
+
+
+
 
 
 

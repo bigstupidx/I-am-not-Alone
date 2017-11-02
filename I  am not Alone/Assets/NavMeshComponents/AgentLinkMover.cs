@@ -13,12 +13,19 @@ public enum OffMeshLinkMoveMethod
 [RequireComponent(typeof(NavMeshAgent))]
 public class AgentLinkMover : MonoBehaviour
 {
+
+    CapsuleCollider Mcollider;
+    float m_CapsuleHeight;
+    Vector3 m_CapsuleCenter;
     public OffMeshLinkMoveMethod m_Method = OffMeshLinkMoveMethod.Parabola;
     public AnimationCurve m_Curve = new AnimationCurve();
     NavMeshAgent agent;
     IEnumerator Start()
     {
          agent = GetComponent<NavMeshAgent>();
+        Mcollider = GetComponent<CapsuleCollider>();
+        m_CapsuleHeight = Mcollider.height;
+        m_CapsuleCenter = Mcollider.center;
         agent.autoTraverseOffMeshLink = false;
         while (true)
         {
@@ -52,12 +59,16 @@ public class AgentLinkMover : MonoBehaviour
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         Vector3 startPos = agent.transform.position;
         Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
+        Mcollider.height = Mcollider.height / 4f;
+        Mcollider.center = Mcollider.center / 4f;
         float normalizedTime = 0.0f;
         while (normalizedTime < 1.0f)
         {
             float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
             agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
             normalizedTime += Time.deltaTime / duration;
+            Mcollider.height = m_CapsuleHeight;
+            Mcollider.center = m_CapsuleCenter;
             yield return null;
         }
     }

@@ -57,7 +57,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     public void CreateBoxInterActive (Vector3 pos)
     {
         int i = Random.Range(0, buildMode.interActivePrefab.Count);
-        GameObject box = pool.InstantiateAPS("BoxWithWeapon", pos + new Vector3(0,2,0), Quaternion.identity);
+        GameObject box = pool.InstantiateAPS("BoxWithWeapon", pos + new Vector3(0, 2, 0), Quaternion.identity);
         box.transform.GetChild(0).GetComponent<BoxWeapon>().Interactive = true;
         box.transform.GetChild(0).GetComponent<BoxWeapon>().gridBuild = gridBuildMenu;
         box.transform.GetChild(0).GetComponent<BoxWeapon>().textGuiPanelGoods = buildMode.interActivePrefab[i].transform;
@@ -81,14 +81,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).category;
         box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).nameWeapon;
         box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).levelWeapon;
-        if (hand == null)
-        {
-            box.transform.GetChild(0).GetComponent<BoxWeapon>().WeaponAmunition = bul.WeaponAmmunition;
-        }
-        else
-        {
-            box.transform.GetChild(0).GetComponent<BoxWeapon>().WeaponAmunition = hand.WeaponAmmunition;
-        }
+
     }
     void AddItemStart ()
     {
@@ -116,7 +109,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
                 if (gridShop.Find(WeaponBought[i].nameWeapon))
                 {
                     gridShop.Find(WeaponBought[i].nameWeapon).GetComponent<ItemParams>().levelItem = WeaponBought[i].levelWeapon;
-                    gridShop.Find(WeaponBought[i].nameWeapon).GetComponent<ItemParams>().IntializedParams(); 
+                    gridShop.Find(WeaponBought[i].nameWeapon).GetComponent<ItemParams>().IntializedParams();
                 }
             }
         }

@@ -52,7 +52,7 @@ public class Health : MonoBehaviour
     float timer;
     private Rigidbody rigid;
     Animator m_anim;
-    
+
     private void Start ()
     {
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
@@ -106,7 +106,7 @@ public class Health : MonoBehaviour
             }
 
             // Reset the damaged flag.
-            damaged = false; 
+            damaged = false;
         }
         if (SoundTrue)
         {
@@ -325,7 +325,7 @@ public class Health : MonoBehaviour
 
 
 
-        //    destroyAi.PlayEffect(30);
+            //    destroyAi.PlayEffect(30);
         }
     }
     void EnebledPhysics ()
@@ -339,10 +339,7 @@ public class Health : MonoBehaviour
         {
             transform.GetComponent<Renderer>().enabled = false;
         }
-        else
-        {
-
-        }
+       
 
         if (transform.childCount != 0)
         {
@@ -357,14 +354,7 @@ public class Health : MonoBehaviour
     }
 
 
-    //private void OnCollisionEnter (Collision collision)
-    //{
-    //    if (CollisionDestroy)
-    //    {
-    //        poolsistem.InstantiateAPS("SmallExplosionEffectForZombie", transform.position, Quaternion.identity);
-    //        Destroy(gameObject);
-    //    }
-    //}
+
 
     private void OnTriggerEnter (Collider other)
     {

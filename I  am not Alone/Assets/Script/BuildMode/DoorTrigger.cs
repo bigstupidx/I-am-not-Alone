@@ -8,9 +8,9 @@ public class DoorTrigger : MonoBehaviour
 
     public NavMeshObstacle obstacle;
     public CraftItem craftItem;
-    public OffMeshLink offmeshLink;
-    Rigidbody rigid;
-
+    //public OffMeshLink offmeshLink;
+    public Rigidbody rigid;
+    NavMeshModifierVolume modifer;
     HingeJoint hinge;
     bool PlayerHere;
     bool close = false;
@@ -35,9 +35,10 @@ public class DoorTrigger : MonoBehaviour
 
     }
 
-    public void DoorClosed(bool close)
+    public void DoorClosed (bool close)
     {
         rigid.isKinematic = close;
+
         obstacle.enabled = close;
     }
 
