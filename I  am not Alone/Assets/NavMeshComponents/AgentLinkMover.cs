@@ -20,9 +20,11 @@ public class AgentLinkMover : MonoBehaviour
     public OffMeshLinkMoveMethod m_Method = OffMeshLinkMoveMethod.Parabola;
     public AnimationCurve m_Curve = new AnimationCurve();
     NavMeshAgent agent;
-    IEnumerator Start()
+    ZombieLevel1 zombie;
+    IEnumerator Start ()
     {
-         agent = GetComponent<NavMeshAgent>();
+        zombie = GetComponent<ZombieLevel1>();
+        agent = GetComponent<NavMeshAgent>();
         Mcollider = GetComponent<CapsuleCollider>();
         m_CapsuleHeight = Mcollider.height;
         m_CapsuleCenter = Mcollider.center;
@@ -43,7 +45,7 @@ public class AgentLinkMover : MonoBehaviour
         }
     }
 
-    IEnumerator NormalSpeed(NavMeshAgent agent)
+    IEnumerator NormalSpeed (NavMeshAgent agent)
     {
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
@@ -54,7 +56,7 @@ public class AgentLinkMover : MonoBehaviour
         }
     }
 
-    IEnumerator Parabola(NavMeshAgent agent, float height, float duration)
+    IEnumerator Parabola (NavMeshAgent agent, float height, float duration)
     {
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         Vector3 startPos = agent.transform.position;
@@ -62,6 +64,7 @@ public class AgentLinkMover : MonoBehaviour
         Mcollider.height = Mcollider.height / 4f;
         Mcollider.center = Mcollider.center / 4f;
         float normalizedTime = 0.0f;
+        zombie.m_animator.SetTrigger("jump");
         while (normalizedTime < 1.0f)
         {
             float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
@@ -73,7 +76,7 @@ public class AgentLinkMover : MonoBehaviour
         }
     }
 
-    IEnumerator Curve(NavMeshAgent agent, float duration)
+    IEnumerator Curve (NavMeshAgent agent, float duration)
     {
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         Vector3 startPos = agent.transform.position;
