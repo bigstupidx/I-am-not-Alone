@@ -256,7 +256,7 @@ public class CraftItem : MonoBehaviour
         {
             if (ItemDown)
             {
-                Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>()); 
+                Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>());
             }
             rigid.isKinematic = false;
         }
@@ -435,7 +435,9 @@ public class CraftItem : MonoBehaviour
                     if (other.GetComponent<ZombieLevel1>().JointWindow)
                     {
 
-                        health.HelthDamage(0.01f, false);
+                        health.HelthDamage(0.03f, false);
+                        Animator anim = other.GetComponent<ZombieLevel1>().m_animator;
+                        anim.SetTrigger("window");
                         OffMeshLinkData data = other.GetComponent<ZombieLevel1>().agent.currentOffMeshLinkData;
                         Vector3 startPos = other.GetComponent<ZombieLevel1>().agent.transform.position;
                         Vector3 endPos = data.endPos + Vector3.up * other.GetComponent<ZombieLevel1>().agent.baseOffset;

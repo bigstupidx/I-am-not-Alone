@@ -28,7 +28,7 @@ public class ZombieLevel1 : MonoBehaviour
     public bool DestoyAll;
     public float standartSpeed;
     public bool RigidExplosion;
-    public GameObject Body;
+
 
     public LSky _sky;
     Health health;
@@ -91,11 +91,11 @@ public class ZombieLevel1 : MonoBehaviour
     {
 
 
-        if(timerStop > 0)
+        if (timerStop > 0)
         {
             timerStop -= Time.deltaTime;
         }
-       
+
         if (RigidExplosion)
         {
             if (agent.isOnNavMesh)
@@ -109,29 +109,29 @@ public class ZombieLevel1 : MonoBehaviour
         {
 
 
-            //if (agent.isStopped)
-            //{
-            //    agent.isStopped = false;
-            //}
+            if (agent.isStopped)
+            {
+                agent.isStopped = false;
+            }
 
 
-            //if ((player.transform.position - transform.position).sqrMagnitude < Mathf.Pow(agent.stoppingDistance, 2))
-            //{
-            //    // If the agent is in attack range, become an obstacle and
-            //    // disable the NavMeshAgent component
-            //    //    obstacle.enabled = true;
-            //    //  agent.enabled = false;
-            //    Vector3 relativePos = player.transform.position - transform.position;
-            //    Quaternion rotation = Quaternion.LookRotation(relativePos);
-            //    transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 7f);
-            //}
-            //else
-            //{
+            if ((player.transform.position - transform.position).sqrMagnitude < Mathf.Pow(agent.stoppingDistance, 2))
+            {
+                // If the agent is in attack range, become an obstacle and
+                // disable the NavMeshAgent component
+                //    obstacle.enabled = true;
+                //    agent.enabled = false;
+                Vector3 relativePos = player.transform.position - transform.position;
+                Quaternion rotation = Quaternion.LookRotation(relativePos);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 7f);
+            }
+            else
+            {
 
 
-                // If we are not in range, become an agent again
+                //   If we are not in range, become an agent again
                 //   obstacle.enabled = false;
-              //  agent.enabled = true;
+                //  agent.enabled = true;
                 if (m_animator)
                 {
                     if (!newTraget)
@@ -147,7 +147,7 @@ public class ZombieLevel1 : MonoBehaviour
 
                     }
                 }
-        //    }
+            }
 
 
 
@@ -165,7 +165,7 @@ public class ZombieLevel1 : MonoBehaviour
             {
                 agent.isStopped = true;
             }
-    
+
         }
 
 
@@ -173,14 +173,6 @@ public class ZombieLevel1 : MonoBehaviour
 
     }
 
-    private void OnTriggerStay (Collider other)
-    {
-        
-    }
-    private void OnTriggerExit (Collider other)
-    {
-        
-    }
 
 
     void CalculateNewPath (Transform target)
@@ -191,93 +183,114 @@ public class ZombieLevel1 : MonoBehaviour
 
         lineRender.positionCount = navMeshPathPlayer.corners.Length;
         lineRender.SetPositions(navMeshPathPlayer.corners);
-        //Vector3 fwd = transform.TransformDirection(Vector3.forward  * 0.5f);
+        Vector3 fwd = transform.TransformDirection(Vector3.forward * 0.5f);
 
-        //Debug.DrawRay(transform.position, fwd * 2.5f, Color.yellow);
-        //if (Physics.Raycast(transform.position, fwd, out hit, 2.5F))
-        //{
-
-        //    Vector3 relativePos = target.transform.position - Body.transform.position;
-        //    Quaternion rotation = Quaternion.LookRotation(relativePos,Vector3.up);
-        //    transform.rotation = Quaternion.Slerp(Body.transform.rotation, rotation, Time.deltaTime * 7f);
+        Debug.DrawRay(transform.position, fwd * 2.5f, Color.yellow);
+        if (Physics.Raycast(transform.position, fwd, out hit, 2.5F))
+        {
 
 
-        //    if (hit.transform.GetComponent<PriorityObject>())
-        //    {
-        //        if (target.CompareTag(Tags.player))
-        //        {
-        //            if (hit.transform.CompareTag(Tags.player))
-        //            {
-        //                target.GetComponent<Health>().HelthDamage(PlayerDamage, false);
 
-        //                if (!source.isPlaying)
-        //                {
-        //                    source.PlayOneShot(zombieAtack);
+            Debug.Log(hit.transform.name);
+            if (hit.transform.GetComponent<PriorityObject>())
+            {
+                if (target.CompareTag(Tags.player))
+                {
+                    if (hit.transform.CompareTag(Tags.player))
+                    {
+                        target.GetComponent<Health>().HelthDamage(PlayerDamage, false);
 
-
-        //                }
-        //                if (m_animator)
-        //                {
-        //                    if (!agent.isStopped)
-        //                    {
-
-        //                        agent.isStopped = true;
-        //                        m_animator.SetBool("attack", true);
-        //                        m_animator.SetBool("attackTwo", false);
-        //                    }
-        //                }
-
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (target.GetComponent<Health>())
-        //            {
-        //                target.GetComponent<Health>().HelthDamage(damage, false);
-        //            }
-        //            else
-        //            {
-        //                target.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false);
-        //            }
-
-        //            if (!source.isPlaying)
-        //            {
-        //                source.PlayOneShot(zombieAtack);
+                        if (!source.isPlaying)
+                        {
+                            source.PlayOneShot(zombieAtack);
 
 
-        //            }
-       
-        //            if (m_animator)
-        //            {
-        //                if (!agent.isStopped)
-        //                {
-             
-        //                    agent.isStopped = true;
-        //                    m_animator.SetBool("attack", true);
-        //                }
-        //            }
-        //        }
+                        }
+                        if (m_animator)
+                        {
+                            if (!agent.isStopped)
+                            {
+
+                                agent.isStopped = true;
+                                m_animator.SetBool("attack", true);
+                                Debug.Log("player  = true");
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        if (m_animator)
+                        {
+                            if (agent.isStopped)
+                            {
+
+                                agent.isStopped = false;
+                                m_animator.SetBool("attack", false);
+                                Debug.Log("attack  = false");
+                            }
+                        }
+                    }
+                }
+                else
+                {
 
 
-        //        GhostAnswer(hit.transform, hit.transform.GetComponent<PriorityObject>());
+                    if (target.GetComponent<Health>())
+                    {
+                        target.GetComponent<Health>().HelthDamage(damage, false);
+                    }
+                    else
+                    {
+                        target.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false);
+                    }
 
-        //    }
-        //}
-        //else
-        //{
-        //    newTraget = null;
-        //    agent.SetDestination(target.position);
-        //    if (m_animator)
-        //    {
-        //        if (agent.isStopped)
-        //        {
-    
-        //            agent.isStopped = false;
-        //            m_animator.SetBool("attack", false);
-        //            m_animator.SetBool("attackTwo", false);
-        //        }
-        //    }
-        //}
+                    if (!source.isPlaying)
+                    {
+                        source.PlayOneShot(zombieAtack);
+
+
+                    }
+
+                    if (m_animator)
+                    {
+                        if (!agent.isStopped)
+                        {
+
+                            agent.isStopped = true;
+                            m_animator.SetTrigger("door");
+                            m_animator.SetBool("attack", true);
+                            Debug.Log("other  = true");
+                        }
+                    }
+                }
+
+
+
+                GhostAnswer(hit.transform, hit.transform.GetComponent<PriorityObject>());
+
+
+            }
+        }
+        else
+        {
+            newTraget = null;
+            agent.SetDestination(target.position);
+            if (m_animator)
+            {
+                if (agent.isStopped)
+                {
+
+                    agent.isStopped = false;
+                    m_animator.SetBool("attack", false);
+                    Debug.Log("attack  = false");
+                }
+                else
+                {
+                    m_animator.SetBool("attack", false);
+                }
+            }
+        }
 
 
 
@@ -299,21 +312,14 @@ public class ZombieLevel1 : MonoBehaviour
             {
                 if (Object.gameObject.GetComponent<DoorTrigger>().rigid.isKinematic)
                 {
-                    int l = Random.Range(0, 2);
-                    if (l ==1  )
-                    {
-                        m_animator.SetBool("attackTwo", true);
-                    }
-                    else
-                    {
-                        m_animator.SetBool("attack", true);
-                    }
+
                     newTraget = target;
 
                 }
                 else
                 {
-                    m_animator.SetBool("attackTwo", false);
+
+
                     newTraget = null;
                 }
             }
@@ -367,14 +373,7 @@ public class ZombieLevel1 : MonoBehaviour
     }
 
 
-  
-    void PathFinding ()
-    {
 
-
-
-
-    }
 
 
 

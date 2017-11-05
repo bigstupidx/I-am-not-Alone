@@ -242,12 +242,13 @@ public class Health : MonoBehaviour
             {
 
                 ZombieLevel1 zombie = GetComponent<ZombieLevel1>();
-                for (int i = 0; i < enablesBoody.Length; i++)
-                {
-                    Destroy(enablesBoody[i]);
-                }
-                //     m_anim.SetBool("die", true);
-                EnebledPhysics();
+                //for (int i = 0; i < enablesBoody.Length; i++)
+                //{
+                //    Destroy(enablesBoody[i]);
+                //}
+
+                zombie.m_animator.SetTrigger("die");
+                //   EnebledPhysics();
                 destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffectForZombie", transform.position, Quaternion.identity);
 
                 if (playerAttack)
@@ -339,7 +340,7 @@ public class Health : MonoBehaviour
         {
             transform.GetComponent<Renderer>().enabled = false;
         }
-       
+
 
         if (transform.childCount != 0)
         {
