@@ -181,17 +181,17 @@ public class ZombieLevel1 : MonoBehaviour
 
         agent.CalculatePath(target.position, navMeshPathPlayer);
 
-        lineRender.positionCount = navMeshPathPlayer.corners.Length;
-        lineRender.SetPositions(navMeshPathPlayer.corners);
+        //lineRender.positionCount = navMeshPathPlayer.corners.Length;
+        //lineRender.SetPositions(navMeshPathPlayer.corners);
         Vector3 fwd = transform.TransformDirection(Vector3.forward * 0.5f);
 
-        Debug.DrawRay(transform.position, fwd * 2.5f, Color.yellow);
+        //  Debug.DrawRay(transform.position, fwd * 2.5f, Color.yellow);
         if (Physics.Raycast(transform.position, fwd, out hit, 2.5F))
         {
 
 
 
-            Debug.Log(hit.transform.name);
+
             if (hit.transform.GetComponent<PriorityObject>())
             {
                 if (target.CompareTag(Tags.player))
@@ -213,7 +213,7 @@ public class ZombieLevel1 : MonoBehaviour
 
                                 agent.isStopped = true;
                                 m_animator.SetBool("attack", true);
-                                Debug.Log("player  = true");
+
                             }
                         }
 
@@ -227,7 +227,7 @@ public class ZombieLevel1 : MonoBehaviour
 
                                 agent.isStopped = false;
                                 m_animator.SetBool("attack", false);
-                                Debug.Log("attack  = false");
+
                             }
                         }
                     }
@@ -260,7 +260,7 @@ public class ZombieLevel1 : MonoBehaviour
                             agent.isStopped = true;
                             m_animator.SetTrigger("door");
                             m_animator.SetBool("attack", true);
-                            Debug.Log("other  = true");
+
                         }
                     }
                 }
@@ -283,7 +283,7 @@ public class ZombieLevel1 : MonoBehaviour
 
                     agent.isStopped = false;
                     m_animator.SetBool("attack", false);
-                    Debug.Log("attack  = false");
+
                 }
                 else
                 {

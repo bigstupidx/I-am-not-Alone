@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityStandardAssets.CrossPlatformInput;
 
 [System.Serializable]
 public class UpdateWeapon
@@ -24,8 +24,7 @@ public class UpdateWeapon
 public class BulletSystem : MonoBehaviour
 {
 
-
-
+    TouchPad touch;
     [Range(0, 3)]
     public int WeightWeapon;
     public float intervalWeaponAmmunition = 0.5f;
@@ -36,6 +35,8 @@ public class BulletSystem : MonoBehaviour
     // последсвите от попадания
 
 
+    public Transform leftHand;
+    public Transform rightHand;
 
     public float WeaponAmmunition = 1;
     public int level;
@@ -43,7 +44,7 @@ public class BulletSystem : MonoBehaviour
 
     public List<UpdateWeapon> updateWeapon = new List<UpdateWeapon>();
     bool l;
-
+    public Vector3 WeaponPOsition;
     WeaponController _weaponController;
     SelectionWeaponForPC selectionWeaponPlay;
     Transform AdvancedPoolingSystem;
@@ -52,7 +53,7 @@ public class BulletSystem : MonoBehaviour
     public float timeBetweenBullets = 0.05f;
     public float effectsDisplayTime = 0.2f;
     public Light gunLight;
-    Light SpotlightFace;
+
     AudioSource gunAudio;
     public bool fireGun;
     public Transform buttonWeapon;
@@ -61,7 +62,7 @@ public class BulletSystem : MonoBehaviour
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         selectionWeaponPlay = GameObject.Find("WeaponController").GetComponent<SelectionWeaponForPC>();
-
+        touch = GameObject.Find("TurnAndLookTouchpad").GetComponent<TouchPad>();
         gunLight = GetComponent<Light>();
 
         gunAudio = GetComponent<AudioSource>();
@@ -70,7 +71,7 @@ public class BulletSystem : MonoBehaviour
         _weaponController.Ammunition(WeaponAmmunition);
         l = false;
 
-        SpotlightFace = GameObject.FindGameObjectWithTag("Player").transform.Find("SpotlightFace").GetComponent<Light>();
+
 
     }
 
@@ -115,52 +116,54 @@ public class BulletSystem : MonoBehaviour
             l = false;
         }
 #if UNITY_ANDROID
-     if (fireGun)
-	{
-		  
-	}else{
-         if (selectionWeaponPlay.Fire1) 
+        if (fireGun)
+        {
+
         }
+        else
+        {
+            if (selectionWeaponPlay.Fire1)
 
 
 
 
                 if (fireGun)
-        {
+                {
 
-             if (selectionWeaponPlay.Fire1) 
-            {
-                gunLight.enabled = true;
-                SpotlightFace.enabled = true;
-
-
-                gunMiscle.Stop();
-                gunMiscle.Play();
-           
-                l = true;
-                bullet.Play();
-                timerShoot = 0f;
-            }
-        }
-        else
-        {
-        if (selectionWeaponPlay.Fire1)
-	{
-		    if (Input.GetButton("Fire1") & timerShoot >= timeBetweenBullets && Time.timeScale != 0)
-            {
-                gunLight.enabled = true;
-                SpotlightFace.enabled = true;
+                    if (selectionWeaponPlay.Fire1)
+                    {
+                        gunLight.enabled = true;
+                      
 
 
-                gunMiscle.Stop();
-                gunMiscle.Play();
-               
-                l = true;
-                bullet.Play();
-                timerShoot = 0f;
-            } 
-	}
+                        gunMiscle.Stop();
+                        gunMiscle.Play();
 
+                        l = true;
+                        bullet.Play();
+                        timerShoot = 0f;
+                    }
+                }
+                else
+                {
+                    if (selectionWeaponPlay.Fire1)
+                    {
+                        if (Input.GetButton("Fire1") & timerShoot >= timeBetweenBullets && Time.timeScale != 0)
+                        {
+                            gunLight.enabled = true;
+                           
+
+
+                            gunMiscle.Stop();
+                            gunMiscle.Play();
+
+                            l = true;
+                            bullet.Play();
+                            timerShoot = 0f;
+                        }
+                    }
+
+                }
         }
 
 #else
@@ -170,7 +173,7 @@ public class BulletSystem : MonoBehaviour
             if (Input.GetButton("Fire1"))
             {
                 gunLight.enabled = true;
-                SpotlightFace.enabled = true;
+
 
 
                 gunMiscle.Stop();
@@ -186,7 +189,7 @@ public class BulletSystem : MonoBehaviour
             if (Input.GetButton("Fire1") & timerShoot >= timeBetweenBullets && Time.timeScale != 0)
             {
                 gunLight.enabled = true;
-                SpotlightFace.enabled = true;
+
 
                 gunAudio.Play();
                 gunMiscle.Stop();

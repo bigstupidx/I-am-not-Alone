@@ -33,12 +33,11 @@ public class DbGame : MonoBehaviour
 
 
         //#if UNITY_ANDROID
-        //        filepath = Application.persistentDataPath + "/" + p;
+      //  filepath = Application.persistentDataPath + "/" + p;
         //#elif UNITY_EDITOR
         //        filepath = Application.dataPath + "/" + p;
         //#endif
-
-        filepath = Application.dataPath + "/" + p;
+     filepath = Application.dataPath + "/" + p;
 
 
 

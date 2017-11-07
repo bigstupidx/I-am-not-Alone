@@ -8,8 +8,8 @@ public class Wave
 {
     public float Day;
     public float Night;
-    public float[] countZombie;
-    public GameObject[] ZombiePref;
+    public List<int> countZombie = new List<int>();
+    public List<GameObject> ZombiePref = new List<GameObject>();
 
 }
 [System.Serializable]
@@ -39,6 +39,7 @@ public class WaveManager : MonoBehaviour
 
 
     [Space(5)]
+    [HideInInspector]
     public List<Wave> wave = new List<Wave>();
     [Space(5)]
 
@@ -57,18 +58,19 @@ public class WaveManager : MonoBehaviour
     bool startWave;
     public bool harfMode = false;
     SwitchMode switchMode;
+    [HideInInspector]
     public List<GameObject> lightAllScene = new List<GameObject>();
     public CheckInWeaponAndCraft _weaponcraft;
     public StartSceneObjectRandom _startObject;
     // Use this for initialization
     void Start ()
     {
-       GameObject[] light =GameObject.FindGameObjectsWithTag("LightInscene");
+        GameObject[] light = GameObject.FindGameObjectsWithTag("LightInscene");
         for (int i = 0; i < light.Length; i++)
         {
             lightAllScene.Add(light[i]);
         }
-   
+
         switchMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -96,7 +98,7 @@ public class WaveManager : MonoBehaviour
 
             if (night)
             {
-              //  _startObject.StartRandomSituation(levelWave);
+                //  _startObject.StartRandomSituation(levelWave);
                 day = true;
                 waveLevelUp = true;
                 _lskyTod.dayInSeconds = wave[levelWave].Night * 2;
@@ -193,7 +195,7 @@ public class WaveManager : MonoBehaviour
 
         {
 
-            for (int i = 0; i < wave[w].ZombiePref.Length; i++)
+            for (int i = 0; i < wave[w].ZombiePref.Count; i++)
             {
 
 
@@ -215,7 +217,7 @@ public class WaveManager : MonoBehaviour
 
         {
 
-            for (int i = 0; i < wave[w].ZombiePref.Length; i++)
+            for (int i = 0; i < wave[w].ZombiePref.Count; i++)
             {
 
 

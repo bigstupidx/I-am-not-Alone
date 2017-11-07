@@ -55,6 +55,7 @@ public class Health : MonoBehaviour
 
     private void Start ()
     {
+    
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
         checkWeaponAndCraft = GameObject.Find("WeaponController").GetComponent<CheckInWeaponAndCraft>();
         weaponsControll = GameObject.Find("WeaponController").GetComponent<WeaponController>();
@@ -65,6 +66,7 @@ public class Health : MonoBehaviour
         if (!transform.CompareTag("Player"))
         {
 
+         
             sourceDestraction = GetComponent<AudioSource>();
             if (!sourceDestraction)
             {
@@ -81,7 +83,8 @@ public class Health : MonoBehaviour
         if (transform.CompareTag("Player"))
         {
             HealthPlayer.fillAmount = CurHelth / MaxHealth;
-
+            blood.Stop();
+            blood.Clear();
         }
 
     }
@@ -91,22 +94,25 @@ public class Health : MonoBehaviour
     {
 
 
-        if (transform.CompareTag("Player"))
+        if (damaged)
         {
-            if (damaged)
+            if (transform.CompareTag("Player"))
             {
-                // ... set the colour of the damageImage to the flash colour.
-                damageImage.color = flashColour;
-            }
-            // Otherwise...
-            else
-            {
-                // ... transition the colour back to clear.
-                damageImage.color = Color.Lerp(damageImage.color, Color.clear, 5.0f * Time.deltaTime);
-            }
+                if (damaged)
+                {
+                    // ... set the colour of the damageImage to the flash colour.
+                    damageImage.color = flashColour;
+                }
+                // Otherwise...
+                else
+                {
+                    // ... transition the colour back to clear.
+                    damageImage.color = Color.Lerp(damageImage.color, Color.clear, 5.0f * Time.deltaTime);
+                }
 
-            // Reset the damaged flag.
-            damaged = false;
+                // Reset the damaged flag.
+                damaged = false;
+            } 
         }
         if (SoundTrue)
         {
@@ -242,13 +248,13 @@ public class Health : MonoBehaviour
             {
 
                 ZombieLevel1 zombie = GetComponent<ZombieLevel1>();
-                //for (int i = 0; i < enablesBoody.Length; i++)
-                //{
-                //    Destroy(enablesBoody[i]);
-                //}
+                for (int i = 0; i < enablesBoody.Length; i++)
+                {
+                    Destroy(enablesBoody[i]);
+                }
 
-                zombie.m_animator.SetTrigger("die");
-                //   EnebledPhysics();
+              //  zombie.m_animator.SetTrigger("die");
+                EnebledPhysics();
                 destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffectForZombie", transform.position, Quaternion.identity);
 
                 if (playerAttack)

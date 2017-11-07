@@ -8,8 +8,7 @@ public class IKtarget : MonoBehaviour
     public Animator m_anim;
     public Transform target;
     public Transform targetBody;
-    public Transform handTarget;
-    public Vector3 offset;
+
 
     Transform body;
 
@@ -20,7 +19,7 @@ public class IKtarget : MonoBehaviour
 
         body = m_anim.GetBoneTransform(HumanBodyBones.Chest);
 
-        Hand = m_anim.GetBoneTransform(HumanBodyBones.LeftHand);
+        //  Hand = m_anim.GetBoneTransform(HumanBodyBones.LeftHand);
     }
 
     // Update is called once per frame
@@ -33,7 +32,7 @@ public class IKtarget : MonoBehaviour
             {
                 //Quaternion r = Quaternion.LookRotation(target.position);
                 //body.rotation = Quaternion.Lerp(body.rotation, r, Time.deltaTime);
-               body.LookAt(target.position);
+                body.LookAt(target.position);
 
                 //   Hand.transform.position = handTarget.position;
             }
@@ -44,11 +43,13 @@ public class IKtarget : MonoBehaviour
                 targetBody.position = transform.position;
                 //Quaternion r = Quaternion.LookRotation(targetBody.position);
                 //body.rotation = Quaternion.Lerp(body.rotation, r, Time.deltaTime/10);
-                 body.LookAt(targetBody.position);
+                body.LookAt(targetBody.position);
             }
 
-            body.rotation = body.rotation * Quaternion.Euler(offset);
+
         }
 
     }
+
+
 }

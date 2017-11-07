@@ -99,19 +99,19 @@ public class MyParticleCollision : MonoBehaviour
 
         }
 
-        int safeLength = GetComponent<ParticleSystem>().GetSafeCollisionEventSize();
-        if (collisionEvents.Length < safeLength)
-            collisionEvents = new ParticleCollisionEvent[safeLength];
-        int numCollisionEvents = GetComponent<ParticleSystem>().GetCollisionEvents(other, collisionEvents);
-        int i = 0;
-        while (i < numCollisionEvents)
-        {
-            Vector3 collisionHitLoc = collisionEvents[i].intersection;
+        //int safeLength = GetComponent<ParticleSystem>().GetSafeCollisionEventSize();
+        //if (collisionEvents.Length < safeLength)
+        //    collisionEvents = new ParticleCollisionEvent[safeLength];
+        //int numCollisionEvents = GetComponent<ParticleSystem>().GetCollisionEvents(other, collisionEvents);
+        //int i = 0;
+        //while (i < numCollisionEvents)
+        //{
+        //    Vector3 collisionHitLoc = collisionEvents[i].intersection;
 
-            //  Instantiate(smoke, collisionHitLoc, Quaternion.identity);
-            i++;
+        //    //  Instantiate(smoke, collisionHitLoc, Quaternion.identity);
+        //    i++;
 
-        }
+        //}
 
     }
 }

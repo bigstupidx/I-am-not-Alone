@@ -27,6 +27,7 @@ public class WeaponController : MonoBehaviour
     GameObject buttonWeaponTwo;
     Transform left;
     Transform right;
+    IKweapon ikWeapon;
     private void OnEnable ()
     {
         pool = PoolingSystem.Instance;
@@ -36,6 +37,7 @@ public class WeaponController : MonoBehaviour
     void Start ()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        ikWeapon = player.GetComponent<IKweapon>();
         _checkInWeaponCraft = GetComponent<CheckInWeaponAndCraft>();
         pool = PoolingSystem.Instance;
         SelectionWeapon(0);
@@ -64,7 +66,8 @@ public class WeaponController : MonoBehaviour
                 WeaponThree.SetActive(false);
                 if (WeaponOne.transform.childCount != 0)
                 {
-                    AnimationWeapon(WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeightWeapon);
+                    WeaponOne.transform.GetChild(0).localPosition = WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
+                    AnimationWeapon(WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().rightHand, WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
 
 
                 }
@@ -81,8 +84,8 @@ public class WeaponController : MonoBehaviour
                 {
 
 
-
-                    AnimationWeapon(WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().WeightWeapon);
+                    WeaponTwo.transform.GetChild(0).localPosition = WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
+                    AnimationWeapon(WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().rightHand, WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
                 }
                 WeaponTwo.SetActive(true);
                 break;
@@ -95,8 +98,8 @@ public class WeaponController : MonoBehaviour
                 {
 
 
-
-                    AnimationWeapon(WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().WeightWeapon);
+                    WeaponThree.transform.GetChild(0).localPosition = WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
+                    AnimationWeapon(WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().rightHand, WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
                 }
                 WeaponThree.SetActive(true);
                 break;
@@ -291,17 +294,15 @@ public class WeaponController : MonoBehaviour
     public void ResetWeapon ()
     {
 
-        m_anim.SetBool("handAttack", false);
-        m_anim.SetLayerWeight(1, 0);
+        ikWeapon.handRight = null;
+        ikWeapon.handLeft = null;
     }
 
 
-    public void AnimationWeapon (int weight)
+    public void AnimationWeapon (Transform right, Transform left)
     {
-        m_anim.SetFloat("WeightWeapon", weight);
-
-
-        m_anim.SetLayerWeight(1, 1);
+        ikWeapon.handRight = right;
+        ikWeapon.handLeft = left;
     }
 
 }
