@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using AC.LSky;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Wave
@@ -62,6 +63,7 @@ public class WaveManager : MonoBehaviour
     public List<GameObject> lightAllScene = new List<GameObject>();
     public CheckInWeaponAndCraft _weaponcraft;
     public StartSceneObjectRandom _startObject;
+    public Text GhostCounter;
     // Use this for initialization
     void Start ()
     {
@@ -105,6 +107,8 @@ public class WaveManager : MonoBehaviour
                 night = false;
                 startWave = true;
                 switchMode.BuildMOdeMenu(false);
+
+
                 for (int i = 0; i < lightAllScene.Count; i++)
                 {
                     if (lightAllScene[i].GetComponent<Light>())
@@ -116,8 +120,16 @@ public class WaveManager : MonoBehaviour
                     //    lightAllScene[i].GetComponent<Renderer>().enabled = true;
                     //}
                 }
-            }
+                for (int i = 0; i < wave[levelWave].countZombie.Count; i++)
+                {
+                    GhostCounter.text = (int.Parse(GhostCounter.text) + wave[levelWave].countZombie[i]).ToString();
 
+                }
+            }
+            //if (GhostCounter.text == "0")
+            //{
+            //    wave[levelWave].Night = 2;
+            //}
         }
 
 
@@ -149,7 +161,7 @@ public class WaveManager : MonoBehaviour
                     {
                         levelWave++;
                     }
-
+                    GhostCounter.text = "0";
                     if (levelWave > wave.Count - 1)
                     {
 
@@ -188,6 +200,7 @@ public class WaveManager : MonoBehaviour
 
         CreatePrefab(levelWave);
         HardModeCreatePreafab(wave.Count - 1);
+
     }
 
     void GenerateParamsWave (int w)

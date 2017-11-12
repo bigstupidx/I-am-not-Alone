@@ -8,7 +8,7 @@ using AC.LSky;
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(Health))]
-[RequireComponent(typeof(NavMeshObstacle))]
+
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(AudioSource))]
 public class ZombieLevel1 : MonoBehaviour
@@ -19,9 +19,9 @@ public class ZombieLevel1 : MonoBehaviour
     public float PlayerDamage;
     public float damage;
     public Transform newTraget;
-
+    public float timeBetweenAttacks = 0.5f;
     public float timerStop;
-
+    float timer;
     public NavMeshPath navMeshPathPlayer;
     public bool JointWindow;
     public bool damageWindow;
@@ -66,7 +66,7 @@ public class ZombieLevel1 : MonoBehaviour
         lineRender = GetComponent<LineRenderer>();
 
 
-
+        transform.tag = Tags.AI;
 
         if (!m_animator)
         {
@@ -82,7 +82,10 @@ public class ZombieLevel1 : MonoBehaviour
     {
         if (_sky.IsDay)
         {
-            health.HelthDamage(0.9f, false);
+            if (health.CurHelth > 0)
+            {
+                health.HelthDamage(0.9f, false, transform.position);
+            }
         }
 
     }
@@ -177,126 +180,127 @@ public class ZombieLevel1 : MonoBehaviour
 
     void CalculateNewPath (Transform target)
     {
+        timer += Time.deltaTime;
 
-
-        agent.CalculatePath(target.position, navMeshPathPlayer);
-
-        //lineRender.positionCount = navMeshPathPlayer.corners.Length;
-        //lineRender.SetPositions(navMeshPathPlayer.corners);
-        Vector3 fwd = transform.TransformDirection(Vector3.forward * 0.5f);
-
-        //  Debug.DrawRay(transform.position, fwd * 2.5f, Color.yellow);
-        if (Physics.Raycast(transform.position, fwd, out hit, 2.5F))
+        if (timer >= timeBetweenAttacks)
         {
+            timer = 0;
+            //lineRender.positionCount = navMeshPathPlayer.corners.Length;
+            //lineRender.SetPositions(navMeshPathPlayer.corners);
+            Vector3 fwd = transform.TransformDirection(Vector3.forward * 0.5f);
 
-
-
-
-            if (hit.transform.GetComponent<PriorityObject>())
+            //  Debug.DrawRay(transform.position, fwd * 2.5f, Color.yellow);
+            if (Physics.Raycast(transform.position, fwd, out hit, 2.5F))
             {
-                if (target.CompareTag(Tags.player))
+
+
+
+
+                if (hit.transform.GetComponent<PriorityObject>())
                 {
-                    if (hit.transform.CompareTag(Tags.player))
+                    if (target.CompareTag(Tags.player))
                     {
-                        target.GetComponent<Health>().HelthDamage(PlayerDamage, false);
+                        if (hit.transform.CompareTag(Tags.player))
+                        {
+                            target.GetComponent<Health>().HelthDamage(PlayerDamage, false, hit.point);
+
+                            if (!source.isPlaying)
+                            {
+                                //  source.PlayOneShot(zombieAtack);
+
+
+                            }
+                            if (m_animator)
+                            {
+                                if (!agent.isStopped)
+                                {
+
+                                    agent.isStopped = true;
+                                    m_animator.SetBool("attack", true);
+
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            if (m_animator)
+                            {
+                                if (agent.isStopped)
+                                {
+
+                                    agent.isStopped = false;
+                                    m_animator.SetBool("attack", false);
+
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+
+
+                        if (target.GetComponent<Health>())
+                        {
+                            target.GetComponent<Health>().HelthDamage(damage, false, hit.point);
+                        }
+                        else
+                        {
+                            target.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false, hit.point);
+                        }
 
                         if (!source.isPlaying)
                         {
-                            source.PlayOneShot(zombieAtack);
+                            //source.PlayOneShot(zombieAtack);
 
 
                         }
+
                         if (m_animator)
                         {
                             if (!agent.isStopped)
                             {
 
                                 agent.isStopped = true;
+                                m_animator.SetTrigger("door");
                                 m_animator.SetBool("attack", true);
 
                             }
                         }
-
                     }
-                    else
-                    {
-                        if (m_animator)
-                        {
-                            if (agent.isStopped)
-                            {
 
-                                agent.isStopped = false;
-                                m_animator.SetBool("attack", false);
 
-                            }
-                        }
-                    }
+
+                    GhostAnswer(hit.transform, hit.transform.GetComponent<PriorityObject>());
+
+
                 }
-                else
-                {
-
-
-                    if (target.GetComponent<Health>())
-                    {
-                        target.GetComponent<Health>().HelthDamage(damage, false);
-                    }
-                    else
-                    {
-                        target.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false);
-                    }
-
-                    if (!source.isPlaying)
-                    {
-                        source.PlayOneShot(zombieAtack);
-
-
-                    }
-
-                    if (m_animator)
-                    {
-                        if (!agent.isStopped)
-                        {
-
-                            agent.isStopped = true;
-                            m_animator.SetTrigger("door");
-                            m_animator.SetBool("attack", true);
-
-                        }
-                    }
-                }
-
-
-
-                GhostAnswer(hit.transform, hit.transform.GetComponent<PriorityObject>());
-
-
             }
-        }
-        else
-        {
-            newTraget = null;
-            agent.SetDestination(target.position);
-            if (m_animator)
+            else
             {
-                if (agent.isStopped)
+                newTraget = null;
+                agent.SetDestination(target.position);
+                if (m_animator)
                 {
+                    if (agent.isStopped)
+                    {
 
-                    agent.isStopped = false;
-                    m_animator.SetBool("attack", false);
+                        agent.isStopped = false;
+                        m_animator.SetBool("attack", false);
 
-                }
-                else
-                {
-                    m_animator.SetBool("attack", false);
+                    }
+                    else
+                    {
+                        m_animator.SetBool("attack", false);
+                    }
                 }
             }
+
+
+
+
+
         }
-
-
-
-
-
-
 
 
 

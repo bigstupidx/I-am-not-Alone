@@ -51,19 +51,20 @@ public class TrasnparentWall : MonoBehaviour
                     if (currentHit.GetComponent<Renderer>())
                     {
                         walls.Add(currentHit);
+                        currentHit.GetComponent<Renderer>().enabled = false;
                         //currentHit.GetComponent<Renderer>().enabled = false;
-                        if (currentHit.GetComponent<TransarentWallChangeMaterial>())
-                        {
-                            currentHit.GetComponent<TransarentWallChangeMaterial>().ChangeTransarentMaterial();
-                            currentHit.GetComponent<TransarentWallChangeMaterial>().newActiveMaterial = true;
-                        }
-                        else
-                        {
-                            if (!currentHit.CompareTag("Things"))
-                            {
-                                currentHit.GetComponent<Renderer>().enabled = false; 
-                            }
-                        }
+                        //if (currentHit.GetComponent<TransarentWallChangeMaterial>())
+                        //{
+                        //    currentHit.GetComponent<TransarentWallChangeMaterial>().ChangeTransarentMaterial();
+                        //    currentHit.GetComponent<TransarentWallChangeMaterial>().newActiveMaterial = true;
+                        //}
+                        //else
+                        //{
+                        //    if (!currentHit.CompareTag("Things"))
+                        //    {
+                        //        currentHit.GetComponent<Renderer>().enabled = false; 
+                        //    }
+                        //}
                     }
                 }
 
@@ -95,19 +96,19 @@ public class TrasnparentWall : MonoBehaviour
                 {
                     if (wasHidden.GetComponent<Renderer>())
                     {
-                        //   wasHidden.GetComponent<Renderer>().enabled = true;
-                        if (wasHidden.GetComponent<TransarentWallChangeMaterial>())
-                        {
+                        wasHidden.GetComponent<Renderer>().enabled = true;
+                        //if (wasHidden.GetComponent<TransarentWallChangeMaterial>())
+                        //{
 
-                            wasHidden.GetComponent<TransarentWallChangeMaterial>().newActiveMaterial = false;
-                        }
-                        else
-                        {
-                            if (!wasHidden.CompareTag("Things"))
-                            {
-                                wasHidden.GetComponent<Renderer>().enabled = true; 
-                            }
-                        }
+                        //    wasHidden.GetComponent<TransarentWallChangeMaterial>().newActiveMaterial = false;
+                        //}
+                        //else
+                        //{
+                        //    if (!wasHidden.CompareTag("Things"))
+                        //    {
+                        //        wasHidden.GetComponent<Renderer>().enabled = true; 
+                        //    }
+                        //}
                         walls.RemoveAt(i);
                     }
 

@@ -16,7 +16,7 @@ public class handWeapon : MonoBehaviour
     public void WaitingAxe ()
     {
         fight = false;
-        anim.SetBool("handAttack", false);
+      anim.SetBool("handAttack", false);
     }
 
 

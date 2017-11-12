@@ -16,7 +16,7 @@ public class MeleeDamage : MonoBehaviour
             {
 
 
-                other.transform.GetComponent<Health>().HelthDamage(Damage, true);
+                other.transform.GetComponent<Health>().HelthDamage(Damage, true,transform.position);
 
 
             }
@@ -25,7 +25,7 @@ public class MeleeDamage : MonoBehaviour
             {
 
 
-                other.transform.GetComponent<Health>().HelthDamage(Damage, true);
+                other.transform.GetComponent<Health>().HelthDamage(Damage, true, transform.position);
 
 
 
@@ -38,7 +38,7 @@ public class MeleeDamage : MonoBehaviour
             {
 
 
-                other.transform.GetComponent<Health>().HelthDamage(Damage, true);
+                other.transform.GetComponent<Health>().HelthDamage(Damage, true, transform.position);
 
 
 
@@ -48,7 +48,7 @@ public class MeleeDamage : MonoBehaviour
             {
 
 
-                other.transform.GetComponent<Health>().HelthDamage(Damage, true);
+                other.transform.GetComponent<Health>().HelthDamage(Damage, true, transform.position);
 
 
 

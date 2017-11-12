@@ -364,7 +364,7 @@ public class CraftItem : MonoBehaviour
 
             if (!Built)
             {
-                buildMode.CraftItemBuildNowStatic = this.gameObject.GetComponent<CraftItem>();
+              
 
 
                 if (buildMode.CraftItemBuildNowDinamic)
@@ -376,6 +376,7 @@ public class CraftItem : MonoBehaviour
 
                 if (BuildStatic)
                 {
+                    buildMode.CraftItemBuildNowStatic = this.gameObject.GetComponent<CraftItem>();
                     buildMode.ButtonCraft.SetActive(true);
                 }
             }
@@ -435,7 +436,7 @@ public class CraftItem : MonoBehaviour
                     if (other.GetComponent<ZombieLevel1>().JointWindow)
                     {
 
-                        health.HelthDamage(0.03f, false);
+                        health.HelthDamage(0.03f, false,transform.position);
                         Animator anim = other.GetComponent<ZombieLevel1>().m_animator;
                         anim.SetTrigger("window");
                         OffMeshLinkData data = other.GetComponent<ZombieLevel1>().agent.currentOffMeshLinkData;
@@ -472,7 +473,7 @@ public class CraftItem : MonoBehaviour
                     if (_StartHisEffect)
                     {
 
-                        other.GetComponent<Health>().HelthDamage(damage, false);
+                        other.GetComponent<Health>().HelthDamage(damage, false,transform.position);
                     }
                 }
                 else
@@ -488,8 +489,8 @@ public class CraftItem : MonoBehaviour
                         }
                         else
                         {
-                            other.GetComponent<Health>().HelthDamage(damage, false);
-                            health.HelthDamage(0.1f, false);
+                            other.GetComponent<Health>().HelthDamage(damage, false,transform.position);
+                            health.HelthDamage(0.1f, false, transform.position);
                         }
 
 
@@ -565,7 +566,7 @@ public class CraftItem : MonoBehaviour
 
             if (hit.GetComponent<Health>() != null)
             {
-                hit.GetComponent<Health>().HelthDamage(damage, false);
+                hit.GetComponent<Health>().HelthDamage(damage, false,transform.position);
 
             }
             if (hit.GetComponent<Rigidbody>() != null)

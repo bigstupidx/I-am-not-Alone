@@ -30,6 +30,8 @@ public class Indicator : MonoBehaviour
     // Use this for initialization
     void Awake ()
     {
+        centerRect.width = Screen.width / 2;
+        centerRect.height = Screen.height / 2;
         canvas = GameObject.Find("HUDCanvas").GetComponent<Canvas>();
         item = GetComponent<CraftItem>();
         switchMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
@@ -44,8 +46,7 @@ public class Indicator : MonoBehaviour
         _targetSpriteOfPool.rectTransform.parent = canvas.transform.GetChild(0);
 
 
-        centerRect.width = 1280;
-        centerRect.height = 800;
+
 
 
         centerRect.position = new Vector2((screenCenter.x - centerRect.width / 2), screenCenter.y - centerRect.height / 2);

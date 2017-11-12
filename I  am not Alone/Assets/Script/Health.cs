@@ -25,11 +25,15 @@ public class Health : MonoBehaviour
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
     public Image HealthPlayer;
     public ParticleSystem blood;
+    public ParticleSystem WoodDoor;
     public GameObject imageGameOver;
 
     [Space(15)]
     [Header("For Ai")]
     public GameObject[] enablesBoody;
+    public GameObject patAi1;
+    public GameObject patAi2;
+
     public SkinnedMeshRenderer skinnedMesh;
     public bool WeaponBox;
     public bool MaterialBox;
@@ -37,8 +41,12 @@ public class Health : MonoBehaviour
     public bool OrRandom;
     public int MoneyAi;
     bool damaged;
+    [Space(15)]
+    [Header("For door")]
 
+    public AudioClip doorHitAudio;
 
+    [Space(15)]
     PoolingSystem poolsistem;
     SwitchMode buildMode;
     CraftItem _craftItem;
@@ -52,21 +60,24 @@ public class Health : MonoBehaviour
     float timer;
     private Rigidbody rigid;
     Animator m_anim;
-
+    Text ghostCounter;
+    WaveManager waveManager;
+    bool isdead;
     private void Start ()
     {
-    
+
         buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
         checkWeaponAndCraft = GameObject.Find("WeaponController").GetComponent<CheckInWeaponAndCraft>();
         weaponsControll = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         staticAudio = GameObject.Find("StaticAudio").GetComponent<AudioSource>();
         playerG = GameObject.FindGameObjectWithTag("Player").transform;
-
+        ghostCounter = GameObject.Find("ZombiewCount").GetComponent<Text>();
         rigid = GetComponent<Rigidbody>();
+        waveManager = GameObject.Find("Spawner").GetComponent<WaveManager>();
         if (!transform.CompareTag("Player"))
         {
 
-         
+
             sourceDestraction = GetComponent<AudioSource>();
             if (!sourceDestraction)
             {
@@ -87,8 +98,32 @@ public class Health : MonoBehaviour
             blood.Clear();
         }
 
-    }
+        if (transform.CompareTag(Tags.AI))
+        {
 
+            CurHelth = MaxHealth;
+
+        }
+    }
+    private void OnEnable ()
+    {
+        if (transform.CompareTag(Tags.AI))
+        {
+            transform.tag = Tags.AI;
+            CurHelth = MaxHealth;
+            EnebledPhysics(true);
+            patAi1.SetActive(true);
+            patAi2.SetActive(true);
+            isdead = false;
+            if (enablesBoody.Length != 0)
+            {
+                for (int i = 0; i < enablesBoody.Length; i++)
+                {
+                    enablesBoody[i].SetActive(true);
+                }
+            }
+        }
+    }
 
     private void Update ()
     {
@@ -112,7 +147,7 @@ public class Health : MonoBehaviour
 
                 // Reset the damaged flag.
                 damaged = false;
-            } 
+            }
         }
         if (SoundTrue)
         {
@@ -153,12 +188,23 @@ public class Health : MonoBehaviour
 
     }
 
-    public void HelthDamage (float damage, bool playerAttack)
+    public void HelthDamage (float damage, bool playerAttack, Vector3 pointhitGhost)
     {
 
 
         CurHelth -= damage;
+        if (transform.CompareTag(Tags.Things))
+        {
+            if (WoodDoor)
+            {
+                sourceDestraction.PlayOneShot(doorHitAudio);
 
+                //    WoodDoor.transform.position = pointhitGhost;
+                //    WoodDoor.transform.LookAt(pointhitGhost);
+                WoodDoor.Play();
+
+            }
+        }
         if (transform.CompareTag("Player"))
         {
             damaged = true;
@@ -167,8 +213,19 @@ public class Health : MonoBehaviour
         }
         if (transform.CompareTag("AI"))
         {
+            blood.transform.position = pointhitGhost;
 
+            // And play the particles.
             blood.Play();
+            if (CurHelth < MaxHealth / 2)
+            {
+
+                patAi1.SetActive(false);
+            }
+            if (CurHelth < MaxHealth / 3)
+            {
+                patAi2.SetActive(false);
+            }
         }
 
         if (CurHelth > MaxHealth)
@@ -215,7 +272,7 @@ public class Health : MonoBehaviour
                 {
                     checkWeaponAndCraft.CreateBoxInterActive(transform.position);
                 }
-                EnebledPhysics();
+                EnebledPhysics(false);
                 Destroy(gameObject, sourceDestraction.clip.length);
 
             }
@@ -247,35 +304,44 @@ public class Health : MonoBehaviour
             if (transform.CompareTag("AI"))
             {
 
-                ZombieLevel1 zombie = GetComponent<ZombieLevel1>();
-                for (int i = 0; i < enablesBoody.Length; i++)
+                if (isdead)
                 {
-                    Destroy(enablesBoody[i]);
+                    return;
                 }
+                destroyAi = poolsistem.InstantiateAPS("DethGhost", transform.position, Quaternion.identity);
+                ZombieLevel1 zombie = GetComponent<ZombieLevel1>();
 
-              //  zombie.m_animator.SetTrigger("die");
-                EnebledPhysics();
-                destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffectForZombie", transform.position, Quaternion.identity);
+
+
+
+                //for (int i = 0; i < enablesBoody.Length; i++)
+                //{
+                //    enablesBoody[i].SetActive(false);
+                //}
+
+                //  zombie.m_animator.SetTrigger("die");
+                //  EnebledPhysics(false);
+
 
                 if (playerAttack)
                 {
                     checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + MoneyAi).ToString();
                 }
 
-                int r = Random.Range(0, 2);
-                if (r == 1)
+                int r = Random.Range(0, 3);
+                if (r >= 1)
                 {
                     if (OrRandom)
                     {
-                        int i = Random.Range(0, 10);
+                        int i = Random.Range(0, 2);
                         int l = Random.Range(0, 4);
 
                         MakeMaterial = l;
-                        if (i >= 0 || i <= 5)
+                        if (i == 0)
                         {
                             checkWeaponAndCraft.CreateBoxItem(transform.position, MakeMaterial);
                         }
-                        else if (i >= 1 && i <= 4)
+                        else if (i == 1)
                         {
                             checkWeaponAndCraft.CreateBoxWeapon(transform.position);
                         }
@@ -300,16 +366,43 @@ public class Health : MonoBehaviour
                 sourceDestraction.clip = zombie.zombieDeth;
 
                 weaponsControll.autolookEnemy.TargetAi = null;
-
+                weaponsControll.autolookEnemy.WeaponNull();
                 sourceDestraction.Play();
-                Destroy(zombie);
-                transform.tag = "CraftMode";
-                Destroy(gameObject, sourceDestraction.clip.length);
+                // Destroy(zombie);
 
+
+           
+                    gameObject.DestroyAPS();
+                
+        
+
+
+
+
+
+                isdead = true;
+                // transform.tag = "CraftMode";
+                transform.position = new Vector3(0, -85f, 0);
+
+                if (waveManager._lsky.IsNight)
+                {
+
+                    ghostCounter.text = (int.Parse(ghostCounter.text) - 1).ToString();
+                    if (ghostCounter.text.Equals("0"))
+                    {
+                        waveManager._lskyTod.dayInSeconds = 2.0f;
+                    }
+                }
+
+
+
+
+
+                return;
             }
             if (transform.CompareTag("WallCrash"))
             {
-                EnebledPhysics();
+                EnebledPhysics(false);
                 sourceDestraction.Play();
                 if (CraftItemStaticForWallCrash)
                 {
@@ -332,19 +425,19 @@ public class Health : MonoBehaviour
 
 
 
-            //    destroyAi.PlayEffect(30);
+            destroyAi.PlayEffect(30);
         }
     }
-    void EnebledPhysics ()
+    void EnebledPhysics (bool active)
     {
-        transform.GetComponent<Collider>().enabled = false;
+        transform.GetComponent<Collider>().enabled = active;
         if (transform.GetComponent<NavMeshObstacle>())
         {
-            transform.GetComponent<NavMeshObstacle>().enabled = false;
+            transform.GetComponent<NavMeshObstacle>().enabled = active;
         }
         if (transform.GetComponent<Renderer>())
         {
-            transform.GetComponent<Renderer>().enabled = false;
+            transform.GetComponent<Renderer>().enabled = active;
         }
 
 
@@ -354,7 +447,7 @@ public class Health : MonoBehaviour
             {
                 if (transform.GetChild(i).GetComponent<Renderer>())
                 {
-                    transform.GetChild(i).GetComponent<Renderer>().enabled = false;
+                    transform.GetChild(i).GetComponent<Renderer>().enabled = active;
                 }
             }
         }

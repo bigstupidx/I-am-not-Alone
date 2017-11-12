@@ -1,20 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 public class SelectionWeaponForPC : MonoBehaviour
 {
 
     public WeaponController weaponController;
     // Use this for initialization
-
+    ThirdPersonUserControl usercontrol;
     public bool Fire1;
 
-    TouchPad touch;
+
     private void Start ()
     {
-        touch = GameObject.Find("TurnAndLookTouchpad").GetComponent<TouchPad>();
+        usercontrol = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<ThirdPersonUserControl>();
     }
 
     // Update is called once per frame
@@ -55,14 +55,12 @@ public class SelectionWeaponForPC : MonoBehaviour
 
     public void WeaponPlayUp ()
     {
-        touch.Xsensitivity = 1f;
-        touch.Ysensitivity = 1f;
+
         Fire1 = false;
     }
     public void WeaponPlayDown ()
     {
-        touch.Xsensitivity = 0.2f;
-        touch.Ysensitivity = 0.2f;
+
         Fire1 = true;
     }
 }

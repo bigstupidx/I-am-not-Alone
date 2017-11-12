@@ -12,14 +12,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private Vector3 m_CamForward;             // The current forward direction of the camera
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
-        public float XSensitivity = 2f;
-        public float YSensitivity = 2f;
-        public bool clampVerticalRotation = true;
-        public float MinimumX = -90F;
-        public float MaximumX = 90F;
-        public bool smooth;
-        public float smoothTime = 5f;
-        public bool lockCursor = true;
+
+
+
+
+
         private Vector2 m_Input;
 
         private Quaternion m_CharacterTargetRot;
@@ -60,8 +57,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             // read inputs
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             float v = CrossPlatformInputManager.GetAxis("Vertical");
-            float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
-            float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
+            float yRot = CrossPlatformInputManager.GetAxis("Mouse X");
+            float xRot = CrossPlatformInputManager.GetAxis("Mouse Y");
             bool crouch = Input.GetKey(KeyCode.C);
             m_Input = new Vector2(h, v);
 

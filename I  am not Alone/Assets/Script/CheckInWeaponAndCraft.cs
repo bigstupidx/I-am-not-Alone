@@ -10,6 +10,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     public List<ParamsDbBoughtWeaponAndCraftItem> WeaponBought = new List<ParamsDbBoughtWeaponAndCraftItem>();
     public List<ParamsDbBoughtWeaponAndCraftItem> CraftItemBought = new List<ParamsDbBoughtWeaponAndCraftItem>();
     public List<GameObject> CraftGuiPrefab = new List<GameObject>();
+
     public Text MyMoney;
     PoolingSystem pool;
     SwitchMode buildMode;
@@ -28,7 +29,14 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         else
         {
             buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
-            AddItemStart();
+            if (CraftItemBought.Count != 0)
+            {
+                AddItemStart();
+            }
+            else
+            {
+
+            }
         }
         pool = PoolingSystem.Instance;
     }
@@ -49,38 +57,76 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     public void CreateBoxItem (Vector3 pos, int _makeMaterial)
     {
 
-        GameObject box = pool.InstantiateAPS("BoxWithWeapon", pos, Quaternion.identity);
-        box.transform.GetChild(0).GetComponent<BoxWeapon>().Materials = true;
-        box.transform.GetChild(0).GetComponent<BoxWeapon>().textGuiPanelGoods = buildMode.panelGoods[_makeMaterial].transform;
-        box.transform.GetChild(0).GetComponent<BoxWeapon>().level = Random.Range(0, 4);
+        try
+        {
+            GameObject box = pool.InstantiateAPS("BoxWithWeapon", pos, Quaternion.identity);
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().Materials = true;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().textGuiPanelGoods = buildMode.panelGoods[_makeMaterial].transform;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().level = Random.Range(0, 4);
+        }
+        catch (System.Exception)
+        {
+
+     
+                Debug.Log("Ошибка при спаунинге CreateBoxItem");
+            
+
+        }
     }
     public void CreateBoxInterActive (Vector3 pos)
     {
-        int i = Random.Range(0, buildMode.interActivePrefab.Count);
-        GameObject box = pool.InstantiateAPS("BoxWithWeapon", pos + new Vector3(0, 2, 0), Quaternion.identity);
-        box.transform.GetChild(0).GetComponent<BoxWeapon>().Interactive = true;
-        box.transform.GetChild(0).GetComponent<BoxWeapon>().gridBuild = gridBuildMenu;
-        box.transform.GetChild(0).GetComponent<BoxWeapon>().textGuiPanelGoods = buildMode.interActivePrefab[i].transform;
-        box.transform.GetChild(0).GetComponent<BoxWeapon>().level = 1;
+        try
+        {
+            int i = Random.Range(0, buildMode.interActivePrefab.Count);
+            GameObject box = pool.InstantiateAPS("BoxWithWeapon", pos + new Vector3(0, 2, 0), Quaternion.identity);
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().Interactive = true;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().gridBuild = gridBuildMenu;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().textGuiPanelGoods = buildMode.interActivePrefab[i].transform;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().level = 1;
+        }
+        catch (System.Exception)
+        {
+
+
+            Debug.Log("Ошибка при спаунинге box");
+        }
     }
     public void CreateBoxWeapon (Vector3 pos)
     {
-        int i = Random.Range(0, WeaponBought.Count);
-        GameObject box = pool.InstantiateAPS("BoxWithWeapon", pos, Quaternion.identity);
+        try
+        {
+            int i = Random.Range(0, WeaponBought.Count);
+            GameObject box = pool.InstantiateAPS("BoxWithWeapon", pos, Quaternion.identity);
 
-        box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought[i].category;
-        box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought[i].nameWeapon;
-        box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought[i].levelWeapon;
-        box.transform.GetChild(0).GetComponent<BoxWeapon>().WeaponAmunition = 1;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought[i].category;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought[i].nameWeapon;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought[i].levelWeapon;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().WeaponAmunition = 1;
+        }
+        catch (System.Exception)
+        {
+
+
+            Debug.Log("Ошибка при спаунинге CreateBoxWeapon");
+        }
     }
 
     public void OldWeapon (string nameWeapon, BulletSystem bul, handWeapon hand, Vector3 pos)
     {
-        GameObject box = pool.InstantiateAPS("BoxWithMyWeapon", pos, Quaternion.identity);
+        try
+        {
+            GameObject box = pool.InstantiateAPS("BoxWithMyWeapon", pos, Quaternion.identity);
 
-        box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).category;
-        box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).nameWeapon;
-        box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).levelWeapon;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).category;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).nameWeapon;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).levelWeapon;
+        }
+        catch (System.Exception)
+        {
+
+
+            Debug.Log("Ошибка при спаунинге box");
+        }
 
     }
     void AddItemStart ()
@@ -104,7 +150,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         {
             if (WeaponBought[i] != null)
             {
-                Debug.Log(WeaponBought[i].nameWeapon);
+
 
                 if (gridShop.Find(WeaponBought[i].nameWeapon))
                 {

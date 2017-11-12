@@ -46,7 +46,7 @@ public class MainMenu : MonoBehaviour
 
     public void CheckInPrice (Text price)
     {
-        if (int.Parse(myMoney.text) > int.Parse(price.text))
+        if (int.Parse(myMoney.text) >= int.Parse(price.text))
         {
             myMoney.text = (int.Parse(myMoney.text) - int.Parse(price.text)).ToString();
             db.UpdateMoney(myMoney.text);

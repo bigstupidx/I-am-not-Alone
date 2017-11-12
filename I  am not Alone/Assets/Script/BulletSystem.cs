@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 [System.Serializable]
 public class UpdateWeapon
@@ -53,7 +54,7 @@ public class BulletSystem : MonoBehaviour
     public float timeBetweenBullets = 0.05f;
     public float effectsDisplayTime = 0.2f;
     public Light gunLight;
-
+    ThirdPersonUserControl usercontrol;
     AudioSource gunAudio;
     public bool fireGun;
     public Transform buttonWeapon;
@@ -62,9 +63,9 @@ public class BulletSystem : MonoBehaviour
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         selectionWeaponPlay = GameObject.Find("WeaponController").GetComponent<SelectionWeaponForPC>();
-        touch = GameObject.Find("TurnAndLookTouchpad").GetComponent<TouchPad>();
-        gunLight = GetComponent<Light>();
 
+        gunLight = GetComponent<Light>();
+        usercontrol = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<ThirdPersonUserControl>();
         gunAudio = GetComponent<AudioSource>();
         UpdateWeapon();
         timer = 0;
@@ -133,9 +134,9 @@ public class BulletSystem : MonoBehaviour
                     if (selectionWeaponPlay.Fire1)
                     {
                         gunLight.enabled = true;
-                      
 
 
+                    
                         gunMiscle.Stop();
                         gunMiscle.Play();
 
@@ -151,9 +152,9 @@ public class BulletSystem : MonoBehaviour
                         if (Input.GetButton("Fire1") & timerShoot >= timeBetweenBullets && Time.timeScale != 0)
                         {
                             gunLight.enabled = true;
-                           
 
 
+                            gunAudio.Play();
                             gunMiscle.Stop();
                             gunMiscle.Play();
 

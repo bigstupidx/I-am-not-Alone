@@ -65,7 +65,7 @@ public class BoxWeapon : MonoBehaviour
         triggerEnable = false;
         thisCollider.enabled = false;
         player = GameObject.FindGameObjectWithTag("Player");
-      
+
         weaponAudio = player.transform.Find("AudioBox").GetChild(0).GetComponent<AudioSource>();
         MaterialsAudio = player.transform.Find("AudioBox").GetChild(1).GetComponent<AudioSource>();
         InteractiveAudio = player.transform.Find("AudioBox").GetChild(2).GetComponent<AudioSource>();
@@ -144,19 +144,32 @@ public class BoxWeapon : MonoBehaviour
         else
         {
 
-            weaponAudio.Play();
-            _weaponController.PlayerWeapon(nameWeapon, level, WeaponAmunition);
+        
+                weaponAudio.Play();
+                _weaponController.PlayerWeapon(nameWeapon, level, WeaponAmunition);
+           
         }
 
     }
 
     void Randomarams ()
     {
-        int u = Random.Range(0, 10);
+        int u = 0;
+
+        if (_checkInWeaponAndCraft.WeaponBought.Count != 0)
+        {
+            u = Random.Range(0, 10);
+
+        }
+        else
+        {
+            u = Random.Range(6, 10);
+        }
 
 
         if (u >= 0 && u <= 5)
         {
+
             int l = Random.Range(0, _checkInWeaponAndCraft.WeaponBought.Count);
 
             categoryWeapon = _checkInWeaponAndCraft.WeaponBought[l].category;
@@ -205,6 +218,7 @@ public class BoxWeapon : MonoBehaviour
 
 
 
+    
 
 
 

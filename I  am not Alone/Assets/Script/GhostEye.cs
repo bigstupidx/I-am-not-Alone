@@ -45,11 +45,11 @@ public class GhostEye : MonoBehaviour
 
                         if (hit.transform.GetComponent<Health>())
                         {
-                            hit.transform.GetComponent<Health>().HelthDamage(zombie.damage, false);
+                            //     hit.transform.GetComponent<Health>().HelthDamage(zombie.damage, false);
                         }
                         else
                         {
-                            hit.transform.GetChild(0).GetComponent<Health>().HelthDamage(zombie.damage, false);
+                            //    hit.transform.GetChild(0).GetComponent<Health>().HelthDamage(zombie.damage, false);
                         }
                     }
 
@@ -70,11 +70,11 @@ public class GhostEye : MonoBehaviour
                 }
                 if (hit.transform.GetComponent<Health>())
                 {
-                    hit.transform.GetComponent<Health>().HelthDamage(zombie.damage, false);
+                    // hit.transform.GetComponent<Health>().HelthDamage(zombie.damage, false);
                 }
                 else
                 {
-                    hit.transform.GetChild(0).GetComponent<Health>().HelthDamage(zombie.damage, false);
+                    //   hit.transform.GetChild(0).GetComponent<Health>().HelthDamage(zombie.damage, false);
                 }
 
 
@@ -84,7 +84,7 @@ public class GhostEye : MonoBehaviour
             if (hit.transform.CompareTag("Player"))
 
             {
-                hit.transform.GetComponent<Health>().HelthDamage(zombie.PlayerDamage, false);
+                // hit.transform.GetComponent<Health>().HelthDamage(zombie.PlayerDamage, false);
 
                 if (!zombie.source.isPlaying)
                 {
@@ -99,7 +99,7 @@ public class GhostEye : MonoBehaviour
                     if (hit.transform.CompareTag("WallCrash"))
 
                     {
-                        hit.transform.GetComponent<Health>().HelthDamage(zombie.damage, false);
+                        //          hit.transform.GetComponent<Health>().HelthDamage(zombie.damage, false);
 
 
 

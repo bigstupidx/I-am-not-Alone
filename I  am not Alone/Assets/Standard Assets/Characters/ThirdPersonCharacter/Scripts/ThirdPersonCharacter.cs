@@ -54,14 +54,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             move = transform.InverseTransformDirection(move);
             CheckGroundStatus();
             move = Vector3.ProjectOnPlane(move, m_GroundNormal);
-            if (transform.CompareTag("Player"))
-            {
+            
                 m_TurnAmount = TargetRot;
-            }
-            else
-            {
-                m_TurnAmount = Mathf.Atan2(move.x, move.z);
-            }
+           
             
             m_ForwardAmount = move.z;
 

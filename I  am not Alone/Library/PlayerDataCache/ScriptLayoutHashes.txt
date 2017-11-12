@@ -131,6 +131,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 73843688b51256aed059f049c540bca8 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformChild
 528ea1fd7c01796fc60c4e2f172ea229 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
 3bcadf73562212cfade0bfc0ab6b7838 Assembly-CSharp.dll:.MobaCamera
+f65b7ccf3d67514e79397e0d8c8d49e7 Assembly-CSharp.dll:.IKweapon
 e8d75d7aac9a80ef56dc5d0d761a21c4 Assembly-CSharp.dll:Lean.Localization.LeanLocalizedImage
 77fdf2bb99710c8fbcde2c923b1ec78a Assembly-CSharp.dll:AC.LSky.LSkyDisplayTime
 cacc21c135305586473163f6599f0573 Assembly-CSharp.dll:.SelectContructionForCreate
@@ -138,7 +139,7 @@ cacc21c135305586473163f6599f0573 Assembly-CSharp.dll:.SelectContructionForCreate
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservableScrollTrigger
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservableEndDragTrigger
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservableLateUpdateTrigger
-d24955b432f48f7d0cb95f407cca881f Assembly-CSharp.dll:.WaveManager
+4c057259c9ec6c65ba61efb94e1e74e2 Assembly-CSharp.dll:.WaveManager
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ParticleDestroyAndDestroyParenObject
 6125320b245a3af124b440905c55c519 Assembly-CSharp.dll:Lean.Localization.LeanLocalizedTextArgs
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Examples.Sample04_ConvertFromUnityCallback
@@ -162,10 +163,11 @@ d28c2e10634fc196cccb5150f3c1d752 Assembly-CSharp.dll:.CraftItem
 8c282e8c641831ff10fe26724ee744ae Assembly-CSharp.dll:Lean.Localization.LeanLocalization
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservableBeginDragTrigger
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservableEnableTrigger
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ChildToggleEnables
 4bdb3a930d93c7ccc9c07c75467df3bc Assembly-CSharp.dll:.BoxWeapon
 a7d3c6c6948d99dd4116e659ddcf5ac4 Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.ButtonHandler
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.GhostEye
-6fc969c6d0b22697f94d5befe52e2e25 Assembly-CSharp-firstpass.dll:UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl
 3221df1a235f5391a6c0cb446f6f873b Assembly-CSharp.dll:.TrasnparentWall
 5c73b5c3c9d67835b3e428b8c837484a Assembly-CSharp.dll:.StartSceneObjectRandom
 57fde8e76fc7bce23deb0e799d336be7 Assembly-CSharp-firstpass.dll:UnityStandardAssets.Utility.SmoothFollow
@@ -248,4 +250,3 @@ dc8ec84a5c6bf5ac482344c561f8aaad Assembly-CSharp.dll:.Indicator
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Examples.Sample06_ConvertToCoroutine
 b1264d785e35e4cd481abfa524662bda Assembly-CSharp.dll:.SwitchMode
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Examples.Sample08_DetectDoubleClick
-f65b7ccf3d67514e79397e0d8c8d49e7 Assembly-CSharp.dll:.IKweapon

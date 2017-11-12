@@ -13,7 +13,10 @@ public class ParticleDestroyAndDestroyParenObject : MonoBehaviour
         system = GetComponent<ParticleSystem>();
 
 
-        InvokeRepeating("DestroyPart", 0.0f, 5.0f);
+        if (system.IsAlive())
+        {
+            InvokeRepeating("DestroyPart", 0.0f, 5.0f); 
+        }
 
     }
 

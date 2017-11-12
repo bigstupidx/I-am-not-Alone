@@ -6,13 +6,17 @@ using AC.LSky;
 public class SpawnerZombie : MonoBehaviour
 {
     public int spawnerRadius;
-
+    PoolingSystem poolsistem;
     void OnDrawGizmosSelected ()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, spawnerRadius);
     }
 
+    private void OnEnable ()
+    {
+        poolsistem = PoolingSystem.Instance;
+    }
     public void CreateZombie (GameObject prefZombie, LSky sky)
     {
 
@@ -26,10 +30,14 @@ public class SpawnerZombie : MonoBehaviour
             randomLoc3d = hit.position;
         }
         // Instantiate and make the enemy a child of this object
-        GameObject o = (GameObject)Instantiate(prefZombie, randomLoc3d, transform.rotation);
-        o.GetComponent<ZombieLevel1>()._sky = sky;
-        o.GetComponent<ZombieLevel1>().agent.avoidancePriority += Random.Range(-20, +20);
-        o.GetComponent<ZombieLevel1>().standartSpeed = o.GetComponent<ZombieLevel1>().agent.speed;
+       
+            GameObject o = poolsistem.InstantiateAPS(prefZombie.name, randomLoc3d, Quaternion.identity);
+            o.GetComponent<ZombieLevel1>()._sky = sky;
+            o.GetComponent<ZombieLevel1>().agent.avoidancePriority += Random.Range(-20, +20);
+            o.GetComponent<ZombieLevel1>().standartSpeed = o.GetComponent<ZombieLevel1>().agent.speed;
+      
+
+
     }
 
 }

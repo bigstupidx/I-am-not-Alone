@@ -77,7 +77,7 @@ public class AutoLookonEnemy : MonoBehaviour
         }
         if (weapon.childCount == 0)
         {
-           
+
             return;
         }
         else
@@ -85,5 +85,11 @@ public class AutoLookonEnemy : MonoBehaviour
             weapon.LookAt(target);
         }
 
+    }
+    public void WeaponNull ()
+    {
+        weapon1.LookAt(iktarget.target);
+        weapon2.LookAt(iktarget.target);
+        weapon3.LookAt(iktarget.target);
     }
 }
