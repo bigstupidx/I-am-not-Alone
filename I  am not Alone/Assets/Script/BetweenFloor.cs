@@ -7,6 +7,7 @@ public class BetweenFloor : MonoBehaviour
     public GameObject Floor;
 
     public bool FloorCraft;
+    public GameObject WallTransparent;
     public SwitchMode switchMode;
     public Transform FurnitureFirst;
     public Transform FurnitureSecond;
@@ -74,6 +75,7 @@ public class BetweenFloor : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             FloorCraft = true;
+            WallTransparent.SetActive(false);
             switchMode.CheckInBuiltWalls(true);
             Floor.SetActive(true);
             FloorHowTrue.SetActive(true);
@@ -106,8 +108,9 @@ public class BetweenFloor : MonoBehaviour
             FloorCraft = false;
             switchMode.CheckInBuiltWalls(true);
             Floor.SetActive(false);
-
-            RenderObjectToFloor(false, "Ignore Raycast");
+            WallTransparent.SetActive(true);
+            RenderObjectToFloor(false, "Default");
+            //  RenderObjectToFloor(false, "Ignore Raycast");
             FloorHowTrue.SetActive(false);
         }
         if (other.CompareTag("Things"))

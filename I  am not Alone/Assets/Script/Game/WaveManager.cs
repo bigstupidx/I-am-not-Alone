@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AC.LSky;
 using UnityEngine.UI;
-
+using UnityEngine.Playables;
 [System.Serializable]
 public class Wave
 {
@@ -64,6 +64,8 @@ public class WaveManager : MonoBehaviour
     public CheckInWeaponAndCraft _weaponcraft;
     public StartSceneObjectRandom _startObject;
     public Text GhostCounter;
+    public Text GhoustWave;
+    PlayableDirector m_playebleDirector;
     // Use this for initialization
     void Start ()
     {
@@ -72,8 +74,10 @@ public class WaveManager : MonoBehaviour
         {
             lightAllScene.Add(light[i]);
         }
+        m_playebleDirector = GhoustWave.GetComponent<PlayableDirector>();
 
         switchMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
+
         for (int i = 0; i < transform.childCount; i++)
         {
 
@@ -107,8 +111,9 @@ public class WaveManager : MonoBehaviour
                 night = false;
                 startWave = true;
                 switchMode.BuildMOdeMenu(false);
-
-
+                GhoustWave.gameObject.SetActive(true);
+                GhoustWave.text = "WAVE " + levelWave;
+                m_playebleDirector.Play();
                 for (int i = 0; i < lightAllScene.Count; i++)
                 {
                     if (lightAllScene[i].GetComponent<Light>())

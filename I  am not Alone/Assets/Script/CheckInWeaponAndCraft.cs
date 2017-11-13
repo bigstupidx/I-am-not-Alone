@@ -63,13 +63,14 @@ public class CheckInWeaponAndCraft : MonoBehaviour
             box.transform.GetChild(0).GetComponent<BoxWeapon>().Materials = true;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().textGuiPanelGoods = buildMode.panelGoods[_makeMaterial].transform;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().level = Random.Range(0, 4);
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().StartGoods = false;
         }
         catch (System.Exception)
         {
 
-     
-                Debug.Log("Ошибка при спаунинге CreateBoxItem");
-            
+
+            Debug.Log("Ошибка при спаунинге CreateBoxItem");
+
 
         }
     }
@@ -83,12 +84,13 @@ public class CheckInWeaponAndCraft : MonoBehaviour
             box.transform.GetChild(0).GetComponent<BoxWeapon>().gridBuild = gridBuildMenu;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().textGuiPanelGoods = buildMode.interActivePrefab[i].transform;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().level = 1;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().StartGoods = false;
         }
         catch (System.Exception)
         {
 
 
-            Debug.Log("Ошибка при спаунинге box");
+            Debug.Log("Ошибка при спаунинге CreateBoxInterActive");
         }
     }
     public void CreateBoxWeapon (Vector3 pos)
@@ -102,6 +104,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
             box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought[i].nameWeapon;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought[i].levelWeapon;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().WeaponAmunition = 1;
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().StartGoods = false;
         }
         catch (System.Exception)
         {

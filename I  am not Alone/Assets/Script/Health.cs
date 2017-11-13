@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
 using UnityEngine.AI;
+using UnityEngine.Playables;
+
 public class Health : MonoBehaviour
 {
     [Header("настроки здоровья")]
@@ -63,6 +65,7 @@ public class Health : MonoBehaviour
     Text ghostCounter;
     WaveManager waveManager;
     bool isdead;
+    PlayableDirector m_director;
     private void Start ()
     {
 
@@ -71,9 +74,10 @@ public class Health : MonoBehaviour
         weaponsControll = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         staticAudio = GameObject.Find("StaticAudio").GetComponent<AudioSource>();
         playerG = GameObject.FindGameObjectWithTag("Player").transform;
-        ghostCounter = GameObject.Find("ZombiewCount").GetComponent<Text>();
+        ghostCounter = buildMode.CounterZombie.GetComponent<Text>();
         rigid = GetComponent<Rigidbody>();
         waveManager = GameObject.Find("Spawner").GetComponent<WaveManager>();
+        m_director = checkWeaponAndCraft.MyMoney.GetComponent<PlayableDirector>();
         if (!transform.CompareTag("Player"))
         {
 
@@ -197,7 +201,10 @@ public class Health : MonoBehaviour
         {
             if (WoodDoor)
             {
-                sourceDestraction.PlayOneShot(doorHitAudio);
+                if (!sourceDestraction.isPlaying)
+                {
+                    sourceDestraction.PlayOneShot(doorHitAudio);
+                }
 
                 //    WoodDoor.transform.position = pointhitGhost;
                 //    WoodDoor.transform.LookAt(pointhitGhost);
@@ -326,10 +333,11 @@ public class Health : MonoBehaviour
                 if (playerAttack)
                 {
                     checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + MoneyAi).ToString();
+                    m_director.Play();
                 }
 
-                int r = Random.Range(0, 3);
-                if (r >= 1)
+                int r = Random.Range(0, 2);
+                if (r == 1)
                 {
                     if (OrRandom)
                     {
@@ -371,10 +379,10 @@ public class Health : MonoBehaviour
                 // Destroy(zombie);
 
 
-           
-                    gameObject.DestroyAPS();
-                
-        
+
+                gameObject.DestroyAPS();
+
+
 
 
 

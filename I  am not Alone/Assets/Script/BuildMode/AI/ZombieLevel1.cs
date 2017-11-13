@@ -118,18 +118,18 @@ public class ZombieLevel1 : MonoBehaviour
             }
 
 
-            if ((player.transform.position - transform.position).sqrMagnitude < Mathf.Pow(agent.stoppingDistance, 2))
-            {
-                // If the agent is in attack range, become an obstacle and
+            //if ((player.transform.position - transform.position).sqrMagnitude < Mathf.Pow(agent.stoppingDistance, 2))
+            //{
+            //    // If the agent is in attack range, become an obstacle and
                 // disable the NavMeshAgent component
                 //    obstacle.enabled = true;
                 //    agent.enabled = false;
                 Vector3 relativePos = player.transform.position - transform.position;
                 Quaternion rotation = Quaternion.LookRotation(relativePos);
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 7f);
-            }
-            else
-            {
+            //}
+            //else
+            //{
 
 
                 //   If we are not in range, become an agent again
@@ -150,7 +150,7 @@ public class ZombieLevel1 : MonoBehaviour
 
                     }
                 }
-            }
+           // }
 
 
 
@@ -206,7 +206,7 @@ public class ZombieLevel1 : MonoBehaviour
 
                             if (!source.isPlaying)
                             {
-                                //  source.PlayOneShot(zombieAtack);
+                                source.PlayOneShot(zombieAtack);
 
 
                             }
@@ -251,7 +251,7 @@ public class ZombieLevel1 : MonoBehaviour
 
                         if (!source.isPlaying)
                         {
-                            //source.PlayOneShot(zombieAtack);
+                            source.PlayOneShot(zombieAtack);
 
 
                         }
@@ -284,7 +284,7 @@ public class ZombieLevel1 : MonoBehaviour
                 {
                     if (agent.isStopped)
                     {
-
+                        source.PlayOneShot(zombieStay);
                         agent.isStopped = false;
                         m_animator.SetBool("attack", false);
 

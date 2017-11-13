@@ -15,11 +15,11 @@ public class Indicator : MonoBehaviour
 
 
     Vector3 screenCenter = new Vector3(Screen.width, Screen.height, 0) * 0.5f;
-   
+
     public Image _targetSpriteOfPool;
-    public Image BlowUpYes;
- 
-    public Image _blowUpYes;
+    //  public Image BlowUpYes;
+
+    //   public Image _blowUpYes;
     private Vector3 offScreen = new Vector3(-2000, -2000, -1200);
     GameObject player;
     private Rect centerRect;
@@ -36,13 +36,13 @@ public class Indicator : MonoBehaviour
         item = GetComponent<CraftItem>();
         switchMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
         _targetSpriteOfPool = Instantiate(TargetSprite, offScreen, Quaternion.Euler(new Vector3(0, 0, 0))) as Image;
-        if (item.BlowUpEffect || item.hisEffect)
-        {
-            _blowUpYes = Instantiate(BlowUpYes, offScreen, Quaternion.Euler(new Vector3(0, 0, 0))) as Image;
-            _blowUpYes.rectTransform.parent = canvas.transform.GetChild(0);
+        //if (item.BlowUpEffect || item.hisEffect)
+        //{
+        //    _blowUpYes = Instantiate(BlowUpYes, offScreen, Quaternion.Euler(new Vector3(0, 0, 0))) as Image;
+        //    _blowUpYes.rectTransform.parent = canvas.transform.GetChild(0);
 
 
-        }
+        //}
         _targetSpriteOfPool.rectTransform.parent = canvas.transform.GetChild(0);
 
 
@@ -51,36 +51,36 @@ public class Indicator : MonoBehaviour
 
         centerRect.position = new Vector2((screenCenter.x - centerRect.width / 2), screenCenter.y - centerRect.height / 2);
 
-        if (staticObject)
+        //if (staticObject)
+        //{
+        for (int i = 0; i < _targetSpriteOfPool.transform.Find("Counter").childCount; i++)
         {
-            for (int i = 0; i < _targetSpriteOfPool.transform.Find("Counter").childCount; i++)
-            {
-                _targetSpriteOfPool.transform.Find("Counter").GetChild(i).GetComponent<Text>().text = item.CountWoodForCreate[i].CountMaterial.ToString();
+            _targetSpriteOfPool.transform.Find("Counter").GetChild(i).GetComponent<Text>().text = item.CountWoodForCreate[i].CountMaterial.ToString();
 
-            }
-            //for (int i = 0; i < _targetSpriteOfPool.transform.Find("Names").childCount; i++)
-            //{
-            //    _targetSpriteOfPool.transform.Find("Names").GetChild(i).GetComponent<Text>().text = item.CountWoodForCreate[i].NameMaterial.ToString();
-
-            //}
         }
-        else
-        {
-            if (item.BlowUpEffect)
-            {
-                Button btn = _blowUpYes.GetComponent<Button>();
-                btn.onClick.AddListener(item.BlowUp);
-            }
+        //for (int i = 0; i < _targetSpriteOfPool.transform.Find("Names").childCount; i++)
+        //{
+        //    _targetSpriteOfPool.transform.Find("Names").GetChild(i).GetComponent<Text>().text = item.CountWoodForCreate[i].NameMaterial.ToString();
 
-            else if (item.hisEffect)
-            {
-                Button btn1 = _blowUpYes.GetComponent<Button>();
-                btn1.onClick.AddListener(item.His);
-            }
-            Button btnswitchMode = _targetSpriteOfPool.GetComponent<Button>();
-            btnswitchMode.onClick.AddListener(switchMode.ButtonYes);
-        
-        }
+        //}
+        //}
+        //else
+        //{
+        //    if (item.BlowUpEffect)
+        //    {
+        //        Button btn = _blowUpYes.GetComponent<Button>();
+        //        btn.onClick.AddListener(item.BlowUp);
+        //    }
+
+        //    else if (item.hisEffect)
+        //    {
+        //        Button btn1 = _blowUpYes.GetComponent<Button>();
+        //        btn1.onClick.AddListener(item.His);
+        //    }
+        //    Button btnswitchMode = _targetSpriteOfPool.GetComponent<Button>();
+        //    btnswitchMode.onClick.AddListener(switchMode.ButtonYes);
+
+        //}
 
 
     }
@@ -120,30 +120,30 @@ public class Indicator : MonoBehaviour
 
                 _targetSpriteOfPool.rectTransform.position = screenpos;
 
-                if (item.BlowUpEffect || item.hisEffect)
-                {
-                    _blowUpYes.rectTransform.position = new Vector3(screenpos.x, screenpos.y, screenpos.z);
-                }
+                //if (item.BlowUpEffect || item.hisEffect)
+                //{
+                //    _blowUpYes.rectTransform.position = new Vector3(screenpos.x, screenpos.y, screenpos.z);
+                //}
 
             }
             else
             {
 
                 _targetSpriteOfPool.rectTransform.position = offScreen;
-                if (item.BlowUpEffect || item.hisEffect)
-                {
-                    _blowUpYes.rectTransform.position = offScreen;
-                }
+                //if (item.BlowUpEffect || item.hisEffect)
+                //{
+                //    _blowUpYes.rectTransform.position = offScreen;
+                //}
             }
         }
         else
         {
 
             _targetSpriteOfPool.rectTransform.position = offScreen;
-            if (item.BlowUpEffect || item.hisEffect)
-            {
-                _blowUpYes.rectTransform.position = offScreen;
-            }
+            //if (item.BlowUpEffect || item.hisEffect)
+            //{
+            //    _blowUpYes.rectTransform.position = offScreen;
+            //}
         }
 
 
@@ -152,13 +152,13 @@ public class Indicator : MonoBehaviour
     }
     public void IndicatorOffScreen ()
     {
-            _targetSpriteOfPool.rectTransform.position = offScreen;
-       // _targetSpriteOfPool.gameObject.SetActive(visible);
-        if (BlowUpYes != null)
-        {
-             _blowUpYes.rectTransform.position = offScreen;
-          //  _blowUpYes.gameObject.SetActive(visible);
-        }
+        _targetSpriteOfPool.rectTransform.position = offScreen;
+        // _targetSpriteOfPool.gameObject.SetActive(visible);
+        //if (BlowUpYes != null)
+        //{
+        //     _blowUpYes.rectTransform.position = offScreen;
+        //  //  _blowUpYes.gameObject.SetActive(visible);
+        //}
     }
     public void IndicatorSetActive (bool visible, int i)
     {
@@ -168,11 +168,11 @@ public class Indicator : MonoBehaviour
         {
             //      _targetSpriteOfPool.rectTransform.position = offScreen;
             _targetSpriteOfPool.gameObject.SetActive(visible);
-            if (BlowUpYes != null)
-            {
-                //   _blowUpYes.rectTransform.position = offScreen;
-                _blowUpYes.gameObject.SetActive(visible);
-            }
+            //if (BlowUpYes != null)
+            //{
+            //    //   _blowUpYes.rectTransform.position = offScreen;
+            //    _blowUpYes.gameObject.SetActive(visible);
+            //}
         }
         else if (i == 1)
         {
@@ -180,11 +180,11 @@ public class Indicator : MonoBehaviour
         }
         else if (i == 2)
         {
-            if (BlowUpYes != null)
-            {
-                //   _blowUpYes.rectTransform.position = offScreen;
-                _blowUpYes.gameObject.SetActive(visible);
-            }
+            //if (BlowUpYes != null)
+            //{
+            //    //   _blowUpYes.rectTransform.position = offScreen;
+            //    _blowUpYes.gameObject.SetActive(visible);
+            //}
         }
     }
 

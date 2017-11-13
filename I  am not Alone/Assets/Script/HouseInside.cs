@@ -22,7 +22,8 @@ public class HouseInside : MonoBehaviour
                 Roof[i].SetActive(false);
             }
             TwoFloour.SetActive(false);
-            betweenFloor.RenderObjectToFloor(false, "Ignore Raycast");
+            //        betweenFloor.RenderObjectToFloor(false, "Ignore Raycast");
+            betweenFloor.RenderObjectToFloor(false, "Default");
         }
     }
     private void OnTriggerExit (Collider other)

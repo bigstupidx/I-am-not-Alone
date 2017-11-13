@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 [System.Serializable]
 public class CraftParams
 {
 
     public GameObject ItemCraft;
     public GameObject PanelUIForCraft;
+
     public int Floor;
     public CraftParams (GameObject item, GameObject panel, int floor)
     {
@@ -30,7 +32,7 @@ public class SwitchMode : MonoBehaviour
 
     public GameObject ButtonCraft;
 
-
+    public Text CounterZombie;
 
     [Space(15)]
     [Header("panelGoods")]
@@ -62,6 +64,7 @@ public class SwitchMode : MonoBehaviour
     int glass = 0;
     int electric = 0;
     bool l;
+
     private void Start ()
     {
         source = GetComponent<AudioSource>();
@@ -77,15 +80,16 @@ public class SwitchMode : MonoBehaviour
         {
 
             BuildMode.SetActive(true);
-
+            CounterZombie.gameObject.SetActive(false);
             //Hand.SetActive(false);
             //HandWeapon.SetActive(false);
         }
         else
         {
 
-            BuildMode.SetActive(false);
 
+            BuildMode.SetActive(false);
+            CounterZombie.gameObject.SetActive(true);
             //Hand.SetActive(true);
             //HandWeapon.SetActive(true);
         }
@@ -189,7 +193,7 @@ public class SwitchMode : MonoBehaviour
 
     }
 
-    
+
 
 
     public void ButtonCraftItemNow ()

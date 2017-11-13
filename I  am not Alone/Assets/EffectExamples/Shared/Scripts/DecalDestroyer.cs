@@ -9,6 +9,6 @@ public class DecalDestroyer : MonoBehaviour {
 	private IEnumerator Start()
 	{
 		yield return new WaitForSeconds(lifeTime);
-		Destroy(gameObject);
+        gameObject.DestroyAPS();
 	}
 }

@@ -60,22 +60,22 @@ public class PauseManager : MonoBehaviour
         loadPanel.enabled = true;
         StartCoroutine(Load("Menu"));
         Time.timeScale = 0;
-        //if (Advertisement.isSupported)
-        //{
-        //    Advertisement.Initialize("1557198", false);
-        //    if (Advertisement.IsReady())
-        //    {
-        //        Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
-            
-        //    }
+        if (Advertisement.isSupported)
+        {
+            Advertisement.Initialize("1557198", false);
+            if (Advertisement.IsReady())
+            {
+                Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
 
-        //}
-        //else
-        //{
-        //    Debug.Log("platform is not Supported");
-        //}
+            }
 
- 
+        }
+        else
+        {
+            Debug.Log("platform is not Supported");
+        }
+
+
     }
     IEnumerator Load (string i)
     {

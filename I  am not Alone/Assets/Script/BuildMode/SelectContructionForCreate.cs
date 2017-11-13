@@ -11,15 +11,15 @@ public class SelectContructionForCreate : MonoBehaviour
 {
 
     SwitchMode switchMode;
-    GameObject panelChooseConstruction;
+
     PoolingSystem pool;
 
     [HideInInspector]
     public GameObject itemCreate;
- 
+
     public Text NameDinamicCraftItem;
     Transform instanceCreatePlayer;
-    [HideInInspector]
+
     public Transform counterText;
     private Toggle toggle;
     public Text level;
@@ -27,13 +27,14 @@ public class SelectContructionForCreate : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        pool = PoolingSystem.Instance;
         counterText = transform.Find("Params").transform;
 
         switchMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
-        panelChooseConstruction = GameObject.Find("panelChooseConstruction");
-        pool = PoolingSystem.Instance;
+
+
         instanceCreatePlayer = GameObject.FindGameObjectWithTag("Player").transform.Find("instanceCreate");
-   
+
         toggle = GetComponent<Toggle>();
     }
 
@@ -58,8 +59,8 @@ public class SelectContructionForCreate : MonoBehaviour
         {
             if (itemCreate == null)
             {
-                itemCreate = pool.InstantiateAPS(NameDinamicCraftItem.text,new Vector3( instanceCreatePlayer.transform.position.x, instanceCreatePlayer.transform.position.y + 0.5f, instanceCreatePlayer.transform.position.z), instanceCreatePlayer.rotation);
-               
+                itemCreate = pool.InstantiateAPS(NameDinamicCraftItem.text, new Vector3(instanceCreatePlayer.transform.position.x, instanceCreatePlayer.transform.position.y + 0.5f, instanceCreatePlayer.transform.position.z), instanceCreatePlayer.rotation);
+
 
                 switchMode.CraftItemBuildNowDinamic = itemCreate.GetComponent<CraftItem>();
                 switchMode.ButtonCraft.SetActive(true);
@@ -68,7 +69,7 @@ public class SelectContructionForCreate : MonoBehaviour
                     itemCreate.GetComponent<CraftItem>().level = int.Parse(level.text);
                 }
                 itemCreate.GetComponent<CraftItem>().Item = gameObject.GetComponent<SelectContructionForCreate>();
-           //     itemCreate.GetComponent<Indicator>().IndicatorSetActive(true, 0);
+                //     itemCreate.GetComponent<Indicator>().IndicatorSetActive(true, 0);
             }
 
         }
@@ -78,7 +79,7 @@ public class SelectContructionForCreate : MonoBehaviour
             {
                 switchMode.ButtonCraft.SetActive(false);
                 itemCreate.DestroyAPS();
-            //    itemCreate.GetComponent<Indicator>().IndicatorSetActive(false, 0);
+                //    itemCreate.GetComponent<Indicator>().IndicatorSetActive(false, 0);
                 //   switchMode.craft.Remove(switchMode.craft.Find(obj => obj.ItemCraft.name == itemCreate.name));
                 itemCreate = null;
             }

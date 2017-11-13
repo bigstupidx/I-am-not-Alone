@@ -224,8 +224,8 @@ public class CraftItem : MonoBehaviour
             }
         }
 
-        indicator.IndicatorSetActive(true, 0);
-        indicator.IndicatorOffScreen();
+        //indicator.IndicatorSetActive(true, 0);
+        //indicator.IndicatorOffScreen();
         if (BuildStatic)
         {
             // indicator.IndicatorSetActive(true, 0);
@@ -334,8 +334,8 @@ public class CraftItem : MonoBehaviour
                     buildMode.CraftItemBuildNowDinamic = null;
                     rigid.isKinematic = true;
                     Item.CheckOFToggle();
-                    indicator.IndicatorSetActive(false, 1);
-                    indicator.IndicatorSetActive(true, 2);
+                    //indicator.IndicatorSetActive(false, 1);
+                    //indicator.IndicatorSetActive(true, 2);
                     if (obstacle)
                     {
                         obstacle.enabled = true;
@@ -555,7 +555,7 @@ public class CraftItem : MonoBehaviour
 
         AddExposionForce(transform.position);
 
-        indicator.IndicatorSetActive(false, 0);
+       // indicator.IndicatorSetActive(false, 0);
     }
 
     void AddExposionForce (Vector3 centre)

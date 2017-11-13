@@ -21,7 +21,7 @@ public class StartSceneObjectRandom : MonoBehaviour
         randomObjectActive = Random.Range(0, startRandom.childCount);
 
         LevelwaveStart = Random.Range(0, _waveManager.wave.Count);
-        randomObjectActiveForWave = Random.Range(0, inWave.childCount);
+     //   randomObjectActiveForWave = Random.Range(0, inWave.childCount);
         for (int i = 0; i < startRandom.childCount; i++)
         {
             if (i != randomObjectActive)

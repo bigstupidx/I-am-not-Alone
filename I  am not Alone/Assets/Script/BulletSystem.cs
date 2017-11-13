@@ -58,6 +58,7 @@ public class BulletSystem : MonoBehaviour
     AudioSource gunAudio;
     public bool fireGun;
     public Transform buttonWeapon;
+
     private void OnEnable ()
     {
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
@@ -139,7 +140,10 @@ public class BulletSystem : MonoBehaviour
                     
                         gunMiscle.Stop();
                         gunMiscle.Play();
-
+                       if (!gunAudio.isPlaying)
+                {
+                    gunAudio.PlayOneShot(weaponSound); 
+                }
                         l = true;
                         bullet.Play();
                         timerShoot = 0f;
@@ -179,7 +183,10 @@ public class BulletSystem : MonoBehaviour
 
                 gunMiscle.Stop();
                 gunMiscle.Play();
-
+                if (!gunAudio.isPlaying)
+                {
+                    gunAudio.PlayOneShot(weaponSound);
+                }
                 l = true;
                 bullet.Play();
                 timerShoot = 0f;
