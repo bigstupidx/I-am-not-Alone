@@ -66,6 +66,7 @@ public class WaveManager : MonoBehaviour
     public Text GhostCounter;
     public Text GhoustWave;
     PlayableDirector m_playebleDirector;
+    int wavenumberForText;
     // Use this for initialization
     void Start ()
     {
@@ -112,7 +113,8 @@ public class WaveManager : MonoBehaviour
                 startWave = true;
                 switchMode.BuildMOdeMenu(false);
                 GhoustWave.gameObject.SetActive(true);
-                GhoustWave.text = "WAVE " + levelWave;
+                wavenumberForText = levelWave + 1;
+                GhoustWave.text = "WAVE " + wavenumberForText;
                 m_playebleDirector.Play();
                 for (int i = 0; i < lightAllScene.Count; i++)
                 {

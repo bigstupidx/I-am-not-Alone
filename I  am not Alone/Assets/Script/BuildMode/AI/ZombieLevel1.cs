@@ -124,9 +124,9 @@ public class ZombieLevel1 : MonoBehaviour
                 // disable the NavMeshAgent component
                 //    obstacle.enabled = true;
                 //    agent.enabled = false;
-                Vector3 relativePos = player.transform.position - transform.position;
-                Quaternion rotation = Quaternion.LookRotation(relativePos);
-                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 7f);
+                //Vector3 relativePos = player.transform.position - transform.position;
+                //Quaternion rotation = Quaternion.LookRotation(relativePos);
+                //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 7f);
             //}
             //else
             //{

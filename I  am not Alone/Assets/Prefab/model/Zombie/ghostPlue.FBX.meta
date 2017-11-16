@@ -1,44 +1,44 @@
 fileFormatVersion: 2
-guid: 0bfe57a94653440479dd11e9cb4d7312
-timeCreated: 1508596705
+guid: 794c3ff55c73f124d9c3903e422e12ce
+timeCreated: 1510858305
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
-    100000: body
-    100002: hand1
-    100004: hand2
-    100006: hands
-    100008: leg1
-    100010: leg2
-    100012: legs
-    100014: //RootNode
-    400000: body
-    400002: hand1
-    400004: hand2
-    400006: hands
-    400008: leg1
-    400010: leg2
-    400012: legs
-    400014: //RootNode
-    2300000: body
-    2300002: hand1
-    2300004: hand2
-    2300006: leg1
-    2300008: leg2
-    3300000: body
-    3300002: hand1
-    3300004: hand2
-    3300006: leg1
-    3300008: leg2
-    4300000: leg1
-    4300002: leg2
-    4300004: body
-    4300006: hand2
-    4300008: hand1
-    7400000: zombiewIdle
+    100000: body001
+    100002: //RootNode
+    100004: leg009
+    100006: leg010
+    100008: leg011
+    100010: leg012
+    100012: legs002
+    100014: ghs
+    400000: body001
+    400002: //RootNode
+    400004: leg009
+    400006: leg010
+    400008: leg011
+    400010: leg012
+    400012: legs002
+    400014: ghs
+    2300000: body001
+    2300002: leg009
+    2300004: leg010
+    2300006: leg011
+    2300008: leg012
+    3300000: body001
+    3300002: leg009
+    3300004: leg010
+    3300006: leg011
+    3300008: leg012
+    4300000: body001
+    4300002: leg009
+    4300004: leg010
+    4300006: leg011
+    4300008: leg012
+    7400000: walk
     7400002: attack
-    7400004: walk
+    7400004: jump
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -65,10 +65,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: zombiewIdle
+      name: walk
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 100
+      lastFrame: 20
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -76,7 +76,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 1
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -88,31 +88,15 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: body
-        weight: 1
-      - path: body/hands
-        weight: 1
-      - path: body/hands/hand1
-        weight: 1
-      - path: body/hands/hand2
-        weight: 1
-      - path: legs
-        weight: 0
-      - path: legs/leg1
-        weight: 0
-      - path: legs/leg2
-        weight: 0
-      maskType: 0
+      transformMask: []
+      maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: attack
       takeName: Take 001
-      firstFrame: 100
-      lastFrame: 130
+      firstFrame: 20
+      lastFrame: 70
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -120,7 +104,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 1
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -132,39 +116,23 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: body
-        weight: 1
-      - path: body/hands
-        weight: 1
-      - path: body/hands/hand1
-        weight: 1
-      - path: body/hands/hand2
-        weight: 1
-      - path: legs
-        weight: 0
-      - path: legs/leg1
-        weight: 0
-      - path: legs/leg2
-        weight: 0
+      transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: walk
+      name: jump
       takeName: Take 001
-      firstFrame: 135
-      lastFrame: 175
+      firstFrame: 70
+      lastFrame: 80
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -176,30 +144,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: body
-        weight: 1
-      - path: body/hands
-        weight: 1
-      - path: body/hands/hand1
-        weight: 1
-      - path: body/hands/hand2
-        weight: 1
-      - path: legs
-        weight: 1
-      - path: legs/leg1
-        weight: 1
-      - path: legs/leg2
-        weight: 1
+      transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1.5
+    globalScale: 3
     meshCompression: 0
     addColliders: 0
     importVisibility: 1

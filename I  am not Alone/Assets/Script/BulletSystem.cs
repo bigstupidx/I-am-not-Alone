@@ -142,7 +142,7 @@ public class BulletSystem : MonoBehaviour
                         gunMiscle.Play();
                        if (!gunAudio.isPlaying)
                 {
-                    gunAudio.PlayOneShot(weaponSound); 
+                    gunAudio.Play();
                 }
                         l = true;
                         bullet.Play();
@@ -185,7 +185,7 @@ public class BulletSystem : MonoBehaviour
                 gunMiscle.Play();
                 if (!gunAudio.isPlaying)
                 {
-                    gunAudio.PlayOneShot(weaponSound);
+                    gunAudio.Play();
                 }
                 l = true;
                 bullet.Play();

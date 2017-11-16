@@ -5,7 +5,7 @@ using UnityEngine;
 public class TurretsAi : MonoBehaviour
 {
     public float damagePerShot = 20;                  // The damage inflicted by each bullet.
-    public float timeBetweenBullets = 0.75f;        // The time between each shot.
+    public float timeBetweenBullets = 0.2f;        // The time between each shot.
     public float range = 100f;                      // The distance the gun can fire.
     public GameObject HeadTurrets;
     public bool Shot;
@@ -15,7 +15,7 @@ public class TurretsAi : MonoBehaviour
     public AudioSource gunAudio;                           // Reference to the audio source.
     public Light gunLight;                                 // Reference to the light component.
     public Transform Zombie;
-
+    public CraftItem craftItem;
     public LayerMask layers;
     float effectsDisplayTime = 0.2f;                // The proportion of the timeBetweenBullets that the effects will display for.
     float timer;                                    // A timer to determine when to fire.
@@ -24,16 +24,20 @@ public class TurretsAi : MonoBehaviour
     Ray Headray = new Ray();                       // A ray from the gun end forwards.
     RaycastHit headHit; // A raycast hit to get information about what was hit.
 
+    BoxCollider boxCollider;
+    SphereCollider sphereCollider;
     Vector3 m_lastPOsition = Vector3.zero;
     Quaternion m_lookRotation;
     MyParticleCollision particleCollision;
+
     void Awake ()
     {
         // Create a layer mask for the Shootable layer.
-
-
+        boxCollider = GetComponent<BoxCollider>();
+        sphereCollider = GetComponent<SphereCollider>();
         // Set up the references.
-
+        boxCollider.enabled = false;
+        sphereCollider.enabled = false;
         //gunLine = GetComponent<LineRenderer>();
         //gunAudio = GetComponent<AudioSource>();
         //gunLight = GetComponent<Light>();
@@ -48,6 +52,13 @@ public class TurretsAi : MonoBehaviour
 
     void Update ()
     {
+
+        if (craftItem.Built)
+        {
+            boxCollider.enabled = true;
+            sphereCollider.enabled = true;
+        }
+
         // Add the time since Update was last called to the timer.
         timer += Time.deltaTime;
         if (Zombie)
@@ -62,7 +73,7 @@ public class TurretsAi : MonoBehaviour
 
             if (HeadTurrets.transform.rotation != m_lookRotation)
             {
-                HeadTurrets.transform.rotation = Quaternion.RotateTowards(HeadTurrets.transform.rotation, m_lookRotation, 100 * Time.deltaTime);
+                HeadTurrets.transform.rotation = Quaternion.RotateTowards(HeadTurrets.transform.rotation, m_lookRotation, 135 * Time.deltaTime);
 
             }
             Headray.origin = HeadTurrets.transform.GetChild(0).GetChild(0).transform.position;
@@ -75,13 +86,13 @@ public class TurretsAi : MonoBehaviour
                 {
 
                     Shot = true;
-               
+
                     //      gunLine.Play();
 
                 }
                 else
                 {
-                   
+
                     //  gunLine.Clear();
                     Shot = false;
                 }
@@ -95,7 +106,7 @@ public class TurretsAi : MonoBehaviour
         }
 
         // If the Fire1 button is being press and it's time to fire...
-        if (Shot && timer >= timeBetweenBullets && Time.timeScale != 0)
+        if (Shot && timer >= timeBetweenBullets)
         {
             // ... shoot the gun.
             Shoot();
@@ -132,7 +143,7 @@ public class TurretsAi : MonoBehaviour
 
 
         gunAudio.Play();
-   
+
 
     }
     private void OnTriggerEnter (Collider other)
@@ -158,7 +169,7 @@ public class TurretsAi : MonoBehaviour
         {
 
 
-            Zombie = other.transform.GetChild(1);
+            Zombie = other.transform.GetChild(0);
 
 
 
@@ -170,8 +181,8 @@ public class TurretsAi : MonoBehaviour
 
             Zombie = null;
 
-        //    gunLine.gameObject.SetActive(false);
-         //   gunLine.Stop();
+            //    gunLine.gameObject.SetActive(false);
+            //   gunLine.Stop();
 
         }
     }
@@ -182,9 +193,9 @@ public class TurretsAi : MonoBehaviour
 
             Zombie = null;
 
-     //       gunLine.gameObject.SetActive(false);
+            //       gunLine.gameObject.SetActive(false);
 
-          //  gunLine.Stop();
+            //  gunLine.Stop();
         }
     }
 }
