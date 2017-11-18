@@ -91,10 +91,11 @@ public class CraftItem : MonoBehaviour
     RaycastHit hit;
     GameObject player;
     NavMeshObstacle obstacle;
+    MobaCamera mobaCamera;
     // Use this for initialization
     void Start ()
     {
-
+        mobaCamera = Camera.main.GetComponent<MobaCamera>();
         for (int i = 0; i < CountWoodForCreate.Count; i++)
         {
             CountWoodForCreate[i].Start();
@@ -364,7 +365,7 @@ public class CraftItem : MonoBehaviour
 
             if (!Built)
             {
-              
+
 
 
                 if (buildMode.CraftItemBuildNowDinamic)
@@ -436,7 +437,7 @@ public class CraftItem : MonoBehaviour
                     if (other.GetComponent<ZombieLevel1>().JointWindow)
                     {
 
-                        health.HelthDamage(0.03f, false,transform.position);
+                        health.HelthDamage(0.03f, false, transform.position);
                         Animator anim = other.GetComponent<ZombieLevel1>().m_animator;
                         anim.SetTrigger("window");
                         OffMeshLinkData data = other.GetComponent<ZombieLevel1>().agent.currentOffMeshLinkData;
@@ -473,7 +474,7 @@ public class CraftItem : MonoBehaviour
                     if (_StartHisEffect)
                     {
 
-                        other.GetComponent<Health>().HelthDamage(damage, false,transform.position);
+                        other.GetComponent<Health>().HelthDamage(damage, false, transform.position);
                     }
                 }
                 else
@@ -489,7 +490,7 @@ public class CraftItem : MonoBehaviour
                         }
                         else
                         {
-                            other.GetComponent<Health>().HelthDamage(damage, false,transform.position);
+                            other.GetComponent<Health>().HelthDamage(damage, false, transform.position);
                             health.HelthDamage(0.1f, false, transform.position);
                         }
 
@@ -546,7 +547,7 @@ public class CraftItem : MonoBehaviour
         hisEffectPrefabPoolForDestroy.GetComponent<GameObjectScaled>().scaleX = transform.GetChild(0).GetChild(0).GetComponent<GameObjectScaled>().scaleX;
         transform.GetChild(0).GetChild(0).GetComponent<GameObjectScaled>().prefabEffect = hisEffectPrefabPoolForDestroy;
         _StartHisEffect = true;
-        indicator.IndicatorSetActive(false, 0);
+        //    indicator.IndicatorSetActive(false, 0);
     }
 
     public void BlowUp ()
@@ -554,8 +555,10 @@ public class CraftItem : MonoBehaviour
         health.MySelfDestroyer();
 
         AddExposionForce(transform.position);
-
-       // indicator.IndicatorSetActive(false, 0);
+        mobaCamera.duration = 0.8f;
+        mobaCamera.power = 0.7f;
+        mobaCamera.shouldShake = true;
+        // indicator.IndicatorSetActive(false, 0);
     }
 
     void AddExposionForce (Vector3 centre)
@@ -566,7 +569,7 @@ public class CraftItem : MonoBehaviour
 
             if (hit.GetComponent<Health>() != null)
             {
-                hit.GetComponent<Health>().HelthDamage(damage, false,transform.position);
+                hit.GetComponent<Health>().HelthDamage(damage, false, transform.position);
 
             }
             if (hit.GetComponent<Rigidbody>() != null)

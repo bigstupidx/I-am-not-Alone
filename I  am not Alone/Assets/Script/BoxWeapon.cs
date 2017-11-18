@@ -23,6 +23,9 @@ public class BoxWeapon : MonoBehaviour
     public float WeaponAmunition;
     CheckInWeaponAndCraft _checkInWeaponAndCraft;
     public bool TriggerTrue;
+    [Space(5)]
+    public PlayableDirector[] m_director;
+    public GameObject[] traningActive;
     bool triggerEnable = false;
     float timer;
     SphereCollider thisCollider;
@@ -79,6 +82,24 @@ public class BoxWeapon : MonoBehaviour
         {
             if (other.CompareTag("Player"))
             {
+
+                if (m_director.Length != 0)
+                {
+                    if (traningActive.Length !=0)
+                    {
+                        for (int i = 0; i < traningActive.Length; i++)
+                        {
+                            traningActive[i].SetActive(true);
+
+                        } 
+                    }
+
+                    for (int i = 0; i < m_director.Length; i++)
+                    {
+                        m_director[i].gameObject.SetActive(true);
+                        m_director[i].Play();
+                    }
+                }
 
                 if (StartGoods)
                 {
@@ -144,10 +165,10 @@ public class BoxWeapon : MonoBehaviour
         else
         {
 
-        
-                weaponAudio.Play();
-                _weaponController.PlayerWeapon(nameWeapon, level, WeaponAmunition);
-           
+
+            weaponAudio.Play();
+            _weaponController.PlayerWeapon(nameWeapon, level, WeaponAmunition);
+
         }
 
     }
@@ -218,7 +239,7 @@ public class BoxWeapon : MonoBehaviour
 
 
 
-    
+
 
 
 

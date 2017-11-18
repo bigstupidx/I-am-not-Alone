@@ -219,7 +219,7 @@ public class WaveManager : MonoBehaviour
             {
 
 
-                waveParams.Add(new WaveParams((wave[w].Night - 20) / wave[w].countZombie[i]));
+                waveParams.Add(new WaveParams((wave[w].Night - 60) / wave[w].countZombie[i]));
 
 
             }

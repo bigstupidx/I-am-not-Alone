@@ -58,13 +58,13 @@ public class BulletSystem : MonoBehaviour
     AudioSource gunAudio;
     public bool fireGun;
     public Transform buttonWeapon;
-
+    MobaCamera mobaCamera;
     private void OnEnable ()
     {
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         selectionWeaponPlay = GameObject.Find("WeaponController").GetComponent<SelectionWeaponForPC>();
-
+        mobaCamera = Camera.main.GetComponent<MobaCamera>();
         gunLight = GetComponent<Light>();
         usercontrol = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<ThirdPersonUserControl>();
         gunAudio = GetComponent<AudioSource>();
@@ -156,7 +156,7 @@ public class BulletSystem : MonoBehaviour
                         if (Input.GetButton("Fire1") & timerShoot >= timeBetweenBullets && Time.timeScale != 0)
                         {
                             gunLight.enabled = true;
-
+         mobaCamera.shouldShake = true;
 
                             gunAudio.Play();
                             gunMiscle.Stop();
@@ -205,6 +205,8 @@ public class BulletSystem : MonoBehaviour
 
                 l = true;
                 bullet.Play();
+              
+                mobaCamera.shouldShake = true;
                 timerShoot = 0f;
             }
 
@@ -224,6 +226,7 @@ public class BulletSystem : MonoBehaviour
         {
             // ... disable the effects.
             DisableEffects();
+
         }
 
 

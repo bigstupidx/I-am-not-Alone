@@ -73,7 +73,7 @@ public class ZombieLevel1 : MonoBehaviour
             m_animator = GetComponent<Animator>();
         }
 
-        //  Physics.IgnoreCollision(transform.GetComponent<Collider>(), other.GetComponent<Collider>());
+          Physics.IgnoreCollision(transform.GetComponent<Collider>(), player.GetComponent<Collider>());
 
 
     }
@@ -249,12 +249,12 @@ public class ZombieLevel1 : MonoBehaviour
                             target.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false, hit.point);
                         }
 
-                        if (!source.isPlaying)
-                        {
-                            source.PlayOneShot(zombieAtack);
+                        //if (!source.isPlaying)
+                        //{
+                        //    source.PlayOneShot(zombieAtack);
 
 
-                        }
+                        //}
 
                         if (m_animator)
                         {

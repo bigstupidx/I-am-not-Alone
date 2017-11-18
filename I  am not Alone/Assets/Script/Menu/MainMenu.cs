@@ -46,13 +46,22 @@ public class MainMenu : MonoBehaviour
 
     public void CheckInPrice (Text price)
     {
-        if (int.Parse(myMoney.text) >= int.Parse(price.text))
+
+        try
         {
-            myMoney.text = (int.Parse(myMoney.text) - int.Parse(price.text)).ToString();
-            db.UpdateMoney(myMoney.text);
+            if (int.Parse(myMoney.text) >= int.Parse(price.text))
+            {
+                myMoney.text = (int.Parse(myMoney.text) - int.Parse(price.text)).ToString();
+                db.UpdateMoney(myMoney.text);
+                byeScene = true;
+            }
+            else { byeScene = false; return; }
+        }
+        catch (System.Exception)
+        {
             byeScene = true;
         }
-        else { byeScene = false; return; }
+
 
     }
 
@@ -66,6 +75,7 @@ public class MainMenu : MonoBehaviour
 
 
             db.InsertDBSceneName(sceneName.text);
+          
         }
 
     }

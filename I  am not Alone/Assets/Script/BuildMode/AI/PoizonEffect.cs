@@ -6,6 +6,7 @@ public class PoizonEffect : MonoBehaviour
 {
     ParticleSystem system;
     GameObject Player;
+    public float poisonDamage = 0.5f;
     private void Start ()
     {
         system = GetComponent<ParticleSystem>();
@@ -21,7 +22,7 @@ public class PoizonEffect : MonoBehaviour
         if (other.transform.CompareTag(Tags.player))
         {
 
-            other.GetComponent<Health>().HelthDamage(0.5f, false, other.transform.position);
+            other.GetComponent<Health>().HelthDamage(poisonDamage, false, other.transform.position);
 
         }
     }
