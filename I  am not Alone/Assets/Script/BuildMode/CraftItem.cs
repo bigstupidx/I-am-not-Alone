@@ -75,6 +75,8 @@ public class CraftItem : MonoBehaviour
     public bool _StartHisEffect = false;
 
     public GameObject[] NavmeshLinkWindow;
+
+    public GameObject[] MeshSecondHideOBject;
     CheckGround checkGround;
     //   public GameObject[] NavmeshLinkWindowOffToIntoTrigger;
     bool ColliderTrue;
@@ -593,13 +595,19 @@ public class CraftItem : MonoBehaviour
         }
     }
 
-    //private void OnCollisionEnter (Collision collision)
-    //{
-    //    ground = true;
-    //}
-    //private void OnCollisionExit (Collision collision)
-    //{
+    public void ChangeActiveParams (bool b)
+    {
+        if (MeshSecondHideOBject.Length != 0)
+        {
 
-    //    ground = false;
-    //}
+            for (int i = 0; i < MeshSecondHideOBject.Length; i++)
+            {
+                MeshSecondHideOBject[i].SetActive(b);
+            }
+
+        }
+
+
+    }
+
 }

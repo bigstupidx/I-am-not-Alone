@@ -14,7 +14,7 @@ public class PauseManager : MonoBehaviour
     public Slider progressSlider;
     private void Awake ()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 0;
         if (Advertisement.isSupported)
         {
             Advertisement.Initialize("1557198", false);

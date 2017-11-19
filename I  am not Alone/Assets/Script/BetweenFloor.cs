@@ -12,60 +12,34 @@ public class BetweenFloor : MonoBehaviour
     public Transform FurnitureFirst;
     public Transform FurnitureSecond;
     public GameObject FloorHowTrue;
-
+    public Camera myCamera;
     private void Start ()
     {
 
-
+        myCamera = Camera.main.GetComponent<Camera>();
+        myCamera.cullingMask &= ~(1 << 9);
     }
-    public void RenderObjectToFloor (bool b, string newLayer)
+    public void RenderObjectToFloor (bool b)
     {
+
+        if (b)
+        {
+            myCamera.cullingMask |= (1 << 9);
+        }
+        else
+        {
+            myCamera.cullingMask &= ~(1 << 9);
+        }
+
         for (int i = 0; i < FurnitureSecond.childCount; i++)
         {
-
-            if (FurnitureSecond.GetChild(i).CompareTag("CraftFromMenu") || FurnitureSecond.GetChild(i).CompareTag("Things"))
+            if (FurnitureSecond.GetChild(0).GetComponent<CraftItem>())
             {
-                FurnitureSecond.GetChild(i).gameObject.layer = LayerMask.NameToLayer(newLayer);
+                FurnitureSecond.GetChild(0).GetComponent<CraftItem>().ChangeActiveParams(b);
             }
-            if (FurnitureSecond.GetChild(i).childCount == 0)
-            {
-                FurnitureSecond.GetChild(i).GetComponent<Renderer>().enabled = b;
-            }
-            else
-            {
-                if (FurnitureSecond.GetChild(i).CompareTag("CraftFromMenu") || FurnitureSecond.GetChild(i).CompareTag("CraftMode"))
-                {
-                    for (int l = 0; l < FurnitureSecond.GetChild(i).GetChild(0).childCount; l++)
-                    {
-                        if (FurnitureSecond.GetChild(i).GetChild(0).GetChild(l).GetComponent<Renderer>())
-                        {
-
-                            FurnitureSecond.GetChild(i).GetChild(0).GetChild(l).GetComponent<Renderer>().enabled = b;
-                        }
-                    }
-                }
-                else
-                {
-
-                    if (FurnitureSecond.GetChild(i).GetComponent<Renderer>())
-                    {
-                        FurnitureSecond.GetChild(i).GetComponent<Renderer>().enabled = b;
-                    }
-                    for (int l = 0; l < FurnitureSecond.GetChild(i).childCount; l++)
-                    {
-                        if (FurnitureSecond.GetChild(i).GetChild(l).GetComponent<Renderer>())
-                        {
-
-                            FurnitureSecond.GetChild(i).GetChild(l).GetComponent<Renderer>().enabled = b;
-                        }
-                    }
-                }
-            }
-
-
-
-
         }
+
+
     }
 
 
@@ -79,8 +53,8 @@ public class BetweenFloor : MonoBehaviour
             switchMode.CheckInBuiltWalls(true);
             Floor.SetActive(true);
             FloorHowTrue.SetActive(true);
-            for (int i = 0; i < FurnitureSecond.childCount; i++)
-                RenderObjectToFloor(true, "Default");
+
+            RenderObjectToFloor(true);
 
 
 
@@ -109,7 +83,7 @@ public class BetweenFloor : MonoBehaviour
             switchMode.CheckInBuiltWalls(true);
             Floor.SetActive(false);
             WallTransparent.SetActive(true);
-            RenderObjectToFloor(false, "Default");
+            RenderObjectToFloor(false);
             //  RenderObjectToFloor(false, "Ignore Raycast");
             FloorHowTrue.SetActive(false);
         }

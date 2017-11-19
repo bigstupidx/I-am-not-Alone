@@ -129,6 +129,10 @@ public class Health : MonoBehaviour
         }
     }
 
+
+  
+
+
     private void Update ()
     {
 
@@ -183,7 +187,7 @@ public class Health : MonoBehaviour
     public void MySelfDestroyer ()
     {
         sourceDestraction.Play();
-        destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffectForZombie", transform.position, Quaternion.identity);
+        destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
         SoundTrue = true;
         timer = 0;
         _craftItem = GetComponent<CraftItem>();
@@ -256,22 +260,9 @@ public class Health : MonoBehaviour
 
                 destroyAi = poolsistem.InstantiateAPS("DestroyObject", transform.position, Quaternion.identity);
 
-                ParticleSystem ps = destroyAi.GetComponent<ParticleSystem>();
-                var sh = ps.shape;
-                sh.shapeType = ParticleSystemShapeType.MeshRenderer;
+            
 
-                if (transform.childCount != 0)
-                {
-                    if (transform.GetChild(0).GetComponent<MeshRenderer>())
-                    {
-                        sh.meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
-
-                    }
-                }
-                else
-                {
-                    sh.meshRenderer = transform.GetComponent<MeshRenderer>();
-                }
+             
                 //   checkWeaponAndCraft.CreateBoxItem(transform.position,MakeMaterial);
                 sourceDestraction.Play();
 
@@ -416,6 +407,7 @@ public class Health : MonoBehaviour
                 {
                     CraftItemStaticForWallCrash.SetActive(true);
                 }
+                destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffectForZombie", transform.position, Quaternion.identity);
                 Destroy(gameObject, sourceDestraction.clip.length);
 
                 timer = 0;
@@ -423,17 +415,18 @@ public class Health : MonoBehaviour
             }
             if (transform.CompareTag("CraftFromMenu"))
             {
+                destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
                 _craftItem = GetComponent<CraftItem>();
                 sourceDestraction.Play();
                 SoundTrue = true;
                 _craftItem.RenderOff();
-                destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffectForZombie", transform.position, Quaternion.identity);
+  
                 timer = 0;
             }
 
 
 
-            destroyAi.PlayEffect(30);
+           // destroyAi.PlayEffect(30);
         }
     }
     void EnebledPhysics (bool active)

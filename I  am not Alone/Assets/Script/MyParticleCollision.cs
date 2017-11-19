@@ -8,7 +8,7 @@ public class MyParticleCollision : MonoBehaviour
     public float bulletDamage;
     int safeLength;
     public bool FireGun;
-    public ParticleSystem wood;
+
     public ParticleSystem sparkl;
     private ParticleSystem old;
 
@@ -19,8 +19,8 @@ public class MyParticleCollision : MonoBehaviour
         safeLength = GetComponent<ParticleSystem>().GetSafeCollisionEventSize();
         if (!FireGun)
         {
-            wood.gameObject.SetActive(false);
-            sparkl.gameObject.SetActive(false); 
+
+            sparkl.gameObject.SetActive(false);
         }
         //pool = PoolingSystem.Instance;
     }
@@ -35,11 +35,11 @@ public class MyParticleCollision : MonoBehaviour
 
                 if (!FireGun)
                 {
-                    wood.gameObject.SetActive(false);
-                    sparkl.gameObject.SetActive(false); 
+
+                    sparkl.gameObject.SetActive(false);
                 }
                 old = null;
-            } 
+            }
         }
     }
 
@@ -89,7 +89,7 @@ public class MyParticleCollision : MonoBehaviour
             if (other.CompareTag("WallCrash"))
             {
 
-      
+
 
                 if (other.transform.root.name != transform.name)
                 {
@@ -120,7 +120,7 @@ public class MyParticleCollision : MonoBehaviour
             {
 
 
-     
+
                 if (other.transform.root.name != transform.name)
                 {
                     other.GetComponent<Health>().HelthDamage(bulletDamage, true, collisionHitLoc);
@@ -133,7 +133,7 @@ public class MyParticleCollision : MonoBehaviour
             {
 
 
-   
+
                 if (other.transform.root.name != transform.name)
                 {
 
@@ -145,11 +145,11 @@ public class MyParticleCollision : MonoBehaviour
 
                         if (!FireGun)
                         {
-                            old = wood; 
+
                         }
 
 
-        
+
 
                     }
 
@@ -172,13 +172,13 @@ public class MyParticleCollision : MonoBehaviour
             if (!FireGun)
             {
                 old.transform.position = collisionHitLoc;
-                wood.gameObject.SetActive(true);
+
                 sparkl.gameObject.SetActive(true);
                 old.Play();
 
             }
 
- 
+
 
 
 
@@ -187,7 +187,7 @@ public class MyParticleCollision : MonoBehaviour
             i++;
 
         }
-    
+
 
     }
 

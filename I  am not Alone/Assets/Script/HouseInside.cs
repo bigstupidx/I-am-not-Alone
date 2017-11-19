@@ -23,7 +23,7 @@ public class HouseInside : MonoBehaviour
             }
             TwoFloour.SetActive(false);
             //        betweenFloor.RenderObjectToFloor(false, "Ignore Raycast");
-            betweenFloor.RenderObjectToFloor(false, "Default");
+            betweenFloor.RenderObjectToFloor(false);
         }
     }
     private void OnTriggerExit (Collider other)

@@ -30,7 +30,7 @@ ed5555ea56c76befb50782024bd97019 Assembly-CSharp.dll:.SpawnerZombie
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservableVisibleTrigger
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.Editor.dll:UnityEngine.Advertisements.Editor.Placeholder
 447ae6b473c3e548e72c5d4b007b855f Assembly-CSharp.dll:.MainMenu
-5eab5318785bfec54492da34da60231d Assembly-CSharp.dll:.WeaponController
+e32d619d9dc5a00d80919b20bd227914 Assembly-CSharp.dll:.WeaponController
 8446156bbcdf3147ae0b36ca48dcf240 Assembly-CSharp.dll:.IKtarget
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
@@ -101,7 +101,7 @@ f61c0793411f10cf5fbfa1473fef5ef2 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 1b8c02d0aa82fbf036a2b9b2d713eec3 UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
 50bc42aec0324e8da9962d40b2a714a9 Assembly-CSharp.dll:.ParticleMenu
 3ecea0c2e43f5d97a17c441bfcf59a7d Assembly-CSharp.dll:UnityEngine.PostProcessing.PostProcessingBehaviour
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.PoizonEffect
+7adcb5789a0d50405906701c521ab778 Assembly-CSharp.dll:.PoizonEffect
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservablePointerClickTrigger
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservableDestroyTrigger
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Tags
@@ -133,7 +133,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 3f32f08a64daf40b09ed864d96fe3840 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransform
 73843688b51256aed059f049c540bca8 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformChild
 528ea1fd7c01796fc60c4e2f172ea229 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
-3bcadf73562212cfade0bfc0ab6b7838 Assembly-CSharp.dll:.MobaCamera
+1c3527b4f04851e5c35e5e95901820b3 Assembly-CSharp.dll:.MobaCamera
 f65b7ccf3d67514e79397e0d8c8d49e7 Assembly-CSharp.dll:.IKweapon
 e8d75d7aac9a80ef56dc5d0d761a21c4 Assembly-CSharp.dll:Lean.Localization.LeanLocalizedImage
 77fdf2bb99710c8fbcde2c923b1ec78a Assembly-CSharp.dll:AC.LSky.LSkyDisplayTime
@@ -162,6 +162,7 @@ b288608f332c48587b24d43541790fe8 Assembly-CSharp-firstpass.dll:UniRx.Examples.Sa
 d78da10fc6fe2ebb0bfa7bfae15012c5 Assembly-CSharp.dll:UnityEngine.AI.NavMeshModifierVolume
 37bf4d6a6d424731cb4a9b998783e5c6 Assembly-CSharp-firstpass.dll:UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservableEventTrigger
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.AdviceManager
 6577f8413c6ad227829e43a5e5b561da Assembly-CSharp.dll:.ZombieLevel1
 b7536247a550bc1596505b7f345c8adf Assembly-CSharp.dll:.GunAim
 a2efb0db652b8114d1ae7dd9a600d626 Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.InputAxisScrollbar
@@ -171,7 +172,7 @@ d28c2e10634fc196cccb5150f3c1d752 Assembly-CSharp.dll:.CraftItem
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservableBeginDragTrigger
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservableEnableTrigger
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ChildToggleEnables
-4bdb3a930d93c7ccc9c07c75467df3bc Assembly-CSharp.dll:.BoxWeapon
+92a14d86afe9220324fbf683418122c5 Assembly-CSharp.dll:.BoxWeapon
 a7d3c6c6948d99dd4116e659ddcf5ac4 Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.ButtonHandler
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.GhostEye
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl
@@ -216,6 +217,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 040033f14df85985c5bbd0a1fe88dd71 Assembly-CSharp.dll:AC.LSky.LSkyProbeRefresh
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservablePointerUpTrigger
 953a8987fbd1e99c1439b032e78f3350 Assembly-CSharp.dll:.TransarentWallChangeMaterial
+87c99d2acca642d378bdfdfd7efd4ffe Assembly-CSharp.dll:.ActivatorTraning
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservableCollision2DTrigger
 bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.AudioSpatializerMicrosoft
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInput
