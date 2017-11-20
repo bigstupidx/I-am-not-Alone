@@ -9,38 +9,32 @@ public class MyParticleCollision : MonoBehaviour
     int safeLength;
     public bool FireGun;
 
-    public ParticleSystem sparkl;
-    private ParticleSystem old;
 
-    Vector3 offset = new Vector3(0, -4000, 0);
+
     // Use this for initialization
     void Start ()
     {
         safeLength = GetComponent<ParticleSystem>().GetSafeCollisionEventSize();
-        if (!FireGun)
-        {
-
-            sparkl.gameObject.SetActive(false);
-        }
+  
         //pool = PoolingSystem.Instance;
     }
 
     private void Update ()
     {
-        if (old)
-        {
-            if (!old.isPlaying)
-            {
+        //if (old)
+        //{
+        //    if (!old.isPlaying)
+        //    {
 
 
-                if (!FireGun)
-                {
+        //        if (!FireGun)
+        //        {
 
-                    sparkl.gameObject.SetActive(false);
-                }
-                old = null;
-            }
-        }
+        //            sparkl.gameObject.SetActive(false);
+        //        }
+        //        old = null;
+        //    }
+        //}
     }
 
 
@@ -49,119 +43,93 @@ public class MyParticleCollision : MonoBehaviour
 
 
 
-
-        if (collisionEvents.Length < safeLength)
-            collisionEvents = new ParticleCollisionEvent[safeLength];
-        int numCollisionEvents = GetComponent<ParticleSystem>().GetCollisionEvents(other, collisionEvents);
-
-
-
-
-
-
-        int i = 0;
-        while (i < numCollisionEvents)
+        if (other.CompareTag("CraftMode"))
         {
 
-            Vector3 collisionHitLoc = collisionEvents[i].intersection;
 
-            old = sparkl;
 
-            if (other.CompareTag("CraftMode"))
+
+            if (other.transform.root.name != transform.name)
             {
+                other.GetComponent<Health>().HelthDamage(bulletDamage, true, transform.position);
+
+            }
 
 
 
 
-                if (other.transform.root.name != transform.name)
-                {
-                    other.GetComponent<Health>().HelthDamage(bulletDamage, true, collisionHitLoc);
-
-                }
 
 
+        }
+
+        if (other.CompareTag("WallCrash"))
+        {
 
 
+
+            if (other.transform.root.name != transform.name)
+            {
+                other.GetComponent<Health>().HelthDamage(bulletDamage, true, transform.position);
 
 
             }
 
-            if (other.CompareTag("WallCrash"))
+        }
+        if (other.CompareTag("AI"))
+        {
+
+
+            // pool.InstantiateAPS("BloodSprayEffect", other.transform.position, Quaternion.identity);
+            if (other.transform.root.name != transform.name)
             {
-
-
-
-                if (other.transform.root.name != transform.name)
+                other.GetComponent<Health>().HelthDamage(bulletDamage, true, transform.position);
+                int l = Random.Range(0, 30);
+                if (l == 7)
                 {
-                    other.GetComponent<Health>().HelthDamage(bulletDamage, true, collisionHitLoc);
-
-
+                    other.GetComponent<ZombieLevel1>().timerStop = 1;
                 }
 
             }
-            if (other.CompareTag("AI"))
+
+        }
+        if (other.CompareTag("CraftFromMenu"))
+        {
+
+
+
+            if (other.transform.root.name != transform.name)
+            {
+                other.GetComponent<Health>().HelthDamage(bulletDamage, true, transform.position);
+
+
+            }
+
+        }
+        if (other.CompareTag("Things"))
+        {
+
+
+
+            if (other.transform.root.name != transform.name)
             {
 
 
-                // pool.InstantiateAPS("BloodSprayEffect", other.transform.position, Quaternion.identity);
-                if (other.transform.root.name != transform.name)
+                other.GetComponent<Health>().HelthDamage(bulletDamage, true, transform.position);
+
+                if (other.transform.name == "Door")
                 {
-                    other.GetComponent<Health>().HelthDamage(bulletDamage, true, collisionHitLoc);
-                    int l = Random.Range(0, 30);
-                    if (l == 7)
+
+                    if (!FireGun)
                     {
-                        other.GetComponent<ZombieLevel1>().timerStop = 1;
-                    }
-
-                }
-
-            }
-            if (other.CompareTag("CraftFromMenu"))
-            {
-
-
-
-                if (other.transform.root.name != transform.name)
-                {
-                    other.GetComponent<Health>().HelthDamage(bulletDamage, true, collisionHitLoc);
-
-
-                }
-
-            }
-            if (other.CompareTag("Things"))
-            {
-
-
-
-                if (other.transform.root.name != transform.name)
-                {
-
-
-                    other.GetComponent<Health>().HelthDamage(bulletDamage, true, collisionHitLoc);
-
-                    if (other.transform.name == "Door")
-                    {
-
-                        if (!FireGun)
-                        {
-
-                        }
-
-
-
 
                     }
 
 
+
+
                 }
 
 
-
-
-
-
-
             }
 
 
@@ -169,22 +137,12 @@ public class MyParticleCollision : MonoBehaviour
 
 
 
-            if (!FireGun)
-            {
-                old.transform.position = collisionHitLoc;
-
-                sparkl.gameObject.SetActive(true);
-                old.Play();
-
-            }
+       
 
 
 
 
 
-
-
-            i++;
 
         }
 
