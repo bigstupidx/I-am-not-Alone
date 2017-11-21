@@ -37,9 +37,7 @@ public class Health : MonoBehaviour
     public GameObject patAi2;
 
     public SkinnedMeshRenderer skinnedMesh;
-    public bool WeaponBox;
-    public bool MaterialBox;
-    public bool InterectiveBox;
+
     public bool OrRandom;
     public int MoneyAi;
     bool damaged;
@@ -116,8 +114,11 @@ public class Health : MonoBehaviour
             transform.tag = Tags.AI;
             CurHelth = MaxHealth;
             EnebledPhysics(true);
-            patAi1.SetActive(true);
-            patAi2.SetActive(true);
+            if (patAi1)
+            {
+                patAi1.SetActive(true);
+                patAi2.SetActive(true);
+            }
             isdead = false;
             if (enablesBoody.Length != 0)
             {
@@ -130,7 +131,7 @@ public class Health : MonoBehaviour
     }
 
 
-  
+
 
 
     private void Update ()
@@ -231,11 +232,17 @@ public class Health : MonoBehaviour
             if (CurHelth < MaxHealth / 2)
             {
 
-                patAi1.SetActive(false);
+                if (patAi1)
+                {
+                    patAi1.SetActive(false);
+                }
             }
             if (CurHelth < MaxHealth / 3)
             {
-                patAi2.SetActive(false);
+                if (patAi2)
+                {
+                    patAi2.SetActive(false);
+                }
             }
         }
 
@@ -260,9 +267,9 @@ public class Health : MonoBehaviour
 
                 destroyAi = poolsistem.InstantiateAPS("DestroyObject", transform.position, Quaternion.identity);
 
-            
 
-             
+
+
                 //   checkWeaponAndCraft.CreateBoxItem(transform.position,MakeMaterial);
                 sourceDestraction.Play();
 
@@ -327,39 +334,31 @@ public class Health : MonoBehaviour
                     m_director.Play();
                 }
 
-                int r = Random.Range(0, 2);
-                if (r == 1)
+                if (weaponsControll.weaponPanel.childCount != 0)
                 {
-                    if (OrRandom)
+                    int r = Random.Range(0, 2);
+                    if (r == 1)
                     {
-                        int i = Random.Range(0, 2);
-                        int l = Random.Range(0, 4);
+                        if (OrRandom)
+                        {
+                            int i = Random.Range(0, 2);
+                            int l = Random.Range(0, 4);
 
-                        MakeMaterial = l;
-                        if (i == 0)
-                        {
-                            checkWeaponAndCraft.CreateBoxItem(transform.position, MakeMaterial);
-                        }
-                        else if (i == 1)
-                        {
-                            checkWeaponAndCraft.CreateBoxWeapon(transform.position);
-                        }
-                    }
-                    else
-                    {
-                        if (MaterialBox)
-                        {
-                            checkWeaponAndCraft.CreateBoxItem(transform.position, MakeMaterial);
-                        }
-                        if (WeaponBox)
-                        {
-                            checkWeaponAndCraft.CreateBoxWeapon(transform.position);
+                            MakeMaterial = l;
+                            if (i == 0)
+                            {
+                                checkWeaponAndCraft.CreateBoxItem(transform.position, MakeMaterial);
+                            }
+                            else if (i == 1)
+                            {
+                                checkWeaponAndCraft.CreateBoxWeapon(transform.position);
+                            }
                         }
                     }
-                    if (InterectiveBox)
-                    {
-                        checkWeaponAndCraft.CreateBoxInterActive(transform.position);
-                    }
+                }
+                else
+                {
+                    checkWeaponAndCraft.CreateBoxWeapon(transform.position);
                 }
 
                 sourceDestraction.clip = zombie.zombieDeth;
@@ -420,13 +419,13 @@ public class Health : MonoBehaviour
                 sourceDestraction.Play();
                 SoundTrue = true;
                 _craftItem.RenderOff();
-  
+
                 timer = 0;
             }
 
 
 
-           // destroyAi.PlayEffect(30);
+            // destroyAi.PlayEffect(30);
         }
     }
     void EnebledPhysics (bool active)

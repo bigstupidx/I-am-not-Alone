@@ -227,7 +227,7 @@ public class WaveManager : MonoBehaviour
 
 
 
-            NightTime = wave[w].Night - 20.0f;
+            NightTime = wave[w].Night - 60.0f;
 
 
         }
@@ -241,7 +241,7 @@ public class WaveManager : MonoBehaviour
             {
 
 
-                waveParamsHard.Add(new WaveParams((wave[w].Night - 20) / wave[w].countZombie[i]));
+                waveParamsHard.Add(new WaveParams((wave[w].Night - 60) / wave[w].countZombie[i]));
 
 
             }

@@ -73,18 +73,21 @@ public class ZombieLevel1 : MonoBehaviour
             m_animator = GetComponent<Animator>();
         }
 
-          Physics.IgnoreCollision(transform.GetComponent<Collider>(), player.GetComponent<Collider>());
+        Physics.IgnoreCollision(transform.GetComponent<Collider>(), player.GetComponent<Collider>());
 
 
     }
-
+    private void OnEnable ()
+    {
+        agent.speed = standartSpeed;
+    }
     void DayDestroyObject ()
     {
         if (_sky.IsDay)
         {
             if (health.CurHelth > 0)
             {
-                health.HelthDamage(0.9f, false, transform.position);
+                health.HelthDamage(4f, false, transform.position);
             }
         }
 
@@ -116,41 +119,42 @@ public class ZombieLevel1 : MonoBehaviour
             {
                 agent.isStopped = false;
             }
+          
 
 
             //if ((player.transform.position - transform.position).sqrMagnitude < Mathf.Pow(agent.stoppingDistance, 2))
             //{
             //    // If the agent is in attack range, become an obstacle and
-                // disable the NavMeshAgent component
-                //    obstacle.enabled = true;
-                //    agent.enabled = false;
-                //Vector3 relativePos = player.transform.position - transform.position;
-                //Quaternion rotation = Quaternion.LookRotation(relativePos);
-                //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 7f);
+            // disable the NavMeshAgent component
+            //    obstacle.enabled = true;
+            //    agent.enabled = false;
+            //Vector3 relativePos = player.transform.position - transform.position;
+            //Quaternion rotation = Quaternion.LookRotation(relativePos);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 7f);
             //}
             //else
             //{
 
 
-                //   If we are not in range, become an agent again
-                //   obstacle.enabled = false;
-                //  agent.enabled = true;
-                if (m_animator)
+            //   If we are not in range, become an agent again
+            //   obstacle.enabled = false;
+            //  agent.enabled = true;
+            if (m_animator)
+            {
+                if (!newTraget)
                 {
-                    if (!newTraget)
-                    {
 
-                        CalculateNewPath(player);
+                    CalculateNewPath(player);
 
-                    }
-                    else
-                    {
-
-                        CalculateNewPath(newTraget);
-
-                    }
                 }
-           // }
+                else
+                {
+
+                    CalculateNewPath(newTraget);
+
+                }
+            }
+            // }
 
 
 
@@ -162,11 +166,13 @@ public class ZombieLevel1 : MonoBehaviour
             if (!source.isPlaying)
             {
                 source.PlayOneShot(zombieStay);
+
             }
 
             if (!agent.isStopped)
             {
                 agent.isStopped = true;
+                agent.speed += 3f;
             }
 
         }

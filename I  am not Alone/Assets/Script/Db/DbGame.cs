@@ -24,8 +24,6 @@ public class DbGame : MonoBehaviour
     string filepath;
 
 
-
-
     public void OpenDB (string p)
     {
 
