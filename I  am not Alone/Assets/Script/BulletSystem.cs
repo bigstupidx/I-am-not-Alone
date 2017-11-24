@@ -25,9 +25,8 @@ public class UpdateWeapon
 public class BulletSystem : MonoBehaviour
 {
 
-    TouchPad touch;
-    [Range(0, 3)]
-    public int WeightWeapon;
+
+ 
     public float intervalWeaponAmmunition = 0.5f;
     public AudioClip weaponSound;
     public ParticleSystem bullet;
@@ -58,13 +57,13 @@ public class BulletSystem : MonoBehaviour
     AudioSource gunAudio;
     public bool fireGun;
     public Transform buttonWeapon;
-    MobaCamera mobaCamera;
+
     private void OnEnable ()
     {
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
         _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         selectionWeaponPlay = GameObject.Find("WeaponController").GetComponent<SelectionWeaponForPC>();
-        mobaCamera = Camera.main.GetComponent<MobaCamera>();
+
         gunLight = GetComponent<Light>();
         usercontrol = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<ThirdPersonUserControl>();
         gunAudio = GetComponent<AudioSource>();
@@ -120,6 +119,22 @@ public class BulletSystem : MonoBehaviour
 #if UNITY_ANDROID
         if (fireGun)
         {
+            if (selectionWeaponPlay.Fire1)
+            {
+                gunLight.enabled = true;
+
+                selectionWeaponPlay.Fire1 = true;
+
+                gunMiscle.Stop();
+                gunMiscle.Play();
+                if (!gunAudio.isPlaying)
+                {
+                    gunAudio.Play();
+                }
+                l = true;
+                bullet.Play();
+                timerShoot = 0f;
+            }
 
         }
         else
@@ -137,13 +152,13 @@ public class BulletSystem : MonoBehaviour
                         gunLight.enabled = true;
 
 
-                    
+
                         gunMiscle.Stop();
                         gunMiscle.Play();
-                       if (!gunAudio.isPlaying)
-                {
-                    gunAudio.Play();
-                }
+                        if (!gunAudio.isPlaying)
+                        {
+                            gunAudio.Play();
+                        }
                         l = true;
                         bullet.Play();
                         timerShoot = 0f;
@@ -156,7 +171,7 @@ public class BulletSystem : MonoBehaviour
                         if (Input.GetButton("Fire1") & timerShoot >= timeBetweenBullets && Time.timeScale != 0)
                         {
                             gunLight.enabled = true;
-         mobaCamera.shouldShake = true;
+
 
                             gunAudio.Play();
                             gunMiscle.Stop();
@@ -172,43 +187,49 @@ public class BulletSystem : MonoBehaviour
         }
 
 #else
-        if (fireGun)
         {
-
-            if (Input.GetButton("Fire1"))
+            if (Input.GetButtonUp("Fire1"))
             {
-                gunLight.enabled = true;
-
-
-
-                gunMiscle.Stop();
-                gunMiscle.Play();
-                if (!gunAudio.isPlaying)
-                {
-                    gunAudio.Play();
-                }
-                l = true;
-                bullet.Play();
-                timerShoot = 0f;
+                selectionWeaponPlay.Fire1 = false;
             }
-        }
-        else
-        {
+            if (fireGun)
+            {
+
+                if (Input.GetButton("Fire1"))
+                {
+                    gunLight.enabled = true;
+
+                    selectionWeaponPlay.Fire1 = true;
+
+                    gunMiscle.Stop();
+                    gunMiscle.Play();
+                    if (!gunAudio.isPlaying)
+                    {
+                        gunAudio.Play();
+                    }
+                    l = true;
+                    bullet.Play();
+                    timerShoot = 0f;
+                }
+            }
+            else
+
             if (Input.GetButton("Fire1") & timerShoot >= timeBetweenBullets && Time.timeScale != 0)
             {
                 gunLight.enabled = true;
 
-
+                selectionWeaponPlay.Fire1 = true;
                 gunAudio.Play();
                 gunMiscle.Stop();
                 gunMiscle.Play();
 
                 l = true;
                 bullet.Play();
-              
-                mobaCamera.shouldShake = true;
+
+
                 timerShoot = 0f;
             }
+
 
         }
 #endif

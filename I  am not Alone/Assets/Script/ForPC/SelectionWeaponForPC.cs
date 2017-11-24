@@ -10,11 +10,12 @@ public class SelectionWeaponForPC : MonoBehaviour
     // Use this for initialization
     ThirdPersonUserControl usercontrol;
     public bool Fire1;
-
+    Animator animator;
 
     private void Start ()
     {
         usercontrol = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<ThirdPersonUserControl>();
+        animator = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -55,12 +56,14 @@ public class SelectionWeaponForPC : MonoBehaviour
 
     public void WeaponPlayUp ()
     {
-
+    
         Fire1 = false;
+        animator.SetBool("attack", Fire1);
     }
     public void WeaponPlayDown ()
     {
 
         Fire1 = true;
+        animator.SetBool("attack", Fire1);
     }
 }

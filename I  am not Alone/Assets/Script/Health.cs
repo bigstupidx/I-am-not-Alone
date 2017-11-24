@@ -39,6 +39,7 @@ public class Health : MonoBehaviour
     public SkinnedMeshRenderer skinnedMesh;
 
     public bool OrRandom;
+    public int MoneyWaveUp;
     public int MoneyAi;
     bool damaged;
     [Space(15)]
@@ -369,7 +370,7 @@ public class Health : MonoBehaviour
                 // Destroy(zombie);
 
 
-
+                MoneyAi += MoneyWaveUp;
                 gameObject.DestroyAPS();
 
 

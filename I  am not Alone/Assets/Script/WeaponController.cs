@@ -16,7 +16,7 @@ public class WeaponController : MonoBehaviour
     public GameObject WeaponThree;
     public Transform weaponPanel;
     public List<GameObject> WeaponImage = new List<GameObject>();
-
+    public Transform targetWeapon;
     PoolingSystem pool;
     Transform AdvancedPoolingSystem;
     CheckInWeaponAndCraft _checkInWeaponCraft;
@@ -29,6 +29,7 @@ public class WeaponController : MonoBehaviour
     Transform left;
     Transform right;
     IKweapon ikWeapon;
+    public Transform Iktarget;
     private void OnEnable ()
     {
         pool = PoolingSystem.Instance;
@@ -69,7 +70,7 @@ public class WeaponController : MonoBehaviour
                 {
                     WeaponOne.transform.GetChild(0).localPosition = WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
                     AnimationWeapon(WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().rightHand, WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
-
+                    WeaponOne.transform.GetChild(0).LookAt(targetWeapon);
 
                 }
 
@@ -87,6 +88,7 @@ public class WeaponController : MonoBehaviour
 
                     WeaponTwo.transform.GetChild(0).localPosition = WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
                     AnimationWeapon(WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().rightHand, WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
+                    WeaponTwo.transform.GetChild(0).LookAt(targetWeapon);
                 }
                 WeaponTwo.SetActive(true);
                 break;
@@ -101,6 +103,7 @@ public class WeaponController : MonoBehaviour
 
                     WeaponThree.transform.GetChild(0).localPosition = WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
                     AnimationWeapon(WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().rightHand, WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
+                    WeaponThree.transform.GetChild(0).LookAt(targetWeapon);
                 }
                 WeaponThree.SetActive(true);
                 break;
@@ -122,7 +125,7 @@ public class WeaponController : MonoBehaviour
             WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
             buttonWeaponOne = Instantiate(WeaponImage.Find(x => x.name == nameWeapon), weaponPanel);
             buttonWeaponOne.name = "buttonWeaponTwo" + WeaponOne;
-        
+
             buttonWeaponOne.transform.GetChild(0).GetComponent<Toggle>().group = buttonWeaponOne.transform.parent.GetComponent<ToggleGroup>();
             Button btn = buttonWeaponOne.GetComponent<Button>();
             btn.onClick.AddListener(selectionWeaponPC.Weapon1);
@@ -228,7 +231,7 @@ public class WeaponController : MonoBehaviour
                 buttonWeaponTree = Instantiate(WeaponImage.Find(x => x.name == nameWeapon), weaponPanel);
                 WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
 
-    
+
                 buttonWeaponTree.name = "buttonWeaponTree" + WeaponThree;
 
                 buttonWeaponTree.transform.GetChild(0).GetComponent<Toggle>().group = buttonWeaponTree.transform.parent.GetComponent<ToggleGroup>();

@@ -626,6 +626,9 @@ ModelImporter:
     4300112: l_kneeProxy_geo
     4300114: l_hipProxy_geo
     7400000: HumanoidRun
+    7400002: HumanoidRunBACK
+    7400004: HumanoidRunLEFT
+    7400006: HumanoidRunRIGHT
     9500000: //RootNode
   materials:
     importMaterials: 0
@@ -677,6 +680,90 @@ ModelImporter:
       events: []
       transformMask: []
       maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 88
+    - serializedVersion: 16
+      name: HumanoidRunBACK
+      takeName: Take 001
+      firstFrame: 335.9
+      lastFrame: 353.7
+      wrapMode: 0
+      orientationOffsetY: -180
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 88
+    - serializedVersion: 16
+      name: HumanoidRunLEFT
+      takeName: Take 001
+      firstFrame: 335.9
+      lastFrame: 353.7
+      wrapMode: 0
+      orientationOffsetY: 90
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 88
+    - serializedVersion: 16
+      name: HumanoidRunRIGHT
+      takeName: Take 001
+      firstFrame: 335.9
+      lastFrame: 353.7
+      wrapMode: 0
+      orientationOffsetY: -90
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 88
     isReadable: 1
