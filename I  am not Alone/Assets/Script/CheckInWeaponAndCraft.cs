@@ -6,15 +6,25 @@ public class CheckInWeaponAndCraft : MonoBehaviour
 {
     public bool ShopOrNot;
     public Transform gridShop;
+    public Transform gridBuildMenuForStart;
     public Transform gridBuildMenu;
+    public Transform gridWeaponMenu;
+    WeaponController weaponControll;
     public List<ParamsDbBoughtWeaponAndCraftItem> WeaponBought = new List<ParamsDbBoughtWeaponAndCraftItem>();
     public List<ParamsDbBoughtWeaponAndCraftItem> CraftItemBought = new List<ParamsDbBoughtWeaponAndCraftItem>();
     public List<GameObject> CraftGuiPrefab = new List<GameObject>();
+    public List<GameObject> CraftGuiPrefabStart = new List<GameObject>();
+    public List<GameObject> WeaponGuiPrefab = new List<GameObject>();
 
+    public List<string> addItemCraft = new List<string>();
+    public List<string> addItemCraftWeapon = new List<string>();
     public Text MyMoney;
     PoolingSystem pool;
     SwitchMode buildMode;
     DbGame db;
+    GameObject buttonWeapon;
+
+    SelectionWeaponForPC selectionWeaponPC;
     void Start ()
     {
         db = GetComponent<DbGame>();
@@ -28,15 +38,15 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         }
         else
         {
+            selectionWeaponPC = GetComponent<SelectionWeaponForPC>();
             buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
+            weaponControll = GameObject.Find("WeaponController").GetComponent<WeaponController>();
             if (CraftItemBought.Count != 0)
             {
-                AddItemStart();
+                AddItemStartWeapon();
+                AddItemStartItem();
             }
-            else
-            {
 
-            }
         }
         pool = PoolingSystem.Instance;
     }
@@ -97,12 +107,12 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     {
         try
         {
-            int i = Random.Range(0, WeaponBought.Count);
+            int i = Random.Range(0, addItemCraftWeapon.Count);
             GameObject box = pool.InstantiateAPS("BoxWithWeapon", pos, Quaternion.identity);
 
-            box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought[i].category;
-            box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought[i].nameWeapon;
-            box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought[i].levelWeapon;
+
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = addItemCraftWeapon[i];
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought.Find(obj => obj.nameWeapon.Equals(addItemCraftWeapon[i])).levelWeapon;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().WeaponAmunition = 1;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().StartGoods = false;
         }
@@ -132,7 +142,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         }
 
     }
-    void AddItemStart ()
+    void AddItemStartItem ()
     {
 
         for (int i = 0; i < CraftItemBought.Count; i++)
@@ -140,9 +150,21 @@ public class CheckInWeaponAndCraft : MonoBehaviour
             if (CraftItemBought[i] != null)
             {
 
-                GameObject l = Instantiate(CraftGuiPrefab.Find((obj => obj.name.Equals(CraftItemBought[i].nameWeapon))), gridBuildMenu.position, gridBuildMenu.rotation, gridBuildMenu);
-                l.GetComponent<SelectContructionForCreate>().level.text = (CraftItemBought[i].levelWeapon).ToString();
-                l.GetComponent<Toggle>().group = gridBuildMenu.GetComponent<ToggleGroup>();
+                GameObject l = Instantiate(CraftGuiPrefabStart.Find((obj => obj.name.Equals(CraftItemBought[i].nameWeapon))), gridBuildMenuForStart.position, gridBuildMenuForStart.rotation, gridBuildMenuForStart);
+
+            }
+        }
+    }
+    void AddItemStartWeapon ()
+    {
+
+        for (int i = 0; i < WeaponBought.Count; i++)
+        {
+            if (WeaponBought[i] != null)
+            {
+
+                GameObject l = Instantiate(WeaponGuiPrefab.Find((obj => obj.name.Equals(WeaponBought[i].nameWeapon))), gridWeaponMenu.position, gridWeaponMenu.rotation, gridWeaponMenu);
+
             }
         }
     }
@@ -174,7 +196,69 @@ public class CheckInWeaponAndCraft : MonoBehaviour
 
     }
 
+    public void StartGame ()
+    {
+        for (int i = 0; i < addItemCraft.Count; i++)
+        {
+            if (addItemCraft[i] != null)
+            {
 
+                GameObject l = Instantiate(CraftGuiPrefab.Find((obj => obj.name.Equals(addItemCraft[i]))), gridBuildMenu.position, gridBuildMenu.rotation, gridBuildMenu);
+                l.GetComponent<SelectContructionForCreate>().level.text = (CraftItemBought[i].levelWeapon).ToString();
+                if (gridBuildMenu.GetComponent<ToggleGroup>())
+                {
+                    l.GetComponent<Toggle>().group = gridBuildMenu.GetComponent<ToggleGroup>();
+                }
+            }
+        }
+        for (int i = 0; i < addItemCraftWeapon.Count; i++)
+        {
+            if (addItemCraftWeapon[i] != null)
+            {
+
+                //   GameObject l = Instantiate(weaponControll.WeaponImage.Find((obj => obj.name.Equals(addItemCraftWeapon[i]))), weaponControll.weaponPanel.position, weaponControll.weaponPanel.rotation, weaponControll.weaponPanel);
+                buttonWeapon = Instantiate(weaponControll.WeaponImage.Find((obj => obj.name.Equals(addItemCraftWeapon[i]))), weaponControll.weaponPanel);
+
+                AddWeapon(addItemCraftWeapon[i], weaponControll.Weapons[i].transform, WeaponBought.Find(obj => obj.nameWeapon.Equals(addItemCraftWeapon[i])).levelWeapon, 1);
+
+                buttonWeapon.transform.GetChild(0).GetComponent<Toggle>().group = buttonWeapon.transform.parent.GetComponent<ToggleGroup>();
+                Button btn = buttonWeapon.GetComponent<Button>();
+                switch (i)
+                {
+                    case 0:
+                        btn.onClick.AddListener(selectionWeaponPC.Weapon1);
+                        break;
+                    case 1:
+                        btn.onClick.AddListener(selectionWeaponPC.Weapon2);
+                        break;
+                    case 2:
+                        btn.onClick.AddListener(selectionWeaponPC.Weapon3);
+                        break;
+                    default:
+                        break;
+                }
+
+                weaponControll.Weapons[i].transform.GetChild(0).GetComponent<BulletSystem>().buttonWeapon = buttonWeapon.transform;
+                weaponControll.Weapons[i].transform.GetChild(0).GetComponent<BulletSystem>().resolution = true;
+            }
+        }
+    }
+
+    public void AddWeapon (string name, Transform pos, int level, float amuni)
+    {
+
+
+
+
+        GameObject weapon = pool.InstantiateAPS(name, pos.position, pos.rotation, pos.gameObject);
+        //weapon.transform.LookAt(weaponControll.Iktarget.GetChild(0));
+        weapon.GetComponent<BulletSystem>().level = level;
+        weapon.GetComponent<BulletSystem>().WeaponAmmunition = amuni;
+
+
+
+
+    }
 }
 
 

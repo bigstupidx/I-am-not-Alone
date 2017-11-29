@@ -14,7 +14,7 @@ public class PauseManager : MonoBehaviour
     public Slider progressSlider;
     private void Awake ()
     {
-        //  Time.timeScale = 0;
+        Time.timeScale = 0;
         if (Advertisement.isSupported)
         {
             Advertisement.Initialize("1557198", false);
@@ -59,7 +59,7 @@ public class PauseManager : MonoBehaviour
     {
         loadPanel.enabled = true;
         StartCoroutine(Load("Menu"));
-        Time.timeScale = 0;
+        Time.timeScale = 1;
         if (Advertisement.isSupported)
         {
             Advertisement.Initialize("1557198", false);
@@ -110,17 +110,17 @@ public class PauseManager : MonoBehaviour
             case ShowResult.Failed:
                 Debug.Log("player failde  launch");
                 StartCoroutine(Load("Menu"));
-                Time.timeScale = 0;
+                Time.timeScale = 1;
                 break;
             case ShowResult.Skipped:
                 Debug.Log("player did not fully watch the ad");
                 StartCoroutine(Load("Menu"));
-                Time.timeScale = 0;
+                Time.timeScale = 1;
                 break;
             case ShowResult.Finished:
                 Debug.Log("player Gains +5 gems");
                 StartCoroutine(Load("Menu"));
-                Time.timeScale = 0;
+                Time.timeScale = 1;
                 break;
             default:
                 break;

@@ -26,7 +26,7 @@ public class BulletSystem : MonoBehaviour
 {
 
 
- 
+
     public float intervalWeaponAmmunition = 0.5f;
     public AudioClip weaponSound;
     public ParticleSystem bullet;
@@ -57,7 +57,7 @@ public class BulletSystem : MonoBehaviour
     AudioSource gunAudio;
     public bool fireGun;
     public Transform buttonWeapon;
-
+    public bool resolution = true;
     private void OnEnable ()
     {
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
@@ -71,7 +71,7 @@ public class BulletSystem : MonoBehaviour
         timer = 0;
         _weaponController.Ammunition(WeaponAmmunition);
         l = false;
-
+        transform.LookAt(_weaponController.targetWeapon);
 
 
     }
@@ -79,24 +79,39 @@ public class BulletSystem : MonoBehaviour
     private void Update ()
     {
 
-        timer += Time.deltaTime;
-        timerShoot += Time.deltaTime;
-        BulettAttack();
-        if (l)
+        if (resolution)
         {
-
-            timer = Time.deltaTime;
-            WeaponAmmunition -= timer * intervalWeaponAmmunition;
-
-            _weaponController.Ammunition(WeaponAmmunition);
-            if (WeaponAmmunition <= 0)
+            timer += Time.deltaTime;
+            timerShoot += Time.deltaTime;
+            BulettAttack();
+            if (l)
             {
 
-                _weaponController.ResetWeapon();
-                Destroy(buttonWeapon.gameObject);
+                timer = Time.deltaTime;
+                WeaponAmmunition -= timer * intervalWeaponAmmunition;
 
-                gameObject.DestroyAPS();
-                transform.SetParent(AdvancedPoolingSystem);
+                _weaponController.Ammunition(WeaponAmmunition);
+                if (WeaponAmmunition <= 0)
+                {
+
+
+                    DisableEffects();
+                    resolution = false;
+                    gunLight.enabled = false;
+
+
+
+                    gunMiscle.Stop();
+                    gunMiscle.Stop();
+
+                    gunAudio.Stop();
+
+                    l = false;
+                    bullet.Stop();
+                    timerShoot = 0f;
+
+
+                }
             }
         }
     }

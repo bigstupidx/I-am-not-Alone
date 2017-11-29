@@ -78,6 +78,7 @@ public class SelectContructionForCreate : MonoBehaviour
             if (itemCreate != null)
             {
                 switchMode.ButtonCraft.SetActive(false);
+                switchMode.CraftItemBuildNowDinamic = null;
                 itemCreate.DestroyAPS();
                 //    itemCreate.GetComponent<Indicator>().IndicatorSetActive(false, 0);
                 //   switchMode.craft.Remove(switchMode.craft.Find(obj => obj.ItemCraft.name == itemCreate.name));

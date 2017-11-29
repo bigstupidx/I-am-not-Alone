@@ -39,7 +39,8 @@ public class Health : MonoBehaviour
     public SkinnedMeshRenderer skinnedMesh;
 
     public bool OrRandom;
-    public int MoneyWaveUp;
+    [Range(1, 4)]
+    public int GhostMoneyWaveUp;
     public int MoneyAi;
     bool damaged;
     [Space(15)]
@@ -112,6 +113,8 @@ public class Health : MonoBehaviour
     {
         if (transform.CompareTag(Tags.AI))
         {
+            waveManager = GameObject.Find("Spawner").GetComponent<WaveManager>();
+            MoneyAi += GhostMoneyWaveUp * waveManager.levelWave;
             transform.tag = Tags.AI;
             CurHelth = MaxHealth;
             EnebledPhysics(true);
@@ -132,7 +135,11 @@ public class Health : MonoBehaviour
     }
 
 
-
+    public void MaxHealthAndCur (int h)
+    {
+        MaxHealth = h;
+        CurHelth = h;
+    }
 
 
     private void Update ()
@@ -222,7 +229,7 @@ public class Health : MonoBehaviour
         {
             damaged = true;
             HealthPlayer.fillAmount = CurHelth / MaxHealth;
-            blood.Play();
+
         }
         if (transform.CompareTag("AI"))
         {
@@ -370,7 +377,7 @@ public class Health : MonoBehaviour
                 // Destroy(zombie);
 
 
-                MoneyAi += MoneyWaveUp;
+
                 gameObject.DestroyAPS();
 
 

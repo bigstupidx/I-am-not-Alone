@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.Playables;
 [System.Serializable]
 public class CraftParams
 {
@@ -64,13 +64,13 @@ public class SwitchMode : MonoBehaviour
     int glass = 0;
     int electric = 0;
     bool l;
-
+    PlayableDirector m_director;
     private void Start ()
     {
         source = GetComponent<AudioSource>();
         ButtonCraft.SetActive(false);
         l = true;
-
+        m_director = ButtonCraft.GetComponent<PlayableDirector>();
     }
     // Update is called once per frame
 
@@ -184,7 +184,7 @@ public class SwitchMode : MonoBehaviour
             {
                 CraftItemBuildNowDinamic.Item.CheckOFToggle();
                 CraftItemBuildNowDinamic.gameObject.DestroyAPS();
-                CraftItemBuildNowDinamic.GetComponent<Indicator>().IndicatorSetActive(false, 0);
+                //    CraftItemBuildNowDinamic.GetComponent<Indicator>().IndicatorSetActive(false, 0);
 
             }
         }
@@ -246,7 +246,7 @@ public class SwitchMode : MonoBehaviour
                 }
                 else
                 {
-
+                    m_director.Play();
                     return;
                 }
 
@@ -262,6 +262,7 @@ public class SwitchMode : MonoBehaviour
                 }
                 else
                 {
+                    m_director.Play();
                     return;
                 }
 
@@ -275,6 +276,7 @@ public class SwitchMode : MonoBehaviour
                 }
                 else
                 {
+                    m_director.Play();
                     return;
                 }
 
@@ -288,6 +290,7 @@ public class SwitchMode : MonoBehaviour
                 }
                 else
                 {
+                    m_director.Play();
                     return;
                 }
 
@@ -300,6 +303,7 @@ public class SwitchMode : MonoBehaviour
                 }
                 else
                 {
+                    m_director.Play();
                     return;
                 }
 

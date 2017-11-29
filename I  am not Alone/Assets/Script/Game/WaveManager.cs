@@ -67,6 +67,7 @@ public class WaveManager : MonoBehaviour
     public Text GhoustWave;
     PlayableDirector m_playebleDirector;
     int wavenumberForText;
+    AudioSource source;
     // Use this for initialization
     void Start ()
     {
@@ -84,7 +85,7 @@ public class WaveManager : MonoBehaviour
 
             spawerZombie.Add(transform.GetChild(i).GetComponent<SpawnerZombie>());
         }
-
+        source = GetComponent<AudioSource>();
         _lskyTod.timeline = 6.0f;
         levelWave = 0;
         waveLevelUp = false;
@@ -112,10 +113,12 @@ public class WaveManager : MonoBehaviour
                 night = false;
                 startWave = true;
                 switchMode.BuildMOdeMenu(false);
+                switchMode.CraftItemBuildNowDinamic = null;
                 GhoustWave.gameObject.SetActive(true);
                 wavenumberForText = levelWave + 1;
                 GhoustWave.text = "WAVE " + wavenumberForText;
                 m_playebleDirector.Play();
+                source.Play();
                 for (int i = 0; i < lightAllScene.Count; i++)
                 {
                     if (lightAllScene[i].GetComponent<Light>())

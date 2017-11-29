@@ -121,20 +121,20 @@ public class CraftItem : MonoBehaviour
 
         DefaultOptions();
     }
-    private void Update ()
-    {
+    //private void Update ()
+    //{
 
-        if (ColliderTrue)
-        {
-            timer -= Time.deltaTime;
-            if (timer <= 0)
-            {
-                rigid.useGravity = true;
-                ColliderTrue = false;
-                thisCollider.enabled = true;
-            }
-        }
-    }
+    //    if (ColliderTrue)
+    //    {
+    //        timer -= Time.deltaTime;
+    //        if (timer <= 0)
+    //        {
+    //            rigid.useGravity = true;
+    //            ColliderTrue = false;
+    //            thisCollider.enabled = true;
+    //        }
+    //    }
+    //}
 
     private void OnEnable ()
     {
@@ -422,9 +422,12 @@ public class CraftItem : MonoBehaviour
                     }
 
                 }
-                if (Built)
+                if (!CustomScript)
                 {
-                    buildMode.ButtonCraft.SetActive(false);
+                    if (Built)
+                    {
+                        buildMode.ButtonCraft.SetActive(false);
+                    } 
                 }
 
             }

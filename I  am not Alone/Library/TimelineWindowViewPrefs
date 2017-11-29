@@ -11,13 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 12941, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Keys:
-  - {fileID: 11400000, guid: 6237ad330cb3b7a4e95fdd0340c32381, type: 2}
-  m_Vals:
-  - timeInFrames: 1
-    timeAreaShownRange: {x: -0.09430604, y: 10.401956}
-    m_Keys:
-    - {fileID: 114489336745944084, guid: 6237ad330cb3b7a4e95fdd0340c32381, type: 2}
-    m_Vals:
-    - collapsed: 0
-      showInlineCurves: 1
+  m_Keys: []
+  m_Vals: []

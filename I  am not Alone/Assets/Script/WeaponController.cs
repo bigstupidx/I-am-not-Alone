@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 public class WeaponController : MonoBehaviour
 {
 
@@ -11,9 +12,8 @@ public class WeaponController : MonoBehaviour
     public AutoLookonEnemy autolookEnemy;
     public Transform handPlayer;
     public Animator m_anim;
-    public GameObject WeaponOne;
-    public GameObject WeaponTwo;
-    public GameObject WeaponThree;
+    public GameObject[] Weapons;
+
     public Transform weaponPanel;
     public List<GameObject> WeaponImage = new List<GameObject>();
     public Transform targetWeapon;
@@ -23,13 +23,12 @@ public class WeaponController : MonoBehaviour
     SelectionWeaponForPC selectionWeaponPC;
     GameObject player;
     GameObject melee;
-    GameObject buttonWeaponOne;
-    GameObject buttonWeaponTwo;
-    GameObject buttonWeaponTree;
+
     Transform left;
     Transform right;
     IKweapon ikWeapon;
     public Transform Iktarget;
+    PlayableDirector m_director;
     private void OnEnable ()
     {
         pool = PoolingSystem.Instance;
@@ -45,6 +44,7 @@ public class WeaponController : MonoBehaviour
         SelectionWeapon(0);
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
         selectionWeaponPC = GetComponent<SelectionWeaponForPC>();
+        Ammunition(1);
     }
 
 
@@ -57,55 +57,51 @@ public class WeaponController : MonoBehaviour
                 ResetWeapon();
                 Hand.SetActive(true);
 
-                WeaponOne.SetActive(false);
-                WeaponTwo.SetActive(false);
+                Weapons[0].SetActive(false);
+                Weapons[1].SetActive(false);
                 m_anim.SetLayerWeight(1, 0);
-                WeaponThree.SetActive(false);
+                Weapons[2].SetActive(false);
                 break;
             case 1:
                 ResetWeapon();
                 Hand.SetActive(false);
-                WeaponThree.SetActive(false);
-                if (WeaponOne.transform.childCount != 0)
-                {
-                    WeaponOne.transform.GetChild(0).localPosition = WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
-                    AnimationWeapon(WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().rightHand, WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
-                    WeaponOne.transform.GetChild(0).LookAt(targetWeapon);
+                Weapons[2].SetActive(false);
 
-                }
+                Weapons[0].transform.GetChild(0).localPosition = Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
+                AnimationWeapon(Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().rightHand, Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
+                Weapons[0].transform.GetChild(0).LookAt(targetWeapon);
 
-                WeaponOne.SetActive(true);
-                WeaponTwo.SetActive(false);
+
+
+                Weapons[0].SetActive(true);
+                Weapons[1].SetActive(false);
                 break;
             case 2:
                 ResetWeapon();
                 Hand.SetActive(false);
-                WeaponOne.SetActive(false);
-                WeaponThree.SetActive(false);
-                if (WeaponTwo.transform.childCount != 0)
-                {
+                Weapons[0].SetActive(false);
+                Weapons[2].SetActive(false);
 
 
-                    WeaponTwo.transform.GetChild(0).localPosition = WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
-                    AnimationWeapon(WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().rightHand, WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
-                    WeaponTwo.transform.GetChild(0).LookAt(targetWeapon);
-                }
-                WeaponTwo.SetActive(true);
+
+                Weapons[1].transform.GetChild(0).localPosition = Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
+                AnimationWeapon(Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().rightHand, Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
+                Weapons[1].transform.GetChild(0).LookAt(targetWeapon);
+
+                Weapons[1].SetActive(true);
                 break;
             case 3:
                 ResetWeapon();
                 Hand.SetActive(false);
-                WeaponOne.SetActive(false);
-                WeaponTwo.SetActive(false);
-                if (WeaponThree.transform.childCount != 0)
-                {
+                Weapons[0].SetActive(false);
+                Weapons[1].SetActive(false);
 
 
-                    WeaponThree.transform.GetChild(0).localPosition = WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
-                    AnimationWeapon(WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().rightHand, WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
-                    WeaponThree.transform.GetChild(0).LookAt(targetWeapon);
-                }
-                WeaponThree.SetActive(true);
+                Weapons[2].transform.GetChild(0).localPosition = Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
+                AnimationWeapon(Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().rightHand, Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
+                Weapons[2].transform.GetChild(0).LookAt(targetWeapon);
+
+                Weapons[2].SetActive(true);
                 break;
             default:
                 break;
@@ -113,148 +109,60 @@ public class WeaponController : MonoBehaviour
 
     }
 
+
     public void PlayerWeapon (string nameWeapon, int level, float amunition)
     {
 
 
 
-
-        if (WeaponOne.transform.childCount == 0)
+        if (Weapons[0].transform.childCount != 0)
         {
-            AddWeapon(nameWeapon, WeaponOne.transform, level, amunition);
-            WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
-            buttonWeaponOne = Instantiate(WeaponImage.Find(x => x.name == nameWeapon), weaponPanel);
-            buttonWeaponOne.name = "buttonWeaponTwo" + WeaponOne;
-
-            buttonWeaponOne.transform.GetChild(0).GetComponent<Toggle>().group = buttonWeaponOne.transform.parent.GetComponent<ToggleGroup>();
-            Button btn = buttonWeaponOne.GetComponent<Button>();
-            btn.onClick.AddListener(selectionWeaponPC.Weapon1);
-            WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().buttonWeapon = buttonWeaponOne.transform;
-            return;
-        }
-        else
-        {
-
-            if (WeaponOne.transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
+            if (Weapons[0].transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
             {
 
 
-                if (WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition == 1.0f)
-                {
-                    RemoveWeapon(WeaponOne.transform.GetChild(0), nameWeapon);
-                    AddWeapon(nameWeapon, WeaponOne.transform, level, amunition);
-                    WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
-                }
-                else
-                {
-                    WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
-                }
 
-                WeaponOne.transform.GetChild(0).GetComponent<BulletSystem>().buttonWeapon = buttonWeaponOne.transform;
-                return;
+                Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
+                Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().resolution = true;
+
+                m_director = weaponPanel.GetChild(0).GetComponent<PlayableDirector>();
+                m_director.Play();
             }
-
         }
-        if (WeaponTwo.transform.childCount == 0)
-        {
-            AddWeapon(nameWeapon, WeaponTwo.transform, level, amunition);
-            WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
-            buttonWeaponTwo = Instantiate(WeaponImage.Find(x => x.name == nameWeapon), weaponPanel);
-            buttonWeaponTwo.name = "buttonWeaponTwo" + WeaponTwo;
 
-            buttonWeaponTwo.transform.GetChild(0).GetComponent<Toggle>().group = buttonWeaponTwo.transform.parent.GetComponent<ToggleGroup>();
-            Button btn = buttonWeaponTwo.GetComponent<Button>();
-            btn.onClick.AddListener(selectionWeaponPC.Weapon2);
-            WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().buttonWeapon = buttonWeaponTwo.transform;
-            return;
-        }
-        else
+        if (Weapons[1].transform.childCount != 0)
         {
-
-            if (WeaponTwo.transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
+            if (Weapons[1].transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
             {
 
 
-                if (WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition == 1.0f)
-                {
-                    RemoveWeapon(WeaponTwo.transform.GetChild(0), nameWeapon);
-                    AddWeapon(nameWeapon, WeaponTwo.transform, level, amunition);
-                    WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
-                }
-                else
-                {
-                    WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
-                }
 
-                WeaponTwo.transform.GetChild(0).GetComponent<BulletSystem>().buttonWeapon = buttonWeaponTwo.transform;
-                return;
+                Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
+
+                Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().resolution = true;
+
+                m_director = weaponPanel.GetChild(1).GetComponent<PlayableDirector>();
+                m_director.Play();
+
             }
-
         }
-        if (WeaponThree.transform.childCount == 0)
+
+        if (Weapons[2].transform.childCount != 0)
         {
-            AddWeapon(nameWeapon, WeaponThree.transform, level, amunition);
-            WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
-
-            buttonWeaponTree = Instantiate(WeaponImage.Find(x => x.name == nameWeapon), weaponPanel);
-            buttonWeaponTree.name = "buttonWeaponTree" + WeaponThree;
-
-            buttonWeaponTree.transform.GetChild(0).GetComponent<Toggle>().group = buttonWeaponTree.transform.parent.GetComponent<ToggleGroup>();
-            Button btn = buttonWeaponTree.GetComponent<Button>();
-            btn.onClick.AddListener(selectionWeaponPC.Weapon3);
-            WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().buttonWeapon = buttonWeaponTree.transform;
-            return;
-        }
-        else
-        {
-
-            if (WeaponThree.transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
+            if (Weapons[2].transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
             {
 
 
-                if (WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition == 1.0f)
-                {
-                    RemoveWeapon(WeaponThree.transform.GetChild(0), nameWeapon);
-                    AddWeapon(nameWeapon, WeaponThree.transform, level, amunition);
-                    WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
-                }
-                else
-                {
-                    WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
-                }
-                WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().buttonWeapon = buttonWeaponTree.transform;
-                return;
+
+                Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
+
+                Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().resolution = true;
+
+                m_director = weaponPanel.GetChild(2).GetComponent<PlayableDirector>();
+                m_director.Play();
             }
-            else
-            {
-                Destroy(buttonWeaponTree);
-                buttonWeaponTree = Instantiate(WeaponImage.Find(x => x.name == nameWeapon), weaponPanel);
-                WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
-
-
-                buttonWeaponTree.name = "buttonWeaponTree" + WeaponThree;
-
-                buttonWeaponTree.transform.GetChild(0).GetComponent<Toggle>().group = buttonWeaponTree.transform.parent.GetComponent<ToggleGroup>();
-                Button btn = buttonWeaponTree.GetComponent<Button>();
-                btn.onClick.AddListener(selectionWeaponPC.Weapon3);
-                WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().buttonWeapon = buttonWeaponTree.transform;
-
-
-
-
-
-                RemoveWeapon(WeaponThree.transform.GetChild(0), nameWeapon);
-
-                AddWeapon(nameWeapon, WeaponThree.transform, level, 1);
-                WeaponThree.transform.GetChild(0).GetComponent<BulletSystem>().buttonWeapon = buttonWeaponTree.transform;
-                return;
-
-            }
-
-
-
-
         }
+
     }
 
 
@@ -268,32 +176,6 @@ public class WeaponController : MonoBehaviour
 
 
 
-    public void AddWeapon (string name, Transform pos, int level, float amuni)
-    {
-
-
-
-
-        GameObject weapon = pool.InstantiateAPS(name, pos.position, pos.rotation, pos.gameObject);
-        weapon.GetComponent<BulletSystem>().level = level;
-        weapon.GetComponent<BulletSystem>().WeaponAmmunition = amuni;
-
-
-
-
-    }
-    public void RemoveWeapon (Transform Weapon, string nameWe)
-    {
-
-
-        _checkInWeaponCraft.OldWeapon(nameWe, Weapon.GetComponent<BulletSystem>(), null, player.transform.position);
-
-
-
-        Weapon.gameObject.DestroyAPS();
-        Weapon.transform.SetParent(AdvancedPoolingSystem);
-
-    }
 
 
     public void Ammunition (float value)
