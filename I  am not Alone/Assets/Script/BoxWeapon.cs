@@ -85,13 +85,13 @@ public class BoxWeapon : MonoBehaviour
 
                 if (m_director.Length != 0)
                 {
-                    if (traningActive.Length !=0)
+                    if (traningActive.Length != 0)
                     {
                         for (int i = 0; i < traningActive.Length; i++)
                         {
                             traningActive[i].SetActive(true);
 
-                        } 
+                        }
                     }
 
                     for (int i = 0; i < m_director.Length; i++)
@@ -142,25 +142,25 @@ public class BoxWeapon : MonoBehaviour
 
             InteractiveAudio.Play();
         }
-        else if (Interactive)
-        {
-            if (gridBuild.Find(textGuiPanelGoods.name + "(Clone)") == null)
-            {
-                textGuiPanelGoods.Find("Params").GetChild(0).GetComponent<Text>().text = level.ToString();
+        //else if (Interactive)
+        //{
+        //    if (gridBuild.Find(textGuiPanelGoods.name + "(Clone)") == null)
+        //    {
+        //        textGuiPanelGoods.Find("Params").GetChild(0).GetComponent<Text>().text = level.ToString();
 
-                Instantiate(textGuiPanelGoods, gridBuild.position, gridBuild.rotation, gridBuild);
+        //        Instantiate(textGuiPanelGoods, gridBuild.position, gridBuild.rotation, gridBuild);
 
 
-            }
-            else
-            {
+        //    }
+        //    else
+        //    {
 
-                gridBuild.Find(textGuiPanelGoods.name + "(Clone)").Find("Params").GetChild(0).GetComponent<Text>().text = ((int.Parse(textGuiPanelGoods.Find("Params").GetChild(0).GetComponent<Text>().text) + level)).ToString();
-            }
+        //        gridBuild.Find(textGuiPanelGoods.name + "(Clone)").Find("Params").GetChild(0).GetComponent<Text>().text = ((int.Parse(textGuiPanelGoods.Find("Params").GetChild(0).GetComponent<Text>().text) + level)).ToString();
+        //    }
 
-            Interactive = false;
-            InteractiveAudio.Play();
-        }
+        //    Interactive = false;
+        //    InteractiveAudio.Play();
+        //}
 
         else
         {
@@ -179,12 +179,12 @@ public class BoxWeapon : MonoBehaviour
 
         if (_checkInWeaponAndCraft.WeaponBought.Count != 0)
         {
-            u = Random.Range(0, 10);
+            u = Random.Range(0, 9);
 
         }
         else
         {
-            u = Random.Range(6, 10);
+            u = Random.Range(6, 9);
         }
 
 
@@ -225,15 +225,15 @@ public class BoxWeapon : MonoBehaviour
             textGuiPanelGoods = buildMode.panelGoods[m].transform;
             level = Random.Range(1, 4);
         }
-        else if (u == 9)
-        {
-            int i = Random.Range(0, buildMode.interActivePrefab.Count);
+        //else if (u == 9)
+        //{
+        //    int i = Random.Range(0, buildMode.interActivePrefab.Count);
 
-            Interactive = true;
-            gridBuild = _checkInWeaponAndCraft.gridBuildMenu;
-            textGuiPanelGoods = buildMode.interActivePrefab[i].transform;
-            level = 1;
-        }
+        //    Interactive = true;
+        //    gridBuild = _checkInWeaponAndCraft.gridBuildMenu;
+        //    textGuiPanelGoods = buildMode.interActivePrefab[i].transform;
+        //    level = 1;
+        //}
 
 
 

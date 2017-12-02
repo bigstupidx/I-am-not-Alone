@@ -15,7 +15,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     public List<GameObject> CraftGuiPrefab = new List<GameObject>();
     public List<GameObject> CraftGuiPrefabStart = new List<GameObject>();
     public List<GameObject> WeaponGuiPrefab = new List<GameObject>();
-
+    public GameObject TraningText;
     public List<string> addItemCraft = new List<string>();
     public List<string> addItemCraftWeapon = new List<string>();
     public Text MyMoney;
@@ -43,9 +43,20 @@ public class CheckInWeaponAndCraft : MonoBehaviour
             weaponControll = GameObject.Find("WeaponController").GetComponent<WeaponController>();
             if (CraftItemBought.Count != 0)
             {
-                AddItemStartWeapon();
+
                 AddItemStartItem();
             }
+            else
+            {
+                gridBuildMenu.gameObject.SetActive(false);
+                gridBuildMenuForStart.gameObject.SetActive(false);
+            }
+            if (WeaponBought.Count != 0)
+            {
+                AddItemStartWeapon();
+
+            }
+
 
         }
         pool = PoolingSystem.Instance;
@@ -198,10 +209,11 @@ public class CheckInWeaponAndCraft : MonoBehaviour
 
     public void StartGame ()
     {
-        for (int i = 0; i < addItemCraft.Count; i++)
+        if (addItemCraft.Count != 0)
         {
-            if (addItemCraft[i] != null)
+            for (int i = 0; i < addItemCraft.Count; i++)
             {
+
 
                 GameObject l = Instantiate(CraftGuiPrefab.Find((obj => obj.name.Equals(addItemCraft[i]))), gridBuildMenu.position, gridBuildMenu.rotation, gridBuildMenu);
                 l.GetComponent<SelectContructionForCreate>().level.text = (CraftItemBought[i].levelWeapon).ToString();
@@ -209,7 +221,14 @@ public class CheckInWeaponAndCraft : MonoBehaviour
                 {
                     l.GetComponent<Toggle>().group = gridBuildMenu.GetComponent<ToggleGroup>();
                 }
+
             }
+        }
+        else
+        {
+            TraningText.SetActive(false);
+            gridBuildMenu.gameObject.SetActive(false);
+            gridBuildMenuForStart.gameObject.SetActive(false);
         }
         for (int i = 0; i < addItemCraftWeapon.Count; i++)
         {
@@ -251,7 +270,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
 
 
         GameObject weapon = pool.InstantiateAPS(name, pos.position, pos.rotation, pos.gameObject);
-        //weapon.transform.LookAt(weaponControll.Iktarget.GetChild(0));
+
         weapon.GetComponent<BulletSystem>().level = level;
         weapon.GetComponent<BulletSystem>().WeaponAmmunition = amuni;
 

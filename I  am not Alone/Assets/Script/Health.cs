@@ -21,14 +21,10 @@ public class Health : MonoBehaviour
     public GameObject CraftItemStaticForWallCrash;
 
 
-    [Space(15)]
-    [Header("For Player")]
-    public Image damageImage;
-    public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
-    public Image HealthPlayer;
+
     public ParticleSystem blood;
     public ParticleSystem WoodDoor;
-    public GameObject imageGameOver;
+
 
     [Space(15)]
     [Header("For Ai")]
@@ -58,7 +54,7 @@ public class Health : MonoBehaviour
     AudioSource sourceDestraction;
     AudioSource staticAudio;
     Transform playerG;
-    bool SoundTrue;
+
     float timer;
     private Rigidbody rigid;
     Animator m_anim;
@@ -95,12 +91,6 @@ public class Health : MonoBehaviour
         }
 
         poolsistem = PoolingSystem.Instance;
-        if (transform.CompareTag("Player"))
-        {
-            HealthPlayer.fillAmount = CurHelth / MaxHealth;
-            blood.Stop();
-            blood.Clear();
-        }
 
         if (transform.CompareTag(Tags.AI))
         {
@@ -142,63 +132,44 @@ public class Health : MonoBehaviour
     }
 
 
-    private void Update ()
-    {
+    //private void Update ()
+    //{
 
 
-        if (damaged)
-        {
-            if (transform.CompareTag("Player"))
-            {
-                if (damaged)
-                {
-                    // ... set the colour of the damageImage to the flash colour.
-                    damageImage.color = flashColour;
-                }
-                // Otherwise...
-                else
-                {
-                    // ... transition the colour back to clear.
-                    damageImage.color = Color.Lerp(damageImage.color, Color.clear, 5.0f * Time.deltaTime);
-                }
 
-                // Reset the damaged flag.
-                damaged = false;
-            }
-        }
-        if (SoundTrue)
-        {
-            timer += Time.deltaTime;
-            if (timer >= sourceDestraction.clip.length)
-            {
-                if (_craftItem)
-                {
-                    _craftItem.DefaultOptions();
-                }
-                else
-                {
-                    _craftItem = GetComponent<CraftItem>();
-                    _craftItem.DefaultOptions();
-                }
+    //    if (SoundTrue)
+    //    {
+    //        timer += Time.deltaTime;
+    //        if (timer >= sourceDestraction.clip.length)
+    //        {
+    //            if (_craftItem)
+    //            {
+    //                _craftItem.DefaultOptions();
+    //            }
+    //            else
+    //            {
+    //                _craftItem = GetComponent<CraftItem>();
+    //                _craftItem.DefaultOptions();
+    //            }
 
 
 
 
-                this.gameObject.DestroyAPS();
-                _craftItem._StartHisEffect = false;
+    //            this.gameObject.DestroyAPS();
+    //            _craftItem._StartHisEffect = false;
 
-                SoundTrue = false;
-            }
-        }
-    }
+    //            SoundTrue = false;
+    //        }
+    //    }
+    //}
     // Use this for initialization
 
     public void MySelfDestroyer ()
     {
-        sourceDestraction.Play();
+
         destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
-        SoundTrue = true;
-        timer = 0;
+        StartCoroutine(DestroyOBjectWithSound(sourceDestraction.clip.length));
+
         _craftItem = GetComponent<CraftItem>();
         _craftItem.RenderOff();
         destroyAi.PlayEffect(30);
@@ -225,15 +196,10 @@ public class Health : MonoBehaviour
 
             }
         }
-        if (transform.CompareTag("Player"))
-        {
-            damaged = true;
-            HealthPlayer.fillAmount = CurHelth / MaxHealth;
 
-        }
         if (transform.CompareTag("AI"))
         {
-            blood.transform.position = pointhitGhost;
+           // blood.transform.position = pointhitGhost;
 
             // And play the particles.
             blood.Play();
@@ -263,13 +229,7 @@ public class Health : MonoBehaviour
         {
             CurHelth = 0;
 
-            if (transform.CompareTag("Player"))
-            {
-                imageGameOver.SetActive(true);
 
-                Time.timeScale = 0;
-
-            }
             if (transform.CompareTag("Things"))
             {
 
@@ -281,10 +241,10 @@ public class Health : MonoBehaviour
                 //   checkWeaponAndCraft.CreateBoxItem(transform.position,MakeMaterial);
                 sourceDestraction.Play();
 
-                if (!nothing)
-                {
-                    checkWeaponAndCraft.CreateBoxInterActive(transform.position);
-                }
+                //if (!nothing)
+                //{
+                //    checkWeaponAndCraft.CreateBoxInterActive(transform.position);
+                //}
                 EnebledPhysics(false);
                 Destroy(gameObject, sourceDestraction.clip.length);
 
@@ -304,11 +264,10 @@ public class Health : MonoBehaviour
                 else
                 {
                     _craftItem.RenderOff();
-                    timer = 0;
-                    SoundTrue = true;
-                }
 
-                sourceDestraction.Play();
+                }
+                StartCoroutine(DestroyOBjectWithSound(sourceDestraction.clip.length));
+
 
 
 
@@ -322,18 +281,7 @@ public class Health : MonoBehaviour
                     return;
                 }
                 destroyAi = poolsistem.InstantiateAPS("DethGhost", transform.position, Quaternion.identity);
-                ZombieLevel1 zombie = GetComponent<ZombieLevel1>();
 
-
-
-
-                //for (int i = 0; i < enablesBoody.Length; i++)
-                //{
-                //    enablesBoody[i].SetActive(false);
-                //}
-
-                //  zombie.m_animator.SetTrigger("die");
-                //  EnebledPhysics(false);
 
 
                 if (playerAttack)
@@ -368,17 +316,18 @@ public class Health : MonoBehaviour
                 {
                     checkWeaponAndCraft.CreateBoxWeapon(transform.position);
                 }
-
+                ZombieLevel1 zombie = GetComponent<ZombieLevel1>();
                 sourceDestraction.clip = zombie.zombieDeth;
 
+                StartCoroutine(DestroyOBjectWithSound(sourceDestraction.clip.length));
                 weaponsControll.autolookEnemy.TargetAi = null;
                 weaponsControll.autolookEnemy.WeaponNull();
-                sourceDestraction.Play();
+
                 // Destroy(zombie);
 
 
 
-                gameObject.DestroyAPS();
+            //    gameObject.DestroyAPS();
 
 
 
@@ -424,16 +373,17 @@ public class Health : MonoBehaviour
             {
                 destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
                 _craftItem = GetComponent<CraftItem>();
-                sourceDestraction.Play();
-                SoundTrue = true;
+
+
+                StartCoroutine(DestroyOBjectWithSound(sourceDestraction.clip.length));
                 _craftItem.RenderOff();
 
-                timer = 0;
+
             }
 
 
 
-            // destroyAi.PlayEffect(30);
+
         }
     }
     void EnebledPhysics (bool active)
@@ -461,8 +411,32 @@ public class Health : MonoBehaviour
         }
     }
 
+    IEnumerator DestroyOBjectWithSound (float clipLengh)
+    {
 
 
+        sourceDestraction.Play();
+        yield return new WaitForSeconds(clipLengh);
+        if (!transform.CompareTag(Tags.AI))
+        {
+            if (_craftItem)
+            {
+                _craftItem.DefaultOptions();
+            }
+            else
+            {
+                _craftItem = GetComponent<CraftItem>();
+                _craftItem.DefaultOptions();
+            }
+            this.gameObject.DestroyAPS();
+            _craftItem._StartHisEffect = false;
+        }
+        else
+        {
+            this.gameObject.DestroyAPS();
+
+        }
+    }
 
     private void OnTriggerEnter (Collider other)
     {

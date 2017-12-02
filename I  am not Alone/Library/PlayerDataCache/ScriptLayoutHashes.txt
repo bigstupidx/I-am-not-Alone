@@ -31,6 +31,7 @@ ed5555ea56c76befb50782024bd97019 Assembly-CSharp.dll:.SpawnerZombie
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.Editor.dll:UnityEngine.Advertisements.Editor.Placeholder
 447ae6b473c3e548e72c5d4b007b855f Assembly-CSharp.dll:.MainMenu
 bb5e75df3b3ee1e5dfc1641b55d97959 Assembly-CSharp.dll:.WeaponController
+b00e4560f7027dec6a59ab8d1e0ee741 Assembly-CSharp.dll:.SelectItemForStart
 8446156bbcdf3147ae0b36ca48dcf240 Assembly-CSharp.dll:.IKtarget
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
@@ -248,7 +249,7 @@ a8796ecdc9d5c260bbe32f30c4b10708 Assembly-CSharp-firstpass.dll:UnityStandardAsse
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Examples.Sample02_ObservableTriggers
 225599eea93dbe4a9c9cdf2f7b034c09 Assembly-CSharp.dll:.TurretsAi
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservableRectTransformTrigger
-6ecac26e81daf7a67e1a25083981ac5b Assembly-CSharp.dll:.Health
+8e083e8ed52d6da16ad6db704b1195f2 Assembly-CSharp.dll:.Health
 c3ff20aa7aa541912d1c77482f506f49 Assembly-CSharp.dll:.SelectionWeaponForPC
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Triggers.ObservableCanvasGroupChangedTrigger
 44e07882f930b0d3f559a26b3c6e0c65 Assembly-CSharp.dll:.GameObjectScaled
@@ -261,4 +262,4 @@ cd7fddd58cac9d17f8228d17170d58ca Assembly-CSharp.dll:.Indicator
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Examples.Sample06_ConvertToCoroutine
 2817ff6cbb722e28d2c170445fa40813 Assembly-CSharp.dll:.SwitchMode
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UniRx.Examples.Sample08_DetectDoubleClick
-b00e4560f7027dec6a59ab8d1e0ee741 Assembly-CSharp.dll:.SelectItemForStart
+6acf0fce47ca44ba6a3b33a4d6f723e6 Assembly-CSharp.dll:.PlayerHealth

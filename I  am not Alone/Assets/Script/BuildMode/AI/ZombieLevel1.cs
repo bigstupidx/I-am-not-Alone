@@ -119,7 +119,7 @@ public class ZombieLevel1 : MonoBehaviour
             {
                 agent.isStopped = false;
             }
-          
+
 
 
             //if ((player.transform.position - transform.position).sqrMagnitude < Mathf.Pow(agent.stoppingDistance, 2))
@@ -208,7 +208,7 @@ public class ZombieLevel1 : MonoBehaviour
                     {
                         if (hit.transform.CompareTag(Tags.player))
                         {
-                            target.GetComponent<Health>().HelthDamage(PlayerDamage, false, hit.point);
+                            target.GetComponent<PlayerHealth>().HelthDamage(PlayerDamage);
 
                             if (!source.isPlaying)
                             {

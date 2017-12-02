@@ -121,7 +121,7 @@ public class CraftItem : MonoBehaviour
 
         DefaultOptions();
     }
-    //private void Update ()
+    //private void update ()
     //{
 
     //    if (ColliderTrue)
@@ -147,16 +147,16 @@ public class CraftItem : MonoBehaviour
             thisCollider = GetComponent<BoxCollider>();
             if (Interactive)
             {
-                //  timer = 0.4f;
-                //   ColliderTrue = true;
+                timer = 0.4f;
+                ColliderTrue = true;
                 rigid.useGravity = true;
                 thisCollider.enabled = true;
             }
             else
             {
                 ColliderTrue = true;
-                rigid.useGravity = false;
-                thisCollider.enabled = false;
+                rigid.useGravity = true;
+                thisCollider.enabled = true;
                 timer = 0.2f;
             }
 
@@ -427,7 +427,7 @@ public class CraftItem : MonoBehaviour
                     if (Built)
                     {
                         buildMode.ButtonCraft.SetActive(false);
-                    } 
+                    }
                 }
 
             }
@@ -575,6 +575,11 @@ public class CraftItem : MonoBehaviour
             if (hit.GetComponent<Health>() != null)
             {
                 hit.GetComponent<Health>().HelthDamage(damage, false, transform.position);
+
+            }
+            if (hit.GetComponent<PlayerHealth>() != null)
+            {
+                hit.GetComponent<PlayerHealth>().HelthDamage(damage);
 
             }
             if (hit.GetComponent<Rigidbody>() != null)

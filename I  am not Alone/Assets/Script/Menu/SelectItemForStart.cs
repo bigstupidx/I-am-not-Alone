@@ -8,12 +8,12 @@ public class SelectItemForStart : MonoBehaviour
     CheckInWeaponAndCraft checkWeapon;
     Toggle tog;
     public string nameItem;
-    Health health;
+    PlayerHealth health;
     SwitchMode buildControll;
     // Use this for initialization
     void Start ()
     {
-        health = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<Health>();
+        health = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<PlayerHealth>();
         checkWeapon = GameObject.Find("WeaponController").GetComponent<CheckInWeaponAndCraft>();
         tog = GetComponent<Toggle>();
         buildControll = GameObject.Find("BuildController").GetComponent<SwitchMode>();
