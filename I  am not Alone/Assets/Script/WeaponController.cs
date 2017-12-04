@@ -69,7 +69,7 @@ public class WeaponController : MonoBehaviour
 
                 Weapons[0].transform.GetChild(0).localPosition = Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
                 AnimationWeapon(Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().rightHand, Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
-                Weapons[0].transform.GetChild(0).LookAt(targetWeapon);
+                //  Weapons[0].transform.GetChild(0).LookAt(targetWeapon);
 
 
 
@@ -86,7 +86,7 @@ public class WeaponController : MonoBehaviour
 
                 Weapons[1].transform.GetChild(0).localPosition = Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
                 AnimationWeapon(Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().rightHand, Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
-                Weapons[1].transform.GetChild(0).LookAt(targetWeapon);
+                //    Weapons[1].transform.GetChild(0).LookAt(targetWeapon);
 
                 Weapons[1].SetActive(true);
                 break;
@@ -99,7 +99,7 @@ public class WeaponController : MonoBehaviour
 
                 Weapons[2].transform.GetChild(0).localPosition = Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
                 AnimationWeapon(Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().rightHand, Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
-                Weapons[2].transform.GetChild(0).LookAt(targetWeapon);
+                //    Weapons[2].transform.GetChild(0).LookAt(targetWeapon);
 
                 Weapons[2].SetActive(true);
                 break;

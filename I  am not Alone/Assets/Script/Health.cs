@@ -62,6 +62,7 @@ public class Health : MonoBehaviour
     WaveManager waveManager;
     bool isdead;
     PlayableDirector m_director;
+
     private void Start ()
     {
 
@@ -103,6 +104,7 @@ public class Health : MonoBehaviour
     {
         if (transform.CompareTag(Tags.AI))
         {
+
             waveManager = GameObject.Find("Spawner").GetComponent<WaveManager>();
             MoneyAi += GhostMoneyWaveUp * waveManager.levelWave;
             transform.tag = Tags.AI;
@@ -132,37 +134,7 @@ public class Health : MonoBehaviour
     }
 
 
-    //private void Update ()
-    //{
 
-
-
-    //    if (SoundTrue)
-    //    {
-    //        timer += Time.deltaTime;
-    //        if (timer >= sourceDestraction.clip.length)
-    //        {
-    //            if (_craftItem)
-    //            {
-    //                _craftItem.DefaultOptions();
-    //            }
-    //            else
-    //            {
-    //                _craftItem = GetComponent<CraftItem>();
-    //                _craftItem.DefaultOptions();
-    //            }
-
-
-
-
-    //            this.gameObject.DestroyAPS();
-    //            _craftItem._StartHisEffect = false;
-
-    //            SoundTrue = false;
-    //        }
-    //    }
-    //}
-    // Use this for initialization
 
     public void MySelfDestroyer ()
     {
@@ -199,7 +171,7 @@ public class Health : MonoBehaviour
 
         if (transform.CompareTag("AI"))
         {
-           // blood.transform.position = pointhitGhost;
+            // blood.transform.position = pointhitGhost;
 
             // And play the particles.
             blood.Play();
@@ -317,17 +289,22 @@ public class Health : MonoBehaviour
                     checkWeaponAndCraft.CreateBoxWeapon(transform.position);
                 }
                 ZombieLevel1 zombie = GetComponent<ZombieLevel1>();
+                Animator m_animator = zombie.m_animator;
                 sourceDestraction.clip = zombie.zombieDeth;
 
-                StartCoroutine(DestroyOBjectWithSound(sourceDestraction.clip.length));
-                weaponsControll.autolookEnemy.TargetAi = null;
-                weaponsControll.autolookEnemy.WeaponNull();
+                m_animator.SetTrigger("Die");
+                sourceDestraction.Play();
+
+                zombie.timerStop = 1.0f;
+                StartCoroutine(DestroyOBjectWithSound(1.0f));
+                //weaponsControll.autolookEnemy.TargetAi = null;
+                //weaponsControll.autolookEnemy.WeaponNull();
 
                 // Destroy(zombie);
 
 
 
-            //    gameObject.DestroyAPS();
+                //    gameObject.DestroyAPS();
 
 
 
@@ -337,7 +314,7 @@ public class Health : MonoBehaviour
 
                 isdead = true;
                 // transform.tag = "CraftMode";
-                transform.position = new Vector3(0, -85f, 0);
+                //  transform.position = new Vector3(0, -85f, 0);
 
                 if (waveManager._lsky.IsNight)
                 {

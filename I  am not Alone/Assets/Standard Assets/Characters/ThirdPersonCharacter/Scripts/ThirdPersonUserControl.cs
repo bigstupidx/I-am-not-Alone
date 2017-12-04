@@ -85,7 +85,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             //   m_Move = v * transform.forward + h * transform.right;
 
 
-
+            var angle = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
+            m_CharacterTargetRot = Quaternion.Euler(0, angle, 0);
 
 
 
@@ -100,10 +101,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             if (yRot != 0f || xRot != 0f)
             {
 
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg, transform.eulerAngles.z);
+                //  transform.eulerAngles = new Vector3(transform.eulerAngles.x, Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg, transform.eulerAngles.z);
 
 
-
+                transform.localRotation = Quaternion.Slerp(transform.localRotation, m_CharacterTargetRot,
+               10 * Time.deltaTime);
 
             }
             else

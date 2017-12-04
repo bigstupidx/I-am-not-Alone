@@ -15,6 +15,9 @@ ModelImporter:
     100014: leg1
     100016: leg2
     100018: legs
+    100020: mostr
+    100022: leg013
+    100024: leg014
     400000: body
     400002: //RootNode
     400004: Group001
@@ -25,26 +28,43 @@ ModelImporter:
     400014: leg1
     400016: leg2
     400018: legs
+    400020: mostr
+    400022: leg013
+    400024: leg014
     2300000: body
     2300002: hand1
     2300004: hand2
     2300006: leg1
     2300008: leg2
+    2300010: leg013
+    2300012: leg014
     3300000: body
     3300002: hand1
     3300004: hand2
     3300006: leg1
     3300008: leg2
+    3300010: leg013
+    3300012: leg014
     4300000: leg1
     4300002: leg2
     4300004: body
     4300006: hand1
     4300008: hand2
-    7400000: walk
+    4300010: leg013
+    4300012: leg014
+    7400000: walkGhostOne
     7400002: attack
     7400004: jump
     7400006: die
+    7400008: walk
+    7400010: DieGhostOne
+    7400012: attackTwo
+    7400014: walk
+    7400016: attack1
+    7400018: attak2
+    7400020: walk2
     9500000: //RootNode
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -54,14 +74,14 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: 
+    motionNodeName: <Root Transform>
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -98,10 +118,66 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: attack
+      name: attack1
       takeName: Take 001
       firstFrame: 45
       lastFrame: 65
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: attak2
+      takeName: Take 001
+      firstFrame: 65
+      lastFrame: 97
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: walk2
+      takeName: Take 001
+      firstFrame: 110
+      lastFrame: 130
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -126,38 +202,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: jump
-      takeName: Take 001
-      firstFrame: 65
-      lastFrame: 75
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
       name: die
       takeName: Take 001
-      firstFrame: 75
-      lastFrame: 80
+      firstFrame: 140
+      lastFrame: 160
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

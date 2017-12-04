@@ -22,7 +22,7 @@ public class PoizonEffect : MonoBehaviour
         if (other.transform.CompareTag(Tags.player))
         {
 
-            other.GetComponent<Health>().HelthDamage(poisonDamage, false, other.transform.position);
+            other.GetComponent<PlayerHealth>().HelthDamage(poisonDamage);
 
         }
     }

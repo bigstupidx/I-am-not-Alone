@@ -79,6 +79,7 @@ public class ZombieLevel1 : MonoBehaviour
     }
     private void OnEnable ()
     {
+        agent.enabled = true;
         agent.speed = standartSpeed;
     }
     void DayDestroyObject ()
