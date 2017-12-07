@@ -62,7 +62,8 @@ public class Health : MonoBehaviour
     WaveManager waveManager;
     bool isdead;
     PlayableDirector m_director;
-
+    float patrons;
+    bool createBoxWeapon;
     private void Start ()
     {
 
@@ -138,11 +139,11 @@ public class Health : MonoBehaviour
 
     public void MySelfDestroyer ()
     {
-
-        destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
-        StartCoroutine(DestroyOBjectWithSound(sourceDestraction.clip.length));
-
         _craftItem = GetComponent<CraftItem>();
+        destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
+        StartCoroutine(DestroyOBjectWithSound(sourceDestraction.clip.length, _craftItem));
+
+
         _craftItem.RenderOff();
         destroyAi.PlayEffect(30);
 
@@ -150,7 +151,6 @@ public class Health : MonoBehaviour
 
     public void HelthDamage (float damage, bool playerAttack, Vector3 pointhitGhost)
     {
-
 
         CurHelth -= damage;
         if (transform.CompareTag(Tags.Things))
@@ -238,7 +238,7 @@ public class Health : MonoBehaviour
                     _craftItem.RenderOff();
 
                 }
-                StartCoroutine(DestroyOBjectWithSound(sourceDestraction.clip.length));
+                //    StartCoroutine(DestroyOBjectWithSound(sourceDestraction.clip.length, _craftItem));
 
 
 
@@ -261,8 +261,25 @@ public class Health : MonoBehaviour
                     checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + MoneyAi).ToString();
                     m_director.Play();
                 }
+                patrons = 0;
 
-                if (weaponsControll.weaponPanel.childCount != 0)
+                createBoxWeapon = false;
+                for (int i = 0; i < weaponsControll.Weapons.Length; i++)
+                {
+                    if(weaponsControll.Weapons[i].transform.childCount != 0)
+                    {
+
+                        patrons += weaponsControll.Weapons[i].transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition;
+                        if (patrons < 0.2f)
+                        {
+                            createBoxWeapon = true;
+                        }
+
+                    }
+                  
+                }
+                Debug.Log(patrons);
+                if (!createBoxWeapon)
                 {
                     int r = Random.Range(0, 2);
                     if (r == 1)
@@ -286,8 +303,24 @@ public class Health : MonoBehaviour
                 }
                 else
                 {
-                    checkWeaponAndCraft.CreateBoxWeapon(transform.position);
+
+
+                    int i = Random.Range(0, 3);
+                    int l = Random.Range(0, 4);
+
+                    MakeMaterial = l;
+                    if (i == 0)
+                    {
+                        checkWeaponAndCraft.CreateBoxItem(transform.position, MakeMaterial);
+                    }
+                    else if (i > 0)
+                    {
+                        checkWeaponAndCraft.CreateBoxWeapon(transform.position);
+                    }
+
                 }
+
+
                 ZombieLevel1 zombie = GetComponent<ZombieLevel1>();
                 Animator m_animator = zombie.m_animator;
                 sourceDestraction.clip = zombie.zombieDeth;
@@ -296,7 +329,7 @@ public class Health : MonoBehaviour
                 sourceDestraction.Play();
 
                 zombie.timerStop = 1.0f;
-                StartCoroutine(DestroyOBjectWithSound(1.0f));
+                StartCoroutine(DestroyOBjectWithSound(1.0f, null));
                 //weaponsControll.autolookEnemy.TargetAi = null;
                 //weaponsControll.autolookEnemy.WeaponNull();
 
@@ -343,7 +376,9 @@ public class Health : MonoBehaviour
                 destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffectForZombie", transform.position, Quaternion.identity);
                 Destroy(gameObject, sourceDestraction.clip.length);
 
-                timer = 0;
+
+
+
 
             }
             if (transform.CompareTag("CraftFromMenu"))
@@ -352,7 +387,7 @@ public class Health : MonoBehaviour
                 _craftItem = GetComponent<CraftItem>();
 
 
-                StartCoroutine(DestroyOBjectWithSound(sourceDestraction.clip.length));
+                StartCoroutine(DestroyOBjectWithSound(sourceDestraction.clip.length, _craftItem));
                 _craftItem.RenderOff();
 
 
@@ -388,7 +423,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    IEnumerator DestroyOBjectWithSound (float clipLengh)
+    IEnumerator DestroyOBjectWithSound (float clipLengh, CraftItem item)
     {
 
 
@@ -396,17 +431,11 @@ public class Health : MonoBehaviour
         yield return new WaitForSeconds(clipLengh);
         if (!transform.CompareTag(Tags.AI))
         {
-            if (_craftItem)
-            {
-                _craftItem.DefaultOptions();
-            }
-            else
-            {
-                _craftItem = GetComponent<CraftItem>();
-                _craftItem.DefaultOptions();
-            }
-            this.gameObject.DestroyAPS();
-            _craftItem._StartHisEffect = false;
+
+            item.DefaultOptions();
+
+            item.gameObject.DestroyAPS();
+            item._StartHisEffect = false;
         }
         else
         {

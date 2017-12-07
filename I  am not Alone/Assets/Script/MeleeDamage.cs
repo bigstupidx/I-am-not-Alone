@@ -6,8 +6,9 @@ public class MeleeDamage : MonoBehaviour
 {
     public float Damage;
     public handWeapon weapon;
+    public ParticleSystem system;
     // Use this for initialization
-    private void OnTriggerStay (Collider other)
+    private void OnTriggerEnter (Collider other)
     {
         if (weapon.fight)
         {
@@ -16,7 +17,20 @@ public class MeleeDamage : MonoBehaviour
             {
 
 
-                other.transform.GetComponent<Health>().HelthDamage(Damage, true,transform.position);
+                if (other.transform.parent.GetComponent<CraftItem>())
+                {
+                    if (other.transform.parent.GetComponent<CraftItem>().Built)
+                    {
+                        if (other.transform.GetComponent<Health>())
+                        {
+                            other.transform.GetComponent<Health>().HelthDamage(Damage, true, transform.position);
+                            system.Play();
+                        }
+                    }
+                }
+
+
+
 
 
             }
@@ -24,9 +38,11 @@ public class MeleeDamage : MonoBehaviour
             if (other.transform.tag == "CraftFromMenu")
             {
 
-
-                other.transform.GetComponent<Health>().HelthDamage(Damage, true, transform.position);
-
+                if (other.transform.GetComponent<Health>())
+                {
+                    other.transform.GetComponent<Health>().HelthDamage(Damage, true, transform.position);
+                    system.Play();
+                }
 
 
 
@@ -37,8 +53,25 @@ public class MeleeDamage : MonoBehaviour
             if (other.transform.tag == "Things")
             {
 
+                if (other.transform.GetComponent<Health>())
+                {
+                    other.transform.GetComponent<Health>().HelthDamage(Damage, true, transform.position);
+                    system.Play();
+                }
 
-                other.transform.GetComponent<Health>().HelthDamage(Damage, true, transform.position);
+
+            }
+            if (other.transform.tag == "WallCrash")
+            {
+
+                if (other.transform.GetComponent<Health>())
+                {
+                    other.transform.GetComponent<Health>().HelthDamage(Damage, true, transform.position);
+                    system.Play();
+
+                }
+
+
 
 
 
@@ -47,13 +80,15 @@ public class MeleeDamage : MonoBehaviour
             if (other.transform.tag == "AI")
             {
 
+                if (other.transform.GetComponent<Health>())
+                {
+                    other.transform.GetComponent<Health>().HelthDamage(Damage, true, transform.position);
+                    system.Play();
+                }
 
-                other.transform.GetComponent<Health>().HelthDamage(Damage, true, transform.position);
 
 
-
-
-            } 
+            }
         }
     }
 }

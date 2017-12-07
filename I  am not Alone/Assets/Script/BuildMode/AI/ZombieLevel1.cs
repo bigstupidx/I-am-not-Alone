@@ -173,7 +173,7 @@ public class ZombieLevel1 : MonoBehaviour
             if (!agent.isStopped)
             {
                 agent.isStopped = true;
-                agent.speed += 3f;
+             
             }
 
         }
@@ -189,26 +189,27 @@ public class ZombieLevel1 : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer >= timeBetweenAttacks)
+
+        //lineRender.positionCount = navMeshPathPlayer.corners.Length;
+        //lineRender.SetPositions(navMeshPathPlayer.corners);
+        Vector3 fwd = transform.TransformDirection(Vector3.forward * 0.5f);
+
+        //  Debug.DrawRay(transform.position, fwd * 2.5f, Color.yellow);
+        if (Physics.Raycast(transform.position, fwd, out hit, 3.5F))
         {
-            timer = 0;
-            //lineRender.positionCount = navMeshPathPlayer.corners.Length;
-            //lineRender.SetPositions(navMeshPathPlayer.corners);
-            Vector3 fwd = transform.TransformDirection(Vector3.forward * 0.5f);
 
-            //  Debug.DrawRay(transform.position, fwd * 2.5f, Color.yellow);
-            if (Physics.Raycast(transform.position, fwd, out hit, 2.5F))
+
+
+
+            if (hit.transform.GetComponent<PriorityObject>())
             {
-
-
-
-
-                if (hit.transform.GetComponent<PriorityObject>())
+                if (target.CompareTag(Tags.player))
                 {
-                    if (target.CompareTag(Tags.player))
+                    if (hit.transform.CompareTag(Tags.player))
                     {
-                        if (hit.transform.CompareTag(Tags.player))
+                        if (timer >= timeBetweenAttacks)
                         {
+                            timer = 0;
                             target.GetComponent<PlayerHealth>().HelthDamage(PlayerDamage);
 
                             if (!source.isPlaying)
@@ -222,22 +223,8 @@ public class ZombieLevel1 : MonoBehaviour
                                 if (!agent.isStopped)
                                 {
 
-                                    agent.isStopped = true;
+
                                     m_animator.SetBool("attack", true);
-
-                                }
-                            }
-
-                        }
-                        else
-                        {
-                            if (m_animator)
-                            {
-                                if (agent.isStopped)
-                                {
-
-                                    agent.isStopped = false;
-                                    m_animator.SetBool("attack", false);
 
                                 }
                             }
@@ -245,7 +232,23 @@ public class ZombieLevel1 : MonoBehaviour
                     }
                     else
                     {
+                        if (m_animator)
+                        {
+                            if (agent.isStopped)
+                            {
 
+
+                                m_animator.SetBool("attack", false);
+
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (timer >= timeBetweenAttacks)
+                    {
+                        timer = 0;
 
                         if (target.GetComponent<Health>())
                         {
@@ -262,52 +265,52 @@ public class ZombieLevel1 : MonoBehaviour
 
 
                         //}
-
-                        if (m_animator)
+                    }
+                    if (m_animator)
+                    {
+                        if (!agent.isStopped)
                         {
-                            if (!agent.isStopped)
-                            {
 
-                                agent.isStopped = true;
-                                m_animator.SetTrigger("door");
-                                m_animator.SetBool("attack", true);
 
-                            }
+                            m_animator.SetTrigger("door");
+                            m_animator.SetBool("attack", true);
+
                         }
                     }
-
-
-
-                    GhostAnswer(hit.transform, hit.transform.GetComponent<PriorityObject>());
-
-
                 }
+
+
+
+                GhostAnswer(hit.transform, hit.transform.GetComponent<PriorityObject>());
+
+
             }
-            else
-            {
-                newTraget = null;
-                agent.SetDestination(target.position);
-                if (m_animator)
-                {
-                    if (agent.isStopped)
-                    {
-                        source.PlayOneShot(zombieStay);
-                        agent.isStopped = false;
-                        m_animator.SetBool("attack", false);
-
-                    }
-                    else
-                    {
-                        m_animator.SetBool("attack", false);
-                    }
-                }
-            }
-
-
-
-
-
         }
+        else
+        {
+            newTraget = null;
+            agent.SetDestination(target.position);
+            if (m_animator)
+            {
+                if (agent.isStopped)
+                {
+                    source.PlayOneShot(zombieStay);
+
+                    m_animator.SetBool("attack", false);
+
+                }
+                else
+                {
+                    m_animator.SetBool("attack", false);
+                }
+            }
+        }
+
+
+
+
+
+
 
 
 
@@ -392,16 +395,3 @@ public class ZombieLevel1 : MonoBehaviour
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -54,6 +54,8 @@ public class DoorTrigger : MonoBehaviour
         //    obstacle.enabled = false;
         //    //    rend.sharedMaterial = materials[0];
         //}
+
+       
         if (craftItem.Built)
         {
             rigid.isKinematic = true;
