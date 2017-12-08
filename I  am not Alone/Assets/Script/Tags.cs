@@ -13,15 +13,5 @@ public class Tags : MonoBehaviour
     public const string AI = "AI";
     public const string WallCrash = "WallCrash";
     public const string CraftFromMenu = "CraftFromMenu";
-    // Use this for initialization
-    void Start ()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update ()
-    {
-
-    }
+  
 }

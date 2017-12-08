@@ -6,7 +6,7 @@ public class StartSceneObjectRandom : MonoBehaviour
 {
     public Transform startRandom;
     public Transform inWave;
-    public WaveManager _waveManager;
+   
     int randomObjectActive;
     int randomObjectActiveForWave;
     public bool RandomSituationStart;

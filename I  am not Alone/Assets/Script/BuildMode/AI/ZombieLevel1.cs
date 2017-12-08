@@ -173,7 +173,7 @@ public class ZombieLevel1 : MonoBehaviour
             if (!agent.isStopped)
             {
                 agent.isStopped = true;
-             
+
             }
 
         }
@@ -190,8 +190,8 @@ public class ZombieLevel1 : MonoBehaviour
         timer += Time.deltaTime;
 
 
-        //lineRender.positionCount = navMeshPathPlayer.corners.Length;
-        //lineRender.SetPositions(navMeshPathPlayer.corners);
+        lineRender.positionCount = navMeshPathPlayer.corners.Length;
+        lineRender.SetPositions(navMeshPathPlayer.corners);
         Vector3 fwd = transform.TransformDirection(Vector3.forward * 0.5f);
 
         //  Debug.DrawRay(transform.position, fwd * 2.5f, Color.yellow);

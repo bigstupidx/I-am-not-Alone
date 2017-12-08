@@ -236,7 +236,15 @@ public class CraftItem : MonoBehaviour
             {
                 gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
             }
-            buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject, Floor));
+            try
+            {
+                buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject, Floor));
+            }
+            catch (System.Exception)
+            {
+
+                Debug.Log(transform.name);
+            }
             ground = true;
             gameObject.SetActive(false);
             transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;

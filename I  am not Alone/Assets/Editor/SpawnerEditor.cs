@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-[CustomEditor(typeof(WaveManager))]
+[CustomEditor(typeof(GhostWaveCreater))]
 [CanEditMultipleObjects]
 public class SpawnerEditor : Editor
 {
     bool showPosition = true;
     string status = "Select a GameObject";
-    WaveManager waveManager;
+    GhostWaveCreater waveManager;
     // Use this for initialization
     private void OnEnable ()
     {
-        waveManager = (WaveManager)target;
+        waveManager = (GhostWaveCreater)target;
     }
 
     public void OnInspectorUpdate ()
@@ -23,7 +23,7 @@ public class SpawnerEditor : Editor
     public override void OnInspectorGUI ()
     {
 
-    
+
         GUILayout.Box("Wave count =" + waveManager.wave.Count.ToString());
         for (int i = 0; i < waveManager.wave.Count; i++)
         {

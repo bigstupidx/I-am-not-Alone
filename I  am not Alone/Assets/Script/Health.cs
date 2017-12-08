@@ -76,16 +76,15 @@ public class Health : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         waveManager = GameObject.Find("Spawner").GetComponent<WaveManager>();
         m_director = checkWeaponAndCraft.MyMoney.GetComponent<PlayableDirector>();
-        if (!transform.CompareTag("Player"))
+
+
+
+        sourceDestraction = GetComponent<AudioSource>();
+        if (!sourceDestraction)
         {
-
-
-            sourceDestraction = GetComponent<AudioSource>();
-            if (!sourceDestraction)
-            {
-                sourceDestraction = transform.parent.GetComponent<AudioSource>();
-            }
+            sourceDestraction = transform.parent.GetComponent<AudioSource>();
         }
+
 
         if (transform.parent != null)
         {
@@ -202,7 +201,7 @@ public class Health : MonoBehaviour
             CurHelth = 0;
 
 
-            if (transform.CompareTag("Things"))
+            if (transform.CompareTag(Tags.Things))
             {
 
                 destroyAi = poolsistem.InstantiateAPS("DestroyObject", transform.position, Quaternion.identity);
@@ -221,7 +220,7 @@ public class Health : MonoBehaviour
                 Destroy(gameObject, sourceDestraction.clip.length);
 
             }
-            if (transform.CompareTag("CraftMode"))
+            if (transform.CompareTag(Tags.CraftMode))
             {
                 _craftItem = GetComponent<CraftItem>();
                 if (!_craftItem)
@@ -245,7 +244,7 @@ public class Health : MonoBehaviour
 
                 destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffectForZombie", transform.position, Quaternion.identity);
             }
-            if (transform.CompareTag("AI"))
+            if (transform.CompareTag(Tags.AI))
             {
 
                 if (isdead)
@@ -266,7 +265,7 @@ public class Health : MonoBehaviour
                 createBoxWeapon = false;
                 for (int i = 0; i < weaponsControll.Weapons.Length; i++)
                 {
-                    if(weaponsControll.Weapons[i].transform.childCount != 0)
+                    if (weaponsControll.Weapons[i].transform.childCount != 0)
                     {
 
                         patrons += weaponsControll.Weapons[i].transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition;
@@ -276,9 +275,9 @@ public class Health : MonoBehaviour
                         }
 
                     }
-                  
+
                 }
-                Debug.Log(patrons);
+
                 if (!createBoxWeapon)
                 {
                     int r = Random.Range(0, 2);
@@ -365,7 +364,7 @@ public class Health : MonoBehaviour
 
                 return;
             }
-            if (transform.CompareTag("WallCrash"))
+            if (transform.CompareTag(Tags.WallCrash))
             {
                 EnebledPhysics(false);
                 sourceDestraction.Play();
@@ -381,7 +380,7 @@ public class Health : MonoBehaviour
 
 
             }
-            if (transform.CompareTag("CraftFromMenu"))
+            if (transform.CompareTag(Tags.CraftFromMenu))
             {
                 destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
                 _craftItem = GetComponent<CraftItem>();
@@ -447,7 +446,7 @@ public class Health : MonoBehaviour
     private void OnTriggerEnter (Collider other)
     {
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(Tags.player))
         {
             if (CollisionDestroy)
             {

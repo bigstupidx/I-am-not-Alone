@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.Advertisements;
 using UnityEngine.Playables;
 using Facebook.Unity;
+using UnityEngine.Advertisements;
+
 public class MainMenu : MonoBehaviour
 {
 
@@ -147,20 +148,20 @@ public class MainMenu : MonoBehaviour
     public void ShowAds ()
     {
 
-        if (Advertisement.isSupported)
-        {
-            Advertisement.Initialize("1557198", false);
-            if (Advertisement.IsReady())
-            {
-                Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
+        //if (Advertisement.isSupported)
+        //{
+        //    Advertisement.Initialize("1557198", false);
+        //    if (Advertisement.IsReady())
+        //    {
+        //        Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
 
-            }
+        //    }
 
-        }
-        else
-        {
-            Debug.Log("platform is not Supported");
-        }
+        //}
+        //else
+        //{
+        //    Debug.Log("platform is not Supported");
+        //}
 
     }
     IEnumerator Load (string i)
@@ -190,26 +191,26 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    private void HandleadResult (ShowResult result)
-    {
-        switch (result)
-        {
-            case ShowResult.Failed:
-                Debug.Log("player failde  launch");
-                break;
-            case ShowResult.Skipped:
-                Debug.Log("player did not fully watch the ad");
-                break;
-            case ShowResult.Finished:
-                Debug.Log("player Gains +500 gems");
-                myMoney.text = (int.Parse(myMoney.text) + MoneyAd).ToString();
-                db.UpdateMoney(myMoney.text);
-                coinPlayeble.Play();
-                break;
-            default:
-                break;
-        }
+    //private void HandleadResult (ShowResult result)
+    //{
+    //    switch (result)
+    //    {
+    //        case ShowResult.Failed:
+    //            Debug.Log("player failde  launch");
+    //            break;
+    //        case ShowResult.Skipped:
+    //            Debug.Log("player did not fully watch the ad");
+    //            break;
+    //        case ShowResult.Finished:
+    //            Debug.Log("player Gains +500 gems");
+    //            myMoney.text = (int.Parse(myMoney.text) + MoneyAd).ToString();
+    //            db.UpdateMoney(myMoney.text);
+    //            coinPlayeble.Play();
+    //            break;
+    //        default:
+    //            break;
+    //    }
 
-    }
+    //}
 }
 

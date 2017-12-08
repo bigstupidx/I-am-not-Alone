@@ -13,7 +13,7 @@ public class MeleeDamage : MonoBehaviour
         if (weapon.fight)
         {
 
-            if (other.transform.tag == "CraftMode")
+            if (other.transform.CompareTag(Tags.CraftMode))
             {
 
 
@@ -35,7 +35,7 @@ public class MeleeDamage : MonoBehaviour
 
             }
 
-            if (other.transform.tag == "CraftFromMenu")
+            if (other.transform.CompareTag(Tags.CraftFromMenu))
             {
 
                 if (other.transform.GetComponent<Health>())
@@ -50,7 +50,7 @@ public class MeleeDamage : MonoBehaviour
 
 
             }
-            if (other.transform.tag == "Things")
+            if (other.transform.CompareTag(Tags.Things))
             {
 
                 if (other.transform.GetComponent<Health>())
@@ -61,7 +61,7 @@ public class MeleeDamage : MonoBehaviour
 
 
             }
-            if (other.transform.tag == "WallCrash")
+            if (other.transform.CompareTag(Tags.WallCrash))
             {
 
                 if (other.transform.GetComponent<Health>())
@@ -77,7 +77,7 @@ public class MeleeDamage : MonoBehaviour
 
             }
 
-            if (other.transform.tag == "AI")
+            if (other.transform.CompareTag(Tags.AI))
             {
 
                 if (other.transform.GetComponent<Health>())
