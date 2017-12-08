@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using AC.LSky;
+
+
 [System.Serializable]
 public class Wave
 {
@@ -37,16 +38,24 @@ public class GhostWaveCreater : MonoBehaviour
         waveManager.init();
     }
 
+    void OnApplicationPause (bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
 
+            PlayerPrefs.Save();
+        }
+    }
 
     public void UpdateLevelWaverPrefs ()
     {
         if (EasyDifficulty)
         {
 
-            if (PlayerPrefs.GetString("EasyDifficulty") != "")
-            {
 
+
+            if (PlayerPrefs.HasKey("EasyDifficulty"))
+            {
                 int i = int.Parse(PlayerPrefs.GetString("EasyDifficulty"));
 
                 if (i >= int.Parse(PlayerPrefs.GetString("EasyDifficulty")))
@@ -57,16 +66,19 @@ public class GhostWaveCreater : MonoBehaviour
                         checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + 7000).ToString();
                     }
                     PlayerPrefs.SetString("EasyDifficulty", i.ToString());
-                }
+                    PlayerPrefs.Save();
 
+
+                }
             }
 
 
         }
         if (MiddleDifficulty)
         {
-            if (PlayerPrefs.GetString("MiddleDifficulty") != "")
+            if (PlayerPrefs.HasKey("MiddleDifficulty"))
             {
+
                 int i = int.Parse(PlayerPrefs.GetString("MiddleDifficulty"));
                 if (i >= int.Parse(PlayerPrefs.GetString("MiddleDifficulty")))
                 {
@@ -75,40 +87,51 @@ public class GhostWaveCreater : MonoBehaviour
                         checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + 14000).ToString();
                     }
                     PlayerPrefs.SetString("MiddleDifficulty", i++.ToString());
+                    PlayerPrefs.Save();
                 }
             }
-            if (HardDifficulty)
-            {
-                if (PlayerPrefs.GetString("HardDifficulty") != "")
-                {
-                    int i = int.Parse(PlayerPrefs.GetString("HardDifficulty"));
-                    if (i >= int.Parse(PlayerPrefs.GetString("HardDifficulty")))
-                    {
-                        if (i == 10)
-                        {
-                            checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + 21000).ToString();
-                        }
-                        PlayerPrefs.SetString("HardDifficulty", i++.ToString());
-                    }
-                }
-                if (VeryHardDifficulty)
-                {
-                    if (PlayerPrefs.GetString("VeryHardDifficulty") != "")
-                    {
-                        int i = int.Parse(PlayerPrefs.GetString("VeryHardDifficulty"));
-                        if (i >= int.Parse(PlayerPrefs.GetString("VeryHardDifficulty")))
-                        {
-                            if (i == 10)
-                            {
-                                checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + 30000).ToString();
-                            }
-                            PlayerPrefs.SetString("VeryHardDifficulty", i++.ToString());
-                        }
 
+
+        }
+        if (HardDifficulty)
+        {
+
+            if (PlayerPrefs.HasKey("HardDifficulty"))
+            {
+                int i = int.Parse(PlayerPrefs.GetString("HardDifficulty"));
+                if (i >= int.Parse(PlayerPrefs.GetString("HardDifficulty")))
+                {
+                    if (i == 10)
+                    {
+                        checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + 21000).ToString();
                     }
+                    PlayerPrefs.SetString("HardDifficulty", i++.ToString());
+                    PlayerPrefs.Save();
+                }
+
+            }
+
+        }
+        if (VeryHardDifficulty)
+        {
+
+            if (PlayerPrefs.HasKey("VeryHardDifficulty"))
+            {
+                int i = int.Parse(PlayerPrefs.GetString("VeryHardDifficulty"));
+                if (i >= int.Parse(PlayerPrefs.GetString("VeryHardDifficulty")))
+                {
+                    if (i == 10)
+                    {
+                        checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + 30000).ToString();
+                    }
+                    PlayerPrefs.SetString("VeryHardDifficulty", i++.ToString());
+                    PlayerPrefs.Save();
                 }
             }
+
+
         }
+
     }
 }
 

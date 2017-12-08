@@ -56,6 +56,8 @@ F:/UNITY/unity 2017.2/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEdi
 F:/UNITY/unity 2017.2/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll
 C:/Users/mrMishka/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll
 C:/Users/mrMishka/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll
+C:/Users/mrMishka/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.xiaomi@1.0.0/UnityChannel/ChannelPurchase.dll
+C:/Users/mrMishka/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.xiaomi@1.0.0/UnityChannel/UnityStore.dll
 F:/UNITY/unity 2017.2/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll
 F:/UNITY/unity 2017.2/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll
 F:/UNITY/unity 2017.2/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll

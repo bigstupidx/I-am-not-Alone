@@ -12,17 +12,19 @@ public class IKtarget : MonoBehaviour
 
     Transform body;
 
-    Transform Hand;
+    Transform Head;
     // Use this for initialization
     void Start ()
     {
 
         body = m_anim.GetBoneTransform(HumanBodyBones.Chest);
-
+        Head = m_anim.GetBoneTransform(HumanBodyBones.Head);
+        body.LookAt(targetBody.position);
+        Head.LookAt(targetBody.position);
         //  Hand = m_anim.GetBoneTransform(HumanBodyBones.LeftHand);
     }
 
-    // Update is called once per frame
+    //// Update is called once per frame
     void Update ()
     {
 
@@ -44,6 +46,7 @@ public class IKtarget : MonoBehaviour
                 //Quaternion r = Quaternion.LookRotation(targetBody.position);
                 //body.rotation = Quaternion.Lerp(body.rotation, r, Time.deltaTime/10);
                 body.LookAt(targetBody.position);
+                Head.LookAt(targetBody.position);
             }
 
 

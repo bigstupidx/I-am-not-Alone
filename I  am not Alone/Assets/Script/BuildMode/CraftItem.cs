@@ -61,14 +61,14 @@ public class CraftItem : MonoBehaviour
     public List<float> LevelUpdate = new List<float>();
     public int level;
     public bool Built;
-    public int Floor;
+
     public Material[] materials;
     [HideInInspector]
     public Transform pointForMenu;
     public TurretsAi turretsAi;
     [HideInInspector]
     public Rigidbody rigid;
-    public bool ItemDown;
+
     public SelectContructionForCreate Item;
 
     [HideInInspector]
@@ -77,27 +77,27 @@ public class CraftItem : MonoBehaviour
     public GameObject[] NavmeshLinkWindow;
 
     public GameObject[] MeshSecondHideOBject;
-    CheckGround checkGround;
-    //   public GameObject[] NavmeshLinkWindowOffToIntoTrigger;
-    bool ColliderTrue;
-    Health health;
-    PoolingSystem pool;
-    float timer;
-    bool ground;
-    BoxCollider thisCollider;
+
+
+
+    private Health health;
+
+
+
+
     private SwitchMode buildMode;
     private Renderer rend;
-    PoolingSystem poolsistem;
-    Indicator indicator;
-    Ray ItemRay = new Ray();                       // A ray from the gun end forwards.
-    RaycastHit hit;
-    GameObject player;
-    NavMeshObstacle obstacle;
-    MobaCamera mobaCamera;
+    private PoolingSystem pool;
+    private Indicator indicator;
+    // A ray from the gun end forwards.
+
+    private GameObject player;
+    private NavMeshObstacle obstacle;
+
     // Use this for initialization
     void Start ()
     {
-        mobaCamera = Camera.main.GetComponent<MobaCamera>();
+
         for (int i = 0; i < CountWoodForCreate.Count; i++)
         {
             CountWoodForCreate[i].Start();
@@ -121,51 +121,16 @@ public class CraftItem : MonoBehaviour
 
         DefaultOptions();
     }
-    //private void update ()
-    //{
 
-    //    if (ColliderTrue)
-    //    {
-    //        timer -= Time.deltaTime;
-    //        if (timer <= 0)
-    //        {
-    //            rigid.useGravity = true;
-    //            ColliderTrue = false;
-    //            thisCollider.enabled = true;
-    //        }
-    //    }
-    //}
 
     private void OnEnable ()
     {
-        poolsistem = PoolingSystem.Instance;
+        pool = PoolingSystem.Instance;
 
         if (!BuildStatic)
         {
-            checkGround = transform.Find("RayTransform").GetComponent<CheckGround>();
+
             rigid = GetComponent<Rigidbody>();
-            thisCollider = GetComponent<BoxCollider>();
-            if (Interactive)
-            {
-                timer = 0.4f;
-                ColliderTrue = true;
-                rigid.useGravity = true;
-                thisCollider.enabled = true;
-            }
-            else
-            {
-                ColliderTrue = true;
-                rigid.useGravity = true;
-                thisCollider.enabled = true;
-                timer = 0.2f;
-            }
-
-        }
-        else
-        {
-
-            ColliderTrue = false;
-
         }
 
     }
@@ -204,7 +169,7 @@ public class CraftItem : MonoBehaviour
     {
         if (!Interactive)
         {
-            ground = true;
+
             health.MaxHealth = health.CurHelth = LevelUpdate[level];
         }
         if (DamageObject)
@@ -238,14 +203,14 @@ public class CraftItem : MonoBehaviour
             }
             try
             {
-                buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject, Floor));
+                buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject));
             }
             catch (System.Exception)
             {
 
                 Debug.Log(transform.name);
             }
-            ground = true;
+
             gameObject.SetActive(false);
             transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
             if (NavmeshLinkWindow.Length != 0)
@@ -265,10 +230,9 @@ public class CraftItem : MonoBehaviour
         }
         else
         {
-            if (ItemDown)
-            {
-                Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>());
-            }
+
+            Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>());
+
             rigid.isKinematic = false;
         }
         Built = false;
@@ -280,7 +244,6 @@ public class CraftItem : MonoBehaviour
     {
         if (b)
         {
-            ground = true;
 
 
             //if (BuildStatic)
@@ -296,76 +259,74 @@ public class CraftItem : MonoBehaviour
 
 
 
-            if (ground)
+            for (int i = 0; i < transform.GetChild(0).childCount; i++)
             {
-                for (int i = 0; i < transform.GetChild(0).childCount; i++)
+                if (transform.GetChild(0).GetChild(i).GetComponent<Renderer>())
                 {
-                    if (transform.GetChild(0).GetChild(i).GetComponent<Renderer>())
-                    {
-                        rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
+                    rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
 
 
-                        rend.sharedMaterial = materials[1];
-                        GameObject createEffect = poolsistem.InstantiateAPS("CreateEffect", transform.position, Quaternion.identity);
-                        ParticleSystem ps = createEffect.GetComponent<ParticleSystem>();
-                        var sh = ps.shape;
-                        sh.shapeType = ParticleSystemShapeType.MeshRenderer;
-                        sh.meshRenderer = transform.GetChild(0).GetChild(i).GetComponent<MeshRenderer>();
-                    }
-
-
-                    if (transform.GetChild(0).GetChild(i).childCount != 0)
-                    {
-                        for (int l = 0; l < transform.GetChild(0).GetChild(i).childCount; l++)
-                        {
-                            transform.GetChild(0).GetChild(i).GetChild(l).gameObject.SetActive(true);
-                        }
-                    }
+                    rend.sharedMaterial = materials[1];
+                    GameObject createEffect = pool.InstantiateAPS("CreateEffect", transform.position, Quaternion.identity);
+                    ParticleSystem ps = createEffect.GetComponent<ParticleSystem>();
+                    var sh = ps.shape;
+                    sh.shapeType = ParticleSystemShapeType.MeshRenderer;
+                    sh.meshRenderer = transform.GetChild(0).GetChild(i).GetComponent<MeshRenderer>();
                 }
 
-                if (gameObject.layer == 2)
-                {
-                    gameObject.layer = LayerMask.NameToLayer("Default");
-                }
-                for (var i = buildMode.craft.Count - 1; i > -1; i--)
-                {
-                    if (buildMode.craft[i].ItemCraft == null)
-                        buildMode.craft.RemoveAt(i);
-                }
-                Built = true;
-                buildMode.ButtonCraft.SetActive(false);
 
-                buildMode.ChangeMaterial();
-                if (!BuildStatic)
+                if (transform.GetChild(0).GetChild(i).childCount != 0)
                 {
-                    if (Interactive)
+                    for (int l = 0; l < transform.GetChild(0).GetChild(i).childCount; l++)
                     {
-                        Item.InterectiveChangeParamsOrDestroy();
+                        transform.GetChild(0).GetChild(i).GetChild(l).gameObject.SetActive(true);
                     }
-                    buildMode.CraftItemBuildNowDinamic = null;
-                    rigid.isKinematic = true;
-                    Item.CheckOFToggle();
-                    //indicator.IndicatorSetActive(false, 1);
-                    //indicator.IndicatorSetActive(true, 2);
-                    if (obstacle)
-                    {
-                        obstacle.enabled = true;
-                    }
-                }
-                else
-                {
-                    buildMode.craft.Remove(buildMode.craft.Find(obj => obj.ItemCraft.name == gameObject.name));
-                    indicator.IndicatorSetActive(false, 0);
-                    if (NavmeshLinkWindow.Length != 0)
-                    {
-                        for (int i = 0; i < NavmeshLinkWindow.Length; i++)
-                        {
-                            NavmeshLinkWindow[i].SetActive(false);
-                        }
-                    }
-                    transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
                 }
             }
+
+            if (gameObject.layer == 2)
+            {
+                gameObject.layer = LayerMask.NameToLayer("Default");
+            }
+            for (var i = buildMode.craft.Count - 1; i > -1; i--)
+            {
+                if (buildMode.craft[i].ItemCraft == null)
+                    buildMode.craft.RemoveAt(i);
+            }
+            Built = true;
+            buildMode.ButtonCraft.SetActive(false);
+
+            buildMode.ChangeMaterial();
+            if (!BuildStatic)
+            {
+                if (Interactive)
+                {
+                    Item.InterectiveChangeParamsOrDestroy();
+                }
+                buildMode.CraftItemBuildNowDinamic = null;
+                rigid.isKinematic = true;
+                Item.CheckOFToggle();
+                //indicator.IndicatorSetActive(false, 1);
+                //indicator.IndicatorSetActive(true, 2);
+                if (obstacle)
+                {
+                    obstacle.enabled = true;
+                }
+            }
+            else
+            {
+                buildMode.craft.Remove(buildMode.craft.Find(obj => obj.ItemCraft.name == gameObject.name));
+                indicator.IndicatorSetActive(false, 0);
+                if (NavmeshLinkWindow.Length != 0)
+                {
+                    for (int i = 0; i < NavmeshLinkWindow.Length; i++)
+                    {
+                        NavmeshLinkWindow[i].SetActive(false);
+                    }
+                }
+                transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+            }
+
         }
     }
     private void OnTriggerEnter (Collider other)
@@ -568,9 +529,7 @@ public class CraftItem : MonoBehaviour
         health.MySelfDestroyer();
 
         AddExposionForce(transform.position);
-        mobaCamera.duration = 0.8f;
-        mobaCamera.power = 0.7f;
-        mobaCamera.shouldShake = true;
+
         // indicator.IndicatorSetActive(false, 0);
     }
 

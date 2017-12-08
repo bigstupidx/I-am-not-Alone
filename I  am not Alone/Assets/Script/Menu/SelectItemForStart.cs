@@ -26,30 +26,59 @@ public class SelectItemForStart : MonoBehaviour
     {
         if (EasyDifficulty)
         {
+            if (PlayerPrefs.HasKey("EasyDifficulty"))
+            {
 
+                GetLevelWave(PlayerPrefs.GetString("EasyDifficulty"), EasyDifficultyText, 1);
 
-            GetLevelWave(PlayerPrefs.GetString("EasyDifficulty"), EasyDifficultyText, 1);
-
+            }
+            else
+            {
+                PlayerPrefs.SetString("EasyDifficulty", "0");
+            }
         }
         if (MiddleDifficulty)
         {
 
-            GetLevelWave(PlayerPrefs.GetString("MiddleDifficulty"), MiddleDifficultyText, 2);
+            if ((PlayerPrefs.HasKey("MiddleDifficulty")))
+            {
+                GetLevelWave(PlayerPrefs.GetString("MiddleDifficulty"), MiddleDifficultyText, 2);
+            }
+            else
+            {
+                PlayerPrefs.SetString("MiddleDifficulty", "0");
+            }
 
         }
         if (HardDifficulty)
         {
 
-            GetLevelWave(PlayerPrefs.GetString("HardDifficulty"), HardDifficultyText, 3);
+            if ((PlayerPrefs.HasKey("HardDifficulty")))
+            {
+                GetLevelWave(PlayerPrefs.GetString("HardDifficulty"), HardDifficultyText, 3);
+            }
+            else
+            {
+                PlayerPrefs.SetString("HardDifficulty", "0");
+            }
 
         }
         if (VeryHardDifficulty)
         {
 
-            GetLevelWave(PlayerPrefs.GetString("VeryHardDifficulty"), VeryHardDifficultyText, 3);
+            if ((PlayerPrefs.HasKey("VeryHardDifficulty")))
+            {
+                GetLevelWave(PlayerPrefs.GetString("VeryHardDifficulty"), VeryHardDifficultyText, 3);
+            }
+            else
+            {
+                PlayerPrefs.SetString("VeryHardDifficulty", "0");
+            }
 
 
         }
+
+        PlayerPrefs.Save();
         health = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<PlayerHealth>();
         checkWeapon = GameObject.Find("WeaponController").GetComponent<CheckInWeaponAndCraft>();
         tog = GetComponent<Toggle>();

@@ -59,6 +59,8 @@ public class WaveManager : MonoBehaviour
     PlayableDirector m_playebleDirector;
     int wavenumberForText;
     AudioSource source;
+    public GameObject Winner;
+    public GameObject dualjoy;
     // Use this for initialization
     private void Start ()
     {
@@ -170,12 +172,14 @@ public class WaveManager : MonoBehaviour
                     //{
                     levelWave++;
                     ghostCreater.UpdateLevelWaverPrefs();
+
                     //  }
                     GhostCounter.text = "0";
-                    if (levelWave > ghostCreater.wave.Count - 1)
+                    if (levelWave > ghostCreater.wave.Count)
                     {
 
-                        Debug.Log("Survive");
+                        dualjoy.SetActive(false);
+                        Winner.SetActive(true);
                     }
                     switchMode.BuildMOdeMenu(true);
                     waveLevelUp = false;

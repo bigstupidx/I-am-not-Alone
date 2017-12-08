@@ -33,32 +33,24 @@ public class PauseManager : MonoBehaviour
         Pause();
 
     }
+    public void HINTSOFF ()
+    {
+        Time.timeScale = 1;
+    }
 
     public void Pause ()
     {
         Time.timeScale = Time.timeScale == 0 ? 1 : 0;
-        Lowpass();
 
-    }
 
-    void Lowpass ()
-    {
-        //if (Time.timeScale == 0)
-        //{
-        //    paused.TransitionTo(.01f);
-        //}
 
-        //else
-
-        //{
-        //    unpaused.TransitionTo(.01f);
-        //}
     }
 
     public void Quit ()
     {
         loadPanel.enabled = true;
         StartCoroutine(Load("Menu"));
+        PlayerPrefs.Save();
         Time.timeScale = 1;
         //if (Advertisement.isSupported)
         //{
