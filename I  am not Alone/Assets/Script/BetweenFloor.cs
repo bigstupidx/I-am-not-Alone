@@ -33,9 +33,9 @@ public class BetweenFloor : MonoBehaviour
 
         for (int i = 0; i < FurnitureSecond.childCount; i++)
         {
-            if (FurnitureSecond.GetChild(0).GetComponent<CraftItem>())
+            if (FurnitureSecond.GetChild(i).GetComponent<CraftItem>())
             {
-                FurnitureSecond.GetChild(0).GetComponent<CraftItem>().ChangeActiveParams(b);
+                FurnitureSecond.GetChild(i).GetComponent<CraftItem>().ChangeActiveParams(b);
             }
         }
 
@@ -84,7 +84,7 @@ public class BetweenFloor : MonoBehaviour
             Floor.SetActive(false);
             WallTransparent.SetActive(true);
             RenderObjectToFloor(false);
-            //  RenderObjectToFloor(false, "Ignore Raycast");
+
             FloorHowTrue.SetActive(false);
         }
         if (other.CompareTag("Things"))

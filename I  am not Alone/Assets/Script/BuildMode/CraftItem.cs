@@ -62,13 +62,14 @@ public class CraftItem : MonoBehaviour
     public int level;
     public bool Built;
 
+    public bool ItemDown;
     public Material[] materials;
     [HideInInspector]
     public Transform pointForMenu;
     public TurretsAi turretsAi;
     [HideInInspector]
     public Rigidbody rigid;
-
+    public int floor;
     public SelectContructionForCreate Item;
 
     [HideInInspector]
@@ -76,7 +77,7 @@ public class CraftItem : MonoBehaviour
 
     public GameObject[] NavmeshLinkWindow;
 
-    public GameObject[] MeshSecondHideOBject;
+    public Renderer[] MeshSecondHideOBject;
 
 
 
@@ -93,6 +94,7 @@ public class CraftItem : MonoBehaviour
 
     private GameObject player;
     private NavMeshObstacle obstacle;
+
 
     // Use this for initialization
     void Start ()
@@ -203,7 +205,7 @@ public class CraftItem : MonoBehaviour
             }
             try
             {
-                buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject));
+                buildMode.craft.Add(new CraftParams(this.gameObject, indicator._targetSpriteOfPool.gameObject, floor));
             }
             catch (System.Exception)
             {
@@ -231,8 +233,10 @@ public class CraftItem : MonoBehaviour
         else
         {
 
-            Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>());
-
+            if (ItemDown)
+            {
+                Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>());
+            }
             rigid.isKinematic = false;
         }
         Built = false;
@@ -551,20 +555,20 @@ public class CraftItem : MonoBehaviour
             }
             if (hit.GetComponent<Rigidbody>() != null)
             {
-                if (hit.CompareTag("AI"))
-                {
-                    hit.GetComponent<ZombieLevel1>().agent.enabled = false;
-                    hit.GetComponent<ZombieLevel1>().RigidExplosion = true;
+                //if (hit.CompareTag("AI"))
+                //{
+                //    hit.GetComponent<ZombieLevel1>().agent.enabled = false;
+                //    hit.GetComponent<ZombieLevel1>().RigidExplosion = true;
 
-                    hit.GetComponent<Rigidbody>().isKinematic = false;
-                    hit.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, centre, ExplosionRadios, 1, ForceMode.Impulse);
+                //    hit.GetComponent<Rigidbody>().isKinematic = false;
+                //    hit.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, centre, ExplosionRadios, 1, ForceMode.Impulse);
 
-                }
-                else
-                {
+                //}
+                //else
+                //{
 
-                }
-                hit.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, centre, ExplosionRadios, 1, ForceMode.Impulse);
+                //}
+                //hit.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, centre, ExplosionRadios, 1, ForceMode.Impulse);
 
             }
         }
@@ -577,7 +581,7 @@ public class CraftItem : MonoBehaviour
 
             for (int i = 0; i < MeshSecondHideOBject.Length; i++)
             {
-                MeshSecondHideOBject[i].SetActive(b);
+                MeshSecondHideOBject[i].enabled = b;
             }
 
         }

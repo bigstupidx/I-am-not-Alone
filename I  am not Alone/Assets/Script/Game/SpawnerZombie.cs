@@ -7,6 +7,7 @@ public class SpawnerZombie : MonoBehaviour
 {
     public int spawnerRadius;
     PoolingSystem poolsistem;
+
     void OnDrawGizmosSelected ()
     {
         Gizmos.color = Color.green;
@@ -30,12 +31,13 @@ public class SpawnerZombie : MonoBehaviour
             randomLoc3d = hit.position;
         }
         // Instantiate and make the enemy a child of this object
-       
-            GameObject o = poolsistem.InstantiateAPS(prefZombie.name, randomLoc3d, Quaternion.identity);
-            o.GetComponent<ZombieLevel1>()._sky = sky;
-            o.GetComponent<ZombieLevel1>().agent.avoidancePriority += Random.Range(-20, +20);
 
-      
+        GameObject o = poolsistem.InstantiateAPS(prefZombie.name, randomLoc3d, Quaternion.identity);
+
+        o.GetComponent<ZombieLevel1>()._sky = sky;
+        o.GetComponent<ZombieLevel1>().agent.avoidancePriority += Random.Range(-20, +20);
+
+
 
 
     }

@@ -25,6 +25,10 @@ public class HouseInside : MonoBehaviour
             //        betweenFloor.RenderObjectToFloor(false, "Ignore Raycast");
             betweenFloor.RenderObjectToFloor(false);
         }
+        if (other.CompareTag(Tags.AI))
+        {
+            other.GetComponent<Rigidbody>().detectCollisions = false;
+        }
     }
     private void OnTriggerExit (Collider other)
     {
@@ -41,6 +45,10 @@ public class HouseInside : MonoBehaviour
 
 
 
+        }
+        if (other.CompareTag(Tags.AI))
+        {
+            other.GetComponent<Rigidbody>().detectCollisions = true;
         }
     }
 }

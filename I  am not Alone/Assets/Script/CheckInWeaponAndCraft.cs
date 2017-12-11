@@ -83,7 +83,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
             GameObject box = pool.InstantiateAPS("BoxWithWeapon", pos, Quaternion.identity);
             box.transform.GetChild(0).GetComponent<BoxWeapon>().Materials = true;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().textGuiPanelGoods = buildMode.panelGoods[_makeMaterial].transform;
-            box.transform.GetChild(0).GetComponent<BoxWeapon>().level = Random.Range(0, 4);
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().level = Random.Range(2, 5);
             box.transform.GetChild(0).GetComponent<BoxWeapon>().StartGoods = false;
         }
         catch (System.Exception)

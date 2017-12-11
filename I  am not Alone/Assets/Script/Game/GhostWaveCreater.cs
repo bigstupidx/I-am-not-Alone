@@ -47,7 +47,7 @@ public class GhostWaveCreater : MonoBehaviour
         }
     }
 
-    public void UpdateLevelWaverPrefs ()
+    public void UpdateLevelWaverPrefs (int levelWave)
     {
         if (EasyDifficulty)
         {
@@ -58,14 +58,14 @@ public class GhostWaveCreater : MonoBehaviour
             {
                 int i = int.Parse(PlayerPrefs.GetString("EasyDifficulty"));
 
-                if (i >= int.Parse(PlayerPrefs.GetString("EasyDifficulty")))
+                if (i <= levelWave)
                 {
-                    i++;
-                    if (i == 10)
+
+                    if (levelWave == 10)
                     {
                         checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + 7000).ToString();
                     }
-                    PlayerPrefs.SetString("EasyDifficulty", i.ToString());
+                    PlayerPrefs.SetString("EasyDifficulty", levelWave.ToString());
                     PlayerPrefs.Save();
 
 
@@ -80,13 +80,14 @@ public class GhostWaveCreater : MonoBehaviour
             {
 
                 int i = int.Parse(PlayerPrefs.GetString("MiddleDifficulty"));
-                if (i >= int.Parse(PlayerPrefs.GetString("MiddleDifficulty")))
+                if (i <= levelWave)
                 {
-                    if (i == 10)
+
+                    if (levelWave == 10)
                     {
                         checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + 14000).ToString();
                     }
-                    PlayerPrefs.SetString("MiddleDifficulty", i++.ToString());
+                    PlayerPrefs.SetString("MiddleDifficulty", levelWave.ToString());
                     PlayerPrefs.Save();
                 }
             }
@@ -99,13 +100,14 @@ public class GhostWaveCreater : MonoBehaviour
             if (PlayerPrefs.HasKey("HardDifficulty"))
             {
                 int i = int.Parse(PlayerPrefs.GetString("HardDifficulty"));
-                if (i >= int.Parse(PlayerPrefs.GetString("HardDifficulty")))
+                if (i <= levelWave)
                 {
-                    if (i == 10)
+
+                    if (levelWave == 10)
                     {
                         checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + 21000).ToString();
                     }
-                    PlayerPrefs.SetString("HardDifficulty", i++.ToString());
+                    PlayerPrefs.SetString("HardDifficulty", levelWave.ToString());
                     PlayerPrefs.Save();
                 }
 
@@ -118,13 +120,14 @@ public class GhostWaveCreater : MonoBehaviour
             if (PlayerPrefs.HasKey("VeryHardDifficulty"))
             {
                 int i = int.Parse(PlayerPrefs.GetString("VeryHardDifficulty"));
-                if (i >= int.Parse(PlayerPrefs.GetString("VeryHardDifficulty")))
+                if (i <= levelWave)
                 {
-                    if (i == 10)
+
+                    if (levelWave == 10)
                     {
                         checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + 30000).ToString();
                     }
-                    PlayerPrefs.SetString("VeryHardDifficulty", i++.ToString());
+                    PlayerPrefs.SetString("VeryHardDifficulty", levelWave.ToString());
                     PlayerPrefs.Save();
                 }
             }

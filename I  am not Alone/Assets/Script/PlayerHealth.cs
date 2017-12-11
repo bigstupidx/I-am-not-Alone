@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     public float CurHelth = 100.0f;
     public Image HealthPlayer;
     public GameObject imageGameOver;
+    public GameObject DualJoy;
     public Image damageImage;
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
     bool damaged;
@@ -62,7 +63,7 @@ public class PlayerHealth : MonoBehaviour
             if (transform.CompareTag("Player"))
             {
                 imageGameOver.SetActive(true);
-
+                DualJoy.SetActive(false);
                 Time.timeScale = 0;
 
             }

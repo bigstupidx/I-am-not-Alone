@@ -95,7 +95,7 @@ public class WaveManager : MonoBehaviour
         SkyParamsWave();
 
         switchMode.BuildMOdeMenu(true);
-
+        Debug.Log(ghostCreater.wave.Count);
     }
 
     public void SkyParamsWave ()
@@ -107,7 +107,7 @@ public class WaveManager : MonoBehaviour
 
             if (night)
             {
-                //  _startObject.StartRandomSituation(levelWave);
+
                 day = true;
                 waveLevelUp = true;
                 _lskyTod.dayInSeconds = ghostCreater.wave[levelWave].Night * 2;
@@ -126,10 +126,7 @@ public class WaveManager : MonoBehaviour
                     {
                         lightAllScene[i].GetComponent<Light>().enabled = true;
                     }
-                    //else
-                    //{
-                    //    lightAllScene[i].GetComponent<Renderer>().enabled = true;
-                    //}
+
                 }
                 for (int i = 0; i < ghostCreater.wave[levelWave].countZombie.Count; i++)
                 {
@@ -137,10 +134,7 @@ public class WaveManager : MonoBehaviour
 
                 }
             }
-            //if (GhostCounter.text == "0")
-            //{
-            //    ghostCreater.wave[levelWave].Night = 2;
-            //}
+
         }
 
 
@@ -148,6 +142,7 @@ public class WaveManager : MonoBehaviour
         {
             if (day)
             {
+
 
                 for (var i = lightAllScene.Count - 1; i > -1; i--)
                 {
@@ -160,27 +155,18 @@ public class WaveManager : MonoBehaviour
                     {
                         lightAllScene[i].GetComponent<Light>().enabled = false;
                     }
-                    //else
-                    //{
-                    //lightAllScene[i].GetComponent<Renderer>().enabled = false;
-                    //}
+
                 }
                 if (waveLevelUp)
                 {
 
-                    //if (!harfMode)
-                    //{
+
                     levelWave++;
-                    ghostCreater.UpdateLevelWaverPrefs();
+                    ghostCreater.UpdateLevelWaverPrefs(levelWave);
 
-                    //  }
+
                     GhostCounter.text = "0";
-                    if (levelWave > ghostCreater.wave.Count)
-                    {
 
-                        dualjoy.SetActive(false);
-                        Winner.SetActive(true);
-                    }
                     switchMode.BuildMOdeMenu(true);
                     waveLevelUp = false;
                     _weaponcraft.PlusAndUpdateMoneyPlayer();
@@ -194,9 +180,11 @@ public class WaveManager : MonoBehaviour
                 if (startWave)
                 {
 
+
                     waveParams.Clear();
                     GenerateParamsWave(levelWave);
                     startWave = false;
+
                 }
             }
         }
@@ -208,10 +196,21 @@ public class WaveManager : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+        if (levelWave >= ghostCreater.wave.Count)
+        {
 
-        SkyParamsWave();
+            dualjoy.SetActive(false);
+            Winner.SetActive(true);
+        }
+        else
+        {
+            SkyParamsWave();
 
-        CreatePrefab(levelWave);
+
+            CreatePrefab(levelWave);
+
+
+        }
         //    HardModeCreatePreafab(wave.Count - 1);
 
     }
@@ -226,7 +225,7 @@ public class WaveManager : MonoBehaviour
             {
 
 
-                waveParams.Add(new WaveParams((ghostCreater.wave[w].Night - 60) / ghostCreater.wave[w].countZombie[i]));
+                waveParams.Add(new WaveParams((ghostCreater.wave[w].Night / 3) / ghostCreater.wave[w].countZombie[i]));
 
 
             }
@@ -234,7 +233,7 @@ public class WaveManager : MonoBehaviour
 
 
 
-            NightTime = ghostCreater.wave[w].Night - 60.0f;
+            NightTime = ghostCreater.wave[w].Night / 3;
 
 
         }

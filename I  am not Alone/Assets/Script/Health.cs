@@ -28,7 +28,7 @@ public class Health : MonoBehaviour
 
     [Space(15)]
     [Header("For Ai")]
-    public GameObject[] enablesBoody;
+
     public GameObject patAi1;
     public GameObject patAi2;
 
@@ -64,6 +64,8 @@ public class Health : MonoBehaviour
     PlayableDirector m_director;
     float patrons;
     bool createBoxWeapon;
+
+
     private void Start ()
     {
 
@@ -116,13 +118,7 @@ public class Health : MonoBehaviour
                 patAi2.SetActive(true);
             }
             isdead = false;
-            if (enablesBoody.Length != 0)
-            {
-                for (int i = 0; i < enablesBoody.Length; i++)
-                {
-                    enablesBoody[i].SetActive(true);
-                }
-            }
+
         }
     }
 

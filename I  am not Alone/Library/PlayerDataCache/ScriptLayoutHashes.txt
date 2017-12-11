@@ -164,7 +164,7 @@ a2efb0db652b8114d1ae7dd9a600d626 Assembly-CSharp-firstpass.dll:UnityStandardAsse
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:Facebook.Unity.Example.ConsoleBase
 ad137559fc4480582f3cc0f36e6aaac3 Assembly-CSharp.dll:.DoneCameraMovving
 fe76270bd84ec3b6f2f6f92c69cf69da Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.AxisTouchButton
-4ead798b7697a8bb9913eafd4d8a1bff Assembly-CSharp.dll:.CraftItem
+db6ce70b8f7c9b9e69f3f5d6e55e913f Assembly-CSharp.dll:.CraftItem
 8c282e8c641831ff10fe26724ee744ae Assembly-CSharp.dll:Lean.Localization.LeanLocalization
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ChildToggleEnables
 92a14d86afe9220324fbf683418122c5 Assembly-CSharp.dll:.BoxWeapon
@@ -245,10 +245,10 @@ a8796ecdc9d5c260bbe32f30c4b10708 Assembly-CSharp-firstpass.dll:UnityStandardAsse
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.DbGame
 225599eea93dbe4a9c9cdf2f7b034c09 Assembly-CSharp.dll:.TurretsAi
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:Facebook.Unity.Example.AppInvites
-8e083e8ed52d6da16ad6db704b1195f2 Assembly-CSharp.dll:.Health
+b298c6bdc6d116289065eace477eb3ba Assembly-CSharp.dll:.Health
 c3ff20aa7aa541912d1c77482f506f49 Assembly-CSharp.dll:.SelectionWeaponForPC
 44e07882f930b0d3f559a26b3c6e0c65 Assembly-CSharp.dll:.GameObjectScaled
-6acf0fce47ca44ba6a3b33a4d6f723e6 Assembly-CSharp.dll:.PlayerHealth
+93d8d894bd4bb4550af8fdb5e3a28612 Assembly-CSharp.dll:.PlayerHealth
 36167ef80c8edf815a370ba7e4bd816a Assembly-CSharp.dll:.BulletSystem
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UnityStandardAssets.Utility.FPSCounter
 f9851e8a4dacab741547624c4963b70e Assembly-CSharp.dll:.Oscillator

@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: b1a5e04ae51004842aba06704a6c2903
 ModelImporter:
-  serializedVersion: 21
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: Chest
     100002: chestProxy_geo
@@ -478,10 +478,12 @@ ModelImporter:
     7400004: HumanoidWalkLEFT
     7400006: HumanoidWalkRIGHT
     9500000: //RootNode
+  externalObjects: {}
   materials:
     importMaterials: 0
     materialName: 1
     materialSearch: 2
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -494,6 +496,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 0
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -523,7 +526,7 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 1
       mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      bodyMask: 01000000010000000100000001000000010000000000000000000000000000000000000001000000010000000000000000000000
       curves: []
       events: []
       transformMask: []
@@ -551,7 +554,7 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 1
       mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      bodyMask: 01000000010000000100000001000000010000000000000000000000000000000000000001000000010000000000000000000000
       curves: []
       events: []
       transformMask: []
@@ -579,7 +582,7 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 1
       mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      bodyMask: 01000000010000000100000001000000010000000000000000000000000000000000000001000000010000000000000000000000
       curves: []
       events: []
       transformMask: []
@@ -607,7 +610,7 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 1
       mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      bodyMask: 01000000010000000100000001000000010000000000000000000000000000000000000001000000010000000000000000000000
       curves: []
       events: []
       transformMask: []

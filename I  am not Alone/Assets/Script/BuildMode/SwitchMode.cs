@@ -10,12 +10,12 @@ public class CraftParams
     public GameObject ItemCraft;
     public GameObject PanelUIForCraft;
 
-
-    public CraftParams (GameObject item, GameObject panel)
+    public int Floor;
+    public CraftParams (GameObject item, GameObject panel, int floor)
     {
         this.ItemCraft = item;
         this.PanelUIForCraft = panel;
-
+        Floor = floor;
     }
 
 
@@ -104,51 +104,73 @@ public class SwitchMode : MonoBehaviour
 
         if (l)
         {
-            //for (var i = craft.Count - 1; i > -1; i--)
-            //{
-            //    if (craft[i].ItemCraft == null)
-            //        craft.RemoveAt(i);
-            //}
+            for (var i = craft.Count - 1; i > -1; i--)
+            {
+                if (craft[i].ItemCraft == null)
+                    craft.RemoveAt(i);
+            }
+            for (int i = 0; i < craft.Count; i++)
+            {
+                if (craft[i].Floor == 2 & betweenFloor.FloorCraft)
+                {
+                    craft[i].ItemCraft.SetActive(visible);
+                    craft[i].PanelUIForCraft.SetActive(visible);
+                }
+                else
+                {
+                    if (craft[i].Floor == 1 & betweenFloor.FloorCraft)
+                    {
+                        craft[i].ItemCraft.SetActive(false);
+                        craft[i].PanelUIForCraft.SetActive(false);
+                    }
 
-            //for (int i = 0; i < craft.Count; i++)
-            //{
-            //    craft[i].ItemCraft.SetActive(visible);
-            //    craft[i].PanelUIForCraft.SetActive(visible);
+                }
+
+                if (craft[i].Floor == 1 & !betweenFloor.FloorCraft)
+                {
+                    craft[i].ItemCraft.SetActive(visible);
+                    craft[i].PanelUIForCraft.SetActive(visible);
+                }
+                else
+                {
+                    if (craft[i].Floor == 2 & !betweenFloor.FloorCraft)
+                    {
+                        craft[i].ItemCraft.SetActive(false);
+                        craft[i].PanelUIForCraft.SetActive(false);
+                    }
+                }
 
 
-            //}
 
 
 
 
 
 
-            //if (CraftItemBuildNowDinamic != null & !visible)
-            //{
-            //    CraftItemBuildNowDinamic.Item.CheckOFToggle();
-            //    CraftItemBuildNowDinamic.gameObject.DestroyAPS();
-            //    CraftItemBuildNowDinamic.GetComponent<Indicator>().IndicatorSetActive(false, 0);
+                if (CraftItemBuildNowDinamic != null & !visible)
+                {
+                    CraftItemBuildNowDinamic.Item.CheckOFToggle();
+                    CraftItemBuildNowDinamic.gameObject.DestroyAPS();
+                    CraftItemBuildNowDinamic.GetComponent<Indicator>().IndicatorSetActive(false, 0);
 
-            //}
-
+                }
+            }
         }
         else
         {
-            //for (var i = craft.Count - 1; i > -1; i--)
-            //{
-            //    if (craft[i].ItemCraft == null)
-            //        craft.RemoveAt(i);
-            //}
-            //for (int i = 0; i < craft.Count; i++)
-            //{
+            for (var i = craft.Count - 1; i > -1; i--)
+            {
+                if (craft[i].ItemCraft == null)
+                    craft.RemoveAt(i);
+            }
+            for (int i = 0; i < craft.Count; i++)
+            {
 
-            //    craft[i].ItemCraft.SetActive(false);
-            //    craft[i].PanelUIForCraft.SetActive(false);
-
-
-            //}
+                craft[i].ItemCraft.SetActive(false);
+                craft[i].PanelUIForCraft.SetActive(false);
 
 
+            }
 
 
 
@@ -156,13 +178,15 @@ public class SwitchMode : MonoBehaviour
 
 
 
-            //if (CraftItemBuildNowDinamic != null & !visible)
-            //{
-            //    CraftItemBuildNowDinamic.Item.CheckOFToggle();
-            //    CraftItemBuildNowDinamic.gameObject.DestroyAPS();
-            //    //    CraftItemBuildNowDinamic.GetComponent<Indicator>().IndicatorSetActive(false, 0);
 
-            //}
+
+            if (CraftItemBuildNowDinamic != null & !visible)
+            {
+                CraftItemBuildNowDinamic.Item.CheckOFToggle();
+                CraftItemBuildNowDinamic.gameObject.DestroyAPS();
+                //    CraftItemBuildNowDinamic.GetComponent<Indicator>().IndicatorSetActive(false, 0);
+
+            }
         }
 
 
