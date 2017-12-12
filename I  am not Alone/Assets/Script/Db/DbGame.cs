@@ -1,442 +1,437 @@
-﻿using UnityEngine;
-using System;
-using System.IO;
+﻿//using UnityEngine;
+//using System;
+//using System.IO;
 
-using System.Data;
+//using System.Data;
+//using Mono.Data.Sqlite;
 
+//public class DbGame : MonoBehaviour
+//{
 
-using UnityEngine.SceneManagement;
-using System.Collections.Generic;
-using System.Threading;
-using Mono.Data.Sqlite;
+//    [Space(15)]
 
-public class DbGame : MonoBehaviour
-{
+//    private string connection;
+//    private IDbConnection dbcon;
+//    private IDbCommand dbcmd;
+//    private IDataReader reader;
+//    CheckInScene checkIn;
+//    CheckInWeaponAndCraft checkInWeaponAndCraft;
+//    MyMainMenu mainmenu;
+//    string filepath;
 
-    [Space(15)]
 
-    private string connection;
-    private IDbConnection dbcon;
-    private IDbCommand dbcmd;
-    private IDataReader reader;
-    CheckInScene checkIn;
-    CheckInWeaponAndCraft checkInWeaponAndCraft;
-    MainMenu mainmenu;
-    string filepath;
+//    public void OpenDB (string p)
+//    {
 
+//        // check if file exists in Application.persistentDataPath
 
-    public void OpenDB (string p)
-    {
 
-        // check if file exists in Application.persistentDataPath
+//        //#if UNITY_ANDROID
+//        //  filepath = Application.persistentDataPath + "/" + p;
+//        //#elif UNITY_EDITOR
+//        //        filepath = Application.dataPath + "/" + p;
+//        //#endif
+//        filepath = Application.dataPath + "/" + p;
 
 
-        //#if UNITY_ANDROID
-        //  filepath = Application.persistentDataPath + "/" + p;
-        //#elif UNITY_EDITOR
-        //        filepath = Application.dataPath + "/" + p;
-        //#endif
-        filepath = Application.dataPath + "/" + p;
 
 
 
 
 
 
+//        if (!File.Exists(filepath))
+//        {
 
+//            // if it doesn't ->
+//            // open StreamingAssets directory and load the db -> 
+//            WWW loadDB = new WWW("jar:file://" + Application.dataPath + "!/assets/" + p);
+//            while (!loadDB.isDone) { }
+//            // then save to Application.persistentDataPath
+//            File.WriteAllBytes(filepath, loadDB.bytes);
+//        }
 
-        if (!File.Exists(filepath))
-        {
+//        //open db connection
+//        connection = "URI=file:" + filepath;
 
-            // if it doesn't ->
-            // open StreamingAssets directory and load the db -> 
-            WWW loadDB = new WWW("jar:file://" + Application.dataPath + "!/assets/" + p);
-            while (!loadDB.isDone) { }
-            // then save to Application.persistentDataPath
-            File.WriteAllBytes(filepath, loadDB.bytes);
-        }
+//        dbcon = new SqliteConnection(connection);
+//        dbcon.Open();
+//    }
 
-        //open db connection
-        connection = "URI=file:" + filepath;
 
-        dbcon = new SqliteConnection(connection);
-        dbcon.Open();
-    }
+//    public void GetSceneBought ()
+//    {
+//        checkIn = GetComponent<CheckInScene>();
+//        using (IDbConnection dbconnection = new SqliteConnection(connection))
+//        {
+//            dbconnection.Open();
+//            using (IDbCommand dcm = dbconnection.CreateCommand())
+//            {
 
 
-    public void GetSceneBought ()
-    {
-        checkIn = GetComponent<CheckInScene>();
-        using (IDbConnection dbconnection = new SqliteConnection(connection))
-        {
-            dbconnection.Open();
-            using (IDbCommand dcm = dbconnection.CreateCommand())
-            {
+//                string sqlQuery = String.Format("SELECT SceneName FROM SceneParams");
 
+//                dcm.CommandText = sqlQuery;
+//                using (IDataReader reader = dcm.ExecuteReader())
+//                {
+//                    while (reader.Read())
+//                    {
 
-                string sqlQuery = String.Format("SELECT SceneName FROM SceneParams");
+//                        checkIn.sceneBought.Add(reader.GetString(0));
 
-                dcm.CommandText = sqlQuery;
-                using (IDataReader reader = dcm.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
+//                    }
+//                    dbconnection.Close();
+//                    reader.Close();
+//                }
 
-                        checkIn.sceneBought.Add(reader.GetString(0));
 
-                    }
-                    dbconnection.Close();
-                    reader.Close();
-                }
+//            }
 
+//        }
 
-            }
 
-        }
 
+//    }
+//    public void GetWeaponBought ()
+//    {
 
 
-    }
-    public void GetWeaponBought ()
-    {
+//        checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>();
 
 
-        checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>();
 
+//        using (IDbConnection dbconnection = new SqliteConnection(connection))
+//        {
+//            dbconnection.Open();
+//            using (IDbCommand dcm = dbconnection.CreateCommand())
+//            {
 
 
-        using (IDbConnection dbconnection = new SqliteConnection(connection))
-        {
-            dbconnection.Open();
-            using (IDbCommand dcm = dbconnection.CreateCommand())
-            {
+//                string sqlQuery = String.Format("SELECT NameWeapon , LevelWeapon, Category  FROM PlayerItemParams");
 
+//                dcm.CommandText = sqlQuery;
+//                using (IDataReader reader = dcm.ExecuteReader())
+//                {
+//                    while (reader.Read())
+//                    {
 
-                string sqlQuery = String.Format("SELECT NameWeapon , LevelWeapon, Category  FROM PlayerItemParams");
 
-                dcm.CommandText = sqlQuery;
-                using (IDataReader reader = dcm.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
+//                        checkInWeaponAndCraft.WeaponBought.Add(new ParamsDbBoughtWeaponAndCraftItem(reader.GetString(0), reader.GetInt32(1), reader.GetInt32(2)));
 
 
-                        checkInWeaponAndCraft.WeaponBought.Add(new ParamsDbBoughtWeaponAndCraftItem(reader.GetString(0), reader.GetInt32(1), reader.GetInt32(2)));
+//                    }
+//                    dbconnection.Close();
+//                    reader.Close();
+//                }
 
 
-                    }
-                    dbconnection.Close();
-                    reader.Close();
-                }
+//            }
 
+//        }
 
-            }
 
-        }
 
+//    }
+//    public void GetCraftItemBought ()
+//    {
 
 
-    }
-    public void GetCraftItemBought ()
-    {
+//        checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>();
 
 
-        checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>();
 
+//        using (IDbConnection dbconnection = new SqliteConnection(connection))
+//        {
+//            dbconnection.Open();
+//            using (IDbCommand dcm = dbconnection.CreateCommand())
+//            {
 
 
-        using (IDbConnection dbconnection = new SqliteConnection(connection))
-        {
-            dbconnection.Open();
-            using (IDbCommand dcm = dbconnection.CreateCommand())
-            {
+//                string sqlQuery = String.Format("SELECT NameCraft , LevelItem  FROM PlayerCraftItem");
 
+//                dcm.CommandText = sqlQuery;
+//                using (IDataReader reader = dcm.ExecuteReader())
+//                {
+//                    while (reader.Read())
+//                    {
 
-                string sqlQuery = String.Format("SELECT NameCraft , LevelItem  FROM PlayerCraftItem");
 
-                dcm.CommandText = sqlQuery;
-                using (IDataReader reader = dcm.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
+//                        checkInWeaponAndCraft.CraftItemBought.Add(new ParamsDbBoughtWeaponAndCraftItem(reader.GetString(0), reader.GetInt32(1), 0));
 
 
-                        checkInWeaponAndCraft.CraftItemBought.Add(new ParamsDbBoughtWeaponAndCraftItem(reader.GetString(0), reader.GetInt32(1), 0));
+//                    }
+//                    dbconnection.Close();
+//                    reader.Close();
+//                }
 
 
-                    }
-                    dbconnection.Close();
-                    reader.Close();
-                }
+//            }
 
+//        }
 
-            }
 
-        }
 
+//    }
 
+//    public void InsertDBSceneName (string sceneName)
+//    {
 
-    }
 
-    public void InsertDBSceneName (string sceneName)
-    {
 
 
+//        using (IDbConnection dbConnection = new SqliteConnection(connection))
+//        {
 
+//            dbConnection.Open();
+//            using (IDbCommand dbCmd = dbConnection.CreateCommand())
+//            {
+//                string sqlQuery = String.Format("INSERT INTO SceneParams VALUES(\"{0}\")", sceneName);
 
-        using (IDbConnection dbConnection = new SqliteConnection(connection))
-        {
+//                dbCmd.CommandText = sqlQuery;
+//                dbCmd.ExecuteScalar();
+//                dbConnection.Close();
 
-            dbConnection.Open();
-            using (IDbCommand dbCmd = dbConnection.CreateCommand())
-            {
-                string sqlQuery = String.Format("INSERT INTO SceneParams VALUES(\"{0}\")", sceneName);
 
-                dbCmd.CommandText = sqlQuery;
-                dbCmd.ExecuteScalar();
-                dbConnection.Close();
 
+//            }
 
 
-            }
+//        }
 
+//    }
 
-        }
+//    public string GetLanguage (string idLanguage)
+//    {
 
-    }
+//        using (IDbConnection dbconnection = new SqliteConnection(connection))
+//        {
+//            dbconnection.Open();
+//            using (IDbCommand dcm = dbconnection.CreateCommand())
+//            {
 
-    public string GetLanguage (string idLanguage)
-    {
 
-        using (IDbConnection dbconnection = new SqliteConnection(connection))
-        {
-            dbconnection.Open();
-            using (IDbCommand dcm = dbconnection.CreateCommand())
-            {
+//                string sqlQuery = String.Format("SELECT  Language  FROM PlayerParams");
 
+//                dcm.CommandText = sqlQuery;
+//                using (IDataReader reader = dcm.ExecuteReader())
+//                {
+//                    while (reader.Read())
+//                    {
 
-                string sqlQuery = String.Format("SELECT  Language  FROM PlayerParams");
+//                        idLanguage = reader.GetString(0);
 
-                dcm.CommandText = sqlQuery;
-                using (IDataReader reader = dcm.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
+//                    }
+//                    dbconnection.Close();
+//                    reader.Close();
+//                    return idLanguage;
+//                }
 
-                        idLanguage = reader.GetString(0);
 
-                    }
-                    dbconnection.Close();
-                    reader.Close();
-                    return idLanguage;
-                }
+//            }
 
+//        }
 
-            }
 
-        }
+//    }
+//    public void UpdateLanguage (String idLanguage)
+//    {
 
+//        using (IDbConnection dbconnetcion = new SqliteConnection(connection))
+//        {
 
-    }
-    public void UpdateLanguage (String idLanguage)
-    {
+//            dbconnetcion.Open();
+//            using (IDbCommand dcm = dbconnetcion.CreateCommand())
+//            {
 
-        using (IDbConnection dbconnetcion = new SqliteConnection(connection))
-        {
+//                string sqlQuery = String.Format("UPDATE  PlayerParams  SET  Language = \"{0}\"", idLanguage);
 
-            dbconnetcion.Open();
-            using (IDbCommand dcm = dbconnetcion.CreateCommand())
-            {
 
-                string sqlQuery = String.Format("UPDATE  PlayerParams  SET  Language = \"{0}\"", idLanguage);
 
+//                dcm.CommandText = sqlQuery;
 
+//                dcm.ExecuteScalar();
+//                dbconnetcion.Close();
 
-                dcm.CommandText = sqlQuery;
+//            }
 
-                dcm.ExecuteScalar();
-                dbconnetcion.Close();
+//        }
 
-            }
 
-        }
+//    }
+//    public void GetMoney ()
+//    {
 
+//        using (IDbConnection dbconnection = new SqliteConnection(connection))
+//        {
+//            dbconnection.Open();
+//            using (IDbCommand dcm = dbconnection.CreateCommand())
+//            {
 
-    }
-    public void GetMoney ()
-    {
 
-        using (IDbConnection dbconnection = new SqliteConnection(connection))
-        {
-            dbconnection.Open();
-            using (IDbCommand dcm = dbconnection.CreateCommand())
-            {
+//                string sqlQuery = String.Format("SELECT  Money  FROM PlayerParams");
 
+//                dcm.CommandText = sqlQuery;
+//                using (IDataReader reader = dcm.ExecuteReader())
+//                {
+//                    while (reader.Read())
+//                    {
+//                        if (mainmenu = GetComponent<MyMainMenu>())
+//                        {
+//                            mainmenu = GetComponent<MyMainMenu>();
+//                            mainmenu.myMoney.text = reader.GetString(0);
 
-                string sqlQuery = String.Format("SELECT  Money  FROM PlayerParams");
+//                        }
+//                        else if (checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>())
+//                        {
+//                            checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>();
+//                            checkInWeaponAndCraft.MyMoney.text = reader.GetString(0);
+//                        }
 
-                dcm.CommandText = sqlQuery;
-                using (IDataReader reader = dcm.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        if (mainmenu = GetComponent<MainMenu>())
-                        {
-                            mainmenu = GetComponent<MainMenu>();
-                            mainmenu.myMoney.text = reader.GetString(0);
 
-                        }
-                        else if (checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>())
-                        {
-                            checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>();
-                            checkInWeaponAndCraft.MyMoney.text = reader.GetString(0);
-                        }
 
 
+//                    }
+//                    dbconnection.Close();
+//                    reader.Close();
+//                }
 
 
-                    }
-                    dbconnection.Close();
-                    reader.Close();
-                }
+//            }
 
+//        }
 
-            }
 
-        }
 
+//    }
 
+//    public void UpdateMoney (string money)
+//    {
+//        using (IDbConnection dbconnetcion = new SqliteConnection(connection))
+//        {
 
-    }
+//            dbconnetcion.Open();
+//            using (IDbCommand dcm = dbconnetcion.CreateCommand())
+//            {
 
-    public void UpdateMoney (string money)
-    {
-        using (IDbConnection dbconnetcion = new SqliteConnection(connection))
-        {
+//                string sqlQuery = String.Format("UPDATE  PlayerParams  SET  Money = \"{0}\"", money);
 
-            dbconnetcion.Open();
-            using (IDbCommand dcm = dbconnetcion.CreateCommand())
-            {
 
-                string sqlQuery = String.Format("UPDATE  PlayerParams  SET  Money = \"{0}\"", money);
 
+//                dcm.CommandText = sqlQuery;
 
+//                dcm.ExecuteScalar();
+//                dbconnetcion.Close();
 
-                dcm.CommandText = sqlQuery;
+//            }
 
-                dcm.ExecuteScalar();
-                dbconnetcion.Close();
+//        }
 
-            }
 
-        }
 
+//    }
+//    public void InsertDBWeapon (string WeaponName, int level, int category)
+//    {
 
 
-    }
-    public void InsertDBWeapon (string WeaponName, int level, int category)
-    {
 
 
+//        using (IDbConnection dbConnection = new SqliteConnection(connection))
+//        {
 
+//            dbConnection.Open();
+//            using (IDbCommand dbCmd = dbConnection.CreateCommand())
+//            {
+//                string sqlQuery = String.Format("INSERT INTO PlayerItemParams VALUES(\"{0}\",\"{1}\",\"{2}\")", WeaponName, level, category);
 
-        using (IDbConnection dbConnection = new SqliteConnection(connection))
-        {
+//                dbCmd.CommandText = sqlQuery;
+//                dbCmd.ExecuteScalar();
+//                dbConnection.Close();
 
-            dbConnection.Open();
-            using (IDbCommand dbCmd = dbConnection.CreateCommand())
-            {
-                string sqlQuery = String.Format("INSERT INTO PlayerItemParams VALUES(\"{0}\",\"{1}\",\"{2}\")", WeaponName, level, category);
 
-                dbCmd.CommandText = sqlQuery;
-                dbCmd.ExecuteScalar();
-                dbConnection.Close();
 
+//            }
 
 
-            }
+//        }
 
+//    }
+//    public void UpdateDBWeapon (string WeaponName, int level)
+//    {
 
-        }
 
-    }
-    public void UpdateDBWeapon (string WeaponName, int level)
-    {
 
 
+//        using (IDbConnection dbConnection = new SqliteConnection(connection))
+//        {
 
+//            dbConnection.Open();
+//            using (IDbCommand dbCmd = dbConnection.CreateCommand())
+//            {
+//                string sqlQuery = String.Format("UPDATE PlayerItemParams SET   LevelWeapon =\"{1}\"  WHERE NameWeapon =\"{0}\"", WeaponName, level);
 
-        using (IDbConnection dbConnection = new SqliteConnection(connection))
-        {
+//                dbCmd.CommandText = sqlQuery;
+//                dbCmd.ExecuteScalar();
+//                dbConnection.Close();
 
-            dbConnection.Open();
-            using (IDbCommand dbCmd = dbConnection.CreateCommand())
-            {
-                string sqlQuery = String.Format("UPDATE PlayerItemParams SET   LevelWeapon =\"{1}\"  WHERE NameWeapon =\"{0}\"", WeaponName, level);
 
-                dbCmd.CommandText = sqlQuery;
-                dbCmd.ExecuteScalar();
-                dbConnection.Close();
 
+//            }
 
 
-            }
+//        }
 
+//    }
+//    public void InsertDBCraft (string NameCraft, int level)
+//    {
 
-        }
 
-    }
-    public void InsertDBCraft (string NameCraft, int level)
-    {
 
 
+//        using (IDbConnection dbConnection = new SqliteConnection(connection))
+//        {
 
+//            dbConnection.Open();
+//            using (IDbCommand dbCmd = dbConnection.CreateCommand())
+//            {
+//                string sqlQuery = String.Format("INSERT INTO PlayerCraftItem VALUES(\"{0}\",\"{1}\")", NameCraft, level);
 
-        using (IDbConnection dbConnection = new SqliteConnection(connection))
-        {
+//                dbCmd.CommandText = sqlQuery;
+//                dbCmd.ExecuteScalar();
+//                dbConnection.Close();
 
-            dbConnection.Open();
-            using (IDbCommand dbCmd = dbConnection.CreateCommand())
-            {
-                string sqlQuery = String.Format("INSERT INTO PlayerCraftItem VALUES(\"{0}\",\"{1}\")", NameCraft, level);
 
-                dbCmd.CommandText = sqlQuery;
-                dbCmd.ExecuteScalar();
-                dbConnection.Close();
 
+//            }
 
 
-            }
+//        }
 
+//    }
+//    public void UpdateDBCraft (string NameCraft, int level)
+//    {
 
-        }
 
-    }
-    public void UpdateDBCraft (string NameCraft, int level)
-    {
 
 
+//        using (IDbConnection dbConnection = new SqliteConnection(connection))
+//        {
 
+//            dbConnection.Open();
+//            using (IDbCommand dbCmd = dbConnection.CreateCommand())
+//            {
+//                string sqlQuery = String.Format("UPDATE PlayerCraftItem SET   LevelItem =\"{1}\"  WHERE NameCraft =\"{0}\"", NameCraft, level);
 
-        using (IDbConnection dbConnection = new SqliteConnection(connection))
-        {
+//                dbCmd.CommandText = sqlQuery;
+//                dbCmd.ExecuteScalar();
+//                dbConnection.Close();
 
-            dbConnection.Open();
-            using (IDbCommand dbCmd = dbConnection.CreateCommand())
-            {
-                string sqlQuery = String.Format("UPDATE PlayerCraftItem SET   LevelItem =\"{1}\"  WHERE NameCraft =\"{0}\"", NameCraft, level);
 
-                dbCmd.CommandText = sqlQuery;
-                dbCmd.ExecuteScalar();
-                dbConnection.Close();
 
+//            }
 
 
-            }
+//        }
 
-
-        }
-
-    }
-}
+//    }
+//}
 

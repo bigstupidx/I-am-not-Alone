@@ -5,17 +5,19 @@ using UnityEngine;
 public class CheckInScene : MonoBehaviour
 {
 
- 
+
     public Transform grid;
     [HideInInspector]
     public List<string> sceneBought = new List<string>();
-
-    DbGame db;
+    SaveData save;
+ ///   DbGame db;
     void Start ()
     {
-        db = GetComponent<DbGame>();
-        db.OpenDB("DBGame.db");
-        db.GetSceneBought();
+       // db = GetComponent<DbGame>();
+        save = GetComponent<SaveData>();
+        //   db.OpenDB("DBGame.db");
+        save.GetSceneBought();
+       // db.GetSceneBought();
         CheckIn();
     }
 

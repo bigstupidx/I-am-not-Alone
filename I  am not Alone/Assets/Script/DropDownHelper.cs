@@ -12,13 +12,13 @@ public class DropDownHelper : MonoBehaviour
     public Text labelDropDown;
     public Sprite[] flags;
     int dropdownValue;
-    DbGame db;
+    SaveData db;
     string Language;
     // Use this for initialization
     void Start ()
     {
-        db = GetComponent<DbGame>();
-        db.OpenDB("DBGame.db");
+        db = GetComponent<SaveData>();
+        //  db.OpenDB("DBGame.db");
 
         if (!WithOutDroDown)
         {

@@ -95,7 +95,7 @@ public class WaveManager : MonoBehaviour
         SkyParamsWave();
 
         switchMode.BuildMOdeMenu(true);
-        Debug.Log(ghostCreater.wave.Count);
+
     }
 
     public void SkyParamsWave ()

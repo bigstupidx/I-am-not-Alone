@@ -15,16 +15,16 @@ public class PauseManager : MonoBehaviour
     private void Awake ()
     {
         Time.timeScale = 0;
-        //if (Advertisement.isSupported)
-        //{
-        //    Advertisement.Initialize("1557198", false);
+        if (Advertisement.isSupported)
+        {
+            Advertisement.Initialize("1557198", false);
 
 
-        //}
-        //else
-        //{
-        //    Debug.Log("platform is not Supported");
-        //}
+        }
+        else
+        {
+            Debug.Log("platform is not Supported");
+        }
     }
     public void ButtonMenu ()
     {
@@ -52,20 +52,20 @@ public class PauseManager : MonoBehaviour
         StartCoroutine(Load("Menu"));
         PlayerPrefs.Save();
         Time.timeScale = 1;
-        //if (Advertisement.isSupported)
-        //{
-        //    Advertisement.Initialize("1557198", false);
-        //    if (Advertisement.IsReady())
-        //    {
-        //        Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
+        if (Advertisement.isSupported)
+        {
+            Advertisement.Initialize("1557198", false);
+            if (Advertisement.IsReady())
+            {
+                Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
 
-        //    }
+            }
 
-        //}
-        //else
-        //{
-        //    Debug.Log("platform is not Supported");
-        //}
+        }
+        else
+        {
+            Debug.Log("platform is not Supported");
+        }
 
 
     }
@@ -95,28 +95,28 @@ public class PauseManager : MonoBehaviour
 
         }
     }
-    //private void HandleadResult (ShowResult result)
-    //{
-    //    switch (result)
-    //    {
-    //        case ShowResult.Failed:
-    //            Debug.Log("player failde  launch");
-    //            StartCoroutine(Load("Menu"));
-    //            Time.timeScale = 1;
-    //            break;
-    //        case ShowResult.Skipped:
-    //            Debug.Log("player did not fully watch the ad");
-    //            StartCoroutine(Load("Menu"));
-    //            Time.timeScale = 1;
-    //            break;
-    //        case ShowResult.Finished:
-    //            Debug.Log("player Gains +5 gems");
-    //            StartCoroutine(Load("Menu"));
-    //            Time.timeScale = 1;
-    //            break;
-    //        default:
-    //            break;
-    //    }
+    private void HandleadResult (ShowResult result)
+    {
+        switch (result)
+        {
+            case ShowResult.Failed:
+                Debug.Log("player failde  launch");
+                StartCoroutine(Load("Menu"));
+                Time.timeScale = 1;
+                break;
+            case ShowResult.Skipped:
+                Debug.Log("player did not fully watch the ad");
+                StartCoroutine(Load("Menu"));
+                Time.timeScale = 1;
+                break;
+            case ShowResult.Finished:
+                Debug.Log("player Gains +5 gems");
+                StartCoroutine(Load("Menu"));
+                Time.timeScale = 1;
+                break;
+            default:
+                break;
+        }
 
-    //}
+    }
 }

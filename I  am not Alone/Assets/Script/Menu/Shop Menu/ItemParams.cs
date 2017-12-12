@@ -17,16 +17,16 @@ public class ItemParams : MonoBehaviour
     public Image upgradeImage;
     public int category;
     public List<string> coast = new List<string>();
- 
-    
-    DbGame db;
+
+    SaveData save;
+  //  DbGame db;
     // Use this for initialization
     void Start ()
     {
-        db = GameObject.Find("MenuController").GetComponent<DbGame>();
-     
-      
-        db.OpenDB("DBGame.db");
+    //    db = GameObject.Find("MenuController").GetComponent<DbGame>();
+        save = GameObject.Find("MenuController").GetComponent<SaveData>();
+
+        // db.OpenDB("DBGame.db");
         IntializedParams();
 
     }
@@ -72,16 +72,17 @@ public class ItemParams : MonoBehaviour
                 {
                     if (ItemCraft)
                     {
-                    
-                        db.InsertDBCraft(weaponName.text, 1);
+
+                        save.InsertDBCraft(weaponName.text, 1);
                     }
                     else
                     {
-                        db.InsertDBWeapon(weaponName.text, 1, category);
+                        save.InsertDBWeapon(weaponName.text, 1, category);
                     }
                     levelItem += 1;
                     MyMoney.text = (int.Parse(MyMoney.text) - int.Parse(coast.text)).ToString();
-                    db.UpdateMoney(MyMoney.text);
+                    //db.UpdateMoney(MyMoney.text);
+                    save.UpdateMoney(MyMoney.text);
                 }
                 else
                 {
@@ -89,13 +90,14 @@ public class ItemParams : MonoBehaviour
                     MyMoney.text = (int.Parse(MyMoney.text) - int.Parse(coast.text)).ToString();
                     if (!ItemCraft)
                     {
-                        db.UpdateDBWeapon(weaponName.text, levelItem);
+                        save.UpdateDBWeapon(weaponName.text, levelItem);
                     }
                     else
                     {
-                        db.UpdateDBCraft(weaponName.text, levelItem);
+                        save.UpdateDBCraft(weaponName.text, levelItem);
                     }
-                    db.UpdateMoney(MyMoney.text);
+                   // db.UpdateMoney(MyMoney.text);
+                    save.UpdateMoney(MyMoney.text);
                 }
 
 

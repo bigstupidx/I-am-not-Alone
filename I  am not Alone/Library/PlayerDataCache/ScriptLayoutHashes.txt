@@ -24,7 +24,7 @@ a71e89494a00540356e3247bc0ed0342 Assembly-CSharp.dll:UnityEngine.AI.NavMeshLink
 ed5555ea56c76befb50782024bd97019 Assembly-CSharp.dll:.SpawnerZombie
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.Editor.dll:UnityEngine.Advertisements.Editor.Placeholder
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:Facebook.Unity.Example.AppEvents
-aae5dd99b8099c225220b4a88e745a3b Assembly-CSharp.dll:.MainMenu
+aae5dd99b8099c225220b4a88e745a3b Assembly-CSharp.dll:.MyMainMenu
 bb5e75df3b3ee1e5dfc1641b55d97959 Assembly-CSharp.dll:.WeaponController
 047682664feae0abd8a6f10625b5992e Assembly-CSharp.dll:.SelectItemForStart
 8446156bbcdf3147ae0b36ca48dcf240 Assembly-CSharp.dll:.IKtarget
@@ -256,3 +256,7 @@ f9851e8a4dacab741547624c4963b70e Assembly-CSharp.dll:.Oscillator
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:Facebook.Unity.Example.AppRequests
 cd7fddd58cac9d17f8228d17170d58ca Assembly-CSharp.dll:.Indicator
 2817ff6cbb722e28d2c170445fa40813 Assembly-CSharp.dll:.SwitchMode
+a449d8334a8055b1f698a95a11f4ab14 FullSerializer.dll:.RuntimeTestRunner
+ac2e9f654cd6ecff98ef972f6f61de53 Assembly-CSharp.dll:BayatGames.SaveGameFree.Examples.ExampleSaveCustom
+176f67aae4ec7273cfef37fd8876bd9a Assembly-CSharp.dll:BayatGames.SaveGameFree.Examples.SerializerDropdown
+b04ad65eea9de95753eaa4a7ece391bf Assembly-CSharp.dll:.SaveData

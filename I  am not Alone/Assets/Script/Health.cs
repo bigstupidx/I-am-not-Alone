@@ -81,6 +81,7 @@ public class Health : MonoBehaviour
 
 
 
+
         sourceDestraction = GetComponent<AudioSource>();
         if (!sourceDestraction)
         {
@@ -255,6 +256,7 @@ public class Health : MonoBehaviour
                 {
                     checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + MoneyAi).ToString();
                     m_director.Play();
+
                 }
                 patrons = 0;
 

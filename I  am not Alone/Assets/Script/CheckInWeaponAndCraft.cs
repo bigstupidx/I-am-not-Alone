@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class CheckInWeaponAndCraft : MonoBehaviour
 {
     public bool ShopOrNot;
@@ -21,17 +22,22 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     public Text MyMoney;
     PoolingSystem pool;
     SwitchMode buildMode;
-    DbGame db;
+ //   DbGame db;
+    SaveData save;
     GameObject buttonWeapon;
 
     SelectionWeaponForPC selectionWeaponPC;
     void Start ()
     {
-        db = GetComponent<DbGame>();
-        db.OpenDB("DBGame.db");
-        db.GetWeaponBought();
-        db.GetCraftItemBought();
-        db.GetMoney();
+      //  db = GetComponent<DbGame>();
+        save = GetComponent<SaveData>();
+        save.GetMoney();
+        //db.OpenDB("DBGame.db");
+        save.GetWeaponBought();
+        // db.GetWeaponBought();
+        save.GetCraftItemBought();
+        //db.GetCraftItemBought();
+        //db.GetMoney();
         if (ShopOrNot)
         {
             CheckInBoughtItem();
@@ -71,8 +77,8 @@ public class CheckInWeaponAndCraft : MonoBehaviour
 
     public void PlusAndUpdateMoneyPlayer ()
     {
-
-        db.UpdateMoney(MyMoney.text);
+        save.UpdateMoney(MyMoney.text);
+        //  db.UpdateMoney(MyMoney.text);
     }
 
     public void CreateBoxItem (Vector3 pos, int _makeMaterial)
