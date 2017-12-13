@@ -6,7 +6,7 @@ public class IKtarget : MonoBehaviour
 {
 
     public Animator m_anim;
-    public Transform target;
+
     public Transform targetBody;
 
 
@@ -19,7 +19,7 @@ public class IKtarget : MonoBehaviour
 
         body = m_anim.GetBoneTransform(HumanBodyBones.Chest);
         Head = m_anim.GetBoneTransform(HumanBodyBones.Head);
-        body.LookAt(targetBody.position);
+        //    body.LookAt(targetBody.position);
         Head.LookAt(targetBody.position);
         //  Hand = m_anim.GetBoneTransform(HumanBodyBones.LeftHand);
     }
@@ -30,24 +30,15 @@ public class IKtarget : MonoBehaviour
 
         if (!m_anim.GetBool("handAttack"))
         {
-            if (target)
-            {
-                //Quaternion r = Quaternion.LookRotation(target.position);
-                //body.rotation = Quaternion.Lerp(body.rotation, r, Time.deltaTime);
-                body.LookAt(target.position);
 
-                //   Hand.transform.position = handTarget.position;
-            }
-            else
-            {
 
-                targetBody = transform;
-                targetBody.position = transform.position;
-                //Quaternion r = Quaternion.LookRotation(targetBody.position);
-                //body.rotation = Quaternion.Lerp(body.rotation, r, Time.deltaTime/10);
-                body.LookAt(targetBody.position);
-                Head.LookAt(targetBody.position);
-            }
+            //targetBody = transform;
+            //targetBody.position = transform.position;
+            //Quaternion r = Quaternion.LookRotation(targetBody.position);
+            //body.rotation = Quaternion.Lerp(body.rotation, r, Time.deltaTime/10);
+            //   body.LookAt(targetBody.position);
+            Head.LookAt(targetBody.position);
+
 
 
         }

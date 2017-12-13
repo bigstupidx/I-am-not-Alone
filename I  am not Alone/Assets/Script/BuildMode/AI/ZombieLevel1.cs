@@ -40,6 +40,7 @@ public class ZombieLevel1 : MonoBehaviour
     public AudioClip zombieAtack;
     public AudioClip zombieStay;
     public AudioClip zombieDeth;
+
     public Animator m_animator;
     [HideInInspector]
     public AudioSource source;
@@ -114,7 +115,7 @@ public class ZombieLevel1 : MonoBehaviour
         }
         if (timerStop <= 0)
         {
-
+          
 
             if (agent.isStopped)
             {

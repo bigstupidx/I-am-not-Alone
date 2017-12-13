@@ -76,7 +76,7 @@ public class DoneCameraMovving : MonoBehaviour
         }
         else
         {
-            transform.position = Vector3.Lerp(transform.position, cameraToPosMoving, 2 * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, cameraToPosMoving, 5 * Time.deltaTime);
             Vector3 cameraNewPOS = transform.position - cameraToPosMoving;
             if (cameraNewPOS.magnitude < 1f)
             {

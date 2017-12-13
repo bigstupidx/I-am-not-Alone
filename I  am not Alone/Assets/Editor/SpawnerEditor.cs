@@ -9,6 +9,7 @@ public class SpawnerEditor : Editor
     bool showPosition = true;
     string status = "Select a GameObject";
     GhostWaveCreater waveManager;
+    int allCount;
     // Use this for initialization
     private void OnEnable ()
     {
@@ -33,6 +34,8 @@ public class SpawnerEditor : Editor
                 {
                     status = "Wave ";
                     GUILayout.Box("Wave  =" + i);
+
+
                     GUILayout.BeginHorizontal();
 
                     GUILayout.Label("Day , Night");
@@ -58,10 +61,9 @@ public class SpawnerEditor : Editor
 
                     }
 
-
+                    allCount = 0;
                     for (int l = 0; l < waveManager.wave[i].countZombie.Count; l++)
                     {
-
 
                         GUILayout.BeginHorizontal();
                         waveManager.wave[i].countZombie[l] = EditorGUILayout.IntField(waveManager.wave[i].countZombie[l]);
@@ -74,8 +76,9 @@ public class SpawnerEditor : Editor
 
                         }
                         GUILayout.EndHorizontal();
+                        allCount += waveManager.wave[i].countZombie[l];
                     }
-
+                    GUILayout.Box("count ghost  =" + allCount);
                 }
             if (!Selection.activeTransform)
             {

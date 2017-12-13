@@ -12,6 +12,8 @@ public class PauseManager : MonoBehaviour
     public Canvas loadPanel;
     AsyncOperation async;
     public Slider progressSlider;
+    private bool isPaused;
+
     private void Awake ()
     {
         Time.timeScale = 0;
@@ -37,7 +39,15 @@ public class PauseManager : MonoBehaviour
     {
         Time.timeScale = 1;
     }
+    void OnApplicationFocus (bool hasFocus)
+    {
+        Pause();
+    }
 
+    void OnApplicationPause (bool pauseStatus)
+    {
+        Pause();
+    }
     public void Pause ()
     {
         Time.timeScale = Time.timeScale == 0 ? 1 : 0;

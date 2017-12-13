@@ -22,9 +22,9 @@ public class AutoLookonEnemy : MonoBehaviour
 
         //if (TargetAi)
         //{
-        WeaponLook(weapon1, TargetAi);
-        WeaponLook(weapon2, TargetAi);
-        WeaponLook(weapon3, TargetAi);
+        //WeaponLook(weapon1, TargetAi);
+        //WeaponLook(weapon2, TargetAi);
+        //WeaponLook(weapon3, TargetAi);
         //    iktarget.target = TargetAi;
         //}
         //else
@@ -37,48 +37,48 @@ public class AutoLookonEnemy : MonoBehaviour
 
 
     }
-    private void OnTriggerStay (Collider other)
-    {
+    //private void OnTriggerStay (Collider other)
+    //{
 
 
-        if (other.CompareTag("AI"))
-        {
-            TargetAi = other.transform.GetChild(0);
+    //    if (other.CompareTag("AI"))
+    //    {
+    //        TargetAi = other.transform.GetChild(0);
 
-            WeaponLook(weapon1, TargetAi);
-            WeaponLook(weapon2, TargetAi);
-            WeaponLook(weapon3, TargetAi);
+    //        WeaponLook(weapon1, TargetAi);
+    //        WeaponLook(weapon2, TargetAi);
+    //        WeaponLook(weapon3, TargetAi);
 
-        }
-    }
-    private void OnTriggerExit (Collider other)
-    {
+    //    }
+    //}
+    //private void OnTriggerExit (Collider other)
+    //{
 
-        if (other.CompareTag("AI"))
-        {
+    //    if (other.CompareTag("AI"))
+    //    {
 
-            TargetAi = null;
+    //        TargetAi = null;
 
-            iktarget.target = TargetAi;
+    //        iktarget.target = TargetAi;
 
-            WeaponLook(weapon1, iktarget.targetBody);
-            WeaponLook(weapon2, iktarget.targetBody);
-            WeaponLook(weapon3, iktarget.targetBody);
-        }
-    }
-
-
-    void WeaponLook (Transform weapon, Transform target)
-    {
-
-        weapon.LookAt(target);
+    //        WeaponLook(weapon1, iktarget.targetBody);
+    //        WeaponLook(weapon2, iktarget.targetBody);
+    //        WeaponLook(weapon3, iktarget.targetBody);
+    //    }
+    //}
 
 
-    }
-    public void WeaponNull ()
-    {
-        weapon1.LookAt(iktarget.target);
-        weapon2.LookAt(iktarget.target);
-        weapon3.LookAt(iktarget.target);
-    }
+    //void WeaponLook (Transform weapon, Transform target)
+    //{
+
+    //    weapon.LookAt(target);
+
+
+    //}
+    //public void WeaponNull ()
+    //{
+    //    weapon1.LookAt(iktarget.target);
+    //    weapon2.LookAt(iktarget.target);
+    //    weapon3.LookAt(iktarget.target);
+    //}
 }
