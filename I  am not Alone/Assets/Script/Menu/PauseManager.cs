@@ -51,7 +51,7 @@ public class PauseManager : MonoBehaviour
     public void Pause ()
     {
         Time.timeScale = Time.timeScale == 0 ? 1 : 0;
-
+  
 
 
     }

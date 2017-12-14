@@ -9,7 +9,7 @@ public class TrasnparentWall : MonoBehaviour
     Ray ray;
     GameObject player;
     private Camera camera;
-
+    public bool OffTransoarent;
     List<Transform> walls = new List<Transform>();
     public LayerMask layerMask;
     // Use this for initialization
@@ -24,98 +24,105 @@ public class TrasnparentWall : MonoBehaviour
     void Update ()
     {
 
-        //Find the direction from the camera to the player
-        Vector3 direction = player.transform.position - camera.transform.position;
-
-        //The magnitude of the direction is the distance of the ray
-        float distance = direction.magnitude;
-
-        //Raycast and store all hit objects in an array. Also include the layermaks so we only hit the layers we have specified
-        RaycastHit[] hits = Physics.RaycastAll(camera.transform.position, direction, distance, layerMask);
-
-        //Go through the objects
-        for (int i = 0; i < hits.Length; i++)
+        if (OffTransoarent)
         {
-            Transform currentHit = hits[i].transform;
+            //Find the direction from the camera to the player
+            Vector3 direction = player.transform.position - camera.transform.position;
 
-            //Only do something if the object is not already in the list
-            if (!walls.Contains(currentHit))
+            //The magnitude of the direction is the distance of the ray
+            float distance = direction.magnitude;
+
+            //Raycast and store all hit objects in an array. Also include the layermaks so we only hit the layers we have specified
+            RaycastHit[] hits = Physics.RaycastAll(camera.transform.position, direction, distance, layerMask);
+
+            //Go through the objects
+            for (int i = 0; i < hits.Length; i++)
             {
-                //Add to list and disable renderer
+                Transform currentHit = hits[i].transform;
 
-
-                // currentHit.GetComponent<Renderer>().material.SetFloat("_BodyAlpha", 0.1f);
-
-                if (!currentHit.CompareTag("Floor"))
+                //Only do something if the object is not already in the list
+                if (!walls.Contains(currentHit))
                 {
-                    if (currentHit.GetComponent<Renderer>())
+                    //Add to list and disable renderer
+
+
+                    // currentHit.GetComponent<Renderer>().material.SetFloat("_BodyAlpha", 0.1f);
+
+                    if (!currentHit.CompareTag("Floor"))
                     {
-                        walls.Add(currentHit);
-                        currentHit.GetComponent<Renderer>().enabled = false;
-                        //currentHit.GetComponent<Renderer>().enabled = false;
-                        //if (currentHit.GetComponent<TransarentWallChangeMaterial>())
-                        //{
-                        //    currentHit.GetComponent<TransarentWallChangeMaterial>().ChangeTransarentMaterial();
-                        //    currentHit.GetComponent<TransarentWallChangeMaterial>().newActiveMaterial = true;
-                        //}
-                        //else
-                        //{
-                        //    if (!currentHit.CompareTag("Things"))
-                        //    {
-                        //        currentHit.GetComponent<Renderer>().enabled = false; 
-                        //    }
-                        //}
+                        if (currentHit.GetComponent<Renderer>())
+                        {
+                            walls.Add(currentHit);
+                            currentHit.GetComponent<Renderer>().enabled = false;
+                            //currentHit.GetComponent<Renderer>().enabled = false;
+                            //if (currentHit.GetComponent<TransarentWallChangeMaterial>())
+                            //{
+                            //    currentHit.GetComponent<TransarentWallChangeMaterial>().ChangeTransarentMaterial();
+                            //    currentHit.GetComponent<TransarentWallChangeMaterial>().newActiveMaterial = true;
+                            //}
+                            //else
+                            //{
+                            //    if (!currentHit.CompareTag("Things"))
+                            //    {
+                            //        currentHit.GetComponent<Renderer>().enabled = false; 
+                            //    }
+                            //}
+                        }
+                    }
+
+                }
+            }
+
+            //clean the list of objects that are in the list but not currently hit.
+            for (int i = 0; i < walls.Count; i++)
+            {
+                bool isHit = false;
+                //Check every object in the list against every hit
+                for (int j = 0; j < hits.Length; j++)
+                {
+                    if (hits[j].transform == walls[i])
+                    {
+                        isHit = true;
+                        break;
                     }
                 }
 
+                //If it is not among the hits
+                if (!isHit)
+                {
+                    //Enable renderer, remove from list, and decrement the counter because the list is one smaller now
+                    Transform wasHidden = walls[i];
+
+                    //  wasHidden.GetComponent<Renderer>().material.SetFloat("_BodyAlpha", 1f);
+                    if (wasHidden)
+                    {
+                        if (wasHidden.GetComponent<Renderer>())
+                        {
+                            wasHidden.GetComponent<Renderer>().enabled = true;
+                            //if (wasHidden.GetComponent<TransarentWallChangeMaterial>())
+                            //{
+
+                            //    wasHidden.GetComponent<TransarentWallChangeMaterial>().newActiveMaterial = false;
+                            //}
+                            //else
+                            //{
+                            //    if (!wasHidden.CompareTag("Things"))
+                            //    {
+                            //        wasHidden.GetComponent<Renderer>().enabled = true; 
+                            //    }
+                            //}
+                            walls.RemoveAt(i);
+                        }
+
+                        i--;
+                    }
+
+                }
             }
         }
-
-        //clean the list of objects that are in the list but not currently hit.
-        for (int i = 0; i < walls.Count; i++)
+        else
         {
-            bool isHit = false;
-            //Check every object in the list against every hit
-            for (int j = 0; j < hits.Length; j++)
-            {
-                if (hits[j].transform == walls[i])
-                {
-                    isHit = true;
-                    break;
-                }
-            }
-
-            //If it is not among the hits
-            if (!isHit)
-            {
-                //Enable renderer, remove from list, and decrement the counter because the list is one smaller now
-                Transform wasHidden = walls[i];
-
-                //  wasHidden.GetComponent<Renderer>().material.SetFloat("_BodyAlpha", 1f);
-                if (wasHidden)
-                {
-                    if (wasHidden.GetComponent<Renderer>())
-                    {
-                        wasHidden.GetComponent<Renderer>().enabled = true;
-                        //if (wasHidden.GetComponent<TransarentWallChangeMaterial>())
-                        //{
-
-                        //    wasHidden.GetComponent<TransarentWallChangeMaterial>().newActiveMaterial = false;
-                        //}
-                        //else
-                        //{
-                        //    if (!wasHidden.CompareTag("Things"))
-                        //    {
-                        //        wasHidden.GetComponent<Renderer>().enabled = true; 
-                        //    }
-                        //}
-                        walls.RemoveAt(i);
-                    }
-
-                    i--;
-                }
-
-            }
+            return;
         }
     }
 }

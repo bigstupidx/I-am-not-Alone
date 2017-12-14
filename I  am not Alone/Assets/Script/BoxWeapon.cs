@@ -32,6 +32,9 @@ public class BoxWeapon : MonoBehaviour
     AudioSource weaponAudio;
     AudioSource MaterialsAudio;
     AudioSource InteractiveAudio;
+    private bool createBoxWeapon;
+    private float patrons;
+
     // Use this for initialization
     void Start ()
     {
@@ -176,7 +179,21 @@ public class BoxWeapon : MonoBehaviour
     void Randomarams ()
     {
         int u = 0;
+        createBoxWeapon = false;
+        for (int i = 0; i < _weaponController.Weapons.Length; i++)
+        {
+            if (_weaponController.Weapons[i].transform.childCount != 0)
+            {
 
+                patrons += _weaponController.Weapons[i].transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition;
+                if (patrons < 0.6f)
+                {
+                    createBoxWeapon = true;
+                }
+
+            }
+
+        }
         if (_checkInWeaponAndCraft.WeaponBought.Count != 0)
         {
             u = Random.Range(0, 9);
@@ -188,19 +205,16 @@ public class BoxWeapon : MonoBehaviour
         }
 
 
-        if (u >= 0 && u <= 5)
+        if (createBoxWeapon)
         {
-
             int l = Random.Range(0, _checkInWeaponAndCraft.WeaponBought.Count);
 
             categoryWeapon = _checkInWeaponAndCraft.WeaponBought[l].category;
             nameWeapon = _checkInWeaponAndCraft.WeaponBought[l].nameWeapon;
 
             level = _checkInWeaponAndCraft.WeaponBought[l].levelWeapon;
-
-
         }
-        else if (u > 5 && u <= 8)
+        else
         {
             Materials = true;
             int m = Random.Range(0, 5);
@@ -225,17 +239,45 @@ public class BoxWeapon : MonoBehaviour
             textGuiPanelGoods = buildMode.panelGoods[m].transform;
             level = Random.Range(1, 4);
         }
-        //else if (u == 9)
+
+
+        //if (u >= 0 && u <= 5)
         //{
-        //    int i = Random.Range(0, buildMode.interActivePrefab.Count);
+        //    int l = Random.Range(0, _checkInWeaponAndCraft.WeaponBought.Count);
 
-        //    Interactive = true;
-        //    gridBuild = _checkInWeaponAndCraft.gridBuildMenu;
-        //    textGuiPanelGoods = buildMode.interActivePrefab[i].transform;
-        //    level = 1;
+        //    categoryWeapon = _checkInWeaponAndCraft.WeaponBought[l].category;
+        //    nameWeapon = _checkInWeaponAndCraft.WeaponBought[l].nameWeapon;
+
+        //    level = _checkInWeaponAndCraft.WeaponBought[l].levelWeapon;
+
+
+
         //}
+        //else if (u > 5 && u <= 8)
+        //{
+        //    Materials = true;
+        //    int m = Random.Range(0, 5);
 
+        //    if (m == 0 && m == 1)
+        //    {
+        //        m = 0;
+        //    }
+        //    if (m == 2)
+        //    {
+        //        m -= 1;
+        //    }
+        //    if (m == 3)
+        //    {
+        //        m -= 1;
+        //    }
+        //    if (m == 4)
+        //    {
+        //        m -= 1;
+        //    }
 
+        //    textGuiPanelGoods = buildMode.panelGoods[m].transform;
+        //    level = Random.Range(1, 4);
+        //}
 
 
 

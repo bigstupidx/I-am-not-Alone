@@ -105,7 +105,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 
                 transform.localRotation = Quaternion.Slerp(transform.localRotation, m_CharacterTargetRot,
-               10 * Time.deltaTime);
+               5 * Time.deltaTime);
 
             }
             else

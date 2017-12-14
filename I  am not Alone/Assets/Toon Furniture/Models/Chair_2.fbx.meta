@@ -3,7 +3,7 @@ guid: 0c18f0ffd4318a149bd680cdf60d0e48
 timeCreated: 1492877219
 licenseType: Store
 ModelImporter:
-  serializedVersion: 21
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: Camera
     100002: //RootNode
@@ -14,12 +14,21 @@ ModelImporter:
     400004: Circle.001
     400006: Lamp
     2300000: Circle.001
+    2300002: //RootNode
     3300000: Circle.001
+    3300002: //RootNode
     4300000: Circle.001
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: b0a6e11e3577ad54084744cf0f67fe47, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -32,6 +41,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5

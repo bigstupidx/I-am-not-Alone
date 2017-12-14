@@ -15,6 +15,7 @@ public class DoneCameraMovving : MonoBehaviour
     Transform target;
     public bool newViewCamera;
     Vector3 cameraToPosMoving;
+    public HouseInside houseInside;
     void Awake ()
     {
         // Setting up the reference.
@@ -95,16 +96,28 @@ public class DoneCameraMovving : MonoBehaviour
     bool ViewingPosCheck (Vector3 checkPos)
     {
         RaycastHit hit;
-        Debug.DrawRay(checkPos, target.position - checkPos, Color.red);
+
         // If a raycast from the check position to the player hits something...
         if (Physics.Raycast(checkPos, player.position - checkPos, out hit, relCameraPosMag))
             // ... if it is not the player...
-            if (hit.transform != target && hit.transform.gameObject.layer == 2)
-            {
-                //   newViewCamera = false;
-                // This position isn't appropriate.
-                return false;
-            }
+            //if (houseInside.playerOutSide)
+            //{
+                if (hit.transform != target && hit.transform.gameObject.layer == 2)
+                {
+                    //   newViewCamera = false;
+                    // This position isn't appropriate.
+                    return false;
+                }
+            //}
+            //else
+            //{
+            //    if (hit.transform != target)
+            //    {
+            //        //   newViewCamera = false;
+            //        // This position isn't appropriate.
+            //        return false;
+            //    }
+            //}
 
 
         // If we haven't hit anything or we've hit the player, this is an appropriate position.

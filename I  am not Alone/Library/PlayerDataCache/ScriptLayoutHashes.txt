@@ -162,7 +162,7 @@ d78da10fc6fe2ebb0bfa7bfae15012c5 Assembly-CSharp.dll:UnityEngine.AI.NavMeshModif
 b7536247a550bc1596505b7f345c8adf Assembly-CSharp.dll:.GunAim
 a2efb0db652b8114d1ae7dd9a600d626 Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.InputAxisScrollbar
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:Facebook.Unity.Example.ConsoleBase
-ad137559fc4480582f3cc0f36e6aaac3 Assembly-CSharp.dll:.DoneCameraMovving
+6e35ffdd1dd0f0614f4c05a8a5a500b7 Assembly-CSharp.dll:.DoneCameraMovving
 fe76270bd84ec3b6f2f6f92c69cf69da Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.AxisTouchButton
 db6ce70b8f7c9b9e69f3f5d6e55e913f Assembly-CSharp.dll:.CraftItem
 8c282e8c641831ff10fe26724ee744ae Assembly-CSharp.dll:Lean.Localization.LeanLocalization
@@ -171,7 +171,7 @@ db6ce70b8f7c9b9e69f3f5d6e55e913f Assembly-CSharp.dll:.CraftItem
 a7d3c6c6948d99dd4116e659ddcf5ac4 Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.ButtonHandler
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.GhostEye
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl
-3221df1a235f5391a6c0cb446f6f873b Assembly-CSharp.dll:.TrasnparentWall
+b93695bab03ad869031b46a4124daf7e Assembly-CSharp.dll:.TrasnparentWall
 b940086d7622a63b288e497914033d42 Assembly-CSharp.dll:.StartSceneObjectRandom
 57fde8e76fc7bce23deb0e799d336be7 Assembly-CSharp-firstpass.dll:UnityStandardAssets.Utility.SmoothFollow
 e0394c8097983adf19510cffba705359 Assembly-CSharp.dll:.BetweenFloor
@@ -236,7 +236,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 8d3a37e750da50a63837faaf26da3bad Assembly-CSharp.dll:.RendHideHouse
 4b92869905a383f4c5a262cb29030331 Assembly-CSharp.dll:.PoolingSystem
 f671a42aea5f34fec6a4450a3668c615 Assembly-CSharp.dll:UnityEngine.PostProcessing.PostProcessingProfile
-e5c7bab9a80553098e8450b6af8a6291 Assembly-CSharp.dll:.HouseInside
+3eaf7da87710a3c8269b022e2a26c836 Assembly-CSharp.dll:.HouseInside
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 11153ccf013f2682e923f11b33eb9e90 Assembly-CSharp.dll:.PriorityObject
 94b068afd10f470a07239342aba26b9b Assembly-CSharp.dll:.HelpersAi

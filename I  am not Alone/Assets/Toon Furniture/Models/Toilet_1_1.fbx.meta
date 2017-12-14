@@ -3,7 +3,7 @@ guid: 8b2187eee69412246b555d50d7e41e78
 timeCreated: 1492877221
 licenseType: Store
 ModelImporter:
-  serializedVersion: 21
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: Camera
     100002: Lamp
@@ -14,12 +14,21 @@ ModelImporter:
     400004: Plane
     400006: //RootNode
     2300000: Plane
+    2300002: //RootNode
     3300000: Plane
+    3300002: //RootNode
     4300000: Plane
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 8d16f9fa2ead07146acf16f15ebc14b4, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -32,6 +41,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5

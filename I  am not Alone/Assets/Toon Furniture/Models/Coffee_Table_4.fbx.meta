@@ -3,7 +3,7 @@ guid: 8b77ab8a65e9c9e4ba013ba2868ef6b8
 timeCreated: 1492877221
 licenseType: Store
 ModelImporter:
-  serializedVersion: 21
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: Camera
     100002: Camera.001
@@ -18,12 +18,21 @@ ModelImporter:
     400008: Lamp
     400010: Lamp.001
     2300000: Cube
+    2300002: //RootNode
     3300000: Cube
+    3300002: //RootNode
     4300000: Cube
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 52fb60218ac5c974fb0eedc190b3495b, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -36,6 +45,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5

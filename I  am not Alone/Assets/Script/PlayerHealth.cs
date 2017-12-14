@@ -38,6 +38,17 @@ public class PlayerHealth : MonoBehaviour
         damaged = false;
     }
 
+    public void UpdateHealth (float health)
+    {
+        CurHelth += health;
+        if (CurHelth > MaxHealth)
+        {
+            CurHelth = MaxHealth;
+
+        }
+        HealthPlayer.fillAmount = CurHelth / MaxHealth;
+    }
+
     public void HelthDamage (float damage)
     {
 
@@ -47,7 +58,7 @@ public class PlayerHealth : MonoBehaviour
         damaged = true;
         HealthPlayer.fillAmount = CurHelth / MaxHealth;
 
-        HealthPlayer.fillAmount = CurHelth / MaxHealth;
+
 
 
 

@@ -8,13 +8,14 @@ public class HouseInside : MonoBehaviour
     public GameObject TwoFloour;
     public GameObject[] Roof;
     public BetweenFloor betweenFloor;
+    public bool playerOutSide;
+    public TrasnparentWall trasnparentWall;
     // Use this for initialization
-    void Start ()
-    {
 
-    }
     private void OnTriggerEnter (Collider other)
     {
+        trasnparentWall.OffTransoarent = true;
+        playerOutSide = true;
         if (other.CompareTag("Player"))
         {
             for (int i = 0; i < Roof.Length; i++)
@@ -32,6 +33,9 @@ public class HouseInside : MonoBehaviour
     }
     private void OnTriggerExit (Collider other)
     {
+
+        playerOutSide = false;
+        trasnparentWall.OffTransoarent = false;
         if (other.CompareTag("Player"))
         {
 

@@ -61,6 +61,7 @@ public class WaveManager : MonoBehaviour
     AudioSource source;
     public GameObject Winner;
     public GameObject dualjoy;
+    PlayerHealth playerHealth;
     // Use this for initialization
     private void Start ()
     {
@@ -72,6 +73,7 @@ public class WaveManager : MonoBehaviour
 
     public void init ()
     {
+        playerHealth = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<PlayerHealth>();
         GameObject[] light = GameObject.FindGameObjectsWithTag("LightInscene");
         for (int i = 0; i < light.Length; i++)
         {
@@ -173,6 +175,12 @@ public class WaveManager : MonoBehaviour
                 }
                 night = true;
                 _lskyTod.dayInSeconds = ghostCreater.wave[levelWave].Day * 2;
+                if (playerHealth.CurHelth > 0)
+                {
+
+                    playerHealth.UpdateHealth(20);
+
+                }
                 day = false;
             }
             if (_lskyTod.CurrentHour == 17.00)
