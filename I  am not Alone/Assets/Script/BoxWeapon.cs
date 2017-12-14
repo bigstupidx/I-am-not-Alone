@@ -178,7 +178,7 @@ public class BoxWeapon : MonoBehaviour
 
     void Randomarams ()
     {
-        int u = 0;
+        //int u = 0;
         createBoxWeapon = false;
         for (int i = 0; i < _weaponController.Weapons.Length; i++)
         {
@@ -194,15 +194,15 @@ public class BoxWeapon : MonoBehaviour
             }
 
         }
-        if (_checkInWeaponAndCraft.WeaponBought.Count != 0)
-        {
-            u = Random.Range(0, 9);
+        //if (_checkInWeaponAndCraft.WeaponBought.Count != 0)
+        //{
+        //    u = Random.Range(0, 9);
 
-        }
-        else
-        {
-            u = Random.Range(6, 9);
-        }
+        //}
+        //else
+        //{
+        //    u = Random.Range(6, 9);
+        //}
 
 
         if (createBoxWeapon)
@@ -218,8 +218,8 @@ public class BoxWeapon : MonoBehaviour
         {
             Materials = true;
             int m = Random.Range(0, 5);
-
-            if (m == 0 && m == 1)
+     
+            if (m == 0 || m == 1)
             {
                 m = 0;
             }

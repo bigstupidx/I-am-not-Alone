@@ -16,7 +16,7 @@ public class WeaponController : MonoBehaviour
 
     public Transform weaponPanel;
     public List<GameObject> WeaponImage = new List<GameObject>();
-    public Transform targetWeapon;
+    public IKtarget ikTarget;
     PoolingSystem pool;
     Transform AdvancedPoolingSystem;
     CheckInWeaponAndCraft _checkInWeaponCraft;
@@ -27,7 +27,7 @@ public class WeaponController : MonoBehaviour
     Transform left;
     Transform right;
     IKweapon ikWeapon;
-    public Transform Iktarget;
+  
     PlayableDirector m_director;
     private void OnEnable ()
     {
@@ -68,10 +68,9 @@ public class WeaponController : MonoBehaviour
                 Weapons[2].SetActive(false);
 
                 Weapons[0].transform.GetChild(0).localPosition = Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
+                ikTarget.WeaponActive = Weapons[0].transform.GetChild(0);
                 AnimationWeapon(Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().rightHand, Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
-                //  Weapons[0].transform.GetChild(0).LookAt(targetWeapon);
-
-
+                ikTarget.GetBulletSystem();
 
                 Weapons[0].SetActive(true);
                 Weapons[1].SetActive(false);
@@ -85,8 +84,9 @@ public class WeaponController : MonoBehaviour
 
 
                 Weapons[1].transform.GetChild(0).localPosition = Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
+                ikTarget.WeaponActive = Weapons[1].transform.GetChild(0);
                 AnimationWeapon(Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().rightHand, Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
-                //    Weapons[1].transform.GetChild(0).LookAt(targetWeapon);
+                ikTarget.GetBulletSystem();
 
                 Weapons[1].SetActive(true);
                 break;
@@ -96,10 +96,10 @@ public class WeaponController : MonoBehaviour
                 Weapons[0].SetActive(false);
                 Weapons[1].SetActive(false);
 
-
+                ikTarget.WeaponActive = Weapons[2].transform.GetChild(0);
                 Weapons[2].transform.GetChild(0).localPosition = Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
                 AnimationWeapon(Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().rightHand, Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
-                //    Weapons[2].transform.GetChild(0).LookAt(targetWeapon);
+                ikTarget.GetBulletSystem();
 
                 Weapons[2].SetActive(true);
                 break;

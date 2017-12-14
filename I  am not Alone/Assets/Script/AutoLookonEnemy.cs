@@ -37,35 +37,7 @@ public class AutoLookonEnemy : MonoBehaviour
 
 
     }
-    //private void OnTriggerStay (Collider other)
-    //{
 
-
-    //    if (other.CompareTag("AI"))
-    //    {
-    //        TargetAi = other.transform.GetChild(0);
-
-    //        WeaponLook(weapon1, TargetAi);
-    //        WeaponLook(weapon2, TargetAi);
-    //        WeaponLook(weapon3, TargetAi);
-
-    //    }
-    //}
-    //private void OnTriggerExit (Collider other)
-    //{
-
-    //    if (other.CompareTag("AI"))
-    //    {
-
-    //        TargetAi = null;
-
-    //        iktarget.target = TargetAi;
-
-    //        WeaponLook(weapon1, iktarget.targetBody);
-    //        WeaponLook(weapon2, iktarget.targetBody);
-    //        WeaponLook(weapon3, iktarget.targetBody);
-    //    }
-    //}
 
 
     //void WeaponLook (Transform weapon, Transform target)
@@ -81,4 +53,5 @@ public class AutoLookonEnemy : MonoBehaviour
     //    weapon2.LookAt(iktarget.target);
     //    weapon3.LookAt(iktarget.target);
     //}
+  
 }

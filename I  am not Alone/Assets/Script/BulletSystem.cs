@@ -26,7 +26,12 @@ public class BulletSystem : MonoBehaviour
 {
 
 
-
+    Ray rayUp;
+    Ray rayForward;
+    Ray RayDown;
+    RaycastHit hitUp;
+    RaycastHit hitForward;
+    RaycastHit hitDown;
     public float intervalWeaponAmmunition = 0.5f;
     public AudioClip weaponSound;
     public ParticleSystem bullet;
@@ -44,7 +49,11 @@ public class BulletSystem : MonoBehaviour
 
     public List<UpdateWeapon> updateWeapon = new List<UpdateWeapon>();
     bool l;
+    [Space(5)]
+
     public Vector3 WeaponPOsition;
+   
+    [Space(5)]
     WeaponController _weaponController;
     SelectionWeaponForPC selectionWeaponPlay;
     Transform AdvancedPoolingSystem;
@@ -58,6 +67,7 @@ public class BulletSystem : MonoBehaviour
     public bool fireGun;
     public Transform buttonWeapon;
     public bool resolution = true;
+
     private void OnEnable ()
     {
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
@@ -71,11 +81,11 @@ public class BulletSystem : MonoBehaviour
         timer = 0;
         _weaponController.Ammunition(WeaponAmmunition);
         l = false;
-        transform.LookAt(_weaponController.targetWeapon);
 
 
     }
 
+    
     private void Update ()
     {
 
@@ -281,7 +291,7 @@ public class BulletSystem : MonoBehaviour
         particleCol.bulletDamage = updateWeapon[level].damage;
     }
 
-
+ 
 }
 
 
