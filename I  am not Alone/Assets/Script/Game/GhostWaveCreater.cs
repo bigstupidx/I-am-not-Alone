@@ -19,7 +19,7 @@ public class GhostWaveCreater : MonoBehaviour
     public bool MiddleDifficulty;
     public bool HardDifficulty;
     public bool VeryHardDifficulty;
-
+    public float PlusHealthAi;
     public List<Wave> wave = new List<Wave>();
     // Use this for initialization
     WaveManager waveManager;

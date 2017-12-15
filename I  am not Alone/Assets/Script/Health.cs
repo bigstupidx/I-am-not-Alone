@@ -98,6 +98,8 @@ public class Health : MonoBehaviour
 
         if (transform.CompareTag(Tags.AI))
         {
+            MaxHealth += waveManager.ghostCreater.PlusHealthAi;
+
 
             CurHelth = MaxHealth;
 

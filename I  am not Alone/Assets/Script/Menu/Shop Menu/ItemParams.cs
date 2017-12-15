@@ -17,15 +17,15 @@ public class ItemParams : MonoBehaviour
     public Image upgradeImage;
     public int category;
     public List<string> coast = new List<string>();
-
+    MyMainMenu menu;
     SaveData save;
-  //  DbGame db;
+    //  DbGame db;
     // Use this for initialization
     void Start ()
     {
-    //    db = GameObject.Find("MenuController").GetComponent<DbGame>();
+        //    db = GameObject.Find("MenuController").GetComponent<DbGame>();
         save = GameObject.Find("MenuController").GetComponent<SaveData>();
-
+    
         // db.OpenDB("DBGame.db");
         IntializedParams();
 
@@ -33,6 +33,7 @@ public class ItemParams : MonoBehaviour
 
     public void IntializedParams ()
     {
+        menu = GameObject.Find("MenuController").GetComponent<MyMainMenu>();
         if (levelItem < maxLevelUpgrade)
         {
 
@@ -59,6 +60,8 @@ public class ItemParams : MonoBehaviour
             Upgrade.gameObject.SetActive(false);
             Full.gameObject.SetActive(true);
         }
+        menu.MidLevel.Add(levelItem);
+        menu.UpdateMoneyADsAndShare();
     }
 
     public void ButtonUpgrade (Text coast)
@@ -96,7 +99,7 @@ public class ItemParams : MonoBehaviour
                     {
                         save.UpdateDBCraft(weaponName.text, levelItem);
                     }
-                   // db.UpdateMoney(MyMoney.text);
+                    // db.UpdateMoney(MyMoney.text);
                     save.UpdateMoney(MyMoney.text);
                 }
 

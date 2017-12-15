@@ -33,6 +33,7 @@ public class SaveData : MonoBehaviour
         public List<int> LevelItem = new List<int>();
 
     }
+    public bool clearAll;
 
     public PlayerItemParams _playerItemParams;
     public SnecePArams snecePArams;
@@ -46,6 +47,15 @@ public class SaveData : MonoBehaviour
     MyMainMenu mainmenu;
     CheckInWeaponAndCraft checkInWeaponAndCraft;
 
+
+    private void Awake ()
+    {
+        if (clearAll)
+        {
+            SaveGame.Clear();
+        }
+
+    }
     public void GetSceneBought ()
     {
         checkIn = GetComponent<CheckInScene>();

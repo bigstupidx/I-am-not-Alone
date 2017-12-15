@@ -21,12 +21,18 @@ public class MyMainMenu : MonoBehaviour
     AsyncOperation async;
     public Slider progressSlider;
     PlayableDirector coinPlayeble;
-    public int MoneyAd = 750;
-    public int MoneyShare = 400;
+    public float MoneyAd = 1000;
+    public float MoneyShare = 1500;
+    public float MiddleLevelWeapon;
     SaveData save;
+    public List<int> MidLevel = new List<int>();
+    CheckInWeaponAndCraft checkInWeaponAndCraft;
+    public Text aDText;
+    public Text shareText;
     // Use this for initialization
     private void Start ()
     {
+        checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>();
         save = GetComponent<SaveData>();
         if (!FB.IsInitialized)
         {
@@ -40,9 +46,39 @@ public class MyMainMenu : MonoBehaviour
         //   db.OpenDB("DBGame.db");
         //  db.GetMoney();
         save.GetMoney();
+
         coinPlayeble = myMoney.GetComponent<PlayableDirector>();
+
+
+
     }
 
+
+    public void UpdateMoneyADsAndShare ()
+    {
+        MiddleLevelWeapon = 0;
+        for (int i = 0; i < MidLevel.Count; i++)
+        {
+
+            MiddleLevelWeapon += MidLevel[i];
+        }
+        MiddleLevelWeapon = MiddleLevelWeapon / MidLevel.Count;
+
+        int a = (int)System.Math.Round(MiddleLevelWeapon);
+
+        if (MidLevel.Count == 10)
+        {
+            Debug.Log(a);
+            if (a != 0)
+            {
+                MoneyAd *= a;
+                MoneyShare *= a;
+
+                aDText.text = "+ " + MoneyAd.ToString();
+                shareText.text = "+ " + MoneyShare.ToString();
+            } 
+        }
+    }
 
     public void ButtonPlay ()
     {

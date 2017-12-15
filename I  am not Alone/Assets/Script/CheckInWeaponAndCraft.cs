@@ -22,14 +22,14 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     public Text MyMoney;
     PoolingSystem pool;
     SwitchMode buildMode;
- //   DbGame db;
+    //   DbGame db;
     SaveData save;
     GameObject buttonWeapon;
-
+    MyMainMenu menu;
     SelectionWeaponForPC selectionWeaponPC;
     void Start ()
     {
-      //  db = GetComponent<DbGame>();
+        //  db = GetComponent<DbGame>();
         save = GetComponent<SaveData>();
         save.GetMoney();
         //db.OpenDB("DBGame.db");
@@ -40,10 +40,12 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         //db.GetMoney();
         if (ShopOrNot)
         {
-            CheckInBoughtItem();
+            menu = GetComponent<MyMainMenu>();
+            CheckLevelInBoughtItem();
         }
         else
         {
+
             selectionWeaponPC = GetComponent<SelectionWeaponForPC>();
             buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
             weaponControll = GameObject.Find("WeaponController").GetComponent<WeaponController>();
@@ -62,6 +64,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
                 AddItemStartWeapon();
 
             }
+
 
 
         }
@@ -185,7 +188,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
             }
         }
     }
-    void CheckInBoughtItem ()
+    public void CheckLevelInBoughtItem ()
     {
 
         for (int i = 0; i < WeaponBought.Count; i++)
@@ -198,6 +201,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
                 {
                     gridShop.Find(WeaponBought[i].nameWeapon).GetComponent<ItemParams>().levelItem = WeaponBought[i].levelWeapon;
                     gridShop.Find(WeaponBought[i].nameWeapon).GetComponent<ItemParams>().IntializedParams();
+
                 }
             }
         }
@@ -211,6 +215,8 @@ public class CheckInWeaponAndCraft : MonoBehaviour
             }
         }
 
+
+  
     }
 
     public void StartGame ()
