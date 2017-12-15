@@ -36,6 +36,7 @@ public class DragRigidbody : MonoBehaviour
         {
             return;
         }
+    
         if (hit.transform.CompareTag("CraftFromMenu"))
         {
             if (hit.transform.GetComponent<CraftItem>().Built)

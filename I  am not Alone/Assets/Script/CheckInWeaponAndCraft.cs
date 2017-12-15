@@ -20,6 +20,8 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     public List<string> addItemCraft = new List<string>();
     public List<string> addItemCraftWeapon = new List<string>();
     public Text MyMoney;
+    public GameObject nOtHaveWeapons;
+    public GameObject nOtHaveItemCraft;
     PoolingSystem pool;
     SwitchMode buildMode;
     //   DbGame db;
@@ -164,7 +166,10 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     }
     void AddItemStartItem ()
     {
-
+        if (CraftItemBought.Count != 0)
+        {
+            nOtHaveItemCraft.SetActive(false);
+        }
         for (int i = 0; i < CraftItemBought.Count; i++)
         {
             if (CraftItemBought[i] != null)
@@ -177,6 +182,10 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     }
     void AddItemStartWeapon ()
     {
+        if(WeaponBought.Count != 0)
+        {
+            nOtHaveWeapons.SetActive(false);
+        }
 
         for (int i = 0; i < WeaponBought.Count; i++)
         {
