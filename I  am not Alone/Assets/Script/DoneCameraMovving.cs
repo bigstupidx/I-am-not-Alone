@@ -13,17 +13,20 @@ public class DoneCameraMovving : MonoBehaviour
     private Vector3 newPos;             // The position the camera is trying to reach.
     private SelectionWeaponForPC selection;
     Transform target;
-    public bool newViewCamera;
+
     Vector3 cameraToPosMoving;
     public HouseInside houseInside;
+    Transform cameraTransform;
+    public bool CameraWallObstacle;
     void Awake ()
     {
+        cameraTransform = GetComponent<Transform>();
         // Setting up the reference.
         player = GameObject.FindGameObjectWithTag(Tags.player).transform;
         selection = GameObject.Find("WeaponController").GetComponent<SelectionWeaponForPC>();
         // Setting the relative position as the initial relative position of the camera in the scene.
         target = player;
-        relCameraPos = transform.position - target.position;
+        relCameraPos = cameraTransform.position - target.position;
         relCameraPosMag = relCameraPos.magnitude - 0.5f;
     }
 
@@ -33,11 +36,11 @@ public class DoneCameraMovving : MonoBehaviour
         if (selection.Fire1)
         {
             target = attaackTransform;
-            smooth = 0.5f;
+           
         }
         else
         {
-            smooth = 1.5f;
+         
             target = player;
         }
         // The standard position of the camera is the relative position of the camera from the player.
@@ -70,23 +73,10 @@ public class DoneCameraMovving : MonoBehaviour
         }
 
 
-        if (!newViewCamera)
-        {
+       
 
-            transform.position = Vector3.Lerp(transform.position, newPos, 1 * Time.deltaTime);
-        }
-        else
-        {
-            transform.position = Vector3.Lerp(transform.position, cameraToPosMoving, 5 * Time.deltaTime);
-            Vector3 cameraNewPOS = transform.position - cameraToPosMoving;
-            if (cameraNewPOS.magnitude < 1f)
-            {
-                relCameraPos = transform.position - target.position;
-                relCameraPosMag = relCameraPos.magnitude - 0.5f;
-                newViewCamera = false;
-            }
+        cameraTransform.position = Vector3.Lerp(cameraTransform.position, newPos, smooth * Time.deltaTime);
 
-        }
 
         // Make sure the camera is looking at the player.
         SmoothLookAt();
@@ -99,25 +89,38 @@ public class DoneCameraMovving : MonoBehaviour
 
         // If a raycast from the check position to the player hits something...
         if (Physics.Raycast(checkPos, player.position - checkPos, out hit, relCameraPosMag))
+      
             // ... if it is not the player...
-            //if (houseInside.playerOutSide)
-            //{
-                if (hit.transform != target && hit.transform.gameObject.layer == 2)
+            if (CameraWallObstacle)
+            {
+                if (houseInside.playerOutSide)
+                {
+                    if (hit.transform != target || hit.transform.gameObject.layer == 2)
+                    {
+
+
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (hit.transform != target)
+                    {
+                        //   newViewCamera = false;
+                        // This position isn't appropriate.
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                if (hit.transform != target)
                 {
                     //   newViewCamera = false;
                     // This position isn't appropriate.
                     return false;
                 }
-            //}
-            //else
-            //{
-            //    if (hit.transform != target)
-            //    {
-            //        //   newViewCamera = false;
-            //        // This position isn't appropriate.
-            //        return false;
-            //    }
-            //}
+            }
 
 
         // If we haven't hit anything or we've hit the player, this is an appropriate position.
@@ -127,20 +130,22 @@ public class DoneCameraMovving : MonoBehaviour
 
     public void CameraToPOsition ()
     {
-        cameraToPosMoving = cameraToPOs.position;
-        newViewCamera = true;
+
+        relCameraPos = cameraToPOs.position - target.position;
+        relCameraPosMag = relCameraPos.magnitude - 0.5f;
+
 
     }
 
     void SmoothLookAt ()
     {
         // Create a vector from the camera towards the player.
-        Vector3 relPlayerPosition = target.position - transform.position;
+        Vector3 relPlayerPosition = target.position - cameraTransform.position;
 
         // Create a rotation based on the relative position of the player being the forward vector.
         Quaternion lookAtRotation = Quaternion.LookRotation(relPlayerPosition, Vector3.up);
 
         // Lerp the camera's rotation between it's current rotation and the rotation that looks at the player.
-        transform.rotation = Quaternion.Lerp(transform.rotation, lookAtRotation, smooth * Time.deltaTime);
+        cameraTransform.rotation = Quaternion.Lerp(cameraTransform.rotation, lookAtRotation, smooth * Time.deltaTime);
     }
 }

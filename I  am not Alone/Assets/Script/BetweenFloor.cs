@@ -12,12 +12,14 @@ public class BetweenFloor : MonoBehaviour
     public Transform FurnitureFirst;
     public Transform FurnitureSecond;
     public GameObject FloorHowTrue;
-    public Camera myCamera;
+    Camera myCamera;
+
     private void Start ()
     {
 
         myCamera = Camera.main.GetComponent<Camera>();
         myCamera.cullingMask &= ~(1 << 9);
+
     }
     public void RenderObjectToFloor (bool b)
     {
@@ -57,7 +59,7 @@ public class BetweenFloor : MonoBehaviour
             RenderObjectToFloor(true);
 
 
-
+            OffRenderAndColliderFirst(false);
         }
         if (other.CompareTag("Things"))
         {
@@ -79,6 +81,7 @@ public class BetweenFloor : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            OffRenderAndColliderFirst(true);
             FloorCraft = false;
             switchMode.CheckInBuiltWalls(true);
             Floor.SetActive(false);
@@ -101,6 +104,22 @@ public class BetweenFloor : MonoBehaviour
         {
 
             other.transform.SetParent(FurnitureFirst);
+        }
+    }
+    void OffRenderAndColliderFirst (bool off)
+    {
+   
+        if (off)
+        {
+            myCamera.cullingMask |= (1 << 10);
+            myCamera.cullingMask |= (1 << 11);
+       
+        }
+        else
+        {
+        
+            myCamera.cullingMask &= ~(1 << 11);
+            myCamera.cullingMask &= ~(1 << 10);
         }
     }
 }

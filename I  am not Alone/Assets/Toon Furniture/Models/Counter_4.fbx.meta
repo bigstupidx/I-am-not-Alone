@@ -20,6 +20,10 @@ ModelImporter:
     100024: Cube.008
     100026: Lamp
     100028: Lamp.002
+    100030: Object001
+    100032: Object002
+    100034: Object003
+    100036: Object004
     400000: Camera
     400002: Camera.001
     400004: Camera.002
@@ -35,6 +39,10 @@ ModelImporter:
     400024: Cube.008
     400026: Lamp
     400028: Lamp.002
+    400030: Object001
+    400032: Object002
+    400034: Object003
+    400036: Object004
     2300000: Cube
     2300002: Cube.001
     2300004: Cube.002
@@ -44,6 +52,10 @@ ModelImporter:
     2300012: Cube.006
     2300014: Cube.007
     2300016: Cube.008
+    2300018: Object001
+    2300020: Object002
+    2300022: Object003
+    2300024: Object004
     3300000: Cube
     3300002: Cube.001
     3300004: Cube.002
@@ -53,6 +65,10 @@ ModelImporter:
     3300012: Cube.006
     3300014: Cube.007
     3300016: Cube.008
+    3300018: Object001
+    3300020: Object002
+    3300022: Object003
+    3300024: Object004
     4300000: Cube.001
     4300002: Cube.008
     4300004: Cube.007
@@ -62,12 +78,16 @@ ModelImporter:
     4300012: Cube.003
     4300014: Cube.002
     4300016: Cube
+    4300018: Object001
+    4300020: Object002
+    4300022: Object003
+    4300024: Object004
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material
-    second: {fileID: 2100000, guid: ca8017b82215b2a4ba79d1aca4fa421f, type: 2}
+    second: {fileID: 2100000, guid: f2e4464f43758224db5cf7713d54f03c, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

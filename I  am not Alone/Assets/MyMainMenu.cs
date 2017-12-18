@@ -245,7 +245,7 @@ public class MyMainMenu : MonoBehaviour
                 Debug.Log("player did not fully watch the ad");
                 break;
             case ShowResult.Finished:
-                Debug.Log("player Gains +500 gems");
+                Debug.Log("player Gains + gems");
                 myMoney.text = (int.Parse(myMoney.text) + MoneyAd).ToString();
                 save.UpdateMoney(myMoney.text);
                 coinPlayeble.Play();

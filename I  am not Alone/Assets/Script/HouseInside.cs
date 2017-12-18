@@ -12,12 +12,23 @@ public class HouseInside : MonoBehaviour
     public TrasnparentWall trasnparentWall;
     // Use this for initialization
 
+    Camera myCamera;
+    private void Start ()
+    {
+        myCamera = Camera.main.GetComponent<Camera>();
+        myCamera.cullingMask &= ~(1 << 9);
+        myCamera.cullingMask &= ~(1 << 11);
+        myCamera.cullingMask |= (1 << 10);
+        myCamera.farClipPlane = 75;
+    }
+
     private void OnTriggerEnter (Collider other)
     {
         trasnparentWall.OffTransoarent = true;
         playerOutSide = true;
         if (other.CompareTag("Player"))
         {
+            OffRenderAndCollider(true);
             for (int i = 0; i < Roof.Length; i++)
             {
                 Roof[i].SetActive(false);
@@ -38,7 +49,7 @@ public class HouseInside : MonoBehaviour
         trasnparentWall.OffTransoarent = false;
         if (other.CompareTag("Player"))
         {
-
+            OffRenderAndCollider(false);
             for (int i = 0; i < Roof.Length; i++)
             {
                 Roof[i].SetActive(true);
@@ -53,6 +64,24 @@ public class HouseInside : MonoBehaviour
         if (other.CompareTag(Tags.AI))
         {
             other.GetComponent<Rigidbody>().detectCollisions = true;
+        }
+    }
+
+    void OffRenderAndCollider (bool off)
+    {
+        if (off)
+        {
+            myCamera.farClipPlane = 50;
+
+            myCamera.cullingMask |= (1 << 9);
+            myCamera.cullingMask |= (1 << 11);
+        }
+        else
+        {
+            myCamera.farClipPlane = 75;
+          
+            myCamera.cullingMask &= ~(1 << 11);
+            myCamera.cullingMask &= ~(1 << 9);
         }
     }
 }

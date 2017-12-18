@@ -104,8 +104,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 //  transform.eulerAngles = new Vector3(transform.eulerAngles.x, Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg, transform.eulerAngles.z);
 
 
-                transform.localRotation = Quaternion.Slerp(transform.localRotation, m_CharacterTargetRot,
-               5 * Time.deltaTime);
+                transform.localRotation = m_CharacterTargetRot;
+
+                // transform.localRotation = Quaternion.Slerp(transform.localRotation, m_CharacterTargetRot,
+                //5 * Time.deltaTime);
 
             }
             else
