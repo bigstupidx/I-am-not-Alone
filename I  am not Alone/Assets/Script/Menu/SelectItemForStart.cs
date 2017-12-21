@@ -24,6 +24,17 @@ public class SelectItemForStart : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+
+        Restart();
+        PlayerPrefs.Save();
+        health = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<PlayerHealth>();
+        checkWeapon = GameObject.Find("WeaponController").GetComponent<CheckInWeaponAndCraft>();
+        tog = GetComponent<Toggle>();
+        buildControll = GameObject.Find("BuildController").GetComponent<SwitchMode>();
+    }
+
+    public void Restart ()
+    {
         if (EasyDifficulty)
         {
             if (PlayerPrefs.HasKey("EasyDifficulty"))
@@ -77,12 +88,6 @@ public class SelectItemForStart : MonoBehaviour
 
 
         }
-
-        PlayerPrefs.Save();
-        health = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<PlayerHealth>();
-        checkWeapon = GameObject.Find("WeaponController").GetComponent<CheckInWeaponAndCraft>();
-        tog = GetComponent<Toggle>();
-        buildControll = GameObject.Find("BuildController").GetComponent<SwitchMode>();
     }
 
     private void GetLevelWave (string v, Text t, int pos)

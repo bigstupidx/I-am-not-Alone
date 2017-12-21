@@ -35,7 +35,7 @@ public class SpawnerZombie : MonoBehaviour
         GameObject o = poolsistem.InstantiateAPS(prefZombie.name, randomLoc3d, Quaternion.identity);
 
         o.GetComponent<ZombieLevel1>()._sky = sky;
-        o.GetComponent<ZombieLevel1>().agent.avoidancePriority += Random.Range(-20, +20);
+        //o.GetComponent<ZombieLevel1>().agent.avoidancePriority += Random.Range(-20, +20);
 
 
 

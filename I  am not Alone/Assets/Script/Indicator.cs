@@ -27,6 +27,7 @@ public class Indicator : MonoBehaviour
     Vector3 screenpos;
     CraftItem item;
     SwitchMode switchMode;
+    Transform craftPointItem;
     // Use this for initialization
     void Awake ()
     {
@@ -36,13 +37,7 @@ public class Indicator : MonoBehaviour
         item = GetComponent<CraftItem>();
         switchMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
         _targetSpriteOfPool = Instantiate(TargetSprite, offScreen, Quaternion.Euler(new Vector3(0, 0, 0))) as Image;
-        //if (item.BlowUpEffect || item.hisEffect)
-        //{
-        //    _blowUpYes = Instantiate(BlowUpYes, offScreen, Quaternion.Euler(new Vector3(0, 0, 0))) as Image;
-        //    _blowUpYes.rectTransform.parent = canvas.transform.GetChild(0);
-
-
-        //}
+  
         _targetSpriteOfPool.rectTransform.parent = canvas.transform.GetChild(0);
 
         _targetSpriteOfPool.name = transform.name + " _targetSpriteOfPool";
@@ -51,37 +46,12 @@ public class Indicator : MonoBehaviour
 
         centerRect.position = new Vector2((screenCenter.x - centerRect.width / 2), screenCenter.y - centerRect.height / 2);
 
-        //if (staticObject)
-        //{
+    
         for (int i = 0; i < _targetSpriteOfPool.transform.Find("Counter").childCount; i++)
         {
             _targetSpriteOfPool.transform.Find("Counter").GetChild(i).GetComponent<Text>().text = item.CountWoodForCreate[i].CountMaterial.ToString();
 
         }
-        //for (int i = 0; i < _targetSpriteOfPool.transform.Find("Names").childCount; i++)
-        //{
-        //    _targetSpriteOfPool.transform.Find("Names").GetChild(i).GetComponent<Text>().text = item.CountWoodForCreate[i].NameMaterial.ToString();
-
-        //}
-        //}
-        //else
-        //{
-        //    if (item.BlowUpEffect)
-        //    {
-        //        Button btn = _blowUpYes.GetComponent<Button>();
-        //        btn.onClick.AddListener(item.BlowUp);
-        //    }
-
-        //    else if (item.hisEffect)
-        //    {
-        //        Button btn1 = _blowUpYes.GetComponent<Button>();
-        //        btn1.onClick.AddListener(item.His);
-        //    }
-        //    Button btnswitchMode = _targetSpriteOfPool.GetComponent<Button>();
-        //    btnswitchMode.onClick.AddListener(switchMode.ButtonYes);
-
-        //}
-
 
     }
 

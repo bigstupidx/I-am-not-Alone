@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-//using UnityEngine.Advertisements;
+using UnityEngine.Advertisements;
 public class PauseManager : MonoBehaviour
 {
 
@@ -13,20 +13,20 @@ public class PauseManager : MonoBehaviour
     AsyncOperation async;
     public Slider progressSlider;
     private bool isPaused;
-
+    public static int sundayCount;
     private void Awake ()
     {
         Time.timeScale = 0;
-        //if (Advertisement.isSupported)
-        //{
-        //    Advertisement.Initialize("1557198", false);
+        if (Advertisement.isSupported)
+        {
+            Advertisement.Initialize("1557198", false);
 
 
-        //}
-        //else
-        //{
-        //    Debug.Log("platform is not Supported");
-        //}
+        }
+        else
+        {
+            Debug.Log("platform is not Supported");
+        }
     }
     public void ButtonMenu ()
     {
@@ -51,8 +51,29 @@ public class PauseManager : MonoBehaviour
     public void Pause ()
     {
         Time.timeScale = Time.timeScale == 0 ? 1 : 0;
-  
 
+
+
+    }
+
+    public void Sunday ()
+    {
+     
+       
+        if (Advertisement.isSupported)
+        {
+            Advertisement.Initialize("1557198", false);
+            if (Advertisement.IsReady())
+            {
+                Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
+
+            }
+
+        }
+        else
+        {
+            Debug.Log("platform is not Supported");
+        }
 
     }
 
@@ -62,21 +83,21 @@ public class PauseManager : MonoBehaviour
         StartCoroutine(Load("Menu"));
         PlayerPrefs.Save();
         Time.timeScale = 1;
-        //if (Advertisement.isSupported)
-        //{
-        //    Advertisement.Initialize("1557198", false);
-        //    if (Advertisement.IsReady())
-        //    {
-        //        Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
+        if (Advertisement.isSupported)
+        {
+            Advertisement.Initialize("1557198", false);
+            if (Advertisement.IsReady())
+            {
+                Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
 
-        //    }
+            }
 
-        //}
-        //else
-        //{
-        //    Debug.Log("platform is not Supported");
-        //}
-
+        }
+        else
+        {
+            Debug.Log("platform is not Supported");
+        }
+        StartCoroutine(Load("Menu"));
 
     }
     IEnumerator Load (string i)
@@ -105,28 +126,28 @@ public class PauseManager : MonoBehaviour
 
         }
     }
-    //private void HandleadResult (ShowResult result)
-    //{
-    //    switch (result)
-    //    {
-    //        case ShowResult.Failed:
-    //            Debug.Log("player failde  launch");
-    //            StartCoroutine(Load("Menu"));
-    //            Time.timeScale = 1;
-    //            break;
-    //        case ShowResult.Skipped:
-    //            Debug.Log("player did not fully watch the ad");
-    //            StartCoroutine(Load("Menu"));
-    //            Time.timeScale = 1;
-    //            break;
-    //        case ShowResult.Finished:
-    //            Debug.Log("player Gains +5 gems");
-    //            StartCoroutine(Load("Menu"));
-    //            Time.timeScale = 1;
-    //            break;
-    //        default:
-    //            break;
-    //    }
+    private void HandleadResult (ShowResult result)
+    {
+        switch (result)
+        {
+            case ShowResult.Failed:
+                Debug.Log("player failde  launch");
+               
+                Time.timeScale = 1;
+                break;
+            case ShowResult.Skipped:
+                Debug.Log("player did not fully watch the ad");
+              
+                Time.timeScale = 1;
+                break;
+            case ShowResult.Finished:
+                Debug.Log("player Gains +5 gems");
+              
+                Time.timeScale = 1;
+                break;
+            default:
+                break;
+        }
 
-    //}
+    }
 }

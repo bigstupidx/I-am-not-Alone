@@ -101,6 +101,16 @@ public class WaveManager : MonoBehaviour
 
     }
 
+    public void Resurrection ()
+    {
+        if (levelWave != 0)
+        {
+            levelWave -= 1;
+            StartWave();
+        }
+
+    }
+
     public void SkyParamsWave ()
     {
 

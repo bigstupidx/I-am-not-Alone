@@ -312,10 +312,7 @@ public class CraftItem : MonoBehaviour
                 Item.CheckOFToggle();
                 //indicator.IndicatorSetActive(false, 1);
                 //indicator.IndicatorSetActive(true, 2);
-                if (obstacle)
-                {
-                    obstacle.enabled = true;
-                }
+              
             }
             else
             {
@@ -330,7 +327,10 @@ public class CraftItem : MonoBehaviour
                 }
                 transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
             }
-
+            if (obstacle)
+            {
+                obstacle.enabled = true;
+            }
         }
     }
     private void OnTriggerEnter (Collider other)

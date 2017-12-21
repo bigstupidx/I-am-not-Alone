@@ -50,6 +50,7 @@ public class PlayerHealth : MonoBehaviour
         }
         HealthPlayer.fillAmount = CurHelth / MaxHealth;
         healthText.text = CurHelth.ToString();
+        DualJoy.SetActive(true);
     }
 
     public void HelthDamage (float damage)
@@ -74,13 +75,12 @@ public class PlayerHealth : MonoBehaviour
         {
             CurHelth = 0;
 
-            if (transform.CompareTag("Player"))
-            {
-                imageGameOver.SetActive(true);
-                DualJoy.SetActive(false);
-                Time.timeScale = 0;
 
-            }
+            imageGameOver.SetActive(true);
+            DualJoy.SetActive(false);
+            Time.timeScale = 0;
+
+
 
 
 
