@@ -12,12 +12,13 @@ public class PlayerHealth : MonoBehaviour
     public GameObject DualJoy;
     public Image damageImage;
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
+    public Text healthText;
     bool damaged;
     // Use this for initialization
     void Start ()
     {
         HealthPlayer.fillAmount = CurHelth / MaxHealth;
-
+        healthText.text = CurHelth.ToString();
     }
 
     private void Update ()
@@ -41,12 +42,14 @@ public class PlayerHealth : MonoBehaviour
     public void UpdateHealth (float health)
     {
         CurHelth += health;
+
         if (CurHelth > MaxHealth)
         {
             CurHelth = MaxHealth;
 
         }
         HealthPlayer.fillAmount = CurHelth / MaxHealth;
+        healthText.text = CurHelth.ToString();
     }
 
     public void HelthDamage (float damage)
@@ -60,7 +63,7 @@ public class PlayerHealth : MonoBehaviour
 
 
 
-
+        healthText.text = CurHelth.ToString();
 
         if (CurHelth > MaxHealth)
         {

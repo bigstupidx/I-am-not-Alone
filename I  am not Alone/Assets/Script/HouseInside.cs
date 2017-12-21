@@ -37,10 +37,7 @@ public class HouseInside : MonoBehaviour
             //        betweenFloor.RenderObjectToFloor(false, "Ignore Raycast");
             betweenFloor.RenderObjectToFloor(false);
         }
-        if (other.CompareTag(Tags.AI))
-        {
-            other.GetComponent<Rigidbody>().detectCollisions = false;
-        }
+
     }
     private void OnTriggerExit (Collider other)
     {
@@ -61,25 +58,22 @@ public class HouseInside : MonoBehaviour
 
 
         }
-        if (other.CompareTag(Tags.AI))
-        {
-            other.GetComponent<Rigidbody>().detectCollisions = true;
-        }
+
     }
 
     void OffRenderAndCollider (bool off)
     {
         if (off)
         {
-            myCamera.farClipPlane = 50;
+            myCamera.farClipPlane = 47;
 
             myCamera.cullingMask |= (1 << 9);
             myCamera.cullingMask |= (1 << 11);
         }
         else
         {
-            myCamera.farClipPlane = 75;
-          
+            myCamera.farClipPlane = 65;
+
             myCamera.cullingMask &= ~(1 << 11);
             myCamera.cullingMask &= ~(1 << 9);
         }

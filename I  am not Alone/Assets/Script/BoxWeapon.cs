@@ -22,11 +22,11 @@ public class BoxWeapon : MonoBehaviour
     GameObject player;
     public float WeaponAmunition;
     CheckInWeaponAndCraft _checkInWeaponAndCraft;
-    public bool TriggerTrue;
+    
     [Space(5)]
     public PlayableDirector[] m_director;
     public GameObject[] traningActive;
-    bool triggerEnable = false;
+
     float timer;
     SphereCollider thisCollider;
     AudioSource weaponAudio;
@@ -44,32 +44,19 @@ public class BoxWeapon : MonoBehaviour
         pool = PoolingSystem.Instance;
         _checkInWeaponAndCraft = _weaponController.GetComponent<CheckInWeaponAndCraft>();
         Physics.IgnoreCollision(transform.parent.GetComponent<Collider>(), player.GetComponent<Collider>());
-        thisCollider = GetComponent<SphereCollider>();
+
         weaponAudio = player.transform.Find("AudioBox").GetChild(0).GetComponent<AudioSource>();
         MaterialsAudio = player.transform.Find("AudioBox").GetChild(1).GetComponent<AudioSource>();
         InteractiveAudio = player.transform.Find("AudioBox").GetChild(2).GetComponent<AudioSource>();
     }
-    private void Update ()
-    {
-        if (TriggerTrue)
-        {
-            timer -= Time.deltaTime;
-            if (timer <= 0)
-            {
-                triggerEnable = true;
-                TriggerTrue = false;
-                thisCollider.enabled = true;
-            }
-        }
-    }
 
     private void OnEnable ()
     {
-        thisCollider = GetComponent<SphereCollider>();
-        timer = 1.5f;
-        TriggerTrue = true;
-        triggerEnable = false;
-        thisCollider.enabled = false;
+
+
+
+
+
         player = GameObject.FindGameObjectWithTag("Player");
 
         weaponAudio = player.transform.Find("AudioBox").GetChild(0).GetComponent<AudioSource>();
@@ -81,8 +68,7 @@ public class BoxWeapon : MonoBehaviour
     private void OnTriggerEnter (Collider other)
     {
 
-        if (triggerEnable)
-        {
+      
             if (other.CompareTag("Player"))
             {
 
@@ -127,7 +113,7 @@ public class BoxWeapon : MonoBehaviour
 
 
             }
-        }
+        
 
         if (other.CompareTag("AI"))
         {
@@ -218,7 +204,7 @@ public class BoxWeapon : MonoBehaviour
         {
             Materials = true;
             int m = Random.Range(0, 5);
-     
+
             if (m == 0 || m == 1)
             {
                 m = 0;

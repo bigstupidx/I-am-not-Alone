@@ -45,7 +45,7 @@ public class Indicator : MonoBehaviour
         //}
         _targetSpriteOfPool.rectTransform.parent = canvas.transform.GetChild(0);
 
-
+        _targetSpriteOfPool.name = transform.name + " _targetSpriteOfPool";
 
 
 

@@ -31,16 +31,16 @@ public class DoneCameraMovving : MonoBehaviour
     }
 
 
-    void FixedUpdate ()
+    void Update ()
     {
         if (selection.Fire1)
         {
             target = attaackTransform;
-           
+
         }
         else
         {
-         
+
             target = player;
         }
         // The standard position of the camera is the relative position of the camera from the player.
@@ -57,8 +57,9 @@ public class DoneCameraMovving : MonoBehaviour
 
         // The next three are 25%, 50% and 75% of the distance between the standard position and abovePos.
         checkPoints[1] = Vector3.Lerp(standardPos, abovePos, 0.25f);
-        checkPoints[2] = Vector3.Lerp(standardPos, abovePos, 0.5f);
+        checkPoints[2] = Vector3.Lerp(standardPos, abovePos, 0.50f);
         checkPoints[3] = Vector3.Lerp(standardPos, abovePos, 0.75f);
+
 
         // The last is the abovePos.
         checkPoints[4] = abovePos;
@@ -73,9 +74,9 @@ public class DoneCameraMovving : MonoBehaviour
         }
 
 
-       
 
-        cameraTransform.position = Vector3.Lerp(cameraTransform.position, newPos, smooth * Time.deltaTime);
+
+        cameraTransform.position = Vector3.Slerp(cameraTransform.position, newPos, smooth * Time.deltaTime);
 
 
         // Make sure the camera is looking at the player.
@@ -87,40 +88,18 @@ public class DoneCameraMovving : MonoBehaviour
     {
         RaycastHit hit;
 
+
         // If a raycast from the check position to the player hits something...
         if (Physics.Raycast(checkPos, player.position - checkPos, out hit, relCameraPosMag))
-      
-            // ... if it is not the player...
-            if (CameraWallObstacle)
-            {
-                if (houseInside.playerOutSide)
-                {
-                    if (hit.transform != target || hit.transform.gameObject.layer == 2)
-                    {
 
 
-                        return false;
-                    }
-                }
-                else
-                {
-                    if (hit.transform != target)
-                    {
-                        //   newViewCamera = false;
-                        // This position isn't appropriate.
-                        return false;
-                    }
-                }
-            }
-            else
+            if (hit.transform != target)
             {
-                if (hit.transform != target)
-                {
-                    //   newViewCamera = false;
-                    // This position isn't appropriate.
-                    return false;
-                }
+                //   newViewCamera = false;
+                // This position isn't appropriate.
+                return false;
             }
+
 
 
         // If we haven't hit anything or we've hit the player, this is an appropriate position.

@@ -119,6 +119,7 @@ public class SelectItemForStart : MonoBehaviour
         {
             health.CurHelth = 150;
             health.MaxHealth = 150;
+            health.UpdateHealth(0);
             for (int i = 0; i < buildControll.panelGoods.Count; i++)
             {
                 buildControll.panelGoods[i].text = "0";
@@ -128,7 +129,7 @@ public class SelectItemForStart : MonoBehaviour
         {
             health.CurHelth = 100;
             health.MaxHealth = 100;
-
+            health.UpdateHealth(0);
         }
     }
 

@@ -452,7 +452,7 @@ public class CraftItem : MonoBehaviour
                     if (_StartHisEffect)
                     {
 
-                        other.GetComponent<Health>().HelthDamage(damage, false, transform.position);
+                        other.GetComponent<Health>().HelthDamage(damage, true, transform.position);
                     }
                 }
                 else
@@ -468,7 +468,7 @@ public class CraftItem : MonoBehaviour
                         }
                         else
                         {
-                            other.GetComponent<Health>().HelthDamage(damage, false, transform.position);
+                            other.GetComponent<Health>().HelthDamage(damage, true, transform.position);
                             health.HelthDamage(0.1f, false, transform.position);
                         }
 

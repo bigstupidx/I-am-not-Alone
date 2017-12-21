@@ -44,7 +44,7 @@ public class WeaponController : MonoBehaviour
         SelectionWeapon(0);
         AdvancedPoolingSystem = GameObject.Find("Advanced Pooling System").transform;
         selectionWeaponPC = GetComponent<SelectionWeaponForPC>();
-        Ammunition(1);
+        Ammunition(0);
     }
 
 

@@ -69,6 +69,7 @@ public class WaveManager : MonoBehaviour
         {
             init();
         }
+
     }
 
     public void init ()

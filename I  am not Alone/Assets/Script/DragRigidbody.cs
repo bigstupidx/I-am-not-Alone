@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+
 using UnityEngine;
 using UnityStandardAssets;
 public class DragRigidbody : MonoBehaviour
@@ -17,6 +18,11 @@ public class DragRigidbody : MonoBehaviour
     const float k_AngularDrag = 5.0f;
     const float k_Distance = 0.2f;
     const bool k_AttachToCenterOfMass = false;
+
+
+
+
+
     private void Update ()
     {
         // Make sure the user pressed the mouse down
@@ -36,7 +42,7 @@ public class DragRigidbody : MonoBehaviour
         {
             return;
         }
-    
+
         if (hit.transform.CompareTag("CraftFromMenu"))
         {
             if (hit.transform.GetComponent<CraftItem>().Built)
@@ -45,14 +51,14 @@ public class DragRigidbody : MonoBehaviour
                 {
                     if (!hit.transform.GetComponent<CraftItem>().hisEffectPrefabPoolForDestroy)
                     {
-                        hit.transform.GetComponent<CraftItem>().His(); 
+                        hit.transform.GetComponent<CraftItem>().His();
                     }
                 }
                 if (hit.transform.GetComponent<CraftItem>().BlowUpEffect)
                 {
                     hit.transform.GetComponent<CraftItem>().BlowUp();
 
-                } 
+                }
             }
         }
         if (hit.transform.CompareTag("Player"))

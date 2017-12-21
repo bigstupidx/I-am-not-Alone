@@ -114,7 +114,7 @@ public class Health : MonoBehaviour
             MoneyAi += GhostMoneyWaveUp * waveManager.levelWave;
             transform.tag = Tags.AI;
             CurHelth = MaxHealth;
-            EnebledPhysics(true);
+    
             if (patAi1)
             {
                 patAi1.SetActive(true);

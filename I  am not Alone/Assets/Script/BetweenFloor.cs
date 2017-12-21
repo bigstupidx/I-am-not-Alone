@@ -12,6 +12,7 @@ public class BetweenFloor : MonoBehaviour
     public Transform FurnitureFirst;
     public Transform FurnitureSecond;
     public GameObject FloorHowTrue;
+    public GameObject[] FurnitureColliderSecondFloor;
     Camera myCamera;
 
     private void Start ()
@@ -23,7 +24,10 @@ public class BetweenFloor : MonoBehaviour
     }
     public void RenderObjectToFloor (bool b)
     {
-
+        for (int i = 0; i < FurnitureColliderSecondFloor.Length; i++)
+        {
+            FurnitureColliderSecondFloor[i].GetComponent<Collider>().enabled = b;
+        }
         if (b)
         {
             myCamera.cullingMask |= (1 << 9);
@@ -108,16 +112,18 @@ public class BetweenFloor : MonoBehaviour
     }
     void OffRenderAndColliderFirst (bool off)
     {
+
    
+
         if (off)
         {
             myCamera.cullingMask |= (1 << 10);
             myCamera.cullingMask |= (1 << 11);
-       
+
         }
         else
         {
-        
+
             myCamera.cullingMask &= ~(1 << 11);
             myCamera.cullingMask &= ~(1 << 10);
         }

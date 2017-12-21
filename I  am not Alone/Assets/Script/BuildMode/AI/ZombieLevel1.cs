@@ -15,7 +15,7 @@ public class ZombieLevel1 : MonoBehaviour
 {
     public NavMeshAgent agent;
     public static float avoidancePredictionTime = 0.5f;
-    public bool ThingsDamage;
+
     public float PlayerDamage;
     public float damage;
     public Transform newTraget;
@@ -25,7 +25,7 @@ public class ZombieLevel1 : MonoBehaviour
     public NavMeshPath navMeshPathPlayer;
     public bool JointWindow;
     public bool damageWindow;
-    public bool DestoyAll;
+
     public float standartSpeed;
     public bool RigidExplosion;
 
@@ -46,9 +46,6 @@ public class ZombieLevel1 : MonoBehaviour
     public AudioSource source;
 
 
-    public int currentTarget = 0;
-    public int OldTarget;
-    LineRenderer lineRender;
 
     // Use this for initialization
     void Start ()
@@ -63,8 +60,7 @@ public class ZombieLevel1 : MonoBehaviour
         source = GetComponent<AudioSource>();
 
         navMeshPathPlayer = new NavMeshPath();
-
-        lineRender = GetComponent<LineRenderer>();
+        
 
 
         transform.tag = Tags.AI;
@@ -95,7 +91,7 @@ public class ZombieLevel1 : MonoBehaviour
 
     }
     // Update is called once per frame
-    void Update ()
+    void FixedUpdate ()
     {
 
 
@@ -115,7 +111,7 @@ public class ZombieLevel1 : MonoBehaviour
         }
         if (timerStop <= 0)
         {
-          
+
 
             if (agent.isStopped)
             {
@@ -124,23 +120,7 @@ public class ZombieLevel1 : MonoBehaviour
 
 
 
-            //if ((player.transform.position - transform.position).sqrMagnitude < Mathf.Pow(agent.stoppingDistance, 2))
-            //{
-            //    // If the agent is in attack range, become an obstacle and
-            // disable the NavMeshAgent component
-            //    obstacle.enabled = true;
-            //    agent.enabled = false;
-            //Vector3 relativePos = player.transform.position - transform.position;
-            //Quaternion rotation = Quaternion.LookRotation(relativePos);
-            //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 7f);
-            //}
-            //else
-            //{
 
-
-            //   If we are not in range, become an agent again
-            //   obstacle.enabled = false;
-            //  agent.enabled = true;
             if (m_animator)
             {
                 if (!newTraget)
@@ -320,6 +300,8 @@ public class ZombieLevel1 : MonoBehaviour
 
     void GhostAnswer (Transform target, PriorityObject Object)
     {
+
+
         if (Object.Priority == 0)
         {
             if (Object.gameObject.GetComponent<DoorTrigger>())
@@ -384,14 +366,13 @@ public class ZombieLevel1 : MonoBehaviour
 
         }
 
+
+
+
+
+
+
+
     }
-
-
-
-
-
-
-
-
 
 }
