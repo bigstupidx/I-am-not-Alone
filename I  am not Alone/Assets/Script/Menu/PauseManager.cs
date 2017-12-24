@@ -83,21 +83,21 @@ public class PauseManager : MonoBehaviour
         StartCoroutine(Load("Menu"));
         PlayerPrefs.Save();
         Time.timeScale = 1;
-        if (Advertisement.isSupported)
-        {
-            Advertisement.Initialize("1557198", false);
-            if (Advertisement.IsReady())
-            {
-                Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
+        //if (Advertisement.isSupported)
+        //{
+        //    Advertisement.Initialize("1557198", false);
+        //    if (Advertisement.IsReady())
+        //    {
+        //        Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
 
-            }
+        //    }
 
-        }
-        else
-        {
-            Debug.Log("platform is not Supported");
-        }
-        StartCoroutine(Load("Menu"));
+        //}
+        //else
+        //{
+        //    Debug.Log("platform is not Supported");
+        //}
+      
 
     }
     IEnumerator Load (string i)

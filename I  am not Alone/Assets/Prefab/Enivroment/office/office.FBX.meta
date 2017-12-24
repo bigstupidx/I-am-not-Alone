@@ -41,6 +41,8 @@ ModelImporter:
     100066: toiletfloor
     100068: toiletWall
     100070: WALS
+    100072: Object076
+    100074: Object086
     400000: Box030
     400002: Box036
     400004: Box037
@@ -77,6 +79,8 @@ ModelImporter:
     400066: toiletfloor
     400068: toiletWall
     400070: WALS
+    400072: Object076
+    400074: Object086
     2300000: Box030
     2300002: Box036
     2300004: Box037
@@ -110,6 +114,8 @@ ModelImporter:
     2300060: straight
     2300062: toiletfloor
     2300064: toiletWall
+    2300066: Object076
+    2300068: Object086
     3300000: Box030
     3300002: Box036
     3300004: Box037
@@ -143,6 +149,8 @@ ModelImporter:
     3300060: straight
     3300062: toiletfloor
     3300064: toiletWall
+    3300066: Object076
+    3300068: Object086
     4300000: centre
     4300002: toiletfloor
     4300004: floor
@@ -176,15 +184,22 @@ ModelImporter:
     4300060: Object006
     4300062: Object002
     4300064: Object004
+    4300066: Object076
+    4300068: Object086
     9500000: //RootNode
   externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #3'
+    second: {fileID: 2100000, guid: 7a476eb29d9101f4e892a6f0b22bfb08, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: No Name
     second: {fileID: 2100000, guid: d53f2936952da3c4093a90df85bf3fb5, type: 2}
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -225,6 +240,8 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
