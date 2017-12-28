@@ -6,88 +6,106 @@ using UnityEngine.UI;
 
 public class SelectItemForStart : MonoBehaviour
 {
-    CheckInWeaponAndCraft checkWeapon;
+    //   CheckInWeaponAndCraft checkWeapon;
     Toggle tog;
-    public string nameItem;
-    PlayerHealth health;
-    SwitchMode buildControll;
-    public bool EasyDifficulty;
-    public bool MiddleDifficulty;
-    public bool HardDifficulty;
-    public bool VeryHardDifficulty;
+    public bool ShopOrNot;
+
+
 
     public Text EasyDifficultyText;
     public Text MiddleDifficultyText;
     public Text HardDifficultyText;
     public Text VeryHardDifficultyText;
     public Toggle[] dificultButton;
+
     // Use this for initialization
     void Start ()
     {
 
-        Restart();
-        PlayerPrefs.Save();
-        health = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<PlayerHealth>();
-        checkWeapon = GameObject.Find("WeaponController").GetComponent<CheckInWeaponAndCraft>();
-        tog = GetComponent<Toggle>();
-        buildControll = GameObject.Find("BuildController").GetComponent<SwitchMode>();
+
+        if (!ShopOrNot)
+        {
+
+            PlayerPrefs.Save();
+            //  health = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<PlayerHealth>();
+            //  checkWeapon = GameObject.Find("WeaponController").GetComponent<CheckInWeaponAndCraft>();
+            tog = GetComponent<Toggle>();
+            //  buildControll = GameObject.Find("BuildController").GetComponent<SwitchMode>();
+        }
+        PlayerPrefs.SetString("wood", "0");
+        PlayerPrefs.SetString("metal", "0");
+        PlayerPrefs.SetString("provoda", "0");
+        PlayerPrefs.SetString("electric", "0");
+        PlayerPrefs.SetFloat("MaxHealth", 100);
+        PlayerPrefs.SetFloat("CurHelth", 100);
+        if (dificultButton.Length != 0)
+        {
+            ActiveDifficulty(dificultButton[0].transform);
+        }
     }
 
-    public void Restart ()
+
+
+    public void Restart (Text sceneSelect)
     {
-        if (EasyDifficulty)
-        {
-            if (PlayerPrefs.HasKey("EasyDifficulty"))
-            {
 
-                GetLevelWave(PlayerPrefs.GetString("EasyDifficulty"), EasyDifficultyText, 1);
-
-            }
-            else
-            {
-                PlayerPrefs.SetString("EasyDifficulty", "0");
-            }
-        }
-        if (MiddleDifficulty)
+        if (PlayerPrefs.HasKey("EasyDifficulty" + sceneSelect.text))
         {
 
-            if ((PlayerPrefs.HasKey("MiddleDifficulty")))
-            {
-                GetLevelWave(PlayerPrefs.GetString("MiddleDifficulty"), MiddleDifficultyText, 2);
-            }
-            else
-            {
-                PlayerPrefs.SetString("MiddleDifficulty", "0");
-            }
+            GetLevelWave(PlayerPrefs.GetString("EasyDifficulty" + sceneSelect.text), EasyDifficultyText, 1);
 
         }
-        if (HardDifficulty)
+        else
         {
+            PlayerPrefs.SetString("EasyDifficulty" + sceneSelect.text, "0");
+        }
 
-            if ((PlayerPrefs.HasKey("HardDifficulty")))
-            {
-                GetLevelWave(PlayerPrefs.GetString("HardDifficulty"), HardDifficultyText, 3);
-            }
-            else
-            {
-                PlayerPrefs.SetString("HardDifficulty", "0");
-            }
+
+
+        if ((PlayerPrefs.HasKey("MiddleDifficulty" + sceneSelect.text)))
+        {
+            GetLevelWave(PlayerPrefs.GetString("MiddleDifficulty" + sceneSelect.text), MiddleDifficultyText, 2);
 
         }
-        if (VeryHardDifficulty)
+        else
+        {
+            PlayerPrefs.SetString("MiddleDifficulty" + sceneSelect.text, "0");
+
+        }
+
+
+
+        if ((PlayerPrefs.HasKey("HardDifficulty" + sceneSelect.text)))
+        {
+            GetLevelWave(PlayerPrefs.GetString("HardDifficulty" + sceneSelect.text), HardDifficultyText, 3);
+        }
+        else
+        {
+            PlayerPrefs.SetString("HardDifficulty" + sceneSelect.text, "0");
+        }
+
+
+
+        if ((PlayerPrefs.HasKey("VeryHardDifficulty" + sceneSelect.text)))
+        {
+            GetLevelWave(PlayerPrefs.GetString("VeryHardDifficulty" + sceneSelect.text), VeryHardDifficultyText, 3);
+        }
+        else
         {
 
-            if ((PlayerPrefs.HasKey("VeryHardDifficulty")))
-            {
-                GetLevelWave(PlayerPrefs.GetString("VeryHardDifficulty"), VeryHardDifficultyText, 3);
-            }
-            else
-            {
-                PlayerPrefs.SetString("VeryHardDifficulty", "0");
-            }
+
+            PlayerPrefs.SetString("VeryHardDifficulty" + sceneSelect.text, "0");
 
 
         }
+
+        PlayerPrefs.Save();
+
+    }
+
+    public void ActiveDifficulty (Transform t)
+    {
+        PlayerPrefs.SetInt("ActiveDifficulty", t.GetSiblingIndex());
     }
 
     private void GetLevelWave (string v, Text t, int pos)
@@ -99,10 +117,10 @@ public class SelectItemForStart : MonoBehaviour
             t.text = "10";
 
 
-            if (pos <= dificultButton.Length)
-            {
-                dificultButton[pos].interactable = true;
-            }
+            //if (pos <= dificultButton.Length)
+            //{
+            //    dificultButton[pos].interactable = true;
+            //}
 
         }
         else
@@ -117,67 +135,66 @@ public class SelectItemForStart : MonoBehaviour
     }
 
 
+    public void MaterialPlus (Toggle h)
+    {
+        if (h.isOn)
+        {
+            PlayerPrefs.SetString("wood", "5");
+            PlayerPrefs.SetString("metal", "4");
+            PlayerPrefs.SetString("provoda", "4");
+            PlayerPrefs.SetString("electric", "1");
+
+        }
+        else
+        {
+            PlayerPrefs.SetString("wood", "0");
+            PlayerPrefs.SetString("metal", "0");
+            PlayerPrefs.SetString("provoda", "0");
+            PlayerPrefs.SetString("electric", "0");
+
+
+        }
+    }
 
     public void UpHealth (Toggle h)
     {
         if (h.isOn)
         {
-            health.CurHelth = 150;
-            health.MaxHealth = 150;
-            health.UpdateHealth(0);
-            for (int i = 0; i < buildControll.panelGoods.Count; i++)
-            {
-                buildControll.panelGoods[i].text = "0";
-            }
+            PlayerPrefs.SetFloat("MaxHealth", 150);
+            PlayerPrefs.SetFloat("CurHelth", 150);
+
+
+            //  health.UpdateHealth(0);
+            //for (int i = 0; i < buildControll.panelGoods.Count; i++)
+            //{
+            //    buildControll.panelGoods[i].text = "0";
+            //}
         }
         else
         {
-            health.CurHelth = 100;
-            health.MaxHealth = 100;
-            health.UpdateHealth(0);
+            PlayerPrefs.SetFloat("MaxHealth", 100);
+            PlayerPrefs.SetFloat("CurHelth", 100);
+
+            //   health.UpdateHealth(0);
         }
     }
 
 
-
-
-    public void SelectItemCraft (Toggle g)
+    public void DestroyOBject (bool ItemCraft)
     {
-        if (g.isOn)
+        SaveData save = GameObject.Find("MenuController").GetComponent<SaveData>();
+        if (ItemCraft)
         {
-            if (checkWeapon.addItemCraft.Count < 5)
-            {
-                checkWeapon.addItemCraft.Add(nameItem);
-            }
-            else
-            {
-                tog.isOn = false;
-            }
-
+            save.DeleteInventoryItemCraft(transform.name);
         }
         else
         {
-            checkWeapon.addItemCraft.Remove(nameItem);
+            save.DeleteInventoryWeapon(transform.name);
         }
 
+        Destroy(this.gameObject);
     }
-    public void SelectWeapon (Toggle g)
-    {
-        if (g.isOn)
-        {
-            if (checkWeapon.addItemCraftWeapon.Count < 3)
-            {
-                checkWeapon.addItemCraftWeapon.Add(nameItem);
-            }
-            else
-            {
-                tog.isOn = false;
-            }
-        }
-        else
-        {
-            checkWeapon.addItemCraftWeapon.Remove(nameItem);
-        }
-    }
+
+
 
 }

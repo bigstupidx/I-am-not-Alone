@@ -29,6 +29,7 @@ public class MyMainMenu : MonoBehaviour
     CheckInWeaponAndCraft checkInWeaponAndCraft;
     public Text aDText;
     public Text shareText;
+    public Button PlayButton;
     // Use this for initialization
     private void Start ()
     {
@@ -46,7 +47,7 @@ public class MyMainMenu : MonoBehaviour
         //   db.OpenDB("DBGame.db");
         //  db.GetMoney();
         save.GetMoney();
-
+        save.GetInventoryForMenu();
         coinPlayeble = myMoney.GetComponent<PlayableDirector>();
 
 
@@ -68,7 +69,7 @@ public class MyMainMenu : MonoBehaviour
 
         if (MidLevel.Count == 10)
         {
-            Debug.Log(a);
+
             if (a != 0)
             {
                 MoneyAd *= a;

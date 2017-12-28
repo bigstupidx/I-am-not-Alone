@@ -16,12 +16,11 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     public List<GameObject> CraftGuiPrefab = new List<GameObject>();
     public List<GameObject> CraftGuiPrefabStart = new List<GameObject>();
     public List<GameObject> WeaponGuiPrefab = new List<GameObject>();
-    public GameObject TraningText;
+
     public List<string> addItemCraft = new List<string>();
     public List<string> addItemCraftWeapon = new List<string>();
     public Text MyMoney;
-    public GameObject nOtHaveWeapons;
-    public GameObject nOtHaveItemCraft;
+
     PoolingSystem pool;
     SwitchMode buildMode;
     //   DbGame db;
@@ -29,8 +28,12 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     GameObject buttonWeapon;
     MyMainMenu menu;
     SelectionWeaponForPC selectionWeaponPC;
+    PlayerHealth health;
+    public GameObject[] ProgresStart;
+    public Text[] materialsCounter;
     void Start ()
     {
+        pool = PoolingSystem.Instance;
         //  db = GetComponent<DbGame>();
         save = GetComponent<SaveData>();
         save.GetMoney();
@@ -38,12 +41,15 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         save.GetWeaponBought();
         // db.GetWeaponBought();
         save.GetCraftItemBought();
+        save.GetInventory();
         //db.GetCraftItemBought();
         //db.GetMoney();
+
         if (ShopOrNot)
         {
             menu = GetComponent<MyMainMenu>();
             CheckLevelInBoughtItem();
+            CheckInventoryShop();
         }
         else
         {
@@ -51,26 +57,21 @@ public class CheckInWeaponAndCraft : MonoBehaviour
             selectionWeaponPC = GetComponent<SelectionWeaponForPC>();
             buildMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
             weaponControll = GameObject.Find("WeaponController").GetComponent<WeaponController>();
-            if (CraftItemBought.Count != 0)
-            {
+            health = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<PlayerHealth>();
 
-                AddItemStartItem();
-            }
-            else
+
+            if (CraftItemBought.Count == 0)
             {
                 gridBuildMenu.gameObject.SetActive(false);
                 gridBuildMenuForStart.gameObject.SetActive(false);
-            }
-            if (WeaponBought.Count != 0)
-            {
-                AddItemStartWeapon();
 
             }
 
 
+            StartGame();
 
         }
-        pool = PoolingSystem.Instance;
+
     }
 
     private void OnEnable ()
@@ -83,7 +84,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     public void PlusAndUpdateMoneyPlayer ()
     {
         save.UpdateMoney(MyMoney.text);
-        //  db.UpdateMoney(MyMoney.text);
+
     }
 
     public void CreateBoxItem (Vector3 pos, int _makeMaterial)
@@ -146,29 +147,12 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         }
     }
 
-    public void OldWeapon (string nameWeapon, BulletSystem bul, handWeapon hand, Vector3 pos)
-    {
-        try
-        {
-            GameObject box = pool.InstantiateAPS("BoxWithMyWeapon", pos, Quaternion.identity);
 
-            box.transform.GetChild(0).GetComponent<BoxWeapon>().categoryWeapon = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).category;
-            box.transform.GetChild(0).GetComponent<BoxWeapon>().nameWeapon = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).nameWeapon;
-            box.transform.GetChild(0).GetComponent<BoxWeapon>().level = WeaponBought.Find(obj => obj.nameWeapon == nameWeapon).levelWeapon;
-        }
-        catch (System.Exception)
-        {
-
-
-            Debug.Log("Ошибка при спаунинге box");
-        }
-
-    }
     void AddItemStartItem ()
     {
         if (CraftItemBought.Count != 0)
         {
-            nOtHaveItemCraft.SetActive(false);
+
         }
         for (int i = 0; i < CraftItemBought.Count; i++)
         {
@@ -180,23 +164,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
             }
         }
     }
-    void AddItemStartWeapon ()
-    {
-        if(WeaponBought.Count != 0)
-        {
-            nOtHaveWeapons.SetActive(false);
-        }
 
-        for (int i = 0; i < WeaponBought.Count; i++)
-        {
-            if (WeaponBought[i] != null)
-            {
-
-                GameObject l = Instantiate(WeaponGuiPrefab.Find((obj => obj.name.Equals(WeaponBought[i].nameWeapon))), gridWeaponMenu.position, gridWeaponMenu.rotation, gridWeaponMenu);
-
-            }
-        }
-    }
     public void CheckLevelInBoughtItem ()
     {
 
@@ -225,11 +193,68 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         }
 
 
-  
+
     }
+    void CheckInventoryShop ()
+    {
+
+        for (int i = 0; i < addItemCraft.Count; i++)
+        {
+            GameObject l = Instantiate(CraftGuiPrefabStart.Find((obj => obj.name.Equals(addItemCraft[i]))), gridBuildMenu.position, gridBuildMenu.rotation, gridBuildMenu);
+            l.name = addItemCraft[i];
+        }
+        for (int i = 0; i < addItemCraftWeapon.Count; i++)
+        {
+            buttonWeapon = Instantiate(WeaponGuiPrefab.Find((obj => obj.name.Equals(addItemCraftWeapon[i]))), gridWeaponMenu.position, gridWeaponMenu.rotation, gridWeaponMenu);
+            buttonWeapon.name = addItemCraftWeapon[i];
+        }
+    }
+
+    public void ButtonAddInventory (ItemParams itemParams)
+    {
+        if (itemParams.ItemCraft)
+        {
+            if (gridBuildMenu.childCount < 3)
+            {
+
+                if (gridBuildMenu.Find(itemParams.weaponName.text) == null)
+                {
+                    GameObject l = Instantiate(CraftGuiPrefabStart.Find((obj => obj.name.Equals(itemParams.weaponName.text))), gridBuildMenu.position, gridBuildMenu.rotation, gridBuildMenu);
+                    l.name = itemParams.weaponName.text;
+                    save.InsertInventoryItemCraft(itemParams.weaponName.text, itemParams.levelItem);
+                }
+            }
+        }
+        else
+        {
+            if (gridWeaponMenu.childCount < 3)
+            {
+
+                if (gridWeaponMenu.Find(itemParams.weaponName.text) == null)
+                {
+                    buttonWeapon = Instantiate(WeaponGuiPrefab.Find((obj => obj.name.Equals(itemParams.weaponName.text))), gridWeaponMenu.position, gridWeaponMenu.rotation, gridWeaponMenu);
+                    buttonWeapon.name = itemParams.weaponName.text;
+                    save.InsertInventoryWeapon(itemParams.weaponName.text, itemParams.levelItem);
+                }
+            }
+        }
+    }
+
 
     public void StartGame ()
     {
+
+        health.MaxHealth = PlayerPrefs.GetFloat("MaxHealth");
+        health.CurHelth = PlayerPrefs.GetFloat("CurHelth");
+        ProgresStart[PlayerPrefs.GetInt("ActiveDifficulty")].SetActive(true);
+        materialsCounter[0].text = PlayerPrefs.GetString("wood");
+        materialsCounter[1].text = PlayerPrefs.GetString("metal");
+        materialsCounter[2].text = PlayerPrefs.GetString("provoda");
+        materialsCounter[3].text = PlayerPrefs.GetString("electric");
+
+
+
+
         if (addItemCraft.Count != 0)
         {
             for (int i = 0; i < addItemCraft.Count; i++)
@@ -247,7 +272,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         }
         else
         {
-            TraningText.SetActive(false);
+
             gridBuildMenu.gameObject.SetActive(false);
             gridBuildMenuForStart.gameObject.SetActive(false);
         }
@@ -284,13 +309,13 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         }
     }
 
-    public void AddWeapon (string name, Transform pos, int level, float amuni)
+    void AddWeapon (string name, Transform pos, int level, float amuni)
     {
 
 
 
 
-        GameObject weapon = pool.InstantiateAPS(name, pos.position, pos.rotation, pos.gameObject);
+        GameObject weapon = Instantiate(weaponControll.weaponPreafab.Find(x => x.name.Equals(name)), pos.position, pos.rotation, pos.transform);
 
         weapon.GetComponent<BulletSystem>().level = level;
         weapon.GetComponent<BulletSystem>().WeaponAmmunition = amuni;
@@ -299,6 +324,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
 
 
     }
+
 }
 
 

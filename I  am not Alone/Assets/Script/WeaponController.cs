@@ -17,6 +17,7 @@ public class WeaponController : MonoBehaviour
     public Transform weaponPanel;
     public List<GameObject> WeaponImage = new List<GameObject>();
     public IKtarget ikTarget;
+    public List<GameObject> weaponPreafab = new List<GameObject>();
     PoolingSystem pool;
     Transform AdvancedPoolingSystem;
     CheckInWeaponAndCraft _checkInWeaponCraft;
@@ -27,7 +28,7 @@ public class WeaponController : MonoBehaviour
     Transform left;
     Transform right;
     IKweapon ikWeapon;
-  
+
     PlayableDirector m_director;
     private void OnEnable ()
     {

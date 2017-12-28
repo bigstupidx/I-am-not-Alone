@@ -33,17 +33,35 @@ public class SaveData : MonoBehaviour
         public List<int> LevelItem = new List<int>();
 
     }
+    public class CraftItemInventory
+    {
+
+        public List<string> NameCraft = new List<string>();
+        public List<int> LevelItem = new List<int>();
+
+    }
+    public class ItemWeaponInventory
+    {
+
+        public List<string> NameWeapon = new List<string>();
+        public List<int> LevelWeapon = new List<int>();
+
+    }
     public bool clearAll;
 
     public PlayerItemParams _playerItemParams;
     public SnecePArams snecePArams;
     public PlayerParams _playerParams;
     public PlayerCraftItem _playerCraftItem;
+    public CraftItemInventory _craftItemInventory;
+    public ItemWeaponInventory _itemWeaponInventory;
     CheckInScene checkIn;
     public static string identifier_snecePArams = "snecePArams";
     public static string identifier_playerParams = "_playerParams";
     public static string identifier_playerItemParams = "_playerItemParams";
     public static string identifier_playerCraftItem = "_playerCraftItem";
+    public static string identifier_craftItemInventory = "_craftItemInventory";
+    public static string identifier_itemWeaponInventory = "_itemWeaponInventory";
     MyMainMenu mainmenu;
     CheckInWeaponAndCraft checkInWeaponAndCraft;
 
@@ -216,7 +234,99 @@ new SaveGameJsonSerializer());
 
     }
 
+    public void GetInventoryForMenu ()
+    {
+        _itemWeaponInventory = SaveGame.Load<ItemWeaponInventory>(
+identifier_itemWeaponInventory,
+new ItemWeaponInventory(),
+new SaveGameJsonSerializer());
 
+
+        _craftItemInventory = SaveGame.Load<CraftItemInventory>(
+identifier_craftItemInventory,
+new CraftItemInventory(),
+new SaveGameJsonSerializer());
+        if (mainmenu = GetComponent<MyMainMenu>())
+        {
+            if (mainmenu.PlayButton)
+            {
+                if (_itemWeaponInventory.NameWeapon.Count != 0)
+                {
+                    mainmenu.PlayButton.interactable = true;
+                }
+                else
+                {
+                    mainmenu.PlayButton.interactable = false;
+                }
+            }
+
+        }
+    }
+
+    public void GetInventory ()
+    {
+        _itemWeaponInventory = SaveGame.Load<ItemWeaponInventory>(
+identifier_itemWeaponInventory,
+new ItemWeaponInventory(),
+new SaveGameJsonSerializer());
+
+
+        _craftItemInventory = SaveGame.Load<CraftItemInventory>(
+identifier_craftItemInventory,
+new CraftItemInventory(),
+new SaveGameJsonSerializer());
+
+        if (checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>())
+        {
+            for (int i = 0; i < _itemWeaponInventory.NameWeapon.Count; i++)
+            {
+                checkInWeaponAndCraft.addItemCraftWeapon.Add(_itemWeaponInventory.NameWeapon[i]);
+            }
+            for (int i = 0; i < _craftItemInventory.NameCraft.Count; i++)
+            {
+                checkInWeaponAndCraft.addItemCraft.Add(_craftItemInventory.NameCraft[i]);
+            }
+        }
+
+    }
+
+    public void InsertInventoryWeapon (string WeaponName, int level)
+    {
+        _itemWeaponInventory.NameWeapon.Add(WeaponName);
+        _itemWeaponInventory.LevelWeapon.Add(level);
+
+        SaveGame.Save<ItemWeaponInventory>(identifier_itemWeaponInventory, _itemWeaponInventory, new SaveGameJsonSerializer());
+    }
+
+    public void DeleteInventoryWeapon (string WeaponName)
+    {
+        _itemWeaponInventory = SaveGame.Load<ItemWeaponInventory>(
+identifier_itemWeaponInventory,
+new ItemWeaponInventory(),
+new SaveGameJsonSerializer());
+        int l = _itemWeaponInventory.NameWeapon.FindIndex(x => x.Equals(WeaponName));
+        _itemWeaponInventory.NameWeapon.RemoveAt(l);
+        _itemWeaponInventory.LevelWeapon.RemoveAt(l);
+        SaveGame.Save<ItemWeaponInventory>(identifier_itemWeaponInventory, _itemWeaponInventory, new SaveGameJsonSerializer());
+    }
+    public void InsertInventoryItemCraft (string WeaponName, int level)
+    {
+        _craftItemInventory.NameCraft.Add(WeaponName);
+        _craftItemInventory.LevelItem.Add(level);
+
+        SaveGame.Save<CraftItemInventory>(identifier_craftItemInventory, _craftItemInventory, new SaveGameJsonSerializer());
+    }
+    public void DeleteInventoryItemCraft (string itemCraft)
+    {
+        _craftItemInventory = SaveGame.Load<CraftItemInventory>(
+identifier_craftItemInventory,
+new CraftItemInventory(),
+new SaveGameJsonSerializer());
+        int l = _craftItemInventory.NameCraft.FindIndex(x => x.Equals(itemCraft));
+        _craftItemInventory.NameCraft.RemoveAt(l);
+        _craftItemInventory.LevelItem.RemoveAt(l);
+        SaveGame.Save<CraftItemInventory>(identifier_craftItemInventory, _craftItemInventory, new SaveGameJsonSerializer());
+    }
     public void InsertDBCraft (string NameCraft, int level)
     {
 

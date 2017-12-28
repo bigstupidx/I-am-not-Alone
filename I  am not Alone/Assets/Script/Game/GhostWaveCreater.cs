@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class Wave
@@ -53,10 +53,9 @@ public class GhostWaveCreater : MonoBehaviour
         {
 
 
-
-            if (PlayerPrefs.HasKey("EasyDifficulty"))
+            if (PlayerPrefs.HasKey("EasyDifficulty" + SceneManager.GetActiveScene().name))
             {
-                int i = int.Parse(PlayerPrefs.GetString("EasyDifficulty"));
+                int i = int.Parse(PlayerPrefs.GetString("EasyDifficulty" + SceneManager.GetActiveScene().name));
 
                 if (i <= levelWave)
                 {
@@ -65,7 +64,7 @@ public class GhostWaveCreater : MonoBehaviour
                     {
                         checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + 7000).ToString();
                     }
-                    PlayerPrefs.SetString("EasyDifficulty", levelWave.ToString());
+                    PlayerPrefs.SetString("EasyDifficulty" + SceneManager.GetActiveScene().name, levelWave.ToString());
                     PlayerPrefs.Save();
 
 
@@ -76,10 +75,10 @@ public class GhostWaveCreater : MonoBehaviour
         }
         if (MiddleDifficulty)
         {
-            if (PlayerPrefs.HasKey("MiddleDifficulty"))
+            if (PlayerPrefs.HasKey("MiddleDifficulty" + SceneManager.GetActiveScene().name))
             {
 
-                int i = int.Parse(PlayerPrefs.GetString("MiddleDifficulty"));
+                int i = int.Parse(PlayerPrefs.GetString("MiddleDifficulty" + SceneManager.GetActiveScene().name));
                 if (i <= levelWave)
                 {
 
@@ -87,7 +86,7 @@ public class GhostWaveCreater : MonoBehaviour
                     {
                         checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + 14000).ToString();
                     }
-                    PlayerPrefs.SetString("MiddleDifficulty", levelWave.ToString());
+                    PlayerPrefs.SetString("MiddleDifficulty" + SceneManager.GetActiveScene().name, levelWave.ToString());
                     PlayerPrefs.Save();
                 }
             }
@@ -97,9 +96,9 @@ public class GhostWaveCreater : MonoBehaviour
         if (HardDifficulty)
         {
 
-            if (PlayerPrefs.HasKey("HardDifficulty"))
+            if (PlayerPrefs.HasKey("HardDifficulty" + SceneManager.GetActiveScene().name))
             {
-                int i = int.Parse(PlayerPrefs.GetString("HardDifficulty"));
+                int i = int.Parse(PlayerPrefs.GetString("HardDifficulty" + SceneManager.GetActiveScene().name));
                 if (i <= levelWave)
                 {
 
@@ -107,7 +106,7 @@ public class GhostWaveCreater : MonoBehaviour
                     {
                         checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + 21000).ToString();
                     }
-                    PlayerPrefs.SetString("HardDifficulty", levelWave.ToString());
+                    PlayerPrefs.SetString("HardDifficulty" + SceneManager.GetActiveScene().name, levelWave.ToString());
                     PlayerPrefs.Save();
                 }
 
@@ -117,9 +116,9 @@ public class GhostWaveCreater : MonoBehaviour
         if (VeryHardDifficulty)
         {
 
-            if (PlayerPrefs.HasKey("VeryHardDifficulty"))
+            if (PlayerPrefs.HasKey("VeryHardDifficulty" + SceneManager.GetActiveScene().name))
             {
-                int i = int.Parse(PlayerPrefs.GetString("VeryHardDifficulty"));
+                int i = int.Parse(PlayerPrefs.GetString("VeryHardDifficulty" + SceneManager.GetActiveScene().name));
                 if (i <= levelWave)
                 {
 
@@ -127,7 +126,7 @@ public class GhostWaveCreater : MonoBehaviour
                     {
                         checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + 30000).ToString();
                     }
-                    PlayerPrefs.SetString("VeryHardDifficulty", levelWave.ToString());
+                    PlayerPrefs.SetString("VeryHardDifficulty" + SceneManager.GetActiveScene().name, levelWave.ToString());
                     PlayerPrefs.Save();
                 }
             }

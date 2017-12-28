@@ -17,6 +17,7 @@ public class ItemParams : MonoBehaviour
     public Image upgradeImage;
     public int category;
     public List<string> coast = new List<string>();
+    public GameObject ButtonPlus;
     MyMainMenu menu;
     SaveData save;
     //  DbGame db;
@@ -39,12 +40,14 @@ public class ItemParams : MonoBehaviour
 
             if (levelItem == 0)
             {
+                ButtonPlus.SetActive(false);
                 Unlock.gameObject.SetActive(true);
                 Upgrade.gameObject.SetActive(false);
                 Full.gameObject.SetActive(false);
             }
             else
             {
+                ButtonPlus.SetActive(true);
                 Unlock.gameObject.SetActive(false);
                 Upgrade.gameObject.SetActive(true);
                 Full.gameObject.SetActive(false);
@@ -89,6 +92,7 @@ public class ItemParams : MonoBehaviour
                 }
                 else
                 {
+               
                     levelItem += 1;
                     MyMoney.text = (int.Parse(MyMoney.text) - int.Parse(coast.text)).ToString();
                     if (!ItemCraft)

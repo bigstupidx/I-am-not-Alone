@@ -42,7 +42,7 @@ public class WaveManager : MonoBehaviour
     float NightTime;
     public LSkyTOD _lskyTod;
     public LSky _lsky;
-
+    public Transform dificultyGhost;
     public int levelWave;
     bool waveLevelUp;
     bool day;
@@ -65,10 +65,9 @@ public class WaveManager : MonoBehaviour
     // Use this for initialization
     private void Start ()
     {
-        if (ghostCreater)
-        {
-            init();
-        }
+        ghostCreater = dificultyGhost.GetChild(PlayerPrefs.GetInt("ActiveDifficulty")).GetComponent<GhostWaveCreater>();
+        init();
+
 
     }
 
