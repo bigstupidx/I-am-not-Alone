@@ -26,6 +26,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         Vector3 m_GroundNormal;
         float m_CapsuleHeight;
         Vector3 m_CapsuleCenter;
+        float capsuleRadius;
         CapsuleCollider m_Capsule;
         Quaternion m_CharacterTargetRot;
         bool m_Crouching;
@@ -37,7 +38,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             m_Capsule = GetComponent<CapsuleCollider>();
             m_CapsuleHeight = m_Capsule.height;
             m_CapsuleCenter = m_Capsule.center;
-
+            capsuleRadius = m_Capsule.radius;
             m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
             m_OrigGroundCheckDistance = m_GroundCheckDistance;
         }
@@ -88,7 +89,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 if (m_Crouching) return;
                 m_Capsule.height = m_Capsule.height / 4f;
                 m_Capsule.center = m_Capsule.center / 4f;
-                m_Crouching = true;
+                m_Capsule.radius = 0.1f;
+               m_Crouching = true;
             }
             else
             {
@@ -101,6 +103,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 }
                 m_Capsule.height = m_CapsuleHeight;
                 m_Capsule.center = m_CapsuleCenter;
+                m_Capsule.radius = capsuleRadius;
                 m_Crouching = false;
             }
         }
@@ -132,6 +135,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             {
                 m_Capsule.height = m_Capsule.height / 4f;
                 m_Capsule.center = m_Capsule.center / 4f;
+                m_Capsule.radius = 0.1f;
                 m_Animator.SetFloat("Jump", m_Rigidbody.velocity.y);
             }
 
@@ -183,7 +187,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
                 m_IsGrounded = false;
                 m_Animator.applyRootMotion = false;
-                m_GroundCheckDistance = 0.1f;
+                m_GroundCheckDistance = 0.5f;
             }
         }
 

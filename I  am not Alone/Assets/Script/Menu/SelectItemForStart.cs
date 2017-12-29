@@ -117,10 +117,10 @@ public class SelectItemForStart : MonoBehaviour
             t.text = "10";
 
 
-            //if (pos <= dificultButton.Length)
-            //{
-            //    dificultButton[pos].interactable = true;
-            //}
+            if (pos <= dificultButton.Length)
+            {
+                dificultButton[pos].interactable = true;
+            }
 
         }
         else

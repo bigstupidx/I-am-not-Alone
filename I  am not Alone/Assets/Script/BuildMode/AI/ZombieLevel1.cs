@@ -44,8 +44,9 @@ public class ZombieLevel1 : MonoBehaviour
     public Animator m_animator;
     [HideInInspector]
     public AudioSource source;
-
-
+    float defaultRadius;
+    float radiusDouble;
+    public bool IamAttack;
 
     // Use this for initialization
     void Start ()
@@ -58,7 +59,8 @@ public class ZombieLevel1 : MonoBehaviour
         health = GetComponent<Health>();
         rigi = GetComponent<Rigidbody>();
         source = GetComponent<AudioSource>();
-
+        defaultRadius = agent.radius;
+        radiusDouble = defaultRadius * 2;
         navMeshPathPlayer = new NavMeshPath();
 
 
@@ -94,7 +96,25 @@ public class ZombieLevel1 : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate ()
     {
+        try
+        {
+            if (!IamAttack)
+            {
+                if (agent.velocity.magnitude <= 0.09f)
+                {
+                    agent.radius = radiusDouble;
+                }
+                else
+                {
+                    agent.radius = defaultRadius;
+                }
+            }
+        }
+        catch (System.Exception)
+        {
 
+            Debug.Log("this ");
+        }
 
         if (timerStop > 0)
         {
@@ -164,6 +184,7 @@ public class ZombieLevel1 : MonoBehaviour
 
 
 
+
     }
 
 
@@ -205,7 +226,7 @@ public class ZombieLevel1 : MonoBehaviour
                                 if (!agent.isStopped)
                                 {
 
-                      
+                                    IamAttack = true;
                                     m_animator.SetBool("attack", true);
 
                                 }
@@ -219,7 +240,7 @@ public class ZombieLevel1 : MonoBehaviour
                             if (agent.isStopped)
                             {
 
-
+                                IamAttack = false;
                                 m_animator.SetBool("attack", false);
 
                             }
@@ -256,7 +277,7 @@ public class ZombieLevel1 : MonoBehaviour
 
                             m_animator.SetTrigger("door");
                             m_animator.SetBool("attack", true);
-
+                            IamAttack = true;
                         }
                     }
                 }
@@ -279,10 +300,11 @@ public class ZombieLevel1 : MonoBehaviour
                     source.PlayOneShot(zombieStay);
 
                     m_animator.SetBool("attack", false);
-
+                    IamAttack = false;
                 }
                 else
                 {
+                    IamAttack = false;
                     m_animator.SetBool("attack", false);
                 }
             }

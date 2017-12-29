@@ -30,9 +30,9 @@ a71e89494a00540356e3247bc0ed0342 Assembly-CSharp.dll:UnityEngine.AI.NavMeshLink
 692ae8f7010412d90605128f9b72c3b8 Assembly-CSharp-firstpass.dll:UnityStandardAssets.Characters.FirstPerson.FirstPersonController
 ed5555ea56c76befb50782024bd97019 Assembly-CSharp.dll:.SpawnerZombie
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.Editor.dll:UnityEngine.Advertisements.Editor.Placeholder
-1fb47e8eb7bbc2e8c2fb2a972189f0b2 Assembly-CSharp.dll:.MyMainMenu
-7cb6a5897d0aaf538c20a9c0a312427d Assembly-CSharp.dll:.WeaponController
-047682664feae0abd8a6f10625b5992e Assembly-CSharp.dll:.SelectItemForStart
+83b0fff0b174240c631256e3b4c6dc6b Assembly-CSharp.dll:.MyMainMenu
+d225127316d3a9fe9d8981c2a24da324 Assembly-CSharp.dll:.WeaponController
+64be0cc548592cf4b398ef829371e4de Assembly-CSharp.dll:.SelectItemForStart
 ca678a4fb175774b3886b5faf2499981 Assembly-CSharp.dll:.IKtarget
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
@@ -117,7 +117,7 @@ ff05dcdf90651c3d98a9cad3df5e471e UnityEngine.Timeline.dll:UnityEngine.Timeline.C
 6af7378a45ad6da4992a71ef50ddc2eb UnityEngine.Timeline.dll:UnityEngine.Timeline.GroupTrack
 6af7378a45ad6da4992a71ef50ddc2eb UnityEngine.Timeline.dll:UnityEngine.Timeline.PlayableTrack
 9ca6347af5ceb6b0d1c105af31b6722e UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
-c84fe425c4876a2d555cddeb05c4bd1f Assembly-CSharp.dll:.CheckInWeaponAndCraft
+a1aa511b0d36abd64d57f90bc1bf1e6d Assembly-CSharp.dll:.CheckInWeaponAndCraft
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ParticleCollision
 baea857e1a811c28d2ecb2ecd92ea2ae Assembly-CSharp.dll:.MB3_MeshBakerGrouper
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
@@ -142,7 +142,7 @@ e8d75d7aac9a80ef56dc5d0d761a21c4 Assembly-CSharp.dll:Lean.Localization.LeanLocal
 cacc21c135305586473163f6599f0573 Assembly-CSharp.dll:.SelectContructionForCreate
 b637db3660ce19de5d6d90c0c5a849d3 Assembly-CSharp.dll:.GhostWaveCreater
 1c859dfdbbcb0df99ff62d9e20d40887 Assembly-CSharp.dll:.GunShoot
-08a4f4459a4b087f8725513aca4d9efa Assembly-CSharp.dll:.WaveManager
+7f09590453d3d0080bc46e3081f72d1e Assembly-CSharp.dll:.WaveManager
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ParticleDestroyAndDestroyParenObject
 6125320b245a3af124b440905c55c519 Assembly-CSharp.dll:Lean.Localization.LeanLocalizedTextArgs
 07701aa818d962a77e81dc66b620136d Assembly-CSharp.dll:.DecalDestroyer
@@ -159,10 +159,10 @@ ef8c11ce53ddeeead3746b0c13faf66b Assembly-CSharp.dll:.DragRigidbody
 d78da10fc6fe2ebb0bfa7bfae15012c5 Assembly-CSharp.dll:UnityEngine.AI.NavMeshModifierVolume
 37bf4d6a6d424731cb4a9b998783e5c6 Assembly-CSharp-firstpass.dll:UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.AdviceManager
-4e6c6ac82a00cd835d9f1e92b3f81a4b Assembly-CSharp.dll:.ZombieLevel1
+a8151b462b5c6c9e2260a88aba670bb0 Assembly-CSharp.dll:.ZombieLevel1
 b7536247a550bc1596505b7f345c8adf Assembly-CSharp.dll:.GunAim
 a2efb0db652b8114d1ae7dd9a600d626 Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.InputAxisScrollbar
-b3b0a1dbdf455977b7ca14c3ce71a862 Assembly-CSharp.dll:.DoneCameraMovving
+a0e00e6d959ee920b5a2370e55e86f06 Assembly-CSharp.dll:.DoneCameraMovving
 fe76270bd84ec3b6f2f6f92c69cf69da Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.AxisTouchButton
 db6ce70b8f7c9b9e69f3f5d6e55e913f Assembly-CSharp.dll:.CraftItem
 8c282e8c641831ff10fe26724ee744ae Assembly-CSharp.dll:Lean.Localization.LeanLocalization
@@ -171,7 +171,7 @@ cd4d382e1c518d5917b767f97807f94e Assembly-CSharp.dll:.MB2_TestUpdate
 46df28736ea7f41afcc2593066695e18 Assembly-CSharp.dll:.BoxWeapon
 a7d3c6c6948d99dd4116e659ddcf5ac4 Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.ButtonHandler
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.GhostEye
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl
+31053ec0c36cd7a301cba78b73519a44 Assembly-CSharp-firstpass.dll:UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl
 b93695bab03ad869031b46a4124daf7e Assembly-CSharp.dll:.TrasnparentWall
 b940086d7622a63b288e497914033d42 Assembly-CSharp.dll:.StartSceneObjectRandom
 57fde8e76fc7bce23deb0e799d336be7 Assembly-CSharp-firstpass.dll:UnityStandardAssets.Utility.SmoothFollow
@@ -199,7 +199,7 @@ a66db4963d9750fe9facaff4efc9b8e6 Assembly-CSharp.dll:AC.LSky.LSkyTOD
 05524b8f659e7bfe5756d1335fec24ba Facebook.Unity.dll:Facebook.Unity.Editor.Dialogs.MockShareDialog
 094cc5991291cd366ef5008f08704bee Assembly-CSharp.dll:.CheckGround
 79276360f6591c3627861e44254c0512 Assembly-CSharp.dll:.MB3_MeshBaker
-1421f06b16f3401ef3a771bbec914a30 Assembly-CSharp.dll:.ItemParams
+fe107f83db5b2fa5f22886fc7daa021e Assembly-CSharp.dll:.ItemParams
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 60b2bb652410a5867a5ab9a01cd38461 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery

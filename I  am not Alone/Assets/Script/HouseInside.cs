@@ -19,7 +19,7 @@ public class HouseInside : MonoBehaviour
         myCamera.cullingMask &= ~(1 << 9);
         myCamera.cullingMask &= ~(1 << 11);
         myCamera.cullingMask |= (1 << 10);
-        myCamera.farClipPlane = 75;
+        myCamera.farClipPlane = 47;
     }
 
     private void OnTriggerEnter (Collider other)
@@ -72,7 +72,7 @@ public class HouseInside : MonoBehaviour
         }
         else
         {
-            myCamera.farClipPlane = 65;
+            myCamera.farClipPlane = 47;
 
             myCamera.cullingMask &= ~(1 << 11);
             myCamera.cullingMask &= ~(1 << 9);

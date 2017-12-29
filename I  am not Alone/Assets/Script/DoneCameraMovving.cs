@@ -17,7 +17,7 @@ public class DoneCameraMovving : MonoBehaviour
     Vector3 cameraToPosMoving;
     public HouseInside houseInside;
     Transform cameraTransform;
-    public bool CameraWallObstacle;
+
     void Awake ()
     {
         cameraTransform = GetComponent<Transform>();
@@ -33,16 +33,19 @@ public class DoneCameraMovving : MonoBehaviour
 
     void Update ()
     {
-        if (selection.Fire1)
+
+        if (!selection.Fire1)
         {
-            target = attaackTransform;
+            target = player;
+            relCameraPos = Vector3.Lerp(relCameraPos, cameraToPOs.position - target.position, 0.2f * Time.deltaTime);
 
         }
         else
         {
-
-            target = player;
+            target = attaackTransform;
         }
+
+
         // The standard position of the camera is the relative position of the camera from the player.
         Vector3 standardPos = target.position + relCameraPos;
 

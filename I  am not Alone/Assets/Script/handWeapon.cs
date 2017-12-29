@@ -11,12 +11,14 @@ public class handWeapon : MonoBehaviour
     public void AttackAxe ()
     {
         fight = true;
-        anim.SetBool("handAttack", true);
+        anim.SetLayerWeight(1, 1);
+        anim.SetTrigger("attack");
     }
     public void WaitingAxe ()
     {
         fight = false;
-      anim.SetBool("handAttack", false);
+        anim.SetLayerWeight(1,0);
+   
     }
 
 

@@ -52,13 +52,14 @@ public class BulletSystem : MonoBehaviour
     [Space(5)]
 
     public Vector3 WeaponPOsition;
-   
+
     [Space(5)]
     WeaponController _weaponController;
     SelectionWeaponForPC selectionWeaponPlay;
     Transform AdvancedPoolingSystem;
     float timer;
     float timerShoot;
+    float timerStartShoot;
     public float timeBetweenBullets = 0.05f;
     public float effectsDisplayTime = 0.2f;
     public Light gunLight;
@@ -85,7 +86,7 @@ public class BulletSystem : MonoBehaviour
 
     }
 
-    
+
     private void Update ()
     {
 
@@ -105,7 +106,7 @@ public class BulletSystem : MonoBehaviour
                 {
 
 
-                    DisableEffects();
+
                     resolution = false;
                     gunLight.enabled = false;
 
@@ -120,7 +121,7 @@ public class BulletSystem : MonoBehaviour
                     bullet.Stop();
                     timerShoot = 0f;
 
-
+                   
                 }
             }
         }
@@ -130,25 +131,32 @@ public class BulletSystem : MonoBehaviour
     public void BulettAttack ()
     {
 
-#if UNITY_ANDROID
+
         if (!selectionWeaponPlay.Fire1)
-#else
-        if (Input.GetMouseButtonUp(0))
-#endif
 
 
         {
+            timerStartShoot = 0;
             bullet.Stop();
+       
             l = false;
         }
-#if UNITY_ANDROID
-        if (fireGun)
-        {
-            if (selectionWeaponPlay.Fire1)
+
+
+        if (selectionWeaponPlay.Fire1)
+
+
+
+
+            if (fireGun)
             {
+
+
+
+
                 gunLight.enabled = true;
 
-                selectionWeaponPlay.Fire1 = true;
+
 
                 gunMiscle.Stop();
                 gunMiscle.Play();
@@ -158,106 +166,36 @@ public class BulletSystem : MonoBehaviour
                 }
                 l = true;
                 bullet.Play();
-                timerShoot = 0f;
+
+               
+
             }
+            else
+            {
 
-        }
-        else
-        {
-            if (selectionWeaponPlay.Fire1)
-
-
-
-
-                if (fireGun)
+              
+                timerStartShoot += Time.deltaTime;
+                if (timerStartShoot > 0.8f)
                 {
-
-                    if (selectionWeaponPlay.Fire1)
+                    if (Input.GetButton("Fire1") & timerShoot >= timeBetweenBullets && Time.timeScale != 0)
                     {
                         gunLight.enabled = true;
 
 
-
+                        gunAudio.Play();
                         gunMiscle.Stop();
                         gunMiscle.Play();
-                        if (!gunAudio.isPlaying)
-                        {
-                            gunAudio.Play();
-                        }
+
                         l = true;
                         bullet.Play();
                         timerShoot = 0f;
                     }
                 }
-                else
-                {
-                    if (selectionWeaponPlay.Fire1)
-                    {
-                        if (Input.GetButton("Fire1") & timerShoot >= timeBetweenBullets && Time.timeScale != 0)
-                        {
-                            gunLight.enabled = true;
 
 
-                            gunAudio.Play();
-                            gunMiscle.Stop();
-                            gunMiscle.Play();
-
-                            l = true;
-                            bullet.Play();
-                            timerShoot = 0f;
-                        }
-                    }
-
-                }
-        }
-
-#else
-        {
-            if (Input.GetButtonUp("Fire1"))
-            {
-                selectionWeaponPlay.Fire1 = false;
-            }
-            if (fireGun)
-            {
-
-                if (Input.GetButton("Fire1"))
-                {
-                    gunLight.enabled = true;
-
-                    selectionWeaponPlay.Fire1 = true;
-
-                    gunMiscle.Stop();
-                    gunMiscle.Play();
-                    if (!gunAudio.isPlaying)
-                    {
-                        gunAudio.Play();
-                    }
-                    l = true;
-                    bullet.Play();
-                    timerShoot = 0f;
-                }
-            }
-            else
-
-            if (Input.GetButton("Fire1") & timerShoot >= timeBetweenBullets && Time.timeScale != 0)
-            {
-                gunLight.enabled = true;
-
-                selectionWeaponPlay.Fire1 = true;
-                gunAudio.Play();
-                gunMiscle.Stop();
-                gunMiscle.Play();
-
-                l = true;
-                bullet.Play();
-
-
-                timerShoot = 0f;
             }
 
 
-        }
-#endif
 
 
 
@@ -265,33 +203,26 @@ public class BulletSystem : MonoBehaviour
 
 
 
-        //   }
+
 
 
         if (timerShoot >= timeBetweenBullets * effectsDisplayTime)
         {
-            // ... disable the effects.
-            DisableEffects();
 
+            gunLight.enabled = false;
         }
 
 
     }
 
-    public void DisableEffects ()
-    {
-        // Disable the line renderer and the light.
 
-        gunLight.enabled = false;
-        //    SpotlightFace.enabled = false;
-    }
     void UpdateWeapon ()
     {
         intervalWeaponAmmunition = updateWeapon[level].intervalWeaponAmmunition;
         particleCol.bulletDamage = updateWeapon[level].damage;
     }
 
- 
+
 }
 
 

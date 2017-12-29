@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityStandardAssets;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 [System.Serializable]
 public class ItemForbuild
@@ -352,6 +354,8 @@ public class CraftItem : MonoBehaviour
 
                 if (BuildStatic)
                 {
+                   
+                   
                     buildMode.CraftItemBuildNowStatic = this.gameObject.GetComponent<CraftItem>();
                     buildMode.ButtonCraft.SetActive(true);
                 }
@@ -506,6 +510,7 @@ public class CraftItem : MonoBehaviour
         }
         if (other.CompareTag("Player"))
         {
+         
             if (buildMode.CraftItemBuildNowDinamic)
             {
                 buildMode.CraftItemBuildNowDinamic.Item.itemCreate.DestroyAPS();

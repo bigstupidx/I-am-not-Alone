@@ -41,12 +41,12 @@ public class SelectionWeaponForPC : MonoBehaviour
     {
     
         Fire1 = false;
-        animator.SetBool("attack", Fire1);
+        animator.SetBool("weaponAttack", Fire1);
     }
     public void WeaponPlayDown ()
     {
 
         Fire1 = true;
-        animator.SetBool("attack", Fire1);
+        animator.SetBool("weaponAttack",Fire1);
     }
 }
