@@ -8,7 +8,7 @@ public class ItemParams : MonoBehaviour
     public bool ItemCraft;
     public int levelItem;
     public Text Upgrade;
-    public Text Unlock;
+    public GameObject Unlock;
     public Text Full;
     public Text textCoast;
     public Text weaponName;

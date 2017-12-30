@@ -1,7 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class DoneCameraMovving : MonoBehaviour
 {
     public float smooth = 1.5f;         // The relative speed at which the camera will catch up.
@@ -17,7 +18,30 @@ public class DoneCameraMovving : MonoBehaviour
     Vector3 cameraToPosMoving;
     public HouseInside houseInside;
     Transform cameraTransform;
+    private bool cameraFixPos;
+    public bool m_changeCamera;
+    public Toggle cameraTog;
 
+
+    public static void CameraSaveSetBool (string key, bool state)
+    {
+        PlayerPrefs.SetInt(key, state ? 1 : 0);
+    }
+
+    public static bool CameraSaveGetBool (string key)
+    {
+        int value = PlayerPrefs.GetInt(key);
+
+        if (value == 1)
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
+        }
+    }
     void Awake ()
     {
         cameraTransform = GetComponent<Transform>();
@@ -28,8 +52,31 @@ public class DoneCameraMovving : MonoBehaviour
         target = player;
         relCameraPos = cameraTransform.position - target.position;
         relCameraPosMag = relCameraPos.magnitude - 0.5f;
+
+        cameraTog.isOn = CameraSaveGetBool("Camera");
+        m_changeCamera = cameraTog.isOn;
+        PlayerPrefs.Save();
+    }
+    public void ChangeCamera (Toggle TOG)
+    {
+        m_changeCamera = TOG.isOn;
+        cameraTog.isOn = m_changeCamera;
+        CameraToPOsition();
+
     }
 
+    private void OnApplicationPause (bool pause)
+    {
+        CameraSaveSetBool("Camera", m_changeCamera);
+
+        PlayerPrefs.Save();
+    }
+    private void OnApplicationQuit ()
+    {
+        CameraSaveSetBool("Camera", m_changeCamera);
+
+        PlayerPrefs.Save();
+    }
 
     void Update ()
     {
@@ -37,11 +84,27 @@ public class DoneCameraMovving : MonoBehaviour
         if (!selection.Fire1)
         {
             target = player;
-            relCameraPos = Vector3.Lerp(relCameraPos, cameraToPOs.position - target.position, 0.2f * Time.deltaTime);
 
+            if (m_changeCamera)
+            {
+                relCameraPos = Vector3.Lerp(relCameraPos, cameraToPOs.position - target.position, 0.2f * Time.deltaTime);
+
+
+                cameraFixPos = true;
+            }
         }
         else
         {
+
+            if (m_changeCamera)
+            {
+                if (cameraFixPos)
+                {
+                    relCameraPos = cameraToPOs.position - target.position;
+                    relCameraPosMag = relCameraPos.magnitude - 0.5f;
+                    cameraFixPos = false;
+                }
+            }
             target = attaackTransform;
         }
 
@@ -52,22 +115,18 @@ public class DoneCameraMovving : MonoBehaviour
         // The abovePos is directly above the player at the same distance as the standard position.
         Vector3 abovePos = target.position + Vector3.up * relCameraPosMag;
 
-        // An array of 5 points to check if the camera can see the player.
-        Vector3[] checkPoints = new Vector3[5];
+        //// An array of 5 points to check if the camera can see the player.
+        Vector3[] checkPoints = new Vector3[3];
 
-        // The first is the standard position of the camera.
+        //// The first is the standard position of the camera.
         checkPoints[0] = standardPos;
 
-        // The next three are 25%, 50% and 75% of the distance between the standard position and abovePos.
+        //// The next three are 25%, 50% and 75% of the distance between the standard position and abovePos.
         checkPoints[1] = Vector3.Lerp(standardPos, abovePos, 0.25f);
         checkPoints[2] = Vector3.Lerp(standardPos, abovePos, 0.50f);
-        checkPoints[3] = Vector3.Lerp(standardPos, abovePos, 0.75f);
 
 
-        // The last is the abovePos.
-        checkPoints[4] = abovePos;
-
-        // Run through the check points...
+        //// Run through the check points...
         for (int i = 0; i < checkPoints.Length; i++)
         {
             // ... if the camera can see the player...
@@ -113,7 +172,10 @@ public class DoneCameraMovving : MonoBehaviour
     public void CameraToPOsition ()
     {
 
-        relCameraPos = cameraToPOs.position - target.position;
+        if (target)
+        {
+            relCameraPos = cameraToPOs.position - target.position;
+        }
         relCameraPosMag = relCameraPos.magnitude - 0.5f;
 
 

@@ -98,7 +98,10 @@ public class MyMainMenu : MonoBehaviour
 
     public void Share ()
     {
-        FB.ShareLink(contentTitle: "I am  not Alone", contentDescription: "Hello  this is my first Game", callback: OnShare);
+        FB.ShareLink(contentTitle: "Plinth",
+            contentURL: new System.Uri("http://n3k.ca"),
+            contentDescription: "Hello  this is my first Game", callback: OnShare);
+        
     }
     private void OnShare (IShareResult result)
     {

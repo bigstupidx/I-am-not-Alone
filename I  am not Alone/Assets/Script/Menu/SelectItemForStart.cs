@@ -17,7 +17,7 @@ public class SelectItemForStart : MonoBehaviour
     public Text HardDifficultyText;
     public Text VeryHardDifficultyText;
     public Toggle[] dificultButton;
-
+    private string sceneActive;
     // Use this for initialization
     void Start ()
     {
@@ -44,11 +44,15 @@ public class SelectItemForStart : MonoBehaviour
         }
     }
 
+    public void ButtonDificulty ()
+    {
+        Restart(sceneActive);
+    }
 
 
     public void Restart (Text sceneSelect)
     {
-
+        sceneActive = sceneSelect.text;
         if (PlayerPrefs.HasKey("EasyDifficulty" + sceneSelect.text))
         {
 
@@ -95,6 +99,62 @@ public class SelectItemForStart : MonoBehaviour
 
 
             PlayerPrefs.SetString("VeryHardDifficulty" + sceneSelect.text, "0");
+
+
+        }
+
+        PlayerPrefs.Save();
+
+    }
+    void Restart (string sceneSelect)
+    {
+         
+        if (PlayerPrefs.HasKey("EasyDifficulty" + sceneSelect))
+        {
+
+            GetLevelWave(PlayerPrefs.GetString("EasyDifficulty" + sceneSelect), EasyDifficultyText, 1);
+
+        }
+        else
+        {
+            PlayerPrefs.SetString("EasyDifficulty" + sceneSelect, "0");
+        }
+
+
+
+        if ((PlayerPrefs.HasKey("MiddleDifficulty" + sceneSelect)))
+        {
+            GetLevelWave(PlayerPrefs.GetString("MiddleDifficulty" + sceneSelect), MiddleDifficultyText, 2);
+
+        }
+        else
+        {
+            PlayerPrefs.SetString("MiddleDifficulty" + sceneSelect, "0");
+
+        }
+
+
+
+        if ((PlayerPrefs.HasKey("HardDifficulty" + sceneSelect)))
+        {
+            GetLevelWave(PlayerPrefs.GetString("HardDifficulty" + sceneSelect), HardDifficultyText, 3);
+        }
+        else
+        {
+            PlayerPrefs.SetString("HardDifficulty" + sceneSelect, "0");
+        }
+
+
+
+        if ((PlayerPrefs.HasKey("VeryHardDifficulty" + sceneSelect)))
+        {
+            GetLevelWave(PlayerPrefs.GetString("VeryHardDifficulty" + sceneSelect), VeryHardDifficultyText, 3);
+        }
+        else
+        {
+
+
+            PlayerPrefs.SetString("VeryHardDifficulty" + sceneSelect, "0");
 
 
         }

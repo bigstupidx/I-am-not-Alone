@@ -239,6 +239,11 @@ public class CraftItem : MonoBehaviour
             {
                 Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>());
             }
+            transform.GetComponent<Collider>().enabled = true;
+            if (transform.GetChild(0).GetComponent<Collider>())
+            {
+                transform.GetChild(0).GetComponent<Collider>().enabled = true;
+            }
             rigid.isKinematic = false;
         }
         Built = false;
@@ -314,7 +319,7 @@ public class CraftItem : MonoBehaviour
                 Item.CheckOFToggle();
                 //indicator.IndicatorSetActive(false, 1);
                 //indicator.IndicatorSetActive(true, 2);
-              
+
             }
             else
             {
@@ -354,8 +359,8 @@ public class CraftItem : MonoBehaviour
 
                 if (BuildStatic)
                 {
-                   
-                   
+
+
                     buildMode.CraftItemBuildNowStatic = this.gameObject.GetComponent<CraftItem>();
                     buildMode.ButtonCraft.SetActive(true);
                 }
@@ -510,7 +515,7 @@ public class CraftItem : MonoBehaviour
         }
         if (other.CompareTag("Player"))
         {
-         
+
             if (buildMode.CraftItemBuildNowDinamic)
             {
                 buildMode.CraftItemBuildNowDinamic.Item.itemCreate.DestroyAPS();

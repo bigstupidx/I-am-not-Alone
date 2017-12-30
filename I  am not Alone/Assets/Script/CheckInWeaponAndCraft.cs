@@ -7,7 +7,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
 {
     public bool ShopOrNot;
     public Transform gridShop;
-    public Transform gridBuildMenuForStart;
+ 
     public Transform gridBuildMenu;
     public Transform gridWeaponMenu;
     WeaponController weaponControll;
@@ -63,7 +63,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
             if (CraftItemBought.Count == 0)
             {
                 gridBuildMenu.gameObject.SetActive(false);
-                gridBuildMenuForStart.gameObject.SetActive(false);
+
 
             }
 
@@ -148,22 +148,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
     }
 
 
-    void AddItemStartItem ()
-    {
-        if (CraftItemBought.Count != 0)
-        {
 
-        }
-        for (int i = 0; i < CraftItemBought.Count; i++)
-        {
-            if (CraftItemBought[i] != null)
-            {
-
-                GameObject l = Instantiate(CraftGuiPrefabStart.Find((obj => obj.name.Equals(CraftItemBought[i].nameWeapon))), gridBuildMenuForStart.position, gridBuildMenuForStart.rotation, gridBuildMenuForStart);
-
-            }
-        }
-    }
 
     public void CheckLevelInBoughtItem ()
     {
@@ -274,7 +259,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
         {
 
             gridBuildMenu.gameObject.SetActive(false);
-            gridBuildMenuForStart.gameObject.SetActive(false);
+
         }
         for (int i = 0; i < addItemCraftWeapon.Count; i++)
         {

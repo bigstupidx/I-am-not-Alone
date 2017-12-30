@@ -253,7 +253,7 @@ public class Health : MonoBehaviour
                 destroyAi = poolsistem.InstantiateAPS("DethGhost", transform.position, Quaternion.identity);
 
 
-
+           
                 if (playerAttack)
                 {
                     checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + MoneyAi).ToString();
@@ -323,8 +323,9 @@ public class Health : MonoBehaviour
                 ZombieLevel1 zombie = GetComponent<ZombieLevel1>();
                 Animator m_animator = zombie.m_animator;
                 sourceDestraction.clip = zombie.zombieDeth;
-
+                m_animator.SetLayerWeight(1, 0);
                 m_animator.SetTrigger("Die");
+            
                 sourceDestraction.Play();
 
                 zombie.timerStop = 1.0f;

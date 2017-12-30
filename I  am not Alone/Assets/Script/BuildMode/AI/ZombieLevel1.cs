@@ -40,7 +40,7 @@ public class ZombieLevel1 : MonoBehaviour
     public AudioClip zombieAtack;
     public AudioClip zombieStay;
     public AudioClip zombieDeth;
-    public bool ChekStoppping;
+
     public Animator m_animator;
     [HideInInspector]
     public AudioSource source;
@@ -81,6 +81,7 @@ public class ZombieLevel1 : MonoBehaviour
         agent.enabled = true;
         agent.speed = standartSpeed;
         timerStop = -1.0f;
+        m_animator.SetLayerWeight(1, 1);
     }
     void DayDestroyObject ()
     {
@@ -137,7 +138,7 @@ public class ZombieLevel1 : MonoBehaviour
             if (agent.isStopped)
             {
                 agent.isStopped = false;
-                ChekStoppping = false;
+
             }
 
 
@@ -173,11 +174,13 @@ public class ZombieLevel1 : MonoBehaviour
 
             }
 
+
             if (!agent.isStopped)
             {
                 agent.isStopped = true;
-                ChekStoppping = true;
+
             }
+            m_animator.SetTrigger("STAY");
 
         }
 

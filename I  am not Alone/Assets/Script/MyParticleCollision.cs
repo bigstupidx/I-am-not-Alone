@@ -15,7 +15,7 @@ public class MyParticleCollision : MonoBehaviour
     void Start ()
     {
         safeLength = GetComponent<ParticleSystem>().GetSafeCollisionEventSize();
-  
+
         //pool = PoolingSystem.Instance;
     }
 
@@ -78,7 +78,7 @@ public class MyParticleCollision : MonoBehaviour
         if (other.CompareTag("AI"))
         {
 
-
+            other.GetComponent<ZombieLevel1>().m_animator.SetTrigger("hit");
             // pool.InstantiateAPS("BloodSprayEffect", other.transform.position, Quaternion.identity);
             if (other.transform.root.name != transform.name)
             {
@@ -137,7 +137,7 @@ public class MyParticleCollision : MonoBehaviour
 
 
 
-       
+
 
 
 
