@@ -100,7 +100,8 @@ public class DoneCameraMovving : MonoBehaviour
             {
                 if (cameraFixPos)
                 {
-                    relCameraPos = cameraToPOs.position - target.position;
+                    relCameraPos = cameraTransform.position - target.position;
+                    relCameraPos.y = 16.0f;
                     relCameraPosMag = relCameraPos.magnitude - 0.5f;
                     cameraFixPos = false;
                 }

@@ -426,6 +426,7 @@ public class CraftItem : MonoBehaviour
 
                         health.HelthDamage(0.03f, false, transform.position);
                         Animator anim = other.GetComponent<ZombieLevel1>().m_animator;
+                        anim.SetLayerWeight(1, 0);
                         anim.SetTrigger("window");
                         OffMeshLinkData data = other.GetComponent<ZombieLevel1>().agent.currentOffMeshLinkData;
                         Vector3 startPos = other.GetComponent<ZombieLevel1>().agent.transform.position;
@@ -509,9 +510,8 @@ public class CraftItem : MonoBehaviour
             //    other.GetComponent<ZombieLevel1>().WinDowAttack = false;
 
             other.GetComponent<ZombieLevel1>().agent.speed = other.GetComponent<ZombieLevel1>().standartSpeed;
-
-
-
+            other.GetComponent<ZombieLevel1>().m_animator.SetLayerWeight(1, 0);
+      
         }
         if (other.CompareTag("Player"))
         {

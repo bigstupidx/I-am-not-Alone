@@ -86,6 +86,10 @@ public class BulletSystem : MonoBehaviour
 
     }
 
+    public void UpdateAmunition ()
+    {
+        _weaponController.Ammunition(WeaponAmmunition);
+    }
 
     private void Update ()
     {
@@ -121,7 +125,7 @@ public class BulletSystem : MonoBehaviour
                     bullet.Stop();
                     timerShoot = 0f;
 
-                   
+
                 }
             }
         }
@@ -138,7 +142,7 @@ public class BulletSystem : MonoBehaviour
         {
             timerStartShoot = 0;
             bullet.Stop();
-       
+
             l = false;
         }
 
@@ -167,13 +171,13 @@ public class BulletSystem : MonoBehaviour
                 l = true;
                 bullet.Play();
 
-               
+
 
             }
             else
             {
 
-              
+
                 timerStartShoot += Time.deltaTime;
                 if (timerStartShoot > 0.8f)
                 {

@@ -180,7 +180,9 @@ public class ZombieLevel1 : MonoBehaviour
                 agent.isStopped = true;
 
             }
+
             m_animator.SetTrigger("STAY");
+
 
         }
 
