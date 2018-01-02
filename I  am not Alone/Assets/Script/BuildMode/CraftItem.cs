@@ -319,7 +319,7 @@ public class CraftItem : MonoBehaviour
                 Item.CheckOFToggle();
                 //indicator.IndicatorSetActive(false, 1);
                 //indicator.IndicatorSetActive(true, 2);
-
+                transform.GetChild(0).GetComponent<Collider>().enabled = true;
             }
             else
             {
@@ -425,12 +425,14 @@ public class CraftItem : MonoBehaviour
                     {
 
                         health.HelthDamage(0.03f, false, transform.position);
+                        ZombieLevel1 zombie = other.GetComponent<ZombieLevel1>();
                         Animator anim = other.GetComponent<ZombieLevel1>().m_animator;
                         anim.SetLayerWeight(1, 0);
                         anim.SetTrigger("window");
+
                         OffMeshLinkData data = other.GetComponent<ZombieLevel1>().agent.currentOffMeshLinkData;
                         Vector3 startPos = other.GetComponent<ZombieLevel1>().agent.transform.position;
-                        Vector3 endPos = data.endPos + Vector3.up * other.GetComponent<ZombieLevel1>().agent.baseOffset;
+                        Vector3 endPos = transform.position;
                         float normalizedTime = 0.0f;
                         while (normalizedTime < 1.0f)
                         {
@@ -443,11 +445,13 @@ public class CraftItem : MonoBehaviour
 
 
 
+
+
                     }
                 }
+
+
             }
-
-
 
 
         }
@@ -511,7 +515,7 @@ public class CraftItem : MonoBehaviour
 
             other.GetComponent<ZombieLevel1>().agent.speed = other.GetComponent<ZombieLevel1>().standartSpeed;
             other.GetComponent<ZombieLevel1>().m_animator.SetLayerWeight(1, 0);
-      
+
         }
         if (other.CompareTag("Player"))
         {
@@ -563,24 +567,7 @@ public class CraftItem : MonoBehaviour
                 hit.GetComponent<PlayerHealth>().HelthDamage(damage);
 
             }
-            if (hit.GetComponent<Rigidbody>() != null)
-            {
-                //if (hit.CompareTag("AI"))
-                //{
-                //    hit.GetComponent<ZombieLevel1>().agent.enabled = false;
-                //    hit.GetComponent<ZombieLevel1>().RigidExplosion = true;
 
-                //    hit.GetComponent<Rigidbody>().isKinematic = false;
-                //    hit.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, centre, ExplosionRadios, 1, ForceMode.Impulse);
-
-                //}
-                //else
-                //{
-
-                //}
-                //hit.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, centre, ExplosionRadios, 1, ForceMode.Impulse);
-
-            }
         }
     }
 

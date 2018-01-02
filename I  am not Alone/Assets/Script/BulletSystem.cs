@@ -88,6 +88,7 @@ public class BulletSystem : MonoBehaviour
 
     public void UpdateAmunition ()
     {
+        _weaponController = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         _weaponController.Ammunition(WeaponAmmunition);
     }
 

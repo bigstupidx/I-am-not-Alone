@@ -53,6 +53,15 @@ public class SelectItemForStart : MonoBehaviour
     public void Restart (Text sceneSelect)
     {
         sceneActive = sceneSelect.text;
+        for (int i = 0; i < dificultButton.Length; i++)
+        {
+
+            dificultButton[i].interactable = false;
+
+            dificultButton[i].isOn = false;
+        }
+        dificultButton[0].interactable = true;
+        dificultButton[0].isOn = true;
         if (PlayerPrefs.HasKey("EasyDifficulty" + sceneSelect.text))
         {
 
@@ -108,7 +117,12 @@ public class SelectItemForStart : MonoBehaviour
     }
     void Restart (string sceneSelect)
     {
-         
+        for (int i = 0; i < dificultButton.Length; i++)
+        {
+
+            dificultButton[i].interactable = false;
+        }
+        dificultButton[0].interactable = true;
         if (PlayerPrefs.HasKey("EasyDifficulty" + sceneSelect))
         {
 

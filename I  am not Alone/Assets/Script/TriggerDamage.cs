@@ -8,7 +8,7 @@ public class TriggerDamage : MonoBehaviour {
     {
         if (other.transform.CompareTag(Tags.player))
         {
-            other.GetComponent<PlayerHealth>().HelthDamage(5);
+            other.GetComponent<PlayerHealth>().HelthDamage(50);
         }
     }
 }

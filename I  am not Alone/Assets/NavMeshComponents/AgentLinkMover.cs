@@ -65,6 +65,8 @@ public class AgentLinkMover : MonoBehaviour
         Mcollider.center = Mcollider.center / 4f;
         float normalizedTime = 0.0f;
         zombie.m_animator.SetTrigger("jump");
+
+
         while (normalizedTime < 1.0f)
         {
             float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
@@ -73,7 +75,8 @@ public class AgentLinkMover : MonoBehaviour
             Mcollider.height = m_CapsuleHeight;
             Mcollider.center = m_CapsuleCenter;
             yield return null;
-        }
+        } /**/
+
     }
 
     IEnumerator Curve (NavMeshAgent agent, float duration)
@@ -81,11 +84,17 @@ public class AgentLinkMover : MonoBehaviour
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         Vector3 startPos = agent.transform.position;
         Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
+
+
+
         float normalizedTime = 0.0f;
+
         while (normalizedTime < 1.0f)
         {
             float yOffset = m_Curve.Evaluate(normalizedTime);
             agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
+
+
             normalizedTime += Time.deltaTime / duration;
             yield return null;
         }
