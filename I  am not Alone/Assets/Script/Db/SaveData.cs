@@ -111,7 +111,7 @@ new SaveGameJsonSerializer());
 
         if (_playerParams.Money == null)
         {
-            UpdateMoney("1500");
+            UpdateMoney("15000");
         }
         if (mainmenu = GetComponent<MyMainMenu>())
         {
