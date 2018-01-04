@@ -95,7 +95,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
             GameObject box = pool.InstantiateAPS("BoxWithWeapon", pos, Quaternion.identity);
             box.transform.GetChild(0).GetComponent<BoxWeapon>().Materials = true;
             box.transform.GetChild(0).GetComponent<BoxWeapon>().textGuiPanelGoods = buildMode.panelGoods[_makeMaterial].transform;
-            box.transform.GetChild(0).GetComponent<BoxWeapon>().level = Random.Range(2, 5);
+            box.transform.GetChild(0).GetComponent<BoxWeapon>().level = Random.Range(3, 5);
             box.transform.GetChild(0).GetComponent<BoxWeapon>().StartGoods = false;
         }
         catch (System.Exception)
@@ -283,6 +283,7 @@ public class CheckInWeaponAndCraft : MonoBehaviour
                         break;
                     case 2:
                         btn.onClick.AddListener(selectionWeaponPC.Weapon3);
+                        
                         break;
                     default:
                         break;

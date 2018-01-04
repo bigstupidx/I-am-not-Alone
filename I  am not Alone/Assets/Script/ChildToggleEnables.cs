@@ -6,7 +6,7 @@ public class ChildToggleEnables : MonoBehaviour
 {
 
     ToggleGroup togGr;
-
+    public SelectionWeaponForPC weapon;
 
     private void Start ()
     {
@@ -20,5 +20,14 @@ public class ChildToggleEnables : MonoBehaviour
             transform.GetChild(i).GetChild(0).GetComponent<Toggle>().isOn = false;
         }
         togGr.allowSwitchOff = false;
+    }
+
+    public void ActiveFIrstWeapon ()
+    {
+
+        Button btn = transform.GetChild(0).GetComponent<Button>();
+        weapon.Weapon1();
+        transform.GetChild(0).GetChild(0).GetComponent<Toggle>().isOn = true;
+
     }
 }

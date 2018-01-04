@@ -85,6 +85,9 @@ public class ZombieLevel1 : MonoBehaviour
     }
     void DayDestroyObject ()
     {
+
+
+
         if (_sky.IsDay)
         {
             if (health.CurHelth > 0)
@@ -92,6 +95,8 @@ public class ZombieLevel1 : MonoBehaviour
                 health.HelthDamage(4f, false, transform.position);
             }
         }
+
+
 
     }
     // Update is called once per frame

@@ -319,7 +319,10 @@ public class CraftItem : MonoBehaviour
                 Item.CheckOFToggle();
                 //indicator.IndicatorSetActive(false, 1);
                 //indicator.IndicatorSetActive(true, 2);
-                transform.GetChild(0).GetComponent<Collider>().enabled = true;
+                if (transform.GetChild(0).GetComponent<Collider>())
+                {
+                    transform.GetChild(0).GetComponent<Collider>().enabled = true; 
+                }
             }
             else
             {

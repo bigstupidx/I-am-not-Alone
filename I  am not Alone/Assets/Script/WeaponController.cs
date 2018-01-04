@@ -67,7 +67,7 @@ public class WeaponController : MonoBehaviour
                 ResetWeapon();
                 Hand.SetActive(false);
                 Weapons[2].SetActive(false);
-
+             
                 Weapons[0].transform.GetChild(0).localPosition = Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
                 ikTarget.WeaponActive = Weapons[0].transform.GetChild(0);
                 AnimationWeapon(Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().rightHand, Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
@@ -125,7 +125,7 @@ public class WeaponController : MonoBehaviour
 
                 Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
                 Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().resolution = true;
-                Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().UpdateAmunition();
+                //      Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().UpdateAmunition();
                 m_director = weaponPanel.GetChild(0).GetComponent<PlayableDirector>();
                 m_director.Play();
             }
@@ -141,7 +141,7 @@ public class WeaponController : MonoBehaviour
                 Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
 
                 Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().resolution = true;
-                Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().UpdateAmunition();
+                //     Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().UpdateAmunition();
                 m_director = weaponPanel.GetChild(1).GetComponent<PlayableDirector>();
                 m_director.Play();
 
@@ -158,7 +158,7 @@ public class WeaponController : MonoBehaviour
                 Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
 
                 Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().resolution = true;
-                Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().UpdateAmunition();
+                //        Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().UpdateAmunition();
                 m_director = weaponPanel.GetChild(2).GetComponent<PlayableDirector>();
                 m_director.Play();
             }

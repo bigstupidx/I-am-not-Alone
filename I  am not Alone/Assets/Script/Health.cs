@@ -114,7 +114,7 @@ public class Health : MonoBehaviour
             MoneyAi += GhostMoneyWaveUp * waveManager.levelWave;
             transform.tag = Tags.AI;
             CurHelth = MaxHealth;
-            
+
             if (patAi1)
             {
                 patAi1.SetActive(true);
@@ -253,7 +253,7 @@ public class Health : MonoBehaviour
                 destroyAi = poolsistem.InstantiateAPS("DethGhost", transform.position, Quaternion.identity);
 
 
-           
+
                 if (playerAttack)
                 {
                     checkWeaponAndCraft.MyMoney.text = (int.Parse(checkWeaponAndCraft.MyMoney.text) + MoneyAi).ToString();
@@ -325,7 +325,7 @@ public class Health : MonoBehaviour
                 sourceDestraction.clip = zombie.zombieDeth;
                 m_animator.SetLayerWeight(1, 0);
                 m_animator.SetTrigger("Die");
-            
+
                 sourceDestraction.Play();
 
                 zombie.timerStop = 1.0f;
@@ -383,8 +383,16 @@ public class Health : MonoBehaviour
             }
             if (transform.CompareTag(Tags.CraftFromMenu))
             {
-                destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
                 _craftItem = GetComponent<CraftItem>();
+                if (_craftItem.mySelf)
+                {
+                    destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffect", transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    destroyAi = poolsistem.InstantiateAPS("SmallExplosionEffectForZombie", transform.position, Quaternion.identity);
+                }
+
 
 
                 StartCoroutine(DestroyOBjectWithSound(sourceDestraction.clip.length, _craftItem));

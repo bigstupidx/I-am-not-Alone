@@ -167,7 +167,7 @@ fe76270bd84ec3b6f2f6f92c69cf69da Assembly-CSharp-firstpass.dll:UnityStandardAsse
 db6ce70b8f7c9b9e69f3f5d6e55e913f Assembly-CSharp.dll:.CraftItem
 8c282e8c641831ff10fe26724ee744ae Assembly-CSharp.dll:Lean.Localization.LeanLocalization
 cd4d382e1c518d5917b767f97807f94e Assembly-CSharp.dll:.MB2_TestUpdate
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ChildToggleEnables
+6a96fe3b0c7dae613dd43d8a379dcfb8 Assembly-CSharp.dll:.ChildToggleEnables
 46df28736ea7f41afcc2593066695e18 Assembly-CSharp.dll:.BoxWeapon
 a7d3c6c6948d99dd4116e659ddcf5ac4 Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.ButtonHandler
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.GhostEye
