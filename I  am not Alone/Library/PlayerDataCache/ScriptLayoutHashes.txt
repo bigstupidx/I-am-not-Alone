@@ -162,7 +162,7 @@ d78da10fc6fe2ebb0bfa7bfae15012c5 Assembly-CSharp.dll:UnityEngine.AI.NavMeshModif
 332c202697775c9e432740481cdfe8a1 Assembly-CSharp.dll:.ZombieLevel1
 b7536247a550bc1596505b7f345c8adf Assembly-CSharp.dll:.GunAim
 a2efb0db652b8114d1ae7dd9a600d626 Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.InputAxisScrollbar
-0faff1d3f3eb9f5fba4076cf02592dfa Assembly-CSharp.dll:.DoneCameraMovving
+60de8f94fe028317c4925070f1a28651 Assembly-CSharp.dll:.DoneCameraMovving
 fe76270bd84ec3b6f2f6f92c69cf69da Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.AxisTouchButton
 db6ce70b8f7c9b9e69f3f5d6e55e913f Assembly-CSharp.dll:.CraftItem
 8c282e8c641831ff10fe26724ee744ae Assembly-CSharp.dll:Lean.Localization.LeanLocalization

@@ -20,13 +20,14 @@ public class ItemParams : MonoBehaviour
     public GameObject ButtonPlus;
     MyMainMenu menu;
     SaveData save;
+    CheckInWeaponAndCraft weaponCraft;
     //  DbGame db;
     // Use this for initialization
     void Start ()
     {
         //    db = GameObject.Find("MenuController").GetComponent<DbGame>();
         save = GameObject.Find("MenuController").GetComponent<SaveData>();
-    
+        weaponCraft = GameObject.Find("MenuController").GetComponent<CheckInWeaponAndCraft>();
         // db.OpenDB("DBGame.db");
         IntializedParams();
 
@@ -89,10 +90,11 @@ public class ItemParams : MonoBehaviour
                     MyMoney.text = (int.Parse(MyMoney.text) - int.Parse(coast.text)).ToString();
                     //db.UpdateMoney(MyMoney.text);
                     save.UpdateMoney(MyMoney.text);
+                    weaponCraft.ButtonAddInventory(GetComponent<ItemParams>());
                 }
                 else
                 {
-               
+
                     levelItem += 1;
                     MyMoney.text = (int.Parse(MyMoney.text) - int.Parse(coast.text)).ToString();
                     if (!ItemCraft)
@@ -105,6 +107,7 @@ public class ItemParams : MonoBehaviour
                     }
                     // db.UpdateMoney(MyMoney.text);
                     save.UpdateMoney(MyMoney.text);
+                    weaponCraft.ButtonAddInventory(GetComponent<ItemParams>());
                 }
 
 

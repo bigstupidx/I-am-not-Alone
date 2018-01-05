@@ -67,12 +67,14 @@ public class WeaponController : MonoBehaviour
                 ResetWeapon();
                 Hand.SetActive(false);
                 Weapons[2].SetActive(false);
-             
-                Weapons[0].transform.GetChild(0).localPosition = Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
+
+                BulletSystem weapon1 = Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>();
+
+                Weapons[0].transform.GetChild(0).localPosition = weapon1.WeaponPOsition;
                 ikTarget.WeaponActive = Weapons[0].transform.GetChild(0);
-                AnimationWeapon(Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().rightHand, Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
+                AnimationWeapon(weapon1.rightHand, weapon1.leftHand);
                 ikTarget.GetBulletSystem();
-                Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().UpdateAmunition();
+                weapon1.UpdateAmunition();
                 Weapons[0].SetActive(true);
                 Weapons[1].SetActive(false);
                 break;
@@ -82,13 +84,13 @@ public class WeaponController : MonoBehaviour
                 Weapons[0].SetActive(false);
                 Weapons[2].SetActive(false);
 
+                BulletSystem weapon2 = Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>();
 
-
-                Weapons[1].transform.GetChild(0).localPosition = Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
+                Weapons[1].transform.GetChild(0).localPosition = weapon2.WeaponPOsition;
                 ikTarget.WeaponActive = Weapons[1].transform.GetChild(0);
-                AnimationWeapon(Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().rightHand, Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
+                AnimationWeapon(weapon2.rightHand, weapon2.leftHand);
                 ikTarget.GetBulletSystem();
-                Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().UpdateAmunition();
+                weapon2.UpdateAmunition();
                 Weapons[1].SetActive(true);
                 break;
             case 3:
@@ -96,12 +98,12 @@ public class WeaponController : MonoBehaviour
                 Hand.SetActive(false);
                 Weapons[0].SetActive(false);
                 Weapons[1].SetActive(false);
-
+                BulletSystem weapon3 = Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>();
                 ikTarget.WeaponActive = Weapons[2].transform.GetChild(0);
-                Weapons[2].transform.GetChild(0).localPosition = Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().WeaponPOsition;
-                AnimationWeapon(Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().rightHand, Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().leftHand);
+                Weapons[2].transform.GetChild(0).localPosition = weapon3.WeaponPOsition;
+                AnimationWeapon(weapon3.rightHand, weapon3.leftHand);
                 ikTarget.GetBulletSystem();
-                Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().UpdateAmunition();
+                weapon3.UpdateAmunition();
                 Weapons[2].SetActive(true);
                 break;
             default:
@@ -118,13 +120,14 @@ public class WeaponController : MonoBehaviour
 
         if (Weapons[0].transform.childCount != 0)
         {
+            BulletSystem weapon1 = Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>();
             if (Weapons[0].transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
             {
 
 
 
-                Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
-                Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().resolution = true;
+                weapon1.WeaponAmmunition = 1;
+                weapon1.resolution = true;
                 //      Weapons[0].transform.GetChild(0).GetComponent<BulletSystem>().UpdateAmunition();
                 m_director = weaponPanel.GetChild(0).GetComponent<PlayableDirector>();
                 m_director.Play();
@@ -133,14 +136,15 @@ public class WeaponController : MonoBehaviour
 
         if (Weapons[1].transform.childCount != 0)
         {
+            BulletSystem weapon2 = Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>();
             if (Weapons[1].transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
             {
 
 
 
-                Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
+                weapon2.WeaponAmmunition = 1;
 
-                Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().resolution = true;
+                weapon2.resolution = true;
                 //     Weapons[1].transform.GetChild(0).GetComponent<BulletSystem>().UpdateAmunition();
                 m_director = weaponPanel.GetChild(1).GetComponent<PlayableDirector>();
                 m_director.Play();
@@ -150,14 +154,15 @@ public class WeaponController : MonoBehaviour
 
         if (Weapons[2].transform.childCount != 0)
         {
+            BulletSystem weapon3 = Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>();
             if (Weapons[2].transform.GetChild(0).name.Equals(nameWeapon + "(Clone)"))
             {
 
 
 
-                Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().WeaponAmmunition = 1;
+                weapon3.WeaponAmmunition = 1;
 
-                Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().resolution = true;
+                weapon3.resolution = true;
                 //        Weapons[2].transform.GetChild(0).GetComponent<BulletSystem>().UpdateAmunition();
                 m_director = weaponPanel.GetChild(2).GetComponent<PlayableDirector>();
                 m_director.Play();

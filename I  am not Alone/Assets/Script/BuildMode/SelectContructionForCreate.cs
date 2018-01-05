@@ -61,14 +61,15 @@ public class SelectContructionForCreate : MonoBehaviour
             {
                 itemCreate = pool.InstantiateAPS(NameDinamicCraftItem.text, new Vector3(instanceCreatePlayer.transform.position.x, instanceCreatePlayer.transform.position.y + 0.5f, instanceCreatePlayer.transform.position.z), instanceCreatePlayer.rotation);
 
+                CraftItem craft = itemCreate.GetComponent<CraftItem>();
 
                 switchMode.CraftItemBuildNowDinamic = itemCreate.GetComponent<CraftItem>();
                 switchMode.ButtonCraft.SetActive(true);
-                if (!itemCreate.GetComponent<CraftItem>().Interactive)
+                if (!craft.Interactive)
                 {
-                    itemCreate.GetComponent<CraftItem>().level = int.Parse(level.text);
+                    craft.level = int.Parse(level.text);
                 }
-                itemCreate.GetComponent<CraftItem>().Item = gameObject.GetComponent<SelectContructionForCreate>();
+                craft.Item = gameObject.GetComponent<SelectContructionForCreate>();
                 //     itemCreate.GetComponent<Indicator>().IndicatorSetActive(true, 0);
             }
 

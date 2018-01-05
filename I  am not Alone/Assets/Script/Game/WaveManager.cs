@@ -63,11 +63,11 @@ public class WaveManager : MonoBehaviour
     public GameObject Winner;
     public GameObject dualjoy;
     PlayerHealth playerHealth;
-    AnalyticsTracker traker;
+  //  AnalyticsTracker traker;
     // Use this for initialization
     private void Start ()
     {
-        traker = GetComponent<AnalyticsTracker>();
+      //  traker = GetComponent<AnalyticsTracker>();
         ghostCreater = dificultyGhost.GetChild(PlayerPrefs.GetInt("ActiveDifficulty")).GetComponent<GhostWaveCreater>();
         init();
 
@@ -178,7 +178,7 @@ public class WaveManager : MonoBehaviour
 
                     levelWave++;
                     ghostCreater.UpdateLevelWaverPrefs(levelWave);
-                    traker.eventName ="Scene  " + SceneManager.GetActiveScene().name + " Max levelWave " + levelWave;
+                //    traker.eventName ="Scene  " + SceneManager.GetActiveScene().name + " Max levelWave " + levelWave;
 
                     GhostCounter.text = "0";
 

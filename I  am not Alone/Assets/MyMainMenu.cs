@@ -88,6 +88,7 @@ public class MyMainMenu : MonoBehaviour
 
         if (!sceneName.Equals(""))
         {
+            loadPanel.transform.parent.gameObject.SetActive(true);
             loadPanel.SetActive(true);
             StartCoroutine(Load(sceneName));
 
@@ -98,10 +99,10 @@ public class MyMainMenu : MonoBehaviour
 
     public void Share ()
     {
-        FB.ShareLink(contentTitle: "Plinth",
-            contentURL: new System.Uri("http://n3k.ca"),
-            contentDescription: "Hello  this is my first Game", callback: OnShare);
-        
+        FB.ShareLink(contentTitle: "Plinth Monsters",
+            contentURL: new System.Uri("https://play.google.com/store/apps/details?id=com.ArctodaGame.PlinthMonsters"),
+            contentDescription: "Survivel trash game", callback: OnShare);
+
     }
     private void OnShare (IShareResult result)
     {

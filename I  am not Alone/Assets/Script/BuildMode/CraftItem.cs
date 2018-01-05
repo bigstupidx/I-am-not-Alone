@@ -153,16 +153,19 @@ public class CraftItem : MonoBehaviour
 
         for (int i = 0; i < transform.GetChild(0).childCount; i++)
         {
-            if (transform.GetChild(0).GetChild(i).GetComponent<Renderer>())
+            Renderer render = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
+
+            if (render)
             {
-                rend = transform.GetChild(0).GetChild(i).GetComponent<Renderer>();
+                rend = render;
                 rend.enabled = false;
             }
             for (int l = 0; l < transform.GetChild(0).GetChild(i).childCount; l++)
             {
-                if (transform.GetChild(0).GetChild(i).GetChild(l).GetComponent<Renderer>())
+                Renderer render2 = transform.GetChild(0).GetChild(i).GetChild(l).GetComponent<Renderer>();
+                if (render2)
                 {
-                    rend = transform.GetChild(0).GetChild(i).GetChild(l).GetComponent<Renderer>();
+                    rend = render2;
                     rend.enabled = false;
                 }
             }
@@ -321,7 +324,7 @@ public class CraftItem : MonoBehaviour
                 //indicator.IndicatorSetActive(true, 2);
                 if (transform.GetChild(0).GetComponent<Collider>())
                 {
-                    transform.GetChild(0).GetComponent<Collider>().enabled = true; 
+                    transform.GetChild(0).GetComponent<Collider>().enabled = true;
                 }
             }
             else
@@ -424,27 +427,28 @@ public class CraftItem : MonoBehaviour
 
                 if (Built)
                 {
-                    if (other.GetComponent<ZombieLevel1>().JointWindow)
+                    ZombieLevel1 zombie = other.GetComponent<ZombieLevel1>();
+                    if (zombie.JointWindow)
                     {
 
                         health.HelthDamage(0.03f, false, transform.position);
-                        ZombieLevel1 zombie = other.GetComponent<ZombieLevel1>();
-                        Animator anim = other.GetComponent<ZombieLevel1>().m_animator;
+
+                        Animator anim = zombie.m_animator;
                         anim.SetLayerWeight(1, 0);
                         anim.SetTrigger("window");
 
-                        OffMeshLinkData data = other.GetComponent<ZombieLevel1>().agent.currentOffMeshLinkData;
-                        Vector3 startPos = other.GetComponent<ZombieLevel1>().agent.transform.position;
+                        OffMeshLinkData data = zombie.agent.currentOffMeshLinkData;
+                        Vector3 startPos = zombie.agent.transform.position;
                         Vector3 endPos = transform.position;
                         float normalizedTime = 0.0f;
                         while (normalizedTime < 1.0f)
                         {
                             float yOffset = 2.0f * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
-                            other.GetComponent<ZombieLevel1>().agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
+                            zombie.agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
                             normalizedTime += Time.deltaTime / 0.5f;
 
                         }
-                        other.GetComponent<ZombieLevel1>().timerStop = 1.0f;
+                        zombie.timerStop = 1.0f;
 
 
 
@@ -463,13 +467,14 @@ public class CraftItem : MonoBehaviour
             if (other.CompareTag("AI"))
             {
 
+                Health AIhelth = other.GetComponent<Health>();
                 if (hisEffect)
                 {
 
                     if (_StartHisEffect)
                     {
 
-                        other.GetComponent<Health>().HelthDamage(damage, true, transform.position);
+                        AIhelth.HelthDamage(damage, true, transform.position);
                     }
                 }
                 else
@@ -485,7 +490,7 @@ public class CraftItem : MonoBehaviour
                         }
                         else
                         {
-                            other.GetComponent<Health>().HelthDamage(damage, true, transform.position);
+                            AIhelth.HelthDamage(damage, true, transform.position);
                             health.HelthDamage(0.1f, false, transform.position);
                         }
 
@@ -512,12 +517,12 @@ public class CraftItem : MonoBehaviour
         if (other.CompareTag("AI"))
         {
 
-
+            ZombieLevel1 zombie = other.GetComponent<ZombieLevel1>();
 
             //    other.GetComponent<ZombieLevel1>().WinDowAttack = false;
 
-            other.GetComponent<ZombieLevel1>().agent.speed = other.GetComponent<ZombieLevel1>().standartSpeed;
-            other.GetComponent<ZombieLevel1>().m_animator.SetLayerWeight(1, 0);
+            zombie.agent.speed = zombie.standartSpeed;
+            zombie.m_animator.SetLayerWeight(1, 0);
 
         }
         if (other.CompareTag("Player"))

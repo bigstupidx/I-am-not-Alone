@@ -47,12 +47,14 @@ public class ZombieLevel1 : MonoBehaviour
     float defaultRadius;
     float radiusDouble;
     public bool IamAttack;
-
+    private Vector3 RaycastTransformForward;
+    PlayerHealth playerHealth;
     // Use this for initialization
     void Start ()
     {
         NavMesh.avoidancePredictionTime = 5;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerHealth = player.GetComponent<PlayerHealth>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
         InvokeRepeating("DayDestroyObject", 0.0f, 0.5f);
@@ -119,7 +121,7 @@ public class ZombieLevel1 : MonoBehaviour
         catch (System.Exception)
         {
 
-            Debug.Log("this ");
+         
         }
 
         if (timerStop > 0)
@@ -205,16 +207,16 @@ public class ZombieLevel1 : MonoBehaviour
 
 
 
-        Vector3 fwd = transform.TransformDirection(Vector3.forward * 0.5f);
+        RaycastTransformForward = transform.TransformDirection(Vector3.forward * 0.5f);
 
         //  Debug.DrawRay(transform.position, fwd * 2.5f, Color.yellow);
-        if (Physics.Raycast(transform.position, fwd, out hit, 3.5F))
+        if (Physics.Raycast(transform.position, RaycastTransformForward, out hit, 3.5F))
         {
+            PriorityObject m_priorityObject = hit.transform.GetComponent<PriorityObject>();
 
 
 
-
-            if (hit.transform.GetComponent<PriorityObject>())
+            if (m_priorityObject)
             {
                 if (target.CompareTag(Tags.player))
                 {
@@ -223,7 +225,7 @@ public class ZombieLevel1 : MonoBehaviour
                         if (timer >= timeBetweenAttacks)
                         {
                             timer = 0;
-                            target.GetComponent<PlayerHealth>().HelthDamage(PlayerDamage);
+                            playerHealth.HelthDamage(PlayerDamage);
 
                             if (!source.isPlaying)
                             {
@@ -263,9 +265,10 @@ public class ZombieLevel1 : MonoBehaviour
                     {
                         timer = 0;
 
-                        if (target.GetComponent<Health>())
+                        Health allHealth = target.GetComponent<Health>();
+                        if (allHealth)
                         {
-                            target.GetComponent<Health>().HelthDamage(damage, false, hit.point);
+                            allHealth.HelthDamage(damage, false, hit.point);
                         }
                         else
                         {
@@ -294,7 +297,7 @@ public class ZombieLevel1 : MonoBehaviour
 
 
 
-                GhostAnswer(hit.transform, hit.transform.GetComponent<PriorityObject>());
+                GhostAnswer(hit.transform, m_priorityObject);
 
 
             }
@@ -338,9 +341,10 @@ public class ZombieLevel1 : MonoBehaviour
 
         if (Object.Priority == 0)
         {
-            if (Object.gameObject.GetComponent<DoorTrigger>())
+            DoorTrigger door = Object.gameObject.GetComponent<DoorTrigger>();
+            if (door)
             {
-                if (Object.gameObject.GetComponent<DoorTrigger>().rigid.isKinematic)
+                if (door.rigid.isKinematic)
                 {
 
                     newTraget = target;

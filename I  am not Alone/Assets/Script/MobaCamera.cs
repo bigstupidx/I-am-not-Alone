@@ -33,7 +33,7 @@ public class MobaCamera : MonoBehaviour
         }
     }
 
-    private void LateUpdate ()
+    private void Update ()
     {
 
         //   Vector3 toPos = target.position + (target.rotation * defaultDistance);
@@ -43,9 +43,9 @@ public class MobaCamera : MonoBehaviour
             Vector3 curos = Vector3.Lerp(myT.position, toPos, distanceDamp * Time.deltaTime);
             myT.position = curos;
 
-            //Quaternion toRot = Quaternion.LookRotation(target.position - myT.position, target.up);
-            //Quaternion curRot = Quaternion.Slerp(myT.rotation, toRot, rotationDamp * Time.deltaTime);
-            //myT.rotation = curRot;
+            Quaternion toRot = Quaternion.LookRotation(target.position - myT.position, target.up);
+            Quaternion curRot = Quaternion.Slerp(myT.rotation, toRot, rotationDamp * Time.deltaTime);
+            myT.rotation = curRot;
             if (shouldShake)
             {
                 if (duration > 0)
