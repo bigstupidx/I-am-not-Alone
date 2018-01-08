@@ -143,13 +143,24 @@ new SaveGameJsonSerializer());
     public void GetWeaponBought ()
     {
 
-
         checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>();
 
         _playerItemParams = SaveGame.Load<PlayerItemParams>(
 identifier_playerItemParams,
 new PlayerItemParams(),
 new SaveGameJsonSerializer());
+
+        if (_playerItemParams.NameWeapon.Count == 0)
+        {
+            InsertDBWeapon("Drobovik", 1, 1);
+            SaveGame.Save<PlayerItemParams>(identifier_playerItemParams, _playerItemParams, new SaveGameJsonSerializer());
+            _playerItemParams = SaveGame.Load<PlayerItemParams>(
+identifier_playerItemParams,
+new PlayerItemParams(),
+new SaveGameJsonSerializer());
+        }
+
+
 
         for (int i = 0; i < _playerItemParams.NameWeapon.Count; i++)
         {
@@ -209,6 +220,7 @@ new SaveGameJsonSerializer());
         _playerItemParams.NameWeapon.Add(WeaponName);
         _playerItemParams.LevelWeapon.Add(level);
         _playerItemParams.Category.Add(category);
+
         SaveGame.Save<PlayerItemParams>(identifier_playerItemParams, _playerItemParams, new SaveGameJsonSerializer());
 
 
@@ -226,6 +238,7 @@ new SaveGameJsonSerializer());
         _playerItemParams.NameWeapon.RemoveAt(l);
         _playerItemParams.LevelWeapon.RemoveAt(l);
         _playerItemParams.Category.RemoveAt(l);
+
 
         _playerItemParams.NameWeapon.Add(WeaponName);
         _playerItemParams.LevelWeapon.Add(level);

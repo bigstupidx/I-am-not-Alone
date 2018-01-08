@@ -149,11 +149,11 @@ public class DoneCameraMovving : MonoBehaviour
         distance = relCameraPos.magnitude;
         if (distance < 17)
         {
-            rotationDamp = smooth;
+            rotationDamp = smooth/2;
         }
         else
         {
-            rotationDamp = 0.3f;
+            rotationDamp = 0.2f;
         }
         cameraTransform.position = Vector3.Slerp(cameraTransform.position, newPos, smooth * Time.deltaTime);
 

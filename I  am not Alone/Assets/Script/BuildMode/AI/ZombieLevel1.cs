@@ -49,11 +49,14 @@ public class ZombieLevel1 : MonoBehaviour
     public bool IamAttack;
     private Vector3 RaycastTransformForward;
     PlayerHealth playerHealth;
+    public float RepathRate = 0.5f;
+    public Transform mainTarget;
+    public bool AiWork;
     // Use this for initialization
     void Start ()
     {
         NavMesh.avoidancePredictionTime = 5;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag(Tags.player).transform;
         playerHealth = player.GetComponent<PlayerHealth>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
@@ -75,7 +78,7 @@ public class ZombieLevel1 : MonoBehaviour
         }
 
         Physics.IgnoreCollision(transform.GetComponent<Collider>(), player.GetComponent<Collider>());
-
+        StartCoroutine(Repath());
 
     }
     private void OnEnable ()
@@ -83,7 +86,8 @@ public class ZombieLevel1 : MonoBehaviour
         agent.enabled = true;
         agent.speed = standartSpeed;
         timerStop = -1.0f;
-        m_animator.SetLayerWeight(1, 1);
+      
+        StartCoroutine(Repath());
     }
     void DayDestroyObject ()
     {
@@ -102,7 +106,7 @@ public class ZombieLevel1 : MonoBehaviour
 
     }
     // Update is called once per frame
-    void FixedUpdate ()
+    void Update ()
     {
         try
         {
@@ -121,7 +125,7 @@ public class ZombieLevel1 : MonoBehaviour
         catch (System.Exception)
         {
 
-         
+
         }
 
         if (timerStop > 0)
@@ -188,7 +192,7 @@ public class ZombieLevel1 : MonoBehaviour
 
             }
 
-            m_animator.SetTrigger("STAY");
+            m_animator.SetTrigger(HashAnim.GhostTriggerStay);
 
 
         }
@@ -215,10 +219,10 @@ public class ZombieLevel1 : MonoBehaviour
             PriorityObject m_priorityObject = hit.transform.GetComponent<PriorityObject>();
 
 
-
+            mainTarget = target;
             if (m_priorityObject)
             {
-                if (target.CompareTag(Tags.player))
+                if (mainTarget.CompareTag(Tags.player))
                 {
                     if (hit.transform.CompareTag(Tags.player))
                     {
@@ -239,7 +243,7 @@ public class ZombieLevel1 : MonoBehaviour
                                 {
 
                                     IamAttack = true;
-                                    m_animator.SetBool("attack", true);
+                                    m_animator.SetBool(HashAnim.GhostBoolAttack, true);
 
                                 }
                             }
@@ -253,7 +257,7 @@ public class ZombieLevel1 : MonoBehaviour
                             {
 
                                 IamAttack = false;
-                                m_animator.SetBool("attack", false);
+                                m_animator.SetBool(HashAnim.GhostBoolAttack, false);
 
                             }
                         }
@@ -265,14 +269,14 @@ public class ZombieLevel1 : MonoBehaviour
                     {
                         timer = 0;
 
-                        Health allHealth = target.GetComponent<Health>();
+                        Health allHealth = mainTarget.GetComponent<Health>();
                         if (allHealth)
                         {
                             allHealth.HelthDamage(damage, false, hit.point);
                         }
                         else
                         {
-                            target.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false, hit.point);
+                            mainTarget.transform.GetChild(0).GetComponent<Health>().HelthDamage(damage, false, hit.point);
                         }
 
                         //if (!source.isPlaying)
@@ -288,8 +292,8 @@ public class ZombieLevel1 : MonoBehaviour
                         {
 
 
-                            m_animator.SetTrigger("door");
-                            m_animator.SetBool("attack", true);
+                            m_animator.SetTrigger(HashAnim.GhostTriggerDoor);
+                            m_animator.SetBool(HashAnim.GhostBoolAttack, true);
                             IamAttack = true;
                         }
                     }
@@ -305,20 +309,21 @@ public class ZombieLevel1 : MonoBehaviour
         else
         {
             newTraget = null;
-            agent.SetDestination(target.position);
+
+            mainTarget = target;
             if (m_animator)
             {
                 if (agent.isStopped)
                 {
                     source.PlayOneShot(zombieStay);
 
-                    m_animator.SetBool("attack", false);
+                    m_animator.SetBool(HashAnim.GhostBoolAttack, false);
                     IamAttack = false;
                 }
                 else
                 {
                     IamAttack = false;
-                    m_animator.SetBool("attack", false);
+                    m_animator.SetBool(HashAnim.GhostBoolAttack, false);
                 }
             }
         }
@@ -333,7 +338,18 @@ public class ZombieLevel1 : MonoBehaviour
 
 
     }
-
+    private IEnumerator Repath ()
+    {
+        while (true)
+        {
+            if (mainTarget)
+            {
+                AiWork = true;
+                agent.destination = mainTarget.position;
+            }
+            yield return new WaitForSeconds(RepathRate);
+        }
+    }
 
     void GhostAnswer (Transform target, PriorityObject Object)
     {
@@ -348,6 +364,7 @@ public class ZombieLevel1 : MonoBehaviour
                 {
 
                     newTraget = target;
+                    mainTarget = newTraget;
 
                 }
                 else
@@ -360,6 +377,7 @@ public class ZombieLevel1 : MonoBehaviour
             else
             {
                 newTraget = target;
+                mainTarget = newTraget;
             }
 
         }
@@ -369,6 +387,7 @@ public class ZombieLevel1 : MonoBehaviour
             if (r == 1)
             {
                 newTraget = target;
+                mainTarget = newTraget;
 
             }
             else
@@ -382,6 +401,7 @@ public class ZombieLevel1 : MonoBehaviour
             if (r == 3)
             {
                 newTraget = target;
+                mainTarget = newTraget;
 
             }
             else
@@ -395,6 +415,7 @@ public class ZombieLevel1 : MonoBehaviour
             if (r == 4)
             {
                 newTraget = target;
+                mainTarget = newTraget;
 
             }
             else

@@ -28,7 +28,7 @@ public class AgentLinkMover : MonoBehaviour
         Mcollider = GetComponent<CapsuleCollider>();
         m_CapsuleHeight = Mcollider.height;
         m_CapsuleCenter = Mcollider.center;
-        agent.autoTraverseOffMeshLink = false;
+        //agent.autoTraverseOffMeshLink = false;
         while (true)
         {
             if (agent.isOnOffMeshLink)
@@ -64,7 +64,7 @@ public class AgentLinkMover : MonoBehaviour
         Mcollider.height = Mcollider.height / 4f;
         Mcollider.center = Mcollider.center / 4f;
         float normalizedTime = 0.0f;
-        zombie.m_animator.SetTrigger("jump");
+        zombie.m_animator.SetTrigger(HashAnim.GhostTriggerJump);
 
 
         while (normalizedTime < 1.0f)

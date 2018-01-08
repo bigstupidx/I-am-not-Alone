@@ -126,17 +126,17 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         void UpdateAnimator (Vector3 move)
         {
             // update the animator parameters
-            m_Animator.SetFloat("Forward", m_ForwardAmount, 0.1f, Time.deltaTime);
+            m_Animator.SetFloat(HashAnim.PlayerForward, m_ForwardAmount, 0.1f, Time.deltaTime);
             //   m_Animator.SetFloat("Turn", m_TurnAmount, 0.1f, Time.deltaTime);
-            m_Animator.SetBool("Crouch", m_Crouching);
-            m_Animator.SetBool("OnGround", m_IsGrounded);
-            m_Animator.SetFloat("strafe", move.x, 0.1f, Time.deltaTime);
+            m_Animator.SetBool(HashAnim.PlayerCrouch, m_Crouching);
+            m_Animator.SetBool(HashAnim.PlayerOnGround, m_IsGrounded);
+            m_Animator.SetFloat(HashAnim.PlayerStrafe, move.x, 0.1f, Time.deltaTime);
             if (!m_IsGrounded)
             {
                 m_Capsule.height = m_Capsule.height / 4f;
                 m_Capsule.center = m_Capsule.center / 4f;
                 m_Capsule.radius = 0.1f;
-                m_Animator.SetFloat("Jump", m_Rigidbody.velocity.y);
+                m_Animator.SetFloat(HashAnim.PlayerJump, m_Rigidbody.velocity.y);
             }
 
             // calculate which leg is behind, so as to leave that leg trailing in the jump animation
@@ -148,7 +148,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             float jumpLeg = (runCycle < k_Half ? 1 : -1) * m_ForwardAmount;
             if (m_IsGrounded)
             {
-                m_Animator.SetFloat("JumpLeg", jumpLeg);
+                m_Animator.SetFloat(HashAnim.PlayerJumpLeg, jumpLeg);
             }
 
             // the anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,

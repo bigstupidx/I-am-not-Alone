@@ -59,7 +59,7 @@ public class ItemParams : MonoBehaviour
         }
         else
         {
-            textCoast.text = "";
+            textCoast.text = System.String.Empty;
             Unlock.gameObject.SetActive(false);
             Upgrade.gameObject.SetActive(false);
             Full.gameObject.SetActive(true);

@@ -73,7 +73,7 @@ public class Health : MonoBehaviour
         checkWeaponAndCraft = GameObject.Find("WeaponController").GetComponent<CheckInWeaponAndCraft>();
         weaponsControll = GameObject.Find("WeaponController").GetComponent<WeaponController>();
         staticAudio = GameObject.Find("StaticAudio").GetComponent<AudioSource>();
-        playerG = GameObject.FindGameObjectWithTag("Player").transform;
+        playerG = GameObject.FindGameObjectWithTag(Tags.player).transform;
         ghostCounter = buildMode.CounterZombie.GetComponent<Text>();
         rigid = GetComponent<Rigidbody>();
         waveManager = GameObject.Find("Spawner").GetComponent<WaveManager>();
@@ -322,9 +322,10 @@ public class Health : MonoBehaviour
 
                 ZombieLevel1 zombie = GetComponent<ZombieLevel1>();
                 Animator m_animator = zombie.m_animator;
+                zombie.AiWork = false;
                 sourceDestraction.clip = zombie.zombieDeth;
                 m_animator.SetLayerWeight(1, 0);
-                m_animator.SetTrigger("Die");
+                m_animator.SetTrigger(HashAnim.GhostTriggerDie);
 
                 sourceDestraction.Play();
 

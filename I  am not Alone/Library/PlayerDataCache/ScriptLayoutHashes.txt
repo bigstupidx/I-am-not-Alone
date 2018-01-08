@@ -159,7 +159,7 @@ ef8c11ce53ddeeead3746b0c13faf66b Assembly-CSharp.dll:.DragRigidbody
 d78da10fc6fe2ebb0bfa7bfae15012c5 Assembly-CSharp.dll:UnityEngine.AI.NavMeshModifierVolume
 37bf4d6a6d424731cb4a9b998783e5c6 Assembly-CSharp-firstpass.dll:UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.AdviceManager
-332c202697775c9e432740481cdfe8a1 Assembly-CSharp.dll:.ZombieLevel1
+46049e765613e50fd425185e73437c2a Assembly-CSharp.dll:.ZombieLevel1
 b7536247a550bc1596505b7f345c8adf Assembly-CSharp.dll:.GunAim
 a2efb0db652b8114d1ae7dd9a600d626 Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.InputAxisScrollbar
 60de8f94fe028317c4925070f1a28651 Assembly-CSharp.dll:.DoneCameraMovving
@@ -250,6 +250,7 @@ a449d8334a8055b1f698a95a11f4ab14 FullSerializer.dll:.RuntimeTestRunner
 a8796ecdc9d5c260bbe32f30c4b10708 Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.TouchPad
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.MB2_UpdateSkinnedMeshBoundsFromBones
 225599eea93dbe4a9c9cdf2f7b034c09 Assembly-CSharp.dll:.TurretsAi
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:.HashAnim
 b298c6bdc6d116289065eace477eb3ba Assembly-CSharp.dll:.Health
 841aa4c5d8bddd8dc3960fa01c1bf1b8 Assembly-CSharp.dll:.MB2_UpdateSkinnedMeshBoundsFromBounds
 c3ff20aa7aa541912d1c77482f506f49 Assembly-CSharp.dll:.SelectionWeaponForPC

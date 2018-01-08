@@ -58,16 +58,18 @@ public class WaveManager : MonoBehaviour
     public Text GhostCounter;
     public Text GhoustWave;
     PlayableDirector m_playebleDirector;
+    PlayableDirector m_playebleDirector2;
     int wavenumberForText;
     AudioSource source;
     public GameObject Winner;
     public GameObject dualjoy;
     PlayerHealth playerHealth;
-  //  AnalyticsTracker traker;
+    int lightAllSceneCount;
+    //  AnalyticsTracker traker;
     // Use this for initialization
     private void Start ()
     {
-      //  traker = GetComponent<AnalyticsTracker>();
+        //  traker = GetComponent<AnalyticsTracker>();
         ghostCreater = dificultyGhost.GetChild(PlayerPrefs.GetInt("ActiveDifficulty")).GetComponent<GhostWaveCreater>();
         init();
 
@@ -82,8 +84,9 @@ public class WaveManager : MonoBehaviour
         {
             lightAllScene.Add(light[i]);
         }
+        lightAllSceneCount = lightAllScene.Count;
+        m_playebleDirector2 = GhoustWave.transform.GetChild(0).GetComponent<PlayableDirector>();
         m_playebleDirector = GhoustWave.GetComponent<PlayableDirector>();
-
         switchMode = GameObject.Find("BuildController").GetComponent<SwitchMode>();
 
         for (int i = 0; i < transform.childCount; i++)
@@ -132,10 +135,11 @@ public class WaveManager : MonoBehaviour
                 switchMode.CraftItemBuildNowDinamic = null;
                 GhoustWave.gameObject.SetActive(true);
                 wavenumberForText = levelWave + 1;
-                GhoustWave.text = "WAVE " + wavenumberForText;
+                GhoustWave.text = wavenumberForText.ToString();
+                m_playebleDirector2.Play();
                 m_playebleDirector.Play();
                 source.Play();
-                for (int i = 0; i < lightAllScene.Count; i++)
+                for (int i = 0; i < lightAllSceneCount; i++)
                 {
                     if (lightAllScene[i].GetComponent<Light>())
                     {
@@ -143,7 +147,9 @@ public class WaveManager : MonoBehaviour
                     }
 
                 }
-                for (int i = 0; i < ghostCreater.wave[levelWave].countZombie.Count; i++)
+                int CountZombie = ghostCreater.wave[levelWave].countZombie.Count;
+
+                for (int i = 0; i < CountZombie; i++)
                 {
                     GhostCounter.text = (int.Parse(GhostCounter.text) + ghostCreater.wave[levelWave].countZombie[i]).ToString();
 
@@ -159,7 +165,7 @@ public class WaveManager : MonoBehaviour
             {
 
 
-                for (var i = lightAllScene.Count - 1; i > -1; i--)
+                for (var i = lightAllSceneCount - 1; i > -1; i--)
                 {
                     if (lightAllScene[i] == null)
                         lightAllScene.RemoveAt(i);
@@ -178,7 +184,7 @@ public class WaveManager : MonoBehaviour
 
                     levelWave++;
                     ghostCreater.UpdateLevelWaverPrefs(levelWave);
-                //    traker.eventName ="Scene  " + SceneManager.GetActiveScene().name + " Max levelWave " + levelWave;
+                    //    traker.eventName ="Scene  " + SceneManager.GetActiveScene().name + " Max levelWave " + levelWave;
 
                     GhostCounter.text = "0";
 

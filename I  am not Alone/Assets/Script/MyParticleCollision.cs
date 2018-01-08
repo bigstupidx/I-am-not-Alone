@@ -77,8 +77,9 @@ public class MyParticleCollision : MonoBehaviour
         }
         if (other.CompareTag("AI"))
         {
+            other.GetComponent<ZombieLevel1>().m_animator.SetLayerWeight(1, 1);
+            other.GetComponent<ZombieLevel1>().m_animator.SetTrigger(HashAnim.GhostTriggerHit);
 
-            other.GetComponent<ZombieLevel1>().m_animator.SetTrigger("hit");
             // pool.InstantiateAPS("BloodSprayEffect", other.transform.position, Quaternion.identity);
             if (other.transform.root.name != transform.name)
             {
@@ -90,6 +91,7 @@ public class MyParticleCollision : MonoBehaviour
                 }
 
             }
+            other.GetComponent<ZombieLevel1>().m_animator.SetLayerWeight(1, 0);
 
         }
         if (other.CompareTag("CraftFromMenu"))

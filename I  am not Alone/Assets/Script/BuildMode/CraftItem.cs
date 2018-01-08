@@ -522,7 +522,7 @@ public class CraftItem : MonoBehaviour
             //    other.GetComponent<ZombieLevel1>().WinDowAttack = false;
 
             zombie.agent.speed = zombie.standartSpeed;
-            zombie.m_animator.SetLayerWeight(1, 0);
+
 
         }
         if (other.CompareTag("Player"))

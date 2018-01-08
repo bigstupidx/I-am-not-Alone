@@ -12,7 +12,7 @@ public class BetweenFloor : MonoBehaviour
     public Transform FurnitureFirst;
     public Transform FurnitureSecond;
     public GameObject FloorHowTrue;
-    public GameObject[] FurnitureColliderSecondFloor;
+    public List<GameObject> FurnitureColliderSecondFloor = new List<GameObject>();
     Camera myCamera;
 
     private void Start ()
@@ -24,7 +24,12 @@ public class BetweenFloor : MonoBehaviour
     }
     public void RenderObjectToFloor (bool b)
     {
-        for (int i = 0; i < FurnitureColliderSecondFloor.Length; i++)
+        for (var i = FurnitureColliderSecondFloor.Count - 1; i > -1; i--)
+        {
+            if (FurnitureColliderSecondFloor[i].gameObject == null)
+                FurnitureColliderSecondFloor.RemoveAt(i);
+        }
+        for (int i = 0; i < FurnitureColliderSecondFloor.Count; i++)
         {
             FurnitureColliderSecondFloor[i].GetComponent<Collider>().enabled = b;
         }
@@ -113,7 +118,7 @@ public class BetweenFloor : MonoBehaviour
     void OffRenderAndColliderFirst (bool off)
     {
 
-   
+
 
         if (off)
         {
