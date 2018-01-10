@@ -30,7 +30,7 @@ a71e89494a00540356e3247bc0ed0342 Assembly-CSharp.dll:UnityEngine.AI.NavMeshLink
 692ae8f7010412d90605128f9b72c3b8 Assembly-CSharp-firstpass.dll:UnityStandardAssets.Characters.FirstPerson.FirstPersonController
 ed5555ea56c76befb50782024bd97019 Assembly-CSharp.dll:.SpawnerZombie
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.Editor.dll:UnityEngine.Advertisements.Editor.Placeholder
-83b0fff0b174240c631256e3b4c6dc6b Assembly-CSharp.dll:.MyMainMenu
+787fccede18a15ead073484cb5aa81fb Assembly-CSharp.dll:.MyMainMenu
 d225127316d3a9fe9d8981c2a24da324 Assembly-CSharp.dll:.WeaponController
 64be0cc548592cf4b398ef829371e4de Assembly-CSharp.dll:.SelectItemForStart
 ca678a4fb175774b3886b5faf2499981 Assembly-CSharp.dll:.IKtarget
@@ -175,9 +175,10 @@ a7d3c6c6948d99dd4116e659ddcf5ac4 Assembly-CSharp-firstpass.dll:UnityStandardAsse
 b93695bab03ad869031b46a4124daf7e Assembly-CSharp.dll:.TrasnparentWall
 b940086d7622a63b288e497914033d42 Assembly-CSharp.dll:.StartSceneObjectRandom
 57fde8e76fc7bce23deb0e799d336be7 Assembly-CSharp-firstpass.dll:UnityStandardAssets.Utility.SmoothFollow
-52c60cc8aefa0fdace2599001a3d3313 Assembly-CSharp.dll:.BetweenFloor
+37154fec0f1987883781201e399f8514 Assembly-CSharp.dll:.BetweenFloor
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.CallbackExecutor
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.Editor.Placeholder
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.GPS
 a66db4963d9750fe9facaff4efc9b8e6 Assembly-CSharp.dll:AC.LSky.LSkyTOD
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UnityStandardAssets.CrossPlatformInput.MobileControlRig
 05524b8f659e7bfe5756d1335fec24ba Facebook.Unity.dll:Facebook.Unity.Mobile.Android.AndroidFacebookGameObject
@@ -220,7 +221,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.PlayModeRunnerCallback
 96d0fbde9fd209878a0a291f82c9bcdd UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.PlaymodeTestsController
 64eb32cc721b1cc68a91ed57461e188c UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.RemoteTestResultSender
-33050515923223c972a01de2a2f620d6 Assembly-CSharp.dll:.PauseManager
+724128daa5b350d9801e92765d0d7d06 Assembly-CSharp.dll:.PauseManager
 040033f14df85985c5bbd0a1fe88dd71 Assembly-CSharp.dll:AC.LSky.LSkyProbeRefresh
 e0f7ffd5d5c2abe4b2e16569a21163da UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioRoom
 05524b8f659e7bfe5756d1335fec24ba UnityStore.dll:UnityEngine.Store.MainThreadDispatcher

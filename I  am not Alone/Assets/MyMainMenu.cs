@@ -8,7 +8,6 @@ using Facebook.Unity;
 using UnityEngine.Advertisements;
 
 
-
 public class MyMainMenu : MonoBehaviour
 {
 
@@ -31,6 +30,9 @@ public class MyMainMenu : MonoBehaviour
     public Text shareText;
     public Button PlayButton;
     public Button buttonAds;
+
+
+
 
     // Use this for initialization
     private void Start ()

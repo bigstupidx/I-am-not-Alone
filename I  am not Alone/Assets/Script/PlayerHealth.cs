@@ -14,9 +14,13 @@ public class PlayerHealth : MonoBehaviour
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
     public Text healthText;
     bool damaged;
+    WaveManager wave;
+    GPS gps;
     // Use this for initialization
     void Start ()
     {
+        wave = GameObject.Find("Spawner").GetComponent<WaveManager>();
+        gps = GameObject.Find("Spawner").GetComponent<GPS>();
         HealthPlayer.fillAmount = CurHelth / MaxHealth;
         healthText.text = CurHelth.ToString();
     }
@@ -74,7 +78,10 @@ public class PlayerHealth : MonoBehaviour
         if (CurHelth <= 0)
         {
             CurHelth = 0;
-
+            if (wave.levelWave == 0)
+            {
+                gps.GetAchiv(GPS.DieFirst);
+            }
 
             imageGameOver.SetActive(true);
             DualJoy.SetActive(false);

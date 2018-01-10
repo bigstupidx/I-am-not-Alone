@@ -416,6 +416,11 @@ public class CraftItem : MonoBehaviour
                     {
                         buildMode.ButtonCraft.SetActive(false);
                     }
+                    else
+                    {
+                        buildMode.CraftItemBuildNowStatic = this.gameObject.GetComponent<CraftItem>();
+                        buildMode.ButtonCraft.SetActive(true);
+                    }
                 }
 
             }

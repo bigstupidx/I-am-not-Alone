@@ -88,7 +88,7 @@ public class MyParticleCollision : MonoBehaviour
                 int l = Random.Range(0, 30);
                 if (l == 7)
                 {
-                    other.GetComponent<ZombieLevel1>().timerStop = 1;
+                    other.GetComponent<ZombieLevel1>().timerStop = 1.5f;
                 }
 
             }

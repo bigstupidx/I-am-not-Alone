@@ -65,11 +65,14 @@ public class WaveManager : MonoBehaviour
     public GameObject dualjoy;
     PlayerHealth playerHealth;
     int lightAllSceneCount;
+    GPS gps;
+
     //  AnalyticsTracker traker;
     // Use this for initialization
     private void Start ()
     {
         //  traker = GetComponent<AnalyticsTracker>();
+        gps = GetComponent<GPS>();
         ghostCreater = dificultyGhost.GetChild(PlayerPrefs.GetInt("ActiveDifficulty")).GetComponent<GhostWaveCreater>();
         init();
 
@@ -181,7 +184,19 @@ public class WaveManager : MonoBehaviour
                 if (waveLevelUp)
                 {
 
+                    if (levelWave == 0)
+                    {
+                        gps.GetAchiv(GPS.surFirst);
 
+                    }
+                    if (levelWave == 4)
+                    {
+                        gps.GetAchiv(GPS.surFifty);
+                    }
+                    if (levelWave == 8)
+                    {
+                        gps.GetAchiv(GPS.surNine);
+                    }
                     levelWave++;
                     ghostCreater.UpdateLevelWaverPrefs(levelWave);
                     //    traker.eventName ="Scene  " + SceneManager.GetActiveScene().name + " Max levelWave " + levelWave;

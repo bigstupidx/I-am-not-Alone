@@ -17,7 +17,8 @@ public class PauseManager : MonoBehaviour
     private bool isPaused;
     public static int sundayCount;
     private RewardBasedVideoAd rewardBasedvideoAd;
-
+    public GameObject Menupause;
+    public GameObject HudCanvas;
     private void Awake ()
     {
         rewardBasedvideoAd = RewardBasedVideoAd.Instance;
@@ -45,6 +46,8 @@ public class PauseManager : MonoBehaviour
     {
         Time.timeScale = 1;
     }
+
+
     void OnApplicationFocus (bool hasFocus)
     {
         Pause();
@@ -58,8 +61,24 @@ public class PauseManager : MonoBehaviour
     {
         Time.timeScale = Time.timeScale == 0 ? 1 : 0;
 
-
-
+        if (Time.timeScale == 0)
+        {
+          
+            if (Menupause)
+            {
+                Menupause.SetActive(true);
+                HudCanvas.SetActive(false);
+            }
+        }
+        else
+        {
+            if (Menupause)
+            {
+            
+                Menupause.SetActive(false);
+                HudCanvas.SetActive(true);
+            }
+        }
     }
 
 
@@ -108,7 +127,6 @@ public class PauseManager : MonoBehaviour
 #else
             string appId = "unexpected_platform";
 #endif
-
 
         rewardBasedvideoAd.LoadAd(new AdRequest.Builder().Build(), appId);
         // Initialize the Google Mobile Ads SDK.
