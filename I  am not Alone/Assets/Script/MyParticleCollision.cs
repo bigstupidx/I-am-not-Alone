@@ -75,7 +75,8 @@ public class MyParticleCollision : MonoBehaviour
             }
 
         }
-        if (other.CompareTag("AI"))
+        //if (other.CompareTag("AI"))
+        if (other.gameObject.layer == 8)
         {
             other.GetComponent<ZombieLevel1>().m_animator.SetLayerWeight(1, 1);
             other.GetComponent<ZombieLevel1>().m_animator.SetTrigger(HashAnim.GhostTriggerHit);

@@ -30,9 +30,12 @@ public class MyMainMenu : MonoBehaviour
     public Text aDText;
     public Text shareText;
     public Button PlayButton;
+    public Button buttonAds;
+
     // Use this for initialization
     private void Start ()
     {
+
         checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>();
         save = GetComponent<SaveData>();
         if (!FB.IsInitialized)
@@ -50,11 +53,34 @@ public class MyMainMenu : MonoBehaviour
         save.GetInventoryForMenu();
         coinPlayeble = myMoney.GetComponent<PlayableDirector>();
 
+        if (buttonAds)
+        {
+            StartCoroutine(Repath());
+        }
 
 
     }
 
+    private IEnumerator Repath ()
+    {
+        while (true)
+        {
+            Advertisement.Initialize("1557198", false);
+            if (Advertisement.IsReady())
+            {
+                Debug.Log("true");
+                buttonAds.interactable = true;
+            }
+            else
+            {
+                Debug.Log("false");
+                buttonAds.interactable = false;
+            }
 
+
+            yield return new WaitForSeconds(.5f);
+        }
+    }
     public void UpdateMoneyADsAndShare ()
     {
         MiddleLevelWeapon = 0;

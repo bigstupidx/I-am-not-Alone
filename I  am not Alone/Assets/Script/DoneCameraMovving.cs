@@ -87,12 +87,16 @@ public class DoneCameraMovving : MonoBehaviour
 
         if (!selection.Fire1)
         {
-          //  target = player;
+            //  target = player;
 
             if (!m_changeCamera)
             {
 
-
+                if (cameraFixPos)
+                {
+                    relCameraPos.y = 14.0f;
+                    cameraFixPos = false;
+                }
                 relCameraPos = Vector3.Lerp(relCameraPos, cameraToPOs.position - target.position, rotationDamp * Time.deltaTime);
 
 
@@ -101,6 +105,10 @@ public class DoneCameraMovving : MonoBehaviour
         else
         {
 
+
+
+            relCameraPos.y = 20.0f;
+            cameraFixPos = true;
             //if (m_changeCamera)
             //{
             //    //if (cameraFixPos)
@@ -149,7 +157,7 @@ public class DoneCameraMovving : MonoBehaviour
         distance = relCameraPos.magnitude;
         if (distance < 17)
         {
-            rotationDamp = smooth/2;
+            rotationDamp = smooth / 2;
         }
         else
         {
