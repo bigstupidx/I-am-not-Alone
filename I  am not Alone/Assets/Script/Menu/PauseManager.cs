@@ -24,16 +24,16 @@ public class PauseManager : MonoBehaviour
         rewardBasedvideoAd = RewardBasedVideoAd.Instance;
         LoadRewardBasedAD();
         Time.timeScale = 0;
-        if (Advertisement.isSupported)
-        {
-            Advertisement.Initialize("1557198", false);
+        //if (Advertisement.isSupported)
+        //{
+        //    Advertisement.Initialize("1557198", false);
 
 
-        }
-        else
-        {
-            Debug.Log("platform is not Supported");
-        }
+        //}
+        //else
+        //{
+        //    Debug.Log("platform is not Supported");
+        //}
     }
     public void ButtonMenu ()
     {
@@ -88,20 +88,20 @@ public class PauseManager : MonoBehaviour
     {
 
 
-        if (Advertisement.isSupported)
-        {
-            Advertisement.Initialize("1557198", false);
-            if (Advertisement.IsReady())
-            {
-                Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
+        //if (Advertisement.isSupported)
+        //{
+        //    Advertisement.Initialize("1557198", false);
+        //    if (Advertisement.IsReady())
+        //    {
+        //        Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
 
-            }
+        //    }
 
-        }
-        else
-        {
-            Debug.Log("platform is not Supported");
-        }
+        //}
+        //else
+        //{
+        //    Debug.Log("platform is not Supported");
+        //}
 
     }
 
@@ -189,28 +189,28 @@ public class PauseManager : MonoBehaviour
 
         }
     }
-    private void HandleadResult (ShowResult result)
-    {
-        switch (result)
-        {
-            case ShowResult.Failed:
-                Debug.Log("player failde  launch");
+    //private void HandleadResult (ShowResult result)
+    //{
+    //    switch (result)
+    //    {
+    //        case ShowResult.Failed:
+    //            Debug.Log("player failde  launch");
 
-                Time.timeScale = 1;
-                break;
-            case ShowResult.Skipped:
-                Debug.Log("player did not fully watch the ad");
+    //            Time.timeScale = 1;
+    //            break;
+    //        case ShowResult.Skipped:
+    //            Debug.Log("player did not fully watch the ad");
 
-                Time.timeScale = 1;
-                break;
-            case ShowResult.Finished:
-                Debug.Log("player Gains +5 gems");
+    //            Time.timeScale = 1;
+    //            break;
+    //        case ShowResult.Finished:
+    //            Debug.Log("player Gains +5 gems");
 
-                Time.timeScale = 1;
-                break;
-            default:
-                break;
-        }
+    //            Time.timeScale = 1;
+    //            break;
+    //        default:
+    //            break;
+    //    }
 
-    }
+    //}
 }

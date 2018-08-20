@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Playables;
-using Facebook.Unity;
+
 using UnityEngine.Advertisements;
 
 
@@ -40,14 +40,7 @@ public class MyMainMenu : MonoBehaviour
 
         checkInWeaponAndCraft = GetComponent<CheckInWeaponAndCraft>();
         save = GetComponent<SaveData>();
-        if (!FB.IsInitialized)
-        {
-            FB.Init();
-        }
-        else
-        {
-            FB.ActivateApp();
-        }
+   
         //  db = GetComponent<DbGame>();
         //   db.OpenDB("DBGame.db");
         //  db.GetMoney();
@@ -67,18 +60,7 @@ public class MyMainMenu : MonoBehaviour
     {
         while (true)
         {
-            Advertisement.Initialize("1557198", false);
-            if (Advertisement.IsReady())
-            {
-                Debug.Log("true");
-                buttonAds.interactable = true;
-            }
-            else
-            {
-                Debug.Log("false");
-                buttonAds.interactable = false;
-            }
-
+    
 
             yield return new WaitForSeconds(.5f);
         }
@@ -127,30 +109,9 @@ public class MyMainMenu : MonoBehaviour
 
     public void Share ()
     {
-        FB.ShareLink(contentTitle: "Plinth Monsters",
-            contentURL: new System.Uri("https://play.google.com/store/apps/details?id=com.ArctodaGame.PlinthMonsters"),
-            contentDescription: "Survivel trash game", callback: OnShare);
 
     }
-    private void OnShare (IShareResult result)
-    {
-        if (result.Cancelled || !string.IsNullOrEmpty(result.Error))
-        {
-            Debug.Log("ShareLink error: " + result.Error);
-        }
-        else if (!string.IsNullOrEmpty(result.PostId))
-        {
-            Debug.Log(result.PostId);
-        }
-        else
-        {
-            myMoney.text = (int.Parse(myMoney.text) + MoneyShare).ToString();
-            save.UpdateMoney(myMoney.text);
-            // db.UpdateMoney(myMoney.text);
-            //  coinPlayeble.Play();
-            Debug.Log("share succeed");
-        }
-    }
+
 
     public void CheckInPrice (Text price)
     {
@@ -224,20 +185,7 @@ public class MyMainMenu : MonoBehaviour
     public void ShowAds ()
     {
 
-        if (Advertisement.isSupported)
-        {
-            Advertisement.Initialize("1557198", false);
-            if (Advertisement.IsReady())
-            {
-                Advertisement.Show("video", new ShowOptions() { resultCallback = HandleadResult });
 
-            }
-
-        }
-        else
-        {
-            Debug.Log("platform is not Supported");
-        }
 
     }
     IEnumerator Load (string i)
@@ -267,31 +215,6 @@ public class MyMainMenu : MonoBehaviour
         }
     }
 
-    private void HandleadResult (ShowResult result)
-    {
-        switch (result)
-        {
-            case ShowResult.Failed:
-                Debug.Log("player failde  launch");
-                break;
-            case ShowResult.Skipped:
-                Debug.Log("player did not fully watch the ad");
-                myMoney.text = (int.Parse(myMoney.text) + MoneyAd).ToString();
-                save.UpdateMoney(myMoney.text);
-                coinPlayeble.Play();
-                break;
-            case ShowResult.Finished:
-                Debug.Log("player Gains + gems");
-                ;
-                myMoney.text = (int.Parse(myMoney.text) + MoneyAd).ToString();
-                save.UpdateMoney(myMoney.text);
-                coinPlayeble.Play();
-                break;
-            default:
-                break;
-        }
-
-    }
 }
 
 
